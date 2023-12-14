@@ -80,6 +80,7 @@ export default function App() {
       setOnMouseEnter(false);
     }
   };
+  
 
   // Change the openConfigurator state
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
