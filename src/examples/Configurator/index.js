@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
 
 // @mui material components
@@ -198,7 +183,7 @@ function Configurator() {
 
         <Divider />
 
-        <SoftBox mt={3} mb={2}>
+        {/* <SoftBox mt={3} mb={2}>
           <SoftBox mb={2}>
             <SoftButton
               component={Link}
@@ -223,8 +208,8 @@ function Configurator() {
           >
             view documentation
           </SoftButton>
-        </SoftBox>
-        <SoftBox display="flex" justifyContent="center">
+        </SoftBox> */}
+        {/* <SoftBox display="flex" justifyContent="center">
           <a
             className="github-button"
             href="https://github.com/creativetimofficial/soft-ui-dashboard-react"
@@ -235,7 +220,7 @@ function Configurator() {
           >
             Star
           </a>
-        </SoftBox>
+        </SoftBox> */}
         <SoftBox mt={3} textAlign="center">
           <SoftBox mb={0.5}>
             <SoftTypography variant="h6">Thank you for sharing!</SoftTypography>
