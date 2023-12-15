@@ -155,8 +155,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             variant="gradient"
             color={color}
             fullWidth
-          >
-            upgrade to pro
+          >Log Out
           </SoftButton>
         </SoftBox>
       </SoftBox>
