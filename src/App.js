@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, Link } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -47,6 +47,7 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "contex
 
 // Images
 import brand from "assets/images/logo-ct.png";
+import SignIn from "layouts/authentication/sign-in";
 
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
@@ -95,14 +96,34 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
+  const getToken = localStorage.getItem("token");
+
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
-      if (route.collapse) {
-        return getRoutes(route.collapse);
-      }
-
-      if (route.route) {
+      // if (route.collapse) {
+      //   return getRoutes(route.collapse);
+      // }
+      // if (route.route) {
+      //   <Routes>
+      //     {getToken ? (
+      //       <>
+      //         <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+      //       </>
+      //     ) : (
+      //       <>
+      //         <Route path="*" element={<Navigate to="/dashboard" />} />
+      //       </>
+      //     )}
+      //   </Routes>
+      // }
+      console.log(localStorage.getItem("token"));
+      if (localStorage.getItem("token")) {
+        console.log("if");
         return <Route exact path={route.route} element={route.component} key={route.key} />;
+      } else{
+        console.log("+++++++else")
+          //  <Route path="/authentication/sign-in" element={<Navigate to="/authentication/sign-in" />} />;
+        return <Route exact path={"/authentication/sign-in"} element={<SignIn />} key={"sign-in"}/>;
       }
 
       return null;
@@ -153,7 +174,7 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          {/* <Route path="*" element={<Navigate to="/dashboard" />} /> */}
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -177,8 +198,19 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
       </Routes>
+      {/* <Routes>
+        {getToken ? (
+          <>
+            <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+          </>
+        ) : (
+          <>
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </>
+        )}
+      </Routes> */}
     </ThemeProvider>
   );
 }
