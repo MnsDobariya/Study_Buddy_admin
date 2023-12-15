@@ -1,11 +1,7 @@
 import { useState } from "react";
 
 // react-router-dom components
-<<<<<<< HEAD
 import { Link, redirect, useNavigate } from "react-router-dom";
-=======
-import { Link, useNavigate } from "react-router-dom";
->>>>>>> 45047bc966f2cf5cf9a31260d5f659fa63f9f75c
 
 // @mui material components
 import Switch from "@mui/material/Switch";
