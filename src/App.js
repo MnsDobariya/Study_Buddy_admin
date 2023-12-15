@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -95,6 +95,8 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
+  // const getToken = localStorage.getItem("token");
+
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
       if (route.collapse) {
@@ -105,8 +107,21 @@ export default function App() {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
 
+      // <Routes>
+      //   {getToken ? (
+      //     <>
+      //       <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+      //     </>
+      //   ) : (
+      //     <>
+      //       <Route path="*" element={<Navigate to="/dashboard" />} />
+      //     </>
+      //   )}
+      // </Routes>
       return null;
     });
+
+  // const getToken = localStorage.getItem("token");
 
   const configsButton = (
     <SoftBox
@@ -133,6 +148,7 @@ export default function App() {
   );
 
   return direction === "rtl" ? (
+
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={themeRTL}>
         <CssBaseline />
@@ -179,6 +195,23 @@ export default function App() {
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
+
+      {/* <Routes>
+        {getToken ? (
+          <>
+            <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+          </>
+        ) : (
+          <>
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </>
+        )}
+      </Routes> */}
+      {/* <Routes>
+        {getToken && 
+        <Route path="*" element={<Navigate to="/authentication/sign-in"/>}/>
+        }
+      </Routes>  */}
     </ThemeProvider>
   );
 }
