@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation, Link } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -83,6 +83,7 @@ export default function App() {
   }, [pathname]);
 
   const getToken = localStorage.getItem("token");
+  // const getToken = localStorage.getItem("token");
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
@@ -112,8 +113,21 @@ export default function App() {
         return <Route exact path={"/authentication/sign-in"} element={<SignIn />} key={"sign-in"}/>;
       }
 
+      // <Routes>
+      //   {getToken ? (
+      //     <>
+      //       <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+      //     </>
+      //   ) : (
+      //     <>
+      //       <Route path="*" element={<Navigate to="/dashboard" />} />
+      //     </>
+      //   )}
+      // </Routes>
       return null;
     });
+
+  // const getToken = localStorage.getItem("token");
 
   const configsButton = (
     <SoftBox
@@ -140,6 +154,7 @@ export default function App() {
   );
 
   return direction === "rtl" ? (
+
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={themeRTL}>
         <CssBaseline />
@@ -186,6 +201,7 @@ export default function App() {
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
       </Routes>
+
       {/* <Routes>
         {getToken ? (
           <>
@@ -197,6 +213,11 @@ export default function App() {
           </>
         )}
       </Routes> */}
+      {/* <Routes>
+        {getToken && 
+        <Route path="*" element={<Navigate to="/authentication/sign-in"/>}/>
+        }
+      </Routes>  */}
     </ThemeProvider>
   );
 }
