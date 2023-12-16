@@ -1,14 +1,15 @@
 import axios from 'axios';
-import Storage from '../storage';
+import Storage from './storage';
+
 
 let API_BASE_URL;
 
 if (window.location.hostname === 'localhost') {
-  API_BASE_URL = 'http://193.194.195.107:8009/api';
+  API_BASE_URL = 'http://localhost:3000/api/v1';
   // API_BASE_URL = 'http://115.124.106.150:8124/api';
 } else {
   // Live server environment
-  API_BASE_URL = 'http://115.124.106.150:8124/api';
+  API_BASE_URL = 'http://localhost:3000/api/v1';
 }
 
 const getHttpMemberOptions = (options, isAuth = false) => {

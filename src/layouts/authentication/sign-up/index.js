@@ -25,6 +25,8 @@ import curved6 from "assets/images/curved-images/curved14.jpg";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { ApiPost } from "config/Api/ApiData";
+import { EndPoint } from "config/EndPoint/Endpoint";
 
 function SignUp() {
   const [agreement, setAgremment] = useState(true);
@@ -115,10 +117,8 @@ function SignUp() {
     }
 
 
-
-    axios.post("http://localhost:3000/api/v1/admin/register", body)
-      .then((res) => {
-        // console.log(res, 'r5555555555es');
+    ApiPost(`${EndPoint.USER_REGISTER}`, body)
+      .then((res) => { 
         if (res.status === 201) {
           setRegFormData({
             FirstName: "",
@@ -143,7 +143,6 @@ function SignUp() {
 
 
   const handleChange = (e) => {
-    // console.log(e,'55555555555;');
     setRegFormData({
       ...regFormData,
       [e.target.name]: e.target.value,
@@ -161,7 +160,7 @@ function SignUp() {
     <>
       <BasicLayout
         title="Welcome!"
-        description="Use these awesome forms to login or create new account in your project for free."
+        // description="Use these awesome forms to login or create new account in your project for free."
         image={curved6}
       >
         <Card >

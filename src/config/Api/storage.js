@@ -1,4 +1,5 @@
-import { STORAGE_KEY } from '../constant/storage';
+import { STORAGE_KEY } from "config/Constant/storage";
+
 
 class Storage {
   static setStorageData(key, data) {
