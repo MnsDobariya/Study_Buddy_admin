@@ -38,6 +38,9 @@ import SpaceShip from "examples/Icons/SpaceShip";
 import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
 import Cube from "examples/Icons/Cube";
+import Teacher from "layouts/teacher/Teacher";
+
+
 
 const routes = [
   {
@@ -60,9 +63,19 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Teacher",
+    key: "teacher",
+    route: "/teacher",
+    icon: <Office size="12px" />,
+    component: <Teacher />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
     name: "Billing",
     key: "billing",
     route: "/billing",
+    role:"teacher",
     icon: <CreditCard size="12px" />,
     component: <Billing />,
     noCollapse: true,

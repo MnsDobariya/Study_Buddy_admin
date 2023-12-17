@@ -35,6 +35,10 @@ import brand from "assets/images/logo-ct.png";
 import SignIn from "layouts/authentication/sign-in";
 
 export default function App() {
+
+  const ueseTeacher = "teacher";
+  const filterRout = routes.filter((roles)=> roles.role !== ueseTeacher);
+  // console.log("filterRout",filterRout);
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
@@ -103,12 +107,10 @@ export default function App() {
       //     )}
       //   </Routes>
       // }
-      console.log(localStorage.getItem("token"));
+      // console.log(localStorage.getItem("token"));
       if (localStorage.getItem("token")) {
-        console.log("if");
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       } else{
-        console.log("+++++++else")
           //  <Route path="/authentication/sign-in" element={<Navigate to="/authentication/sign-in" />} />;
         return <Route exact path={"/authentication/sign-in"} element={<SignIn />} key={"sign-in"}/>;
       }
@@ -182,13 +184,15 @@ export default function App() {
   ) : (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      {/* {console.log(layout,"qqqqqq")} */}
       {layout === "dashboard" && (
         <>
+        
           <Sidenav
             color={sidenavColor}
             brand={brand}
             brandName="Soft UI Dashboard"
-            routes={routes}
+            routes={filterRout}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
