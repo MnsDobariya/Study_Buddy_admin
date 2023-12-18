@@ -28,10 +28,46 @@ import breakpoints from "assets/theme/base/breakpoints";
 // Images
 import burceMars from "assets/images/bruce-mars.jpg";
 import curved0 from "assets/images/curved-images/curved0.jpg";
+import axios from "axios";
+import { element } from "prop-types";
 
 function Header() {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+  const [userProfile, setUserProfile] = useState([]);
+  const [profilePicture, setProfilePicture] = useState();
+
+
+  const token = localStorage.getItem("token");
+  // console.log(localStorage.getItem("token"),"tokennnnnnnnn");
+
+  const getProfileUser = () => {
+    axios.get("http://localhost:3000/api/v1/users/teacher/me", { headers: { "Authorization": `Bearer ${token}` } })
+      .then((res) => {
+        // console.log(res, "qqqqqqqqq");
+        setUserProfile(res?.data)
+        setProfilePicture(res?.data.profileImage === "undefined" ? "" : res?.data.profileImage)
+
+      })
+  }
+
+  useEffect(() => {
+    getProfileUser("")
+    // handleImage();
+    handleChange();
+  }, [])
+
+const  handleChange = () => {
+  // console.log(userProfile,"qqqqqqqqqqqq");
+  console.log(profilePicture,"qqqqqqqqqqqq");
+
+}
+
+
+
+
+
+
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -100,10 +136,12 @@ function Header() {
           <Grid item>
             <SoftBox height="100%" mt={0.5} lineHeight={1}>
               <SoftTypography variant="h5" fontWeight="medium">
-                Alex Thompson
+                {/* Alex Thompson */}
+                {userProfile.firstName} 
               </SoftTypography>
               <SoftTypography variant="button" color="text" fontWeight="medium">
-                CEO / Co-Founder
+                {/* CEO / Co-Founder */}
+                {userProfile.lastName}
               </SoftTypography>
             </SoftBox>
           </Grid>
