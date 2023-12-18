@@ -33,8 +33,34 @@ import team1 from "assets/images/team-1.jpg";
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Modal } from "@mui/material";
 
 function Overview() {
+
+  const [userProfile,setUserProfile] = useState([]);
+
+  
+
+  const token = localStorage.getItem("token");
+
+
+  const getProfileUser = () => {
+    axios.get("http://localhost:3000/api/v1/users/teacher/me", { headers: { "Authorization": `Bearer ${token}` } })
+      .then((res) => {
+        // console.log(res, "qqqqqqqqq2222222222");
+        setUserProfile(res?.data)
+
+      })
+  }
+
+  useEffect(() => {
+    getProfileUser("")
+    // handleChange();
+  }, [])
+
+
   return (
     <DashboardLayout>
       <Header />
@@ -48,10 +74,11 @@ function Overview() {
               title="profile information"
               description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
               info={{
-                fullName: "Alec M. Thompson",
-                mobile: "(44) 123 1234 123",
-                email: "alecthompson@mail.com",
-                location: "USA",
+                FirstName: userProfile.firstName,
+                LastName: userProfile.lastName,
+                Mobile: userProfile.phone,
+                Email: userProfile.email,
+                Location: "USA",
               }}
               social={[
                 {
@@ -161,8 +188,10 @@ function Overview() {
           </SoftBox>
         </Card>
       </SoftBox>
-
       <Footer />
+      <Modal>
+
+      </Modal>
     </DashboardLayout>
   );
 }
