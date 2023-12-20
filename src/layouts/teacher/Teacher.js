@@ -7,7 +7,15 @@ import SoftBox from 'components/SoftBox';
 import SoftButton from 'components/SoftButton';
 // import image from 'Images/Screenshot (231).png'
 import { toast } from 'react-toastify';
+import '../teacher/Css/teacher.css';
 import SoftInput from 'components/SoftInput';
+import { EndPoint } from "config/EndPoint/Endpoint";
+import { ApiPut } from "config/Api/ApiData";
+import { ApiPost } from "config/Api/ApiData";
+import { ApiGet } from "config/Api/ApiData";
+// import { ApiDelete } from 'config/Api/ApiData';
+
+
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import {  faXmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,10 +24,7 @@ import SoftInput from 'components/SoftInput';
 
 
 const Teacher = () => {
-    const location = useLocation();
-
     const [open, setOpen] = useState(false);
-    
     const [addTeacher, setAddTeacher] = useState({
         firstName: "",
         lastName: "",
@@ -40,7 +45,9 @@ const Teacher = () => {
     const token = localStorage.getItem("token")
 
     const getTeacherRecord = () => {
-        axios.get("http://localhost:3000/api/v1/users/teacher/get",
+        // axios.get("http://localhost:3000/api/v1/users/teacher/get",
+        ApiGet(`${EndPoint.USER_GET}`,
+
             { headers: { "Authorization": `Bearer ${token}` } }).then((res) => {
                 // console.log("helloo",res);
                 setTeacherRecord(res.data);
@@ -48,9 +55,12 @@ const Teacher = () => {
     };
 
     useEffect((e) => {
-        getTeacherRecord("");
+        getTeacherRecord();
 
     }, []);
+
+    
+
 
     const [openPopUp, setOpenPopUp] = useState(false);
     const [deleteRowId, setDeleteRowId] = useState();
@@ -130,6 +140,7 @@ const Teacher = () => {
         },
     ];
     const deleteRecord = (id) => {
+        // ApiDelete(`${EndPoint.USER_DELETE}`)
         axios.delete(`http://localhost:3000/api/v1/users/teacher/delete/${id}`)
             .then((res) => {
                 // console.log("res.data",res.data);
@@ -137,13 +148,6 @@ const Teacher = () => {
                 getTeacherRecord();
             });
     };
-
-
-    useEffect(() => {
-        if (location?.state) {
-            setAddGame(location?.state);
-        }
-    }, [location]);
 
     const handleChange = (e) => {
         setAddTeacher({
@@ -210,57 +214,65 @@ const Teacher = () => {
             setError(error);
             return;
         }
-        console.log("location?.state", location?.state);
-        const form_data = new FormData();
-        if (location?.state) {
-            form_data.append("id", addTeacher?.id);
+        const body = {
+            firstName: addTeacher?.firstName,
+            lastName: addTeacher?.lastName,
+            email: addTeacher?.email,
+            password: addTeacher?.password,
+            phone: addTeacher?.phone,
+            gender: addTeacher?.gender
         }
 
-        form_data.append("firstName", addTeacher?.firstName);
-        form_data.append("lastName", addTeacher?.lastName);
-        form_data.append("email", addTeacher?.email);
-        form_data.append("password", addTeacher?.password);
-        form_data.append("phone", addTeacher?.phone);
-        form_data.append("gender", addTeacher?.gender);
-        if (location?.state) {
-            axios
-                .put(`http://localhost:3000/api/v1/users/teacher/me/${location?.state?.id}`, form_data)
-                .then((res) => {
-                    console.log("update", res);
-                    // toast.success("Update Successfully");
-                    toast.success("Update successfully");
+        ApiPost(`${EndPoint.USER_CREATE}`, body)
+            .then((res) => {
+                console.log("res", res);
+                if (res.status == 201) {
+                    setAddTeacher({
+                        firstName: "",
+                        lastName: "",
+                        email: "",
+                        phone: "",
+                        password: "",
+                        gender: ""
+                    });
+                    toast.success("Add Teacher Successfully");
+                }
+                handleClose();
+                getTeacherRecord();
 
-                });
-        } else {
-            axios
-                .post("http://localhost:3000/api/v1/users/teacher/create", form_data)
-                .then((res) => {
-                    // console.log("res",res);
-                    if (res.status == 201) {
-                        setAddTeacher({
-                            firstName: "",
-                            lastName: "",
-                            email: "",
-                            phone: "",
-                            password: "",
-                            gender: ""
-                        });
-                        toast.success("Add Teacher Successfully");
-                    }
-                    handleClose();
-                    getTeacherRecord();
+            }).catch((error) => {
+                console.log("error", error);
+                if (error.response.data.message === "email already exists") {
+                    toast.error(<p style={{ fontSize: "80%" }}>{"Teacher Already Registered"}</p>, {
+                        position: "top-center",
+                    });
+                }
+            });
 
-                }).catch((error) => {
-                    // console.log("error", error);
-                    if (error.response.data.message === "email already exists") {
-                        toast.error(<p style={{ fontSize: "80%" }}>{"Teacher Already Registered"}</p>, {
-                            position: "top-center",
-                        });
-                    }
-                });
-        }
     }
-    const obj = useMemo(() => ({ teacherRecord }), [teacherRecord]);
+
+    const updateTeacher = () => {
+
+        const body = {
+            firstName: addTeacher?.firstName,
+            lastName: addTeacher?.lastName,
+            email: addTeacher?.email,
+            password: addTeacher?.password,
+            phone: addTeacher?.phone,
+            gender: addTeacher?.gender,
+
+        }
+        console.log(addTeacher?.id,'addTeacher?.id')
+        ApiPut(`${EndPoint.USER_UPDATE}?id=${addTeacher?.id}`,body )
+            .then((res) => {
+                console.log("update", res);
+                toast.success("Update successfully");
+                handleClose();
+
+            }).catch((e)=>{
+                console.log(e,"message")
+            })
+    }
 
     return (
         <>
@@ -288,12 +300,17 @@ const Teacher = () => {
                     }}
                     style={{ height: "90vh", width: "100%", padding: "2%" }}
                     onRowClick={(e) => {
-                        console.log(e);
+                        // console.log(e);
                     }}
                     className='custom-data-grid'
                 />
                 {openPopUp && (
                     <div>
+
+                        {/* hello
+                <button onClick={()=>deleteRecord(deleteRowId)}>Yes</button>
+                <button onClick={()=>{setOpenPopUp(false)}}>No</button> */}
+
                         <div
                             className='modal fade'
                             id='exampleModal'
@@ -302,32 +319,6 @@ const Teacher = () => {
                             aria-labelledby='exampleModalLabel'
                             aria-hidden='true'
                         >
-                            {/* <Modal show={showModal} onHide={handleCloseModal} centerd>
-                                <Modal.Header>
-                                    <Modal.Title>Delete</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            fontSize: "18px",
-                                            padding: "10px 20px",
-                                        }}
-                                    >
-                                        Are you sure Delete?
-                                    </div>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <SoftBox>
-                                        <SoftButton variant="gradient" color="info" onClick={SingIn}>
-                                            YES
-                                        </SoftButton>
-                                        <SoftButton variant="gradient" color="info" onClick={SingIn}>
-                                            NO
-                                        </SoftButton>
-                                    </SoftBox>
-                                </Modal.Footer>
-                            </Modal> */}
                             <div className='modal-dialog' role='document'>
                                 <div className='modal-content'>
                                     <div className='modal-header'>
@@ -369,7 +360,7 @@ const Teacher = () => {
                                             data-dismiss='modal'
                                             onClick={() => {
                                                 deleteRecord(deleteRowId)
-                                                setOpenPopUp(false);
+                                                setOpenPopUp(false)
                                             }}
                                         >
                                             Yes
@@ -387,31 +378,26 @@ const Teacher = () => {
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
-                        <SoftBox pt={5}>
-                            <SoftBox component="form" role="form" height="100%">
-                                <form>
-                                    <div className='col-md-8'>
-                                        <div className='content' style={{
-                                            position: "fixed",
-                                            padding: "5%",
-                                            width: "50%",
-                                            justifyContent: "center",
-                                            marginTop: "8%",
-                                            marginLeft: "25%",
-                                            border: " 2px solid #ffffff",
-                                            backgroundColor: "white",
-                                            boxShadow: "0px 2px 6px 0",
-                                            position: "relative",
-                                            justifyContent: "space-between"
-                                        }}>
-                                            <div className='form-row ' style={{ display: "flex", justifyContent: "center", justifyContent: "space-between" }}>
-                                                <SoftBox mb={1} mt={0} style={{ width: "48%" }}>
+                        <div className="form_wrapper">
+                            <div className="form_container">
+                                <div className="title_container">
+                                    {/* <h2>Add Teacher Data</h2> */}
+                                    <h2 style={{ textAlign: "center", marginBottom: "5%" }}>
+                                        {" "}
+                                        {addTeacher?.id ? "Update" : "Add"} Teacher
+
+                                    </h2>
+                                </div>
+                                <div className="row clearfix">
+                                    <div className="">
+                                        <form>
+                                            <div className="input_field">
+                                                <SoftBox>
                                                     <SoftInput
-                                                        type='text'
-                                                        className='form-control'
-                                                        name='firstName'
+                                                        type="text"
+                                                        name="firstName"
                                                         value={addTeacher.firstName}
-                                                        placeholder='FirstName'
+                                                        placeholder="First Name"
                                                         onChange={(e) => {
                                                             setError({
                                                                 ...error,
@@ -419,17 +405,17 @@ const Teacher = () => {
                                                             });
                                                             handleChange(e);
                                                         }}
-                                                    // style={{marginRight:"50px"}}
                                                     />
                                                     {error.firstName && <p style={{ color: "red", fontSize: "60%" }}>{error.firstName} </p>}
                                                 </SoftBox>
-                                                <SoftBox mb={1} mt={0} style={{ width: "48%" }}>
+                                            </div>
+                                            <div className="input_field">
+                                                <SoftBox>
                                                     <SoftInput
-                                                        type='text'
-                                                        className='form-control'
-                                                        name='lastName'
+                                                        type="text"
+                                                        name="lastName"
                                                         value={addTeacher.lastName}
-                                                        placeholder='LastName'
+                                                        placeholder="Last Name"
                                                         onChange={(e) => {
                                                             setError({
                                                                 ...error,
@@ -437,19 +423,17 @@ const Teacher = () => {
                                                             });
                                                             handleChange(e);
                                                         }}
-                                                    // style={{marginLeft:"50%"}}
                                                     />
                                                     {error.lastName && <p style={{ color: "red", fontSize: "60%" }}>{error.lastName} </p>}
                                                 </SoftBox>
                                             </div>
-                                            <div className='form-row' style={{ display: "flex", justifyContent: "center", justifyContent: "space-between" }}>
-                                                <SoftBox mb={1} mt={0} style={{ width: "48%" }}>
+                                            <div className="input_field">
+                                                <SoftBox>
                                                     <SoftInput
-                                                        type='text'
-                                                        className='form-control'
-                                                        name='email'
+                                                        type="email"
+                                                        name="email"
                                                         value={addTeacher.email}
-                                                        placeholder='Email'
+                                                        placeholder="Email"
                                                         onChange={(e) => {
                                                             setError({
                                                                 ...error,
@@ -457,17 +441,17 @@ const Teacher = () => {
                                                             });
                                                             handleChange(e);
                                                         }}
-                                                    // style={{marginLeft:"20%"}}
                                                     />
                                                     {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email} </p>}
                                                 </SoftBox>
-                                                <SoftBox mb={1} mt={0} style={{ width: "48%" }}>
+                                            </div>
+                                            <div className="input_field">
+                                                <SoftBox>
                                                     <SoftInput
-                                                        type='text'
-                                                        className='form-control'
-                                                        name='password'
+                                                        type="password"
+                                                        name="password"
                                                         value={addTeacher.password}
-                                                        placeholder='Password'
+                                                        placeholder="Password"
                                                         onChange={(e) => {
                                                             setError({
                                                                 ...error,
@@ -475,19 +459,19 @@ const Teacher = () => {
                                                             });
                                                             handleChange(e);
                                                         }}
-                                                    // style={{marginLeft:"20%"}}
                                                     />
                                                     {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password} </p>}
                                                 </SoftBox>
                                             </div>
-                                            <div className='form-row' style={{ display: "flex", justifyContent: "center", justifyContent: "space-between" }}>
-                                                <SoftBox mb={1} mt={0} style={{ width: "48%" }}>
+                                            {/* <div className="row clearfix">
+                                                <div className="col_half"> */}
+                                            <div className="input_field">
+                                                <SoftBox>
                                                     <SoftInput
-                                                        type='text'
-                                                        className='form-control'
-                                                        name='phone'
+                                                        type="mobile"
+                                                        name="phone"
                                                         value={addTeacher.phone}
-                                                        placeholder='Mobile Number'
+                                                        placeholder="Mobile No"
                                                         onChange={(e) => {
                                                             setError({
                                                                 ...error,
@@ -495,62 +479,89 @@ const Teacher = () => {
                                                             });
                                                             handleChange(e);
                                                         }}
-                                                    // style={{marginLeft:"20%"}}
                                                     />
                                                     {error.phone && <p style={{ color: "red", fontSize: "60%" }}>{error.phone} </p>}
                                                 </SoftBox>
-                                                <SoftBox mb={1} mt={0} style={{ marginRight: "20%" }}>
-                                                    <div className='form-group col-md-6 mt-4'>
-                                                        <h5 style={{ display: "flex" }}>
-                                                            Gender :{" "}
-                                                        </h5>
-                                                        <input
-                                                            type='radio'
-                                                            name='gender'
-                                                            style={{ marginTop: "5%" }}
-                                                            checked={addTeacher.gender == "male" ? true : false}
-                                                            onChange={(e) =>
-                                                                setAddTeacher({
-                                                                    ...addTeacher,
-                                                                    gender: "male",
-                                                                })
-                                                            }
-                                                        />
-                                                        Male
-                                                        <input
-                                                            type='radio'
-                                                            name='gender'
-                                                            style={{ marginLeft: "30px" }}
-                                                            checked={addTeacher.gender == "feMale" ? true : false}
-                                                            onChange={(e) =>
-                                                                setAddTeacher({
-                                                                    ...addTeacher,
-                                                                    gender: "feMale",
-                                                                })
-                                                            }
-                                                        />
-                                                        Female
-                                                    </div>
-                                                </SoftBox>
                                             </div>
+                                            <SoftBox mb={1} mt={0} style={{ marginRight: "20%" }}>
+
+                                                <div className='form-group col-md-6 mt-4'>
+                                                    <h5 style={{ display: "flex" }}>
+                                                        Gender :{" "}
+                                                    </h5>
+                                                    <input
+                                                        type='radio'
+                                                        name='gender'
+                                                        style={{ marginTop: "5%" }}
+                                                        checked={addTeacher.gender == "male" ? true : false}
+                                                        onChange={(e) =>
+                                                            setAddTeacher({
+                                                                ...addTeacher,
+                                                                gender: "male",
+                                                            })
+                                                        }
+                                                    />
+                                                    Male
+                                                    <input
+                                                        type='radio'
+                                                        name='gender'
+                                                        style={{ marginLeft: "30px" }}
+                                                        checked={addTeacher.gender == "feMale" ? true : false}
+                                                        onChange={(e) =>
+                                                            setAddTeacher({
+                                                                ...addTeacher,
+                                                                gender: "feMale",
+                                                            })
+                                                        }
+                                                    />
+                                                    Female
+                                                </div>
+                                            </SoftBox>
                                             <SoftBox mt={4} mb={1} style={{ display: "flex", justifyContent: "center", justifyContent: "space-between" }}>
-                                                <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher} >
-                                                    {location?.state?.id ? "Update" : "Update"}
-                                                </SoftButton>
+                                                {
+                                                    addTeacher?.id ?
+                                                        <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={updateTeacher} >
+                                                            update
+                                                        </SoftButton> : <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher} >
+                                                            Add Teacher
+                                                        </SoftButton>
+
+                                                }
+                                                {/* <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher()} >
+                                                    {addTeacher?.id ? "Update" : "Add Teacher"}
+                                                </SoftButton> */}
                                                 <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={handleClose} >
                                                     Cancel
                                                 </SoftButton>
                                             </SoftBox>
-                                        </div>
+
+                                            {/* <div className="input_field select_option">
+                                                <select>
+                                                    <option>Select a country</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>x
+                                                <div className="select_arrow"></div>
+                                            </div>
+                                            <div className="input_field checkbox_option">
+                                                <input type="checkbox" id="cb1" />
+                                                <label>I agree with terms and conditions</label>
+                                            </div>
+                                            <div className="input_field checkbox_option">
+                                                <input type="checkbox" id="cb2" />
+                                                <label >I want to receive the newsletter</label>
+                                            </div> */}
+                                            {/* <input className="button" type="submit" value="Register" /> */}
+                                        </form>
                                     </div>
-                                </form>
-                            </SoftBox>
-                        </SoftBox>
-                    </Modal>
-                </SoftBox>
-            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal >
+                </SoftBox >
+            </div >
         </>
     )
 }
 
-export default Teacher
+export default Teacher;

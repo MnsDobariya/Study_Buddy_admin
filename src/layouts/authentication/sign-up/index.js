@@ -44,7 +44,6 @@ function SignUp() {
     FirstName: "",
     LastName: "",
     Mobile: "",
-    BookingDate: "",
     Email: "",
     Password: "",
     ConfirmPassword: "",

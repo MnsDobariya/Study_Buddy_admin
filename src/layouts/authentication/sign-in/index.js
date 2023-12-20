@@ -77,7 +77,9 @@ function SignIn() {
       password: lgnFormData.password,
     }
 
-    axios.post("http://localhost:3000/api/v1/admin/login", body)
+    // axios.post("http://localhost:3000/api/v1/admin/login", body)
+    ApiPost(`${EndPoint.USER_LOGIN}`, body)
+
       .then((res) => {
         // console.log("res", res);
         if (res.status === 200) {
