@@ -36,12 +36,21 @@ import team4 from "assets/images/team-4.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal } from "@mui/material";
+import '../profile/profile.css';
+import SoftButton from "components/SoftButton";
+import SoftInput from "components/SoftInput";
 
 function Overview() {
+  const [open, setOpen] = useState();
 
-  const [userProfile,setUserProfile] = useState([]);
+  const handleOpen = () => {
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
 
-  
+  const [userProfile, setUserProfile] = useState([]);
 
   const token = localStorage.getItem("token");
 
@@ -60,6 +69,10 @@ function Overview() {
     // handleChange();
   }, [])
 
+  const UpdateProfile = () => {
+    
+  }
+
 
   return (
     <DashboardLayout>
@@ -70,6 +83,7 @@ function Overview() {
             <PlatformSettings />
           </Grid>
           <Grid item xs={12} md={6} xl={4}>
+
             <ProfileInfoCard
               title="profile information"
               description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
@@ -80,6 +94,7 @@ function Overview() {
                 Email: userProfile.email,
                 Location: "USA",
               }}
+              handleOpen={handleOpen}
               social={[
                 {
                   link: "https://www.facebook.com/CreativeTim/",
@@ -98,6 +113,7 @@ function Overview() {
                 },
               ]}
               action={{ route: "", tooltip: "Edit Profile" }}
+              
             />
           </Grid>
           <Grid item xs={12} xl={4}>
@@ -189,9 +205,138 @@ function Overview() {
         </Card>
       </SoftBox>
       <Footer />
-      <Modal>
+      <SoftBox mt={4} mb={1}>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <div className="form_wrapper">
+            <div className="form_container">
+              <div className="title_container">
+                <h2>Profile Update</h2>
+              </div>
+              <div className="row clearfix">
+                <div className="">
+                  <form>
+                    <div className="input_field">
+                      <SoftBox>
+                        <SoftInput
+                          type="text"
+                          name="firstName"
+                          placeholder="First Name"
+                        />
+                      </SoftBox>
+                    </div>
+                    <div className="input_field">
+                      <SoftBox>
+                        <SoftInput
+                          type="text"
+                          name="lastName"
+                          placeholder="Last Name"
+                        />
+                      </SoftBox>
+                    </div>
+                    <div className="input_field">
+                      <SoftBox>
+                        <SoftInput
+                          type="email"
+                          name="email"
+                          placeholder="Email"
+                        />
+                      </SoftBox>
+                    </div>
+                    <div className="input_field">
+                      <SoftBox>
+                        <SoftInput
+                          type="password"
+                          name="password"
+                          placeholder="Password"
+                        />
+                      </SoftBox>
+                    </div>
+                    {/* <div className="row clearfix">
+                                                <div className="col_half"> */}
+                    <div className="input_field">
+                      <SoftBox>
+                        <SoftInput
+                          type="mobile"
+                          name="phone"
+                          placeholder="Mobile No"
+                        />
+                      </SoftBox>
+                    </div>
+                    <SoftBox mb={1} mt={0} style={{ marginRight: "20%" }}>
 
-      </Modal>
+                      <div className='form-group col-md-6 mt-4'>
+                        <h5 style={{ display: "flex" }}>
+                          Gender :{" "}
+                        </h5>
+                        <input
+                          type='radio'
+                          name='gender'
+                          style={{ marginTop: "5%" }}
+                        />
+                        Male
+                        <input
+                          type='radio'
+                          name='gender'
+                          style={{ marginLeft: "30px" }}
+                        />
+                        Female
+                      </div>
+                    </SoftBox>
+                    <SoftBox mt={4} mb={1} style={{ display: "flex", justifyContent: "center", justifyContent: "space-between" }}>
+                      {/* {
+                        addTeacher?.id ?
+                          <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={updateTeacher} >
+                            update
+                          </SoftButton> : <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher} >
+                            Add Teacher
+                          </SoftButton>
+
+                      } */}
+                      {/* <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher()} >
+                                                    {addTeacher?.id ? "Update" : "Add Teacher"}
+                                                </SoftButton> */}
+
+                      <SoftButton variant="gradient" color="info" marginLeft="50%" >
+                        Update
+                        </SoftButton>
+                      <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={handleClose} >
+                        Cancel
+                      </SoftButton>
+                    </SoftBox>
+
+                    {/* <div className="input_field select_option">
+                                                <select>
+                                                    <option>Select a country</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>x
+                                                <div className="select_arrow"></div>
+                                            </div>
+                                            <div className="input_field checkbox_option">
+                                                <input type="checkbox" id="cb1" />
+                                                <label>I agree with terms and conditions</label>
+                                            </div>
+                                            <div className="input_field checkbox_option">
+                                                <input type="checkbox" id="cb2" />
+                                                <label >I want to receive the newsletter</label>
+                                            </div> */}
+                    {/* <input className="button" type="submit" value="Register" /> */}
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <p class="credit">Developed by <a href="http://www.designtheway.com" target="_blank">Design the way</a></p> */}
+        </Modal>
+      </SoftBox>
+      {/* <Modal>
+
+      </Modal> */}
     </DashboardLayout>
   );
 }

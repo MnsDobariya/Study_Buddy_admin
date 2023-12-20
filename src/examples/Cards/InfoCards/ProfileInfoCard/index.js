@@ -1,5 +1,5 @@
 // react-routers components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // prop-types is library for typechecking of props
 import PropTypes from "prop-types";
@@ -18,7 +18,7 @@ import SoftTypography from "components/SoftTypography";
 import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 
-function ProfileInfoCard({ title, description, info, social, action }) {
+function ProfileInfoCard({ title, description, info, social, action,handleOpen }) {
   const labels = [];
   const values = [];
   const { socialMediaColors } = colors;
@@ -68,6 +68,7 @@ function ProfileInfoCard({ title, description, info, social, action }) {
       {icon}
     </SoftBox>
   ));
+  const navigate = useNavigate();
 
   return (
     <Card sx={{ height: "100%" }}>
@@ -76,7 +77,7 @@ function ProfileInfoCard({ title, description, info, social, action }) {
           {title}
         </SoftTypography>
         <SoftTypography component={Link} to={action.route} variant="body2" color="secondary">
-          <Tooltip title={action.tooltip} placement="top">
+          <Tooltip title={action.tooltip} placement="top" onClick={handleOpen}  >
             <Icon>edit</Icon>
           </Tooltip>
         </SoftTypography>
@@ -110,6 +111,7 @@ ProfileInfoCard.propTypes = {
   description: PropTypes.string.isRequired,
   info: PropTypes.objectOf(PropTypes.string).isRequired,
   social: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleOpen : PropTypes.any,
   action: PropTypes.shape({
     route: PropTypes.string.isRequired,
     tooltip: PropTypes.string.isRequired,
