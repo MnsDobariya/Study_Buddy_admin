@@ -23,6 +23,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { token } from "stylis";
 import DefaultNavbarLink from "examples/Navbars/DefaultNavbar/DefaultNavbarLink";
 import routes from "routes";
+import { ApiPost } from "config/Api/ApiData";
+import { EndPoint } from "config/EndPoint/Endpoint";
 
 
 function SignIn() {
@@ -170,8 +172,22 @@ function SignIn() {
               sx={{ cursor: "pointer", userSelect: "none" }}
             >
               &nbsp;&nbsp;Remember me
+
+            </SoftTypography>
+          
+            <SoftTypography
+              component={Link}
+              to="/authentication/verify-email"
+              variant="button"
+              color="info"
+              ml={4}
+              fontWeight="medium"
+              textGradient
+            >
+              Forgot your Password?
             </SoftTypography>
           </SoftBox>
+
           <SoftBox mt={4} mb={1}>
             <SoftButton variant="gradient" color="info" fullWidth onClick={SingIn}>
               sign in
@@ -192,6 +208,7 @@ function SignIn() {
               </SoftTypography>
             </SoftTypography>
           </SoftBox>
+
         </SoftBox>
       </CoverLayout>
       <ToastContainer />

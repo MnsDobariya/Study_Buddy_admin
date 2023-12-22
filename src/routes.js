@@ -39,6 +39,8 @@ import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
 import Cube from "examples/Icons/Cube";
 import Teacher from "layouts/teacher/Teacher";
+import ForgotPassword from "layouts/authentication/forgot-password";
+import EmailVerify from "layouts/authentication/verify-email";
 
 
 
@@ -124,6 +126,24 @@ const routes = [
     route: "/authentication/sign-up",
     icon: <SpaceShip size="12px" />,
     component: <SignUp />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Forgor Password",
+    key: "forgot-password",
+    route: "/authentication/forgot-password",
+    icon: <SpaceShip size="12px" />,
+    component: <ForgotPassword />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Verify Email",
+    key: "verify-email",
+    route: "/authentication/verify-email",
+    icon: <SpaceShip size="12px" />,
+    component: <EmailVerify />,
     noCollapse: true,
   },
 ];
