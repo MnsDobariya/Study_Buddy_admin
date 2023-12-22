@@ -39,6 +39,7 @@ import { Modal } from "@mui/material";
 import '../profile/profile.css';
 import SoftButton from "components/SoftButton";
 import SoftInput from "components/SoftInput";
+import { toast } from "react-toastify";
 
 function Overview() {
   const [open, setOpen] = useState();
@@ -50,7 +51,14 @@ function Overview() {
     setOpen(false)
   }
 
-  const [userProfile, setUserProfile] = useState([]);
+  const [userProfile, setUserProfile] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    gender: "",
+    profileImage: ""
+  });
 
   const token = localStorage.getItem("token");
 
@@ -58,7 +66,7 @@ function Overview() {
   const getProfileUser = () => {
     axios.get("http://localhost:3000/api/v1/users/teacher/me", { headers: { "Authorization": `Bearer ${token}` } })
       .then((res) => {
-        // console.log(res, "qqqqqqqqq2222222222");
+        // console.log(res, "res");
         setUserProfile(res?.data)
 
       })
@@ -66,24 +74,104 @@ function Overview() {
 
   useEffect(() => {
     getProfileUser("")
-    // handleChange();
   }, [])
 
+  const [imagePreview, setImagePreview] = useState(null);
+  const handleChange = (e) => {
+    setUserProfile({
+      ...userProfile,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleImageChange = (e) => {
+    console.log(e,"22222222");
+    setUserProfile({
+      ...userProfile,
+      profileImage: e?.target?.files[0],
+    });
+
+    const file = e.target.files[0];
+
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setUserProfile({
+          ...userProfile,
+          profileImage: file,
+        });
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+
+  };
+
+  const [error, setError] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    gender: ""
+  })
+
   const UpdateProfile = () => {
-    
+    const error = {};
+    if (!userProfile.firstName) {
+      error.firstName = "Please FirstName Required";
+    }
+    if (!userProfile.lastName) {
+      error.lastName = "Please LastName Required";
+    }
+
+    const mobileRegex = /^\d+$/;
+    if (!userProfile.phone) {
+      error.phone = "Please Mobile Required";
+    } else if (!mobileRegex.test(userProfile.phone)) {
+      error.phone = "Invalid Mobile";
+    }
+
+
+    if (
+      error.firstName ||
+      error.lastName ||
+      error.phone ||
+      error.gender
+    ) {
+      setError(error);
+      return;
+    }
+
+    const form_data = new FormData();
+
+    form_data.append("firstName", userProfile?.firstName)
+    form_data.append("lastName", userProfile?.lastName)
+    form_data.append("phone", userProfile?.phone)
+    form_data.append("email", userProfile?.email)
+    form_data.append("gender", userProfile?.gender)
+    // form_data.append("profileImage", userProfile?.profileImage)
+
+    axios.put(`http://localhost:3000/api/v1/users/teacher/update/${userProfile?.id}`, form_data)
+      .then((res) => {
+        console.log("res", res);
+        toast.success("Update Successfully");
+        handleClose();
+      }).catch((error) => {
+        console.log("error", error);
+        toast.error("Somthing went to wrong");
+      })
   }
 
 
   return (
     <DashboardLayout>
-      <Header />
+      <Header userProfile={userProfile} imagePreview={imagePreview} handleImageChange={handleImageChange}/>
       <SoftBox mt={5} mb={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} xl={4}>
             <PlatformSettings />
           </Grid>
           <Grid item xs={12} md={6} xl={4}>
-
             <ProfileInfoCard
               title="profile information"
               description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
@@ -113,7 +201,7 @@ function Overview() {
                 },
               ]}
               action={{ route: "", tooltip: "Edit Profile" }}
-              
+
             />
           </Grid>
           <Grid item xs={12} xl={4}>
@@ -217,6 +305,18 @@ function Overview() {
               <div className="title_container">
                 <h2>Profile Update</h2>
               </div>
+              {/* <div className="user-avatar">
+                <img src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profileImage}`} /> */}
+                {/* <input
+                  type='button'
+                  name="Submit"
+                  id='imageUpload'
+                  style={{ display: 'none' }}
+                  onChange={(e) => {
+                    handleImageChange(e);
+                  }}
+                /> */}
+              {/* </div> */}
               <div className="row clearfix">
                 <div className="">
                   <form>
@@ -225,8 +325,17 @@ function Overview() {
                         <SoftInput
                           type="text"
                           name="firstName"
+                          value={userProfile.firstName}
                           placeholder="First Name"
+                          onChange={(e) => {
+                            setError({
+                              ...error,
+                              firstName: "",
+                            });
+                            handleChange(e);
+                          }}
                         />
+                        {error.firstName && <p style={{ color: "red", fontSize: "60%" }}>{error.firstName}</p>}
                       </SoftBox>
                     </div>
                     <div className="input_field">
@@ -234,8 +343,16 @@ function Overview() {
                         <SoftInput
                           type="text"
                           name="lastName"
+                          value={userProfile.lastName}
                           placeholder="Last Name"
-                        />
+                          onChange={(e) => {
+                            setError({
+                              ...error,
+                              lastName: "",
+                            });
+                            handleChange(e);
+                          }}
+                        />{error.lastName && <p style={{ color: "red", fontSize: "60%" }}>{error.lastName}</p>}
                       </SoftBox>
                     </div>
                     <div className="input_field">
@@ -243,11 +360,15 @@ function Overview() {
                         <SoftInput
                           type="email"
                           name="email"
+                          value={userProfile.email}
                           placeholder="Email"
+                        // onChange={(e) => {
+                        //   handleChange(e);
+                        // }}
                         />
                       </SoftBox>
                     </div>
-                    <div className="input_field">
+                    {/* <div className="input_field">
                       <SoftBox>
                         <SoftInput
                           type="password"
@@ -255,7 +376,7 @@ function Overview() {
                           placeholder="Password"
                         />
                       </SoftBox>
-                    </div>
+                    </div> */}
                     {/* <div className="row clearfix">
                                                 <div className="col_half"> */}
                     <div className="input_field">
@@ -263,8 +384,18 @@ function Overview() {
                         <SoftInput
                           type="mobile"
                           name="phone"
+                          value={userProfile.phone}
                           placeholder="Mobile No"
+                          onChange={(e) => {
+                            setError({
+                              ...error,
+                              phone: "",
+                            });
+                            handleChange(e);
+                          }}
                         />
+                        {error.phone && <p style={{ color: "red", fontSize: "60%" }}>{error.phone}</p>}
+
                       </SoftBox>
                     </div>
                     <SoftBox mb={1} mt={0} style={{ marginRight: "20%" }}>
@@ -277,12 +408,24 @@ function Overview() {
                           type='radio'
                           name='gender'
                           style={{ marginTop: "5%" }}
+                          checked={userProfile.gender == "male" ? true : false}
+                          onChange={(e) =>
+                            setUserProfile({
+                              ...userProfile,
+                              gender: "male"
+                            })}
                         />
                         Male
                         <input
                           type='radio'
                           name='gender'
                           style={{ marginLeft: "30px" }}
+                          checked={userProfile.gender == "female" ? true : false}
+                          onChange={(e) =>
+                            setUserProfile({
+                              ...userProfile,
+                              gender: "female"
+                            })}
                         />
                         Female
                       </div>
@@ -301,9 +444,9 @@ function Overview() {
                                                     {addTeacher?.id ? "Update" : "Add Teacher"}
                                                 </SoftButton> */}
 
-                      <SoftButton variant="gradient" color="info" marginLeft="50%" >
+                      <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => UpdateProfile()} >
                         Update
-                        </SoftButton>
+                      </SoftButton>
                       <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={handleClose} >
                         Cancel
                       </SoftButton>

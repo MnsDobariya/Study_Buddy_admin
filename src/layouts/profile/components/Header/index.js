@@ -1,5 +1,6 @@
 
 
+/* eslint-disable*/
 import { useState, useEffect } from "react";
 
 // @mui material components
@@ -30,42 +31,31 @@ import burceMars from "assets/images/bruce-mars.jpg";
 import curved0 from "assets/images/curved-images/curved0.jpg";
 import axios from "axios";
 import { element } from "prop-types";
+import { Link } from "react-router-dom";
 
-function Header() {
+const Header = ({ userProfile, imagePreview, handleImageChange }) => {
+  // console.log("userProfileuserProfile",userProfile);
+  // console.log("userProfileuserProfile",imagePreview);
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-  const [userProfile, setUserProfile] = useState([]);
-  const [profilePicture, setProfilePicture] = useState();
-
-
-  const token = localStorage.getItem("token");
-  // console.log(localStorage.getItem("token"),"tokennnnnnnnn");
-
-  const getProfileUser = () => {
-    axios.get("http://localhost:3000/api/v1/users/teacher/me", { headers: { "Authorization": `Bearer ${token}` } })
-      .then((res) => {
-        // console.log(res, "qqqqqqqqq");
-        setUserProfile(res?.data)
-        setProfilePicture(res?.data.profileImage === "undefined" ? "" : res?.data.profileImage)
-
-      })
-  }
-
-  useEffect(() => {
-    getProfileUser("")
-    // handleImage();
-    handleChange();
-  }, [])
-
-const  handleChange = () => {
-  // console.log(userProfile,"qqqqqqqqqqqq");
-  console.log(profilePicture,"qqqqqqqqqqqq");
-
-}
+  // const [userProfile, setUserProfile] = useState();
 
 
 
+  // const token = localStorage.getItem("token");
 
+  // const getProfileUser = () => {
+  //   axios.get("http://localhost:3000/api/v1/users/teacher/me", { headers: { "Authorization": `Bearer ${token}` } })
+  //     .then((res) => {
+  //       // console.log(res, "qqqqqqqqq");
+  //       setUserProfile(res?.data)
+
+  //     })
+  // }
+
+  // useEffect(() => {
+  //   getProfileUser("")
+  // }, [])
 
 
 
@@ -90,6 +80,7 @@ const  handleChange = () => {
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
+
 
   return (
     <SoftBox position="relative">
@@ -126,18 +117,21 @@ const  handleChange = () => {
         <Grid container spacing={3} alignItems="center">
           <Grid item>
             <SoftAvatar
-              src={burceMars}
+
+              // src={burceMars}
+              src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profileImage}`}
               alt="profile-image"
               variant="rounded"
               size="xl"
               shadow="sm"
-            />
+             />
           </Grid>
+          <FontAwesomeIcon icon={faPen} />
           <Grid item>
             <SoftBox height="100%" mt={0.5} lineHeight={1}>
               <SoftTypography variant="h5" fontWeight="medium">
                 {/* Alex Thompson */}
-                {userProfile.firstName} 
+                {userProfile.firstName}
               </SoftTypography>
               <SoftTypography variant="button" color="text" fontWeight="medium">
                 {/* CEO / Co-Founder */}
@@ -164,5 +158,7 @@ const  handleChange = () => {
     </SoftBox>
   );
 }
+
+
 
 export default Header;
