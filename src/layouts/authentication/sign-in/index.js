@@ -27,7 +27,7 @@ import { ApiPost } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faEye, faEyeSlash, faKey, faXmark } from "@fortawesome/free-solid-svg-icons";
-import '../../authentication/sign-in/index.css';
+// import '../../authentication/sign-in/index.css';
 
 
 
