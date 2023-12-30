@@ -43,22 +43,30 @@ import { toast } from "react-toastify";
 
 function Overview() {
   const [open, setOpen] = useState();
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const [userProfile, setUserProfile] = useState();
+  // console.log(userProfile,"userProfile");
+
+  const [updateData, setUpdateData] = useState();
+  // console.log(updateData, "updateData");
+  const [profilePicture, setProfilePicture] = useState();
+  console.log("profilePicture",profilePicture);
+
+
 
   const handleOpen = () => {
     setOpen(true);
   }
+
   const handleClose = () => {
+    setUpdateData(userProfile)
     setOpen(false)
   }
 
-  const [userProfile, setUserProfile] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    gender: "",
-    profileImage: ""
-  });
+  // const handleClick = () => {
+  //   document.getElementById("imageUpload").click();
+  // }
 
   const token = localStorage.getItem("token");
 
@@ -67,7 +75,9 @@ function Overview() {
     axios.get("http://localhost:3000/api/v1/users/teacher/me", { headers: { "Authorization": `Bearer ${token}` } })
       .then((res) => {
         // console.log(res, "res");
+        setUpdateData(res?.data)
         setUserProfile(res?.data)
+        setProfilePicture(res?.data?.profileImage === "undefined" ? "" : res?.data?.profileImage);
 
       })
   }
@@ -76,20 +86,24 @@ function Overview() {
     getProfileUser("")
   }, [])
 
-  const [imagePreview, setImagePreview] = useState(null);
   const handleChange = (e) => {
-    setUserProfile({
-      ...userProfile,
+    setUpdateData({
+      ...updateData,
       [e.target.name]: e.target.value,
     });
   };
 
+  // const handleUpdate = () => {
+
+  // }
+
   const handleImageChange = (e) => {
-    console.log(e,"22222222");
-    setUserProfile({
-      ...userProfile,
-      profileImage: e?.target?.files[0],
-    });
+    // console.log(e?.target?.files, "22222222");
+    // e.preventDefault();
+    setProfilePicture(
+      // ...updateData,
+      e?.target?.files[0],
+    );
 
     const file = e.target.files[0];
 
@@ -97,16 +111,17 @@ function Overview() {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setUserProfile({
-          ...userProfile,
-          profileImage: file,
-        });
+        setProfilePicture(
+          file,
+        );
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
 
   };
+
+
 
   const [error, setError] = useState({
     firstName: "",
@@ -117,17 +132,25 @@ function Overview() {
 
   const UpdateProfile = () => {
     const error = {};
-    if (!userProfile.firstName) {
+
+    const fname = /^[a-zA-Z]{2,40}([a-zA-Z]{2,40})+$/;
+    if (!updateData?.firstName) {
       error.firstName = "Please FirstName Required";
-    }
-    if (!userProfile.lastName) {
-      error.lastName = "Please LastName Required";
+    }else if(!fname.test(updateData?.firstName)){
+      error.firstName = "Invalid FirstName";
     }
 
-    const mobileRegex = /^\d+$/;
-    if (!userProfile.phone) {
+    const lname = /^[a-zA-Z]{2,40}([a-zA-Z]{2,40})+$/;
+    if (!updateData?.lastName) {
+      error.lastName = "Please LastName Required";
+    }else if(!lname.test(updateData?.lastName)){
+      error.lastName = "Invalid LastName";
+    }
+
+    const mobileRegex = /^\d{1,10}$/;
+    if (!updateData?.phone) {
       error.phone = "Please Mobile Required";
-    } else if (!mobileRegex.test(userProfile.phone)) {
+    } else if (!mobileRegex.test(updateData?.phone)) {
       error.phone = "Invalid Mobile";
     }
 
@@ -144,28 +167,33 @@ function Overview() {
 
     const form_data = new FormData();
 
-    form_data.append("firstName", userProfile?.firstName)
-    form_data.append("lastName", userProfile?.lastName)
-    form_data.append("phone", userProfile?.phone)
-    form_data.append("email", userProfile?.email)
-    form_data.append("gender", userProfile?.gender)
-    // form_data.append("profileImage", userProfile?.profileImage)
+    form_data.append("firstName", updateData?.firstName)
+    form_data.append("lastName", updateData?.lastName)
+    form_data.append("phone", updateData?.phone)
+    form_data.append("email", updateData?.email)
+    form_data.append("gender", updateData?.gender)
+    form_data.append("profileImage",profilePicture)
+    // console.log("form_data",form_data);
 
-    axios.put(`http://localhost:3000/api/v1/users/teacher/update/${userProfile?.id}`, form_data)
+    axios.put(`http://localhost:3000/api/v1/users/teacher/update/${updateData?.id}`, form_data,
+    { headers: { "content-type": "multipart/form-data"}})
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
+        setUserProfile(res?.data)
         toast.success("Update Successfully");
+
         handleClose();
       }).catch((error) => {
-        console.log("error", error);
+        // console.log("error", error);
         toast.error("Somthing went to wrong");
       })
   }
 
 
+
   return (
     <DashboardLayout>
-      <Header userProfile={userProfile} imagePreview={imagePreview} handleImageChange={handleImageChange}/>
+      <Header userProfile={userProfile} imagePreview={imagePreview} updateData={updateData} profilePicture={profilePicture} />
       <SoftBox mt={5} mb={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} xl={4}>
@@ -176,10 +204,10 @@ function Overview() {
               title="profile information"
               description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
               info={{
-                FirstName: userProfile.firstName,
-                LastName: userProfile.lastName,
-                Mobile: userProfile.phone,
-                Email: userProfile.email,
+                FirstName: userProfile?.firstName,
+                LastName: userProfile?.lastName,
+                Mobile: userProfile?.phone,
+                Email: userProfile?.email,
                 Location: "USA",
               }}
               handleOpen={handleOpen}
@@ -303,11 +331,11 @@ function Overview() {
           <div className="form_wrapper">
             <div className="form_container">
               <div className="title_container">
-                <h2>Profile Update</h2>
+                <h2 style={{ color: "rgb(95, 142, 224)" }}>Profile Update</h2>
               </div>
               {/* <div className="user-avatar">
                 <img src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profileImage}`} /> */}
-                {/* <input
+              {/* <input
                   type='button'
                   name="Submit"
                   id='imageUpload'
@@ -321,11 +349,16 @@ function Overview() {
                 <div className="">
                   <form>
                     <div className="input_field">
-                      <SoftBox>
+                      <SoftBox mb={0.5}>
+                        <SoftBox mb={0} ml={0.5}>
+                          <SoftTypography component="label" variant="caption" fontWeight="bold">
+                            FirstName
+                          </SoftTypography>
+                        </SoftBox>
                         <SoftInput
                           type="text"
                           name="firstName"
-                          value={userProfile.firstName}
+                          value={updateData?.firstName}
                           placeholder="First Name"
                           onChange={(e) => {
                             setError({
@@ -335,15 +368,20 @@ function Overview() {
                             handleChange(e);
                           }}
                         />
-                        {error.firstName && <p style={{ color: "red", fontSize: "60%" }}>{error.firstName}</p>}
+                        {error.firstName && <p style={{ color: "red", fontSize: "60%", marginTop: "0px", marginBottom: "0px" }}>{error.firstName}</p>}
                       </SoftBox>
                     </div>
                     <div className="input_field">
-                      <SoftBox>
+                      <SoftBox mb={0.5}>
+                        <SoftBox mb={0} ml={0.5}>
+                          <SoftTypography component="label" variant="caption" fontWeight="bold">
+                            LastName
+                          </SoftTypography>
+                        </SoftBox>
                         <SoftInput
                           type="text"
                           name="lastName"
-                          value={userProfile.lastName}
+                          value={updateData?.lastName}
                           placeholder="Last Name"
                           onChange={(e) => {
                             setError({
@@ -356,11 +394,16 @@ function Overview() {
                       </SoftBox>
                     </div>
                     <div className="input_field">
-                      <SoftBox>
+                      <SoftBox mb={0.5}>
+                        <SoftBox mb={0} ml={0.5}>
+                          <SoftTypography component="label" variant="caption" fontWeight="bold">
+                            Email
+                          </SoftTypography>
+                        </SoftBox>
                         <SoftInput
                           type="email"
                           name="email"
-                          value={userProfile.email}
+                          value={updateData?.email}
                           placeholder="Email"
                         // onChange={(e) => {
                         //   handleChange(e);
@@ -380,11 +423,16 @@ function Overview() {
                     {/* <div className="row clearfix">
                                                 <div className="col_half"> */}
                     <div className="input_field">
-                      <SoftBox>
+                      <SoftBox mb={0.5}>
+                        <SoftBox mb={0} ml={0.5}>
+                          <SoftTypography component="label" variant="caption" fontWeight="bold">
+                            Mobile
+                          </SoftTypography>
+                        </SoftBox>
                         <SoftInput
                           type="mobile"
                           name="phone"
-                          value={userProfile.phone}
+                          value={updateData?.phone}
                           placeholder="Mobile No"
                           onChange={(e) => {
                             setError({
@@ -398,20 +446,19 @@ function Overview() {
 
                       </SoftBox>
                     </div>
-                    <SoftBox mb={1} mt={0} style={{ marginRight: "20%" }}>
-
+                    <SoftBox mb={1} mt={0} style={{ marginRight: "20%", marginTop: "4%" }}>
                       <div className='form-group col-md-6 mt-4'>
-                        <h5 style={{ display: "flex" }}>
+                        <h6 style={{ display: "flex" }}>
                           Gender :{" "}
-                        </h5>
+                        </h6>
                         <input
                           type='radio'
                           name='gender'
-                          style={{ marginTop: "5%" }}
-                          checked={userProfile.gender == "male" ? true : false}
+                          style={{ marginTop: "1%" }}
+                          checked={updateData?.gender == "male" ? true : false}
                           onChange={(e) =>
-                            setUserProfile({
-                              ...userProfile,
+                            setUpdateData({
+                              ...updateData,
                               gender: "male"
                             })}
                         />
@@ -419,16 +466,41 @@ function Overview() {
                         <input
                           type='radio'
                           name='gender'
-                          style={{ marginLeft: "30px" }}
-                          checked={userProfile.gender == "female" ? true : false}
+                          style={{ marginLeft: "20px" }}
+                          checked={updateData?.gender == "female" ? true : false}
                           onChange={(e) =>
-                            setUserProfile({
-                              ...userProfile,
+                            setUpdateData({
+                              ...updateData,
                               gender: "female"
                             })}
                         />
                         Female
                       </div>
+                    </SoftBox>
+                    <SoftBox>
+                      <input
+                        type="file"
+                        id="imageUpload"
+                        // value={updateData?.profileImage}
+                        // style={{ display: "none" }}
+                        onChange={(e) => {
+                          handleImageChange(e);
+                        }}
+                      />
+                      {/* <div className='form-group col-md-6 mb-3'>
+                        <label htmlFor='inputImage'>Image</label>
+                        <div className='custom-file'>
+                          <input
+                            type='file'
+                            className='custom-file-input'
+                            id='Image'
+                            onChange={(e) => {
+                              handleImageChange(e);
+                            }}
+                          />
+                        </div>
+
+                      </div> */}
                     </SoftBox>
                     <SoftBox mt={4} mb={1} style={{ display: "flex", justifyContent: "center", justifyContent: "space-between" }}>
                       {/* {
@@ -451,6 +523,7 @@ function Overview() {
                         Cancel
                       </SoftButton>
                     </SoftBox>
+
 
                     {/* <div className="input_field select_option">
                                                 <select>
@@ -477,6 +550,7 @@ function Overview() {
           {/* <p class="credit">Developed by <a href="http://www.designtheway.com" target="_blank">Design the way</a></p> */}
         </Modal>
       </SoftBox>
+
       {/* <Modal>
 
       </Modal> */}

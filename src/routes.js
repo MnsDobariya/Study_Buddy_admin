@@ -41,6 +41,10 @@ import Cube from "examples/Icons/Cube";
 import Teacher from "layouts/teacher/Teacher";
 import ForgotPassword from "layouts/authentication/forgot-password";
 import EmailVerify from "layouts/authentication/verify-email";
+import Form1 from "layouts/form/Form1";
+import Form2 from "layouts/form/Form2";
+import Form3 from "layouts/form/Form3";
+import To_dos from "layouts/to-dos/To_dos";
 
 
 
@@ -70,6 +74,15 @@ const routes = [
     route: "/teacher",
     icon: <Office size="12px" />,
     component: <Teacher />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "To_dos",
+    key: "to_dos",
+    route: "/todos",
+    icon: <Office size="12px" />,
+    component: <To_dos />,
     noCollapse: true,
   },
   {
@@ -146,6 +159,34 @@ const routes = [
     component: <EmailVerify />,
     noCollapse: true,
   },
+  {
+    type: "collapse",
+    name: "Form1",
+    key: "form1",
+    route: "/form1",
+    icon: <SpaceShip size="12px" />,
+    component: <Form1 />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Form2",
+    key: "form2",
+    route: "/form2",
+    icon: <SpaceShip size="12px" />,
+    component: <Form2 />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Form3",
+    key: "form3",
+    route: "/form3",
+    icon: <SpaceShip size="12px" />,
+    component: <Form3 />,
+    noCollapse: true,
+  },
+  
 ];
 
 export default routes;
