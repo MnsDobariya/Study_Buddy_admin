@@ -25,6 +25,10 @@ import DefaultNavbarLink from "examples/Navbars/DefaultNavbar/DefaultNavbarLink"
 import routes from "routes";
 import { ApiPost } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faEye, faEyeSlash, faKey, faXmark } from "@fortawesome/free-solid-svg-icons";
+import '../../authentication/sign-in/index.css';
+
 
 
 function SignIn() {
@@ -48,6 +52,11 @@ function SignIn() {
       [e.target.name]: e.target.value
     })
   }
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   const navigate = useNavigate();
 
   const SingIn = () => {
@@ -126,19 +135,24 @@ function SignIn() {
                 Email
               </SoftTypography>
             </SoftBox>
-            <SoftInput
-              type="email"
-              name="email"
-              value={lgnFormData.email}
-              placeholder="Email"
-              onChange={(e) => {
-                setError({
-                  ...error,
-                  email: "",
-                })
-                handleChange(e);
-              }}
-            />
+            <SoftBox style={{ display: "flex" }}>
+              <div className="input-group-prepend">
+                <span className="input-group-text"><FontAwesomeIcon icon={faEnvelope} style={{ color: "black", marginTop: "3%" }} /></span>
+              </div>
+              <SoftInput
+                type="email"
+                name="email"
+                value={lgnFormData.email}
+                placeholder="Email"
+                onChange={(e) => {
+                  setError({
+                    ...error,
+                    email: "",
+                  })
+                  handleChange(e);
+                }}
+              />
+            </SoftBox>
             {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email}</p>}
           </SoftBox>
           <SoftBox mb={1} >
@@ -147,23 +161,39 @@ function SignIn() {
                 Password
               </SoftTypography>
             </SoftBox>
-            <SoftInput
-              type="password"
-              name="password"
-              value={lgnFormData.password}
-              placeholder="Password"
-              onChange={(e) => {
-                setError({
-                  ...error,
-                  password: "",
-                })
-                handleChange(e);
-              }}
-              onKeyPress={(e) => onKeyBtn(e)}
-            />
+            <SoftBox style={{ display: "flex" }}>
+              <div className="input-group-prepend">
+                <span className="input-group-text"><FontAwesomeIcon icon={faKey} style={{ color: "black", marginTop: "3%" }} /></span>
+              </div>
+              <SoftInput
+                type="password"
+                name="password"
+                value={lgnFormData.password}
+                placeholder="Password"
+                onChange={(e) => {
+                  setError({
+                    ...error,
+                    password: "",
+                  })
+                  handleChange(e);
+                }}
+                onKeyPress={(e) => onKeyBtn(e)}
+              />
+              {/* <span
+                className='input-group-text'
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer", marginTop: "1%" }}
+              >
+                {passwordVisible ? (
+                  <FontAwesomeIcon icon={faEye} />
+                ) : (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                )}
+              </span> */}
+            </SoftBox>
             {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password}</p>}
           </SoftBox>
-          <SoftBox display="flex" alignItems="center" mt={1}>
+          <SoftBox display="flex" alignItems="center" mt={2}>
             <Switch checked={rememberMe} onChange={handleSetRememberMe} />
             <SoftTypography
               variant="button"
@@ -171,10 +201,10 @@ function SignIn() {
               onClick={handleSetRememberMe}
               sx={{ cursor: "pointer", userSelect: "none" }}
             >
-              &nbsp;&nbsp;Remember me
+              &nbsp;Remember me
 
             </SoftTypography>
-          
+
             <SoftTypography
               component={Link}
               to="/authentication/verify-email"

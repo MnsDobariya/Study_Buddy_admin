@@ -41,6 +41,9 @@ import Cube from "examples/Icons/Cube";
 import Teacher from "layouts/teacher/Teacher";
 import ForgotPassword from "layouts/authentication/forgot-password";
 import EmailVerify from "layouts/authentication/verify-email";
+import Form from "layouts/authentication/form";
+import Assignment from "layouts/authentication/assignments";
+
 
 
 
@@ -81,8 +84,8 @@ const routes = [
     icon: <CreditCard size="12px" />,
     component: <Billing />,
     noCollapse: true,
-  },
-  // {
+  },  
+  // {  
   //   type: "collapse",
   //   name: "Virtual Reality",
   //   key: "virtual-reality",
@@ -144,6 +147,24 @@ const routes = [
     route: "/authentication/verify-email",
     icon: <SpaceShip size="12px" />,
     component: <EmailVerify />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Form ",
+    key: "form",
+    route: "/authentication/form",
+    icon: <SpaceShip size="12px" />,
+    component: <Form />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Assignment ",
+    key: "assignments",
+    route: "/authentication/assignments",
+    icon: <SpaceShip size="12px" />,
+    component: <Assignment />,
     noCollapse: true,
   },
 ];

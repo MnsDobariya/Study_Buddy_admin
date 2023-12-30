@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // react-router-dom components
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, generatePath, redirect, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Switch from "@mui/material/Switch";
@@ -26,15 +26,17 @@ import routes from "routes";
 import { ApiPost } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import OTPInput from "react-otp-input";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 function EmailVerify() {
 
-  const [vryEmail, setVryEmail] = useState({
+  const [vrfyEmail, setVrfyEmail] = useState({
     email: '',
   });
 
-  const [OTP, setOTP] = useState("");
+  const [OTP, setOTP] = useState('');
 
   const [error, setError] = useState({
     email: '',
@@ -43,80 +45,82 @@ function EmailVerify() {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    // console.log("lgnFormData",e.target.value);
-    setVryEmail({
-      ...vryEmail,
+    // console.log( e.target.name,e.target.value);
+    setVrfyEmail({
+      ...vrfyEmail,
       [e.target.name]: e.target.value
     })
   }
 
   const getOTP = () => {
 
-    // Send 'otp' to your server for validation
-    // If validation is successful, proceed; otherwise, show an error message
-
-    console.log('OTP is ', OTP);
-
     const error = {};
 
     const emailRegx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!vryEmail.email) {
+    if (!vrfyEmail.email) {
       error.email = "Please Email Required";
-    } else if (!emailRegx.test(vryEmail.email)) {
+    } else if (!emailRegx.test(vrfyEmail.email)) {
       error.email = "Invalid Email";
     }
-
 
     if (error.email) {
       setError(error);
       return;
     }
-
     const body = {
-      email: vryEmail.email
+      email: vrfyEmail.email
     }
 
-    
-    const token = localStorage.getItem("token")
-    console.log("token", token);
-
-    axios.post("http://localhost:3000/api/v1/auth/send-verification-email", body,
-      { headers: { "Authorization": `Bearer ${token}` } })
-      // ApiPost(`${EndPoint.USER_LOGIN}`, body)
+    // axios.post("http://localhost:3000/api/v1/auth/send-otp", body)
+    ApiPost(`${EndPoint.USER_VERIFY_EMAIL}`, body)
       .then((res) => {
-
-        console.log(res);
+        console.log(res, "ressssssssseeeee");
         if (res.status === 200) {
-          setVryEmail({
-            email: ''
+          toast.success(<p style={{ fontSize: "80%" }}>{"OTP sent your Email"}</p>, {
+            position: "top-center"
           })
         }
-        navigate("/authentication/forgot-password")
+      }).catch((error) => {
+        // console.log("err", error);
+        if (error.response.data.message === "email not found") {
+          toast.error(<p style={{ fontSize: "80%" }}>{"email not found..!"}</p>, {
+            position: "top-center",
 
-
-      })
-
-    // .catch((error) => {
-    //   console.log("err", error);
-    //   if (error.response.data.message === "Incorrect email or password") {
-    //     toast.error(<p style={{ fontSize: "80%" }}>{"Incorrect email or password..!"}</p>, {
-    //       position: "top-center",
-
-    //     });
-    //   }
-    // });
+          });
+        }
+      });
   };
 
   const handleVerify = () => {
+    const body = {
+      email: vrfyEmail.email,
+      generateOTP: OTP
+    }
 
+    // axios.post("http://localhost:3000/api/v1/auth/verify-otp", body)
+    ApiPost(`${EndPoint.USER_VERIFY_OTP}`, body,)
+      .then((res) => {
+        console.log(res, "55555555");
+        if (res.status === 200) {
+          toast.success(<p style={{ fontSize: "80%" }}>{"OTP Verification Successfully"}</p>, {
+            position: "top-center"
+          })
+        }
+        navigate("/authentication/forgot-password", { state: { token: res.data.newAdmin.token } })
+
+      }).catch((error) => {
+        console.log("err", error);
+        if (error.error === "Invalid OTP.") {
+          toast.error(<p style={{ fontSize: "80%" }}>{"Invalid OTP...!"}</p>, {
+            position: "top-center",
+          });
+        }
+      });
   }
-
   const onKeyBtn = (e) => {
     if (e.key === "Enter")
-      Save();
+      getOTP();
   }
-
-
 
   return (
     <>
@@ -131,28 +135,30 @@ function EmailVerify() {
               <SoftTypography component="label" variant="caption" fontWeight="bold">
                 Email
               </SoftTypography>
-
             </SoftBox>
-            <SoftInput
-              type="email"
-              name="email"
-              //   value={vryEmail.email}
-              placeholder="Email"
-              onChange={(e) => {
-                
-                setError({
-                  ...error,
-                  email: "",
-                })
-                handleChange(e);
-              }}
+            <SoftBox style={{ display: "flex"}}>
 
-            />
+              {/* <FontAwesomeIcon icon={faEnvelope} style={{marginTop:"3%"}}/> */}
+              <SoftInput
+                type="email"
+                name="email"
+                value={vrfyEmail.email}
+                placeholder="Email"
+                onChange={(e) => {
+                  setError({
+                    ...error,
+                    email: "",
+                  })
+                  handleChange(e);
+                }}
+                onKeyPress={(e) => onKeyBtn(e)}
+              />
+            </SoftBox>
             {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email}</p>}
           </SoftBox>
-            <SoftButton variant="gradient" color="info" onClick={getOTP}>
-                  Get OTP
-                </SoftButton>
+          <SoftButton variant="gradient" color="info" onClick={getOTP}>
+            Get OTP
+          </SoftButton>
 
           <SoftBox mb={1} >
             <SoftBox mb={1} ml={0.5}>
