@@ -22,6 +22,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Cube from "examples/Icons/Cube";
 import Document from "examples/Icons/Document";
 import Settings from "examples/Icons/Settings";
+import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard React base styles
 import breakpoints from "assets/theme/base/breakpoints";
@@ -32,8 +33,13 @@ import curved0 from "assets/images/curved-images/curved0.jpg";
 import axios from "axios";
 import { element } from "prop-types";
 import { Link } from "react-router-dom";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { Tooltip } from "@mui/material";
+import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Header = ({ userProfile, imagePreview, handleImageChange }) => {
+const Header = ({ userProfile,imagePreview,profilePicture,updateData}) => {
   // console.log("userProfileuserProfile",userProfile);
   // console.log("userProfileuserProfile",imagePreview);
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
@@ -80,7 +86,9 @@ const Header = ({ userProfile, imagePreview, handleImageChange }) => {
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
-
+  //  const handleClick = () => {
+  //   document.getElementById("imageUpload").click();
+  //  }
 
   return (
     <SoftBox position="relative">
@@ -116,26 +124,63 @@ const Header = ({ userProfile, imagePreview, handleImageChange }) => {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
+            {/* <FontAwesomeIcon icon={faPen} /> */}
+            {/* <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth='1.5'
+              stroke='currentColor'
+              height='20px'
+              width='30px'
+              className='edit-icon'
+              // type="file"
+            // style={{ marginRight: "10px", cursor: "pointer" }}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125'
+              />
+            </svg> */}
+            {/* <SoftTypography component={Link}  variant="body2" color="secondary">
+              <Tooltip placement="top" onClick={()=> handleClick()} >
+                <Icon>edit</Icon>
+              </Tooltip>
+            </SoftTypography> */}
             <SoftAvatar
-
               // src={burceMars}
-              src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profileImage}`}
+              // src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profileImage}`}
+              src={imagePreview ? imagePreview :`http://localhost:3000/${profilePicture}`}
               alt="profile-image"
+              // style={{width:50,height:50}}
               variant="rounded"
               size="xl"
               shadow="sm"
-             />
+            />
+
+            {/* <label htmlFor="imageUpload" className="button">
+              <span className="">Upload</span>
+            </label> */}
+            {/* <input
+              type="file"
+              id="imageUpload"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                handleImageChange(e);
+              }}
+            /> */}
           </Grid>
-          <FontAwesomeIcon icon={faPen} />
+
           <Grid item>
             <SoftBox height="100%" mt={0.5} lineHeight={1}>
               <SoftTypography variant="h5" fontWeight="medium">
                 {/* Alex Thompson */}
-                {userProfile.firstName}
+                {userProfile?.firstName}
               </SoftTypography>
               <SoftTypography variant="button" color="text" fontWeight="medium">
                 {/* CEO / Co-Founder */}
-                {userProfile.lastName}
+                {userProfile?.lastName}
               </SoftTypography>
             </SoftBox>
           </Grid>

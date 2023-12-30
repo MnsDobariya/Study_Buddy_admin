@@ -13,8 +13,11 @@ body {
 	}
 }
 .form_wrapper {
+  border: 3px solid rgb(95, 142, 224);
+  border-radius: 3%;
 	background: #fff;
-	width: 400px;
+	width: 420px;
+  /* max-height: 80%; */
 	max-width: 100%;
 	box-sizing: border-box;
 	padding: 25px;
@@ -65,7 +68,7 @@ body {
 	}
 	.input_field {
 		position: relative;
-		margin-bottom: 20px;
+		/* margin-bottom: 20px; */
         -webkit-animation: bounce 0.6s ease-out;
   	     animation: bounce 0.6s ease-out;
 		/* >span {
