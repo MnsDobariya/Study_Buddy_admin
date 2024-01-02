@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -17,12 +17,6 @@ import Configurator from "examples/Configurator";
 
 // React themes
 import theme from "assets/theme";
-import themeRTL from "assets/theme/theme-rtl";
-
-// RTL plugins
-import rtlPlugin from "stylis-plugin-rtl";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
 
 // React routes
 import routes from "routes";
@@ -33,6 +27,9 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "contex
 // Images
 import brand from "assets/images/logo-ct.png";
 import SignIn from "layouts/authentication/sign-in";
+import SignUp from "layouts/authentication/sign-up";
+import ForgotPassword from "layouts/authentication/forgot-password";
+import EmailVerify from "layouts/authentication/verify-email";
 
 export default function App() {
 
@@ -42,18 +39,7 @@ export default function App() {
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
-
-  // Cache for the rtl
-  useMemo(() => {
-    const cacheRtl = createCache({
-      key: "rtl",
-      stylisPlugins: [rtlPlugin],
-    });
-
-    setRtlCache(cacheRtl);
-  }, []);
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -90,42 +76,20 @@ export default function App() {
   // const getToken = localStorage.getItem("token");
 
   const getRoutes = (allRoutes) =>
+  
     allRoutes.map((route) => {
-      // if (route.collapse) {
-      //   return getRoutes(route.collapse);
-      // }
-      // if (route.route) {
-      //   <Routes>
-      //     {getToken ? (
-      //       <>
-      //         <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
-      //       </>
-      //     ) : (
-      //       <>
-      //         <Route path="*" element={<Navigate to="/dashboard" />} />
-      //       </>
-      //     )}
-      //   </Routes>
-      // }
-      // console.log(localStorage.getItem("token"));
+      console.log("route",route.route, "***",route.component);
       if (localStorage.getItem("token")) {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
+        // <Route exact path={"/dashboard"} element={<Dashboard />} key={"sign-up"}/>;
+
       } else{
           //  <Route path="/authentication/sign-in" element={<Navigate to="/authentication/sign-in" />} />;
-        return <Route exact path={"/authentication/sign-in"} element={<SignIn />} key={"sign-in"}/>;
+        <Route exact path={"/authentication/sign-up"} element={<SignUp />} key={"sign-up"}/>;
+        <Route exact path={"/authentication/sign-in"} element={<SignIn />} key={"sign-in"}/>;
+        <Route exact path={"/authentication/forgot-password"} element={<ForgotPassword />} key={"forgot-password"}/>;
+        <Route exact path={"/authentication/verify-email"} element={<EmailVerify />} key={"verify-email"}/>;
       }
-
-      // <Routes>
-      //   {getToken ? (
-      //     <>
-      //       <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
-      //     </>
-      //   ) : (
-      //     <>
-      //       <Route path="*" element={<Navigate to="/dashboard" />} />
-      //     </>
-      //   )}
-      // </Routes>
       return null;
     });
 
@@ -155,39 +119,12 @@ export default function App() {
     </SoftBox>
   );
 
-  return direction === "rtl" ? (
-
-    <CacheProvider value={rtlCache}>
-      <ThemeProvider theme={themeRTL}>
-        <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={brand}
-              brandName="Soft UI Dashboard"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Configurator />
-            {configsButton}
-          </>
-        )}
-        {layout === "vr" && <Configurator />}
-        <Routes>
-          {getRoutes(routes)}
-          {/* <Route path="*" element={<Navigate to="/dashboard" />} /> */}
-        </Routes>
-      </ThemeProvider>
-    </CacheProvider>
-  ) : (
+  return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {/* {console.log(layout,"qqqqqq")} */}
       {layout === "dashboard" && (
         <>
-        
           <Sidenav
             color={sidenavColor}
             brand={brand}
@@ -204,6 +141,10 @@ export default function App() {
       <Routes>
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+        <Route exact path={"/authentication/sign-up"} element={<SignUp />} key={"sign-up"}/>;
+        <Route exact path={"/authentication/sign-in"} element={<SignIn />} key={"sign-in"}/>;
+        <Route exact path={"/authentication/forgot-password"} element={<ForgotPassword />} key={"forgot-password"}/>;
+        <Route exact path={"/authentication/verify-email"} element={<EmailVerify />} key={"verify-email"}/>;
       </Routes>
 
       {/* <Routes>
@@ -223,5 +164,5 @@ export default function App() {
         }
       </Routes>  */}
     </ThemeProvider>
-  );
+  )
 }

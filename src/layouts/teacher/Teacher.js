@@ -244,7 +244,194 @@ const Teacher = () => {
                         </div>
                     </div>
                 )}
-             
+                <SoftBox mt={4} mb={1}>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <div className="form_wrapper" style={{width: '40%'}}>
+                            <div className="form_container">
+                                <div className="title_container">
+                                    {/* <h2>Add Teacher Data</h2> */}
+                                    <h2 style={{ textAlign: "center", marginBottom: "5%" }}>
+                                        {" "}
+                                        {addTeacher?.id ? "Update" : "Add"} Teacher
+
+                                    </h2>
+                                </div>
+                                <div className="row clearfix">
+                                    <div className="">
+                                        <form>
+                                            <div className="input_field">
+                                                <SoftBox>
+                                                    <SoftInput
+                                                        type="text"
+                                                        name="firstName"
+                                                        value={addTeacher.firstName}
+                                                        placeholder="First Name"
+                                                        onChange={(e) => {
+                                                            setError({
+                                                                ...error,
+                                                                firstName: "",
+                                                            });
+                                                            handleChange(e);
+                                                        }}
+                                                    />
+                                                    {error.firstName && <p style={{ color: "red", fontSize: "60%" }}>{error.firstName} </p>}
+                                                </SoftBox>
+                                            </div>
+                                            <div className="input_field">
+                                                <SoftBox>
+                                                    <SoftInput
+                                                        type="text"
+                                                        name="lastName"
+                                                        value={addTeacher.lastName}
+                                                        placeholder="Last Name"
+                                                        onChange={(e) => {
+                                                            setError({
+                                                                ...error,
+                                                                lastName: "",
+                                                            });
+                                                            handleChange(e);
+                                                        }}
+                                                    />
+                                                    {error.lastName && <p style={{ color: "red", fontSize: "60%" }}>{error.lastName} </p>}
+                                                </SoftBox>
+                                            </div>
+                                            <div className="input_field">
+                                                <SoftBox>
+                                                    <SoftInput
+                                                        type="email"
+                                                        name="email"
+                                                        value={addTeacher.email}
+                                                        placeholder="Email"
+                                                        onChange={(e) => {
+                                                            setError({
+                                                                ...error,
+                                                                email: "",
+                                                            });
+                                                            handleChange(e);
+                                                        }}
+                                                    />
+                                                    {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email} </p>}
+                                                </SoftBox>
+                                            </div>
+                                            <div className="input_field">
+                                                <SoftBox>
+                                                    <SoftInput
+                                                        type="password"
+                                                        name="password"
+                                                        value={addTeacher.password}
+                                                        placeholder="Password"
+                                                        onChange={(e) => {
+                                                            setError({
+                                                                ...error,
+                                                                password: "",
+                                                            });
+                                                            handleChange(e);
+                                                        }}
+                                                    />
+                                                    {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password} </p>}
+                                                </SoftBox>
+                                            </div>
+                                            {/* <div className="row clearfix">
+                                                <div className="col_half"> */}
+                                            <div className="input_field">
+                                                <SoftBox>
+                                                    <SoftInput
+                                                        type="mobile"
+                                                        name="phone"
+                                                        value={addTeacher.phone}
+                                                        placeholder="Mobile No"
+                                                        onChange={(e) => {
+                                                            setError({
+                                                                ...error,
+                                                                phone: "",
+                                                            });
+                                                            handleChange(e);
+                                                        }}
+                                                    />
+                                                    {error.phone && <p style={{ color: "red", fontSize: "60%" }}>{error.phone} </p>}
+                                                </SoftBox>
+                                            </div>
+                                            <SoftBox mb={1} mt={0} style={{ marginRight: "20%" }}>
+
+                                                <div className='form-group col-md-6 mt-4'>
+                                                    <h5 style={{ display: "flex" }}>
+                                                        Gender :{" "}
+                                                    </h5>
+                                                    <input
+                                                        type='radio'
+                                                        name='gender'
+                                                        style={{ marginTop: "5%" }}
+                                                        checked={addTeacher.gender == "male" ? true : false}
+                                                        onChange={(e) =>
+                                                            setAddTeacher({
+                                                                ...addTeacher,
+                                                                gender: "male",
+                                                            })
+                                                        }
+                                                    />
+                                                    Male
+                                                    <input
+                                                        type='radio'
+                                                        name='gender'
+                                                        style={{ marginLeft: "30px" }}
+                                                        checked={addTeacher.gender == "feMale" ? true : false}
+                                                        onChange={(e) =>
+                                                            setAddTeacher({
+                                                                ...addTeacher,
+                                                                gender: "feMale",
+                                                            })
+                                                        }
+                                                    />
+                                                    Female
+                                                </div>
+                                            </SoftBox>
+                                            <SoftBox mt={4} mb={1} style={{ display: "flex", justifyContent: "center", justifyContent: "space-between" }}>
+                                                {
+                                                    addTeacher?.id ?
+                                                        <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={updateTeacher} >
+                                                            update
+                                                        </SoftButton> : <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher} >
+                                                            Add Teacher
+                                                        </SoftButton>
+
+                                                }
+                                                {/* <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher()} >
+                                                    {addTeacher?.id ? "Update" : "Add Teacher"}
+                                                </SoftButton> */}
+                                                <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={handleClose} >
+                                                    Cancel
+                                                </SoftButton>
+                                            </SoftBox>
+
+                                            {/* <div className="input_field select_option">
+                                                <select>
+                                                    <option>Select a country</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>x
+                                                <div className="select_arrow"></div>
+                                            </div>
+                                            <div className="input_field checkbox_option">
+                                                <input type="checkbox" id="cb1" />
+                                                <label>I agree with terms and conditions</label>
+                                            </div>
+                                            <div className="input_field checkbox_option">
+                                                <input type="checkbox" id="cb2" />
+                                                <label >I want to receive the newsletter</label>
+                                            </div> */}
+                                            {/* <input className="button" type="submit" value="Register" /> */}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal >
+                </SoftBox >
             </div >
         </>
     )

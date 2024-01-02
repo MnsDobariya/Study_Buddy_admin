@@ -14,16 +14,16 @@ import SoftTypography from "components/SoftTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import Footer from "examples/Footer";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-import ProfilesList from "examples/Lists/ProfilesList";
+// import ProfilesList from "examples/Lists/ProfilesList";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 import PlaceholderCard from "examples/Cards/PlaceholderCard";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
-import PlatformSettings from "layouts/profile/components/PlatformSettings";
+// import PlatformSettings from "layouts/profile/components/PlatformSettings";
 
 // Data
-import profilesListData from "layouts/profile/data/profilesListData";
+// import profilesListData from "layouts/profile/data/profilesListData";
 
 // Images
 import homeDecor1 from "assets/images/home-decor-1.jpg";
@@ -197,7 +197,7 @@ function Overview() {
       <SoftBox mt={5} mb={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} xl={4}>
-            <PlatformSettings />
+            {/* <PlatformSettings /> */}
           </Grid>
           <Grid item xs={12} md={6} xl={4}>
             <ProfileInfoCard
@@ -233,7 +233,7 @@ function Overview() {
             />
           </Grid>
           <Grid item xs={12} xl={4}>
-            <ProfilesList title="conversations" profiles={profilesListData} />
+            {/* <ProfilesList title="conversations" profiles={profilesListData} /> */}
           </Grid>
         </Grid>
       </SoftBox>
