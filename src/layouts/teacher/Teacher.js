@@ -13,6 +13,8 @@ import { ApiPut } from "config/Api/ApiData";
 import { ApiPost } from "config/Api/ApiData";
 import { ApiGet } from "config/Api/ApiData";
 import { ApiDelete } from 'config/Api/ApiData';
+import SoftBox from 'components/SoftBox';
+import SoftInput from 'components/SoftInput';
 // import { ApiDelete } from 'config/Api/ApiData';
 
 

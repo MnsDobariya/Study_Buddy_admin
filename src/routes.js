@@ -162,7 +162,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Forgor Password",
+    name: "Forgort Password",
     key: "forgot-password",
     route: "/authentication/forgot-password",
     icon: <SpaceShip size="12px" />,
