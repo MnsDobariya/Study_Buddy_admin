@@ -41,14 +41,10 @@ import Cube from "examples/Icons/Cube";
 import Teacher from "layouts/teacher/Teacher";
 import ForgotPassword from "layouts/authentication/forgot-password";
 import EmailVerify from "layouts/authentication/verify-email";
-// import Form from "layouts/authentication/form";
-// import Assignment from "layouts/authentication/assignments";
-
-// import Form1 from "layouts/form/Form1";
-// import Form2 from "layouts/form/Form2";
-// import Form3 from "layouts/form/Form3";
-// import To_dos from "layouts/to-dos/To_dos";
-
+import Assignment from "layouts/authentication/assignments";
+import TeacherForm from "layouts/teacher/TeacherForm";
+import AssignmentForm from "layouts/authentication/assignments/assignmentForm";
+// import AssignmentList from "layouts/authentication/assignments/assignmentList";
 
 
 const routes = [
@@ -79,6 +75,8 @@ const routes = [
     component: <Teacher />,
     noCollapse: true,
   },
+ 
+  
   // {
   //   type: "collapse",
   //   name: "To_dos",
@@ -162,6 +160,7 @@ const routes = [
     component: <EmailVerify />,
     noCollapse: true,
   },
+ 
   // {
   //   type: "collapse",
   //   name: "Form ",
@@ -176,21 +175,41 @@ const routes = [
   //   component: <Form1 />,
   //   noCollapse: true,
   // },
+  {
+    type: "collapse",
+    name: "Assignment ",
+    key: "assignments",
+    route: "/authentication/assignments",
+    icon: <SpaceShip size="12px" />,
+    component: <Assignment />,
+    noCollapse: true,
+  },
+
+  {
+    // type: "collapse",
+    name: "Teacher Form",
+    key: "teacherform",
+    route: "/teacher/teacherform",
+    icon: <SpaceShip size="12px" />,
+    component: <TeacherForm />,
+    noCollapse: true,
+  },
+  {
+    // type: "collapse",
+    name: "assignment Form",
+    key: "assignmentform",
+    route: "/assignments/assignmentform",
+    icon: <SpaceShip size="12px" />,
+    component: <AssignmentForm />,
+    noCollapse: true,
+  },
   // {
-  //   type: "collapse",
-  //   name: "Assignment ",
-  //   key: "assignments",
-  //   route: "/authentication/assignments",
+  //   // type: "collapse",
+  //   name: "assignment List",
+  //   key: "assignmentlist",
+  //   route: "/assignments/assignmentList",
   //   icon: <SpaceShip size="12px" />,
-  //   component: <Assignment />,
-  //   noCollapse: true,
-  // },
-  // {
-  //   name: "Form2",
-  //   key: "form2",
-  //   route: "/form2",
-  //   icon: <SpaceShip size="12px" />,
-  //   component: <Form2 />,
+  //   component: <AssignmentList />,
   //   noCollapse: true,
   // },
   // {
