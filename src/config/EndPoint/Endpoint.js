@@ -7,5 +7,7 @@ export const EndPoint = {
     USER_DELETE:'users/teacher/delete',
     USER_VERIFY_EMAIL:'/auth/send-otp' ,
     USER_VERIFY_OTP:'auth/verify-otp',
-    USER_FORGOT_PASSWORD:'/auth/forgot-password'
+    USER_FORGOT_PASSWORD:'/auth/forgot-password',
+    ASSIGNMENT_CREATE:'/v1/assignments/create',
+    ASSIGNMENT_GET:'/v1/assignments/get',
 }
