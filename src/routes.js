@@ -41,6 +41,8 @@ import Cube from "examples/Icons/Cube";
 import Teacher from "layouts/teacher/Teacher";
 import ForgotPassword from "layouts/authentication/forgot-password";
 import EmailVerify from "layouts/authentication/verify-email";
+import To_dos from "layouts/to-dos/To_dos";
+import Addtodos from "layouts/to-dos/Addtodos";
 // import Form from "layouts/authentication/form";
 // import Assignment from "layouts/authentication/assignments";
 
@@ -79,15 +81,24 @@ const routes = [
     component: <Teacher />,
     noCollapse: true,
   },
-  // {
-  //   type: "collapse",
-  //   name: "To_dos",
-  //   key: "to_dos",
-  //   route: "/todos",
-  //   icon: <Office size="12px" />,
-  //   component: <To_dos />,
-  //   noCollapse: true,
-  // },
+  {
+    type: "collapse",
+    name: "To_dos",
+    key: "to_dos",
+    route: "/todos",
+    icon: <Office size="12px" />,
+    component: <To_dos />,
+    noCollapse: true,
+  },
+  {
+    // type: "collapse",
+    name: "Add To_dos",
+    key: "addtodos",
+    route: "/todos/addtodos",
+    icon: <Office size="12px" />,
+    component: <Addtodos />,
+    noCollapse: true,
+  },
   {
     type: "collapse",
     name: "Billing",
@@ -98,6 +109,7 @@ const routes = [
     component: <Billing />,
     noCollapse: true,
   },  
+  
   // {  
   //   type: "collapse",
   //   name: "Virtual Reality",
