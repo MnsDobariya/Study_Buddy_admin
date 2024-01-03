@@ -78,7 +78,7 @@ export default function App() {
   const getRoutes = (allRoutes) =>
   
     allRoutes.map((route) => {
-      console.log("route",route.route, "***",route.component);
+      // console.log("route",route.route, "***",route.component);
       if (localStorage.getItem("token")) {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
         // <Route exact path={"/dashboard"} element={<Dashboard />} key={"sign-up"}/>;

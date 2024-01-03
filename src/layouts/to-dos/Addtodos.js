@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SoftBox from "components/SoftBox";
 import SoftButton from "components/SoftButton";
 import SoftInput from "components/SoftInput";
 import '../to-dos/Addtodos.css';
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
+import { ApiPost } from "config/Api/ApiData";
+import { EndPoint } from "config/EndPoint/Endpoint";
+
 
 
 const categoryDropDown = [
@@ -12,99 +19,233 @@ const categoryDropDown = [
 ];
 
 const Addtodos = () => {
-    const [addTodos,setAddTodos] = useState({
-
+    const [addTodos, setAddTodos] = useState({
+        // deadlinedate: "",
+        task: "",
+        portable: "",
+        description: ""
     });
+    const [startDate, setStartDate] = useState(new Date());
+    // console.log(startDate, "startDate");
+
+    const location = useLocation();
+    
+
+    const [error, setError] = useState({
+        // deadlinedate: "",
+        task: "",
+        portable: "",
+        description: ""
+    });
+
+    const token = localStorage.getItem("token");
+
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setAddTodos({
+            ...addTodos,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    console.log(location?.state,"aqaqaqaqaqa");
+    // useEffect(() => {
+    // })
+
+    const Addtodos = () => {
+        const error = {};
+
+        // if (!addTodos.deadlinedate) {
+        //     error.deadlinedate = "Please Date Required";
+        // }
+
+        if (!addTodos.task) {
+            error.task = "Please Task Required";
+        }
+
+        if (!addTodos.portable) {
+            error.portable = "Please Portable Required";
+        }
+
+        if (!addTodos.description) {
+            error.description = "Please Description Required";
+        }
+
+        if (error.deadlinedate || error.task || error.portable || error.description) {
+            setError(error)
+            return;
+        }
+
+        const body = {
+            deadlinedate: startDate,
+            task: addTodos.task,
+            portable: addTodos.portable,
+            description: addTodos.description
+        }
+
+
+
+        // axios.post(`http://localhost:3000/api/v1/todos/create`, body,
+        // { headers: { "Authorization": `Bearer ${token}` } })
+        //     .then((res) => {
+        //         console.log(res, "res");
+        //     })
+
+
+        ApiPost(`${EndPoint.TODOS_CREATE}`, body,
+            { headers: { "Authorization": `Bearer ${token}` } })
+            .then((res) => {
+                // console.log(res,"res");
+                if (res.status === 201) {
+                    setAddTodos({
+                        task: "",
+                        portable: "",
+                        description: ""
+                    })
+                }
+                navigate("/todos")
+            })
+
+    }
+
+    const onKeyBtn = (e) => {
+        if (e.key === "Enter") {
+            Addtodos();
+        }
+    }
+
+    const cancelBtn = () => {
+        navigate("/todos");
+    }
 
     return (
         <>
             <SoftBox mt={4} mb={1}>
-            <h2 style={{ textAlign: "left", marginTop: "5%",marginLeft:"23%" }}>
-                            {/* {" "}
+                <h2 style={{ textAlign: "left", marginTop: "5%", marginLeft: "20%" }}>
+                    {/* {" "}
                             {addTeacher?.id ? "Update" : "Add"}  */}
-                            To_dos 
+                    To-dos
 
-                        </h2>
+                </h2>
 
                 <div className="container" style={{ marginTop: "5%", marginLeft: "19%" }}>
                     <form className="addtodos">
-                    {/* <div className="row jumbotron box8"> */}
-                    <div className="col-sm-12 mx-t3 mb-3">
-                        {/* <h2 style={{ textAlign: "left", marginTop: "5%",paddingTop:"3%" }}>
+                        {/* <div className="row jumbotron box8"> */}
+                        <div className="col-sm-12 mx-t3 mb-3">
+                            {/* <h2 style={{ textAlign: "left", marginTop: "5%",paddingTop:"3%" }}>
                             {" "}
                             {addTeacher?.id ? "Update" : "Add"} 
                             To_dos 
 
                         </h2> */}
-                    </div>
-                    <div style={{ display: "flex", marginTop: "6%",paddingLeft:"41px",paddingRight:"41px" }}>
-                        <div className="col-sm-6 form-group">
-                            <label htmlFor="name-f" style={{ fontWeight: "500" }} >DeadlineDate</label>
-                            <SoftInput
-                                type="date"
-                                name="deadlinedate"
-                                placeholder="DeadlineDate"
-                                
-                                // style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
-
-                            />
-
                         </div>
-                        <div className="col-sm-6 form-group">
-                            <label htmlFor="name-l" style={{ fontWeight: "500" }} >Task</label>
-                            <SoftInput
-                                type="text"
-                                name="task"
-                                placeholder="Task"
-                               
+                        <div className="form-row" style={{ display: "flex", marginTop: "6%", paddingLeft: "41px", paddingRight: "41px" }}>
+                            <div className="col-sm-6 form-group">
+                                <label htmlFor="name-f" style={{ fontWeight: "500" }} >DeadlineDate</label>
+                                {/* <SoftInput
+                                    type="date"
+                                    name="deadlinedate"
+                                    value={addTodos?.deadlinedate}
+                                    placeholder="DeadlineDate"
+                                    onChange={(e) => {
+                                        setError({
+                                            ...error,
+                                            deadlinedate: ""
+                                        })
+                                        handleChange(e)
+                                    }} */}
+
+                                {/* // style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }} */}
+                                {/* /> */}
+                                <div>
+                                    <DatePicker
+                                        dateFormat="dd-MM-yyyy"
+                                        className="form-control"
+                                        selected={startDate}
+                                        onChange={(date) =>
+                                            setStartDate(date)
+                                        }
+                                    />
+                                </div>
+                                {/* {error.deadlinedate && <p>{error.deadlinedate}</p>} */}
+                            </div>
+                            <div className="col-sm-6 form-group">
+                                <label htmlFor="name-l" style={{ fontWeight: "500" }} >Task</label>
+                                <SoftInput
+                                    type="text"
+                                    name="task"
+                                    value={addTodos?.task}
+                                    placeholder="Task"
+                                    onChange={(e) => {
+                                        setError({
+                                            ...error,
+                                            task: ""
+                                        })
+                                        handleChange(e)
+                                    }}
                                 // style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
-
-                            />
-
+                                />
+                                {error.task && <p>{error.task}</p>}
+                            </div>
                         </div>
-                    </div>
-                    <div style={{ display: "flex",paddingLeft:"41px",paddingRight:"41px",marginTop:"2%" }}>
-                        <div className="col-sm-6 form-group">
-                            <label htmlFor="portable" style={{ fontWeight: "500" }}>Portable</label>
-                           {/* <SoftInput
+                        <div className="form-row" style={{ display: "flex", paddingLeft: "41px", paddingRight: "41px", marginTop: "2%" }}>
+                            <div className="col-sm-6 form-group">
+                                <label htmlFor="portable" style={{ fontWeight: "500" }}>Portable</label>
+                                {/* <SoftInput
                                     type="text"
                                     name="portable"
                                     placeholder="Portable"
 
                                 /> */}
                                 <select
-                                name="portable"
-                                id="portable"
-                                className="form-control"
-                                placeholder="Select Portable "
-                                style={{borderRadius:"0.5rem"}}
+                                    name="portable"
+                                    id="portable"
+                                    className="form-control"
+                                    value={addTodos?.portable}
+                                    style={{ borderRadius: "0.5rem" }}
+                                    onChange={(e) => {
+                                        setError({
+                                            ...error,
+                                            portable: ""
+                                        })
+                                        handleChange(e)
+                                    }}
                                 // style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)",borderRadius:"0.5rem" }}
                                 >
                                     {/* <option value="low">Low</option>
                                     <option value="high">High</option>
                                     <option value="medium">Mudium</option> */}
-                                {/* {categoryDropDown && 
-                                categoryDropDown?.map((x) => (
-                                    <option value={x.value}>{x.value}</option>
-                                ))
-                                    
-                                } */}
+                                    <option key="">Select Portable</option>
+                                    {categoryDropDown &&
+                                        categoryDropDown?.map((x) => (
+                                            <option key={x.value}>{x.value}</option>
+                                        ))
+                                    }
                                 </select>
-
-                        </div>
-                        <div className="col-sm-6 form-group">
-                            <label htmlFor="description" style={{ fontWeight: "500" }} >Description</label>
-                            <SoftInput
-                                type="text"
-                                name="description"
-                                placeholder="Description"
-                                
+                                {error.portable && <p>{error.portable}</p>}
+                            </div>
+                            <div className="col-sm-6 form-group">
+                                <label htmlFor="description" style={{ fontWeight: "500" }} >Description</label>
+                                <SoftInput
+                                    type="text"
+                                    name="description"
+                                    value={addTodos.description}
+                                    placeholder="Description"
+                                    onChange={(e) => {
+                                        setError({
+                                            ...error,
+                                            description: ""
+                                        })
+                                        handleChange(e)
+                                    }}
+                                    onKeyPress={(e) => onKeyBtn(e)}
                                 // style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
-
-                            />
+                                />
+                                {error.description && <p>{error.description}</p>}
+                            </div>
                         </div>
-                    </div>
-                    {/* <div style={{ display: "flex" }}>
+                        {/* <div style={{ display: "flex" }}>
                         <div className="col-sm-6 form-group">
                             <label htmlFor="mobile" style={{ fontWeight: "500" }} >Mobile</label>
                             <SoftInput
@@ -116,7 +257,7 @@ const Addtodos = () => {
                             />
 
                         </div> */}
-                        
+
                         {/* <div className="col-sm-6 form-group mt-1">
                             <h5 style={{ display: "flex" }}>
                                 <label htmlFor='Gender' style={{ fontWeight: "500" }} >Gender :{""}</label>
@@ -146,9 +287,9 @@ const Addtodos = () => {
                             />
                             Female
                         </div> */}
-                    {/* </div> */}
-                    <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "27%", width: "40%",marginBottom:"10vh",marginTop:"6%"}}>
-                        {/* {
+                        {/* </div> */}
+                        <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "32%", width: "30%", marginBottom: "10vh", marginTop: "6%" }}>
+                            {/* {
                     addTeacher?.id ?
                         <SoftButton className="add-teacher" variant="gradient" color="info">
                             update
@@ -158,20 +299,20 @@ const Addtodos = () => {
 
                 } */}
 
-                        <SoftButton className="teacher1" variant="gradient" color="info" fullWidth  style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)"}}
-                        >
-                            {/* {location?.state ? "Update" : "Add"}  */}
-                            Add Todos
-                        </SoftButton>
+                            <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={Addtodos} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}
+                            >
+                                {/* {location?.state ? "Update" : "Add"}  */}
+                                Add To-dos
+                            </SoftButton>
 
-                        {/* <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher()} >
+                            {/* <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher()} >
                                     {addTeacher?.id ? "Update" : "Add Teacher"}
                                 </SoftButton> */}
-                        <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth  style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}>
-                            Cancel
-                        </SoftButton>
-                    </SoftBox>
-                    {/* </div> */}
+                            <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={cancelBtn} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}>
+                                Cancel
+                            </SoftButton>
+                        </SoftBox>
+                        {/* </div> */}
                     </form>
                 </div >
             </SoftBox >
