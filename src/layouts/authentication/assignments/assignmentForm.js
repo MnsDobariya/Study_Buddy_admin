@@ -4,8 +4,12 @@ import SoftButton from 'components/SoftButton';
 import SoftInput from 'components/SoftInput';
 import { ApiPost } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { ApiPut } from 'config/Api/ApiData';
 
 
 const categoryDropDown = [
@@ -15,7 +19,10 @@ const categoryDropDown = [
 ];
 
 const AssignmentForm = () => {
-    
+
+    const token = localStorage.getItem("token");
+    const location = useLocation();
+
     const [addAssignment, setAddAssignment] = useState({
         title: "",
         status: "",
@@ -25,6 +32,8 @@ const AssignmentForm = () => {
         projectDescription: ""
     });
     const navigate = useNavigate();
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     const [error, setError] = useState({
         title: "",
@@ -43,6 +52,12 @@ const AssignmentForm = () => {
         });
     };
 
+    useEffect(() => {
+        // if (location?.state) {
+        //     setAddAssignment(location?.state);
+        // }
+        console.log(location?.state);
+    }, []);
 
 
     const createAssignment = () => {
@@ -76,35 +91,50 @@ const AssignmentForm = () => {
             title: addAssignment?.title,
             status: addAssignment?.status,
             assignmentSummary: addAssignment?.assignmentSummary,
-            startDate: addAssignment?.startDate,
-            endDate: addAssignment?.endDate,
-            projectDescription: addAssignment?.projectDescription
+            startDate: startDate,
+            endDate: endDate,
+            projectDescription: addAssignment?.projectDescription,
         }
-        // axios.post("http://localhost:3000/api/v1/assignments/create", body)
-        ApiPost(`${EndPoint.ASSIGNMENT_CREATE}`, body)
-            .then((res) => {
-                console.log("res", res);
-                if (res.status == 201) {
-                    setAddAssignment({
-                        title: "",
-                        status: "",
-                        assignmentSummary: "",
-                        startDate: "",
-                        endDate: "",
-                        projectDescription: ""
-                    });
-                    toast.success("Add Assignment Successfully");
-                }
-                navigate('/authentication/assignments')
 
-            }).catch((error) => {
-                console.log("error", error);
-                if (error.error === "assignment already exists") {
-                    toast.error(<p style={{ fontSize: "80%" }}>{"Assignment Already Registered"}</p>, {
-                        position: "top-center",
-                    });
-                }
-            });
+        if (location?.state) {
+            console.log(location?.state, "hhhhhhhhh")
+            ApiPut(`${EndPoint.ASSIGNMENT_UPDATE}?id=${location?.state?.id}`, body,
+                { headers: { "Authorization": `Bearer ${token}` } })
+                .then((res) => {
+                    console.log("update", res);
+                    toast.success("Update successfully");
+
+                    navigate('/authentication/assignments');
+
+                });
+
+        } else {
+            ApiPost(`${EndPoint.ASSIGNMENT_CREATE}`, body,
+                { headers: { "Authorization": `Bearer ${token}` } })
+                .then((res) => {
+                    console.log("res", res);
+                    if (res.status == 201) {
+                        setAddAssignment({
+                            title: "",
+                            status: "",
+                            assignmentSummary: "",
+                            startDate: "",
+                            endDate: "",
+                            projectDescription: ""
+                        });
+                        navigate('/authentication/assignments');
+                        toast.success(<p style={{ fontSize: "78%" }}>{"Add Assignment Successfully"}</p>);
+                    }
+
+                }).catch((error) => {
+                    console.log("error", error);
+                    if (error.error === "assignment already exists") {
+                        toast.error(<p style={{ fontSize: "80%" }}>{"Assignment Already Registered"}</p>, {
+                            position: "top-center",
+                        });
+                    }
+                });
+        }
     }
 
     return (
@@ -145,7 +175,7 @@ const AssignmentForm = () => {
                         </div>
                         <div className="col-sm-6 form-group">
                             <label htmlFor="name-l">Status</label>
-                            <SoftInput
+                            {/* <SoftInput
                                 type="text"
                                 name="status"
                                 value={addAssignment?.status}
@@ -159,24 +189,23 @@ const AssignmentForm = () => {
                                 }}
                                 style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
-                            />
+                            /> */}
+                            <label htmlFor='inputCategory'></label>
+                            <select
+                                name='status'
+                                id='inputCategory'
+                                className='form-control'
+                                value={addAssignment?.status}
+                                onChange={(e) => handleChange(e)}
+                            // style={{marginLeft:"50%"}}
+                            >
+                                <option key="">Select Status</option>
+                                {categoryDropDown &&
+                                    categoryDropDown?.map((x) => (
+                                        <option key={x.value}>{x.value}</option>
+                                    ))}
+                            </select>
                             {error.status && <p style={{ color: "red", fontSize: "60%" }}>{error.status} </p>}
-
-
-                            {/* <label htmlFor='inputCategory'></label>
-                                    <select
-                                        name='status'
-                                        id='inputCategory'
-                                        className='form-control'
-                                        value={addAssignment?.status}
-                                        onChange={(e) => handleChange(e)}
-                                    // style={{marginLeft:"50%"}}
-                                    >
-                                        {categoryDropDown &&
-                                            categoryDropDown?.map((x) => (
-                                                <option value={x.value}>{x.value}</option>
-                                            ))}
-                                    </select> */}
                         </div>
                     </div>
                     <div style={{ display: "flex" }}>
@@ -203,19 +232,14 @@ const AssignmentForm = () => {
                         </div>
                         <div className="col-sm-6 form-group">
                             <label htmlFor="password">Start Data</label>
-                            <SoftInput
-                                type="date"
-                                name="startDate"
-                                value={addAssignment?.startDate}
-                                onChange={(e) => {
-                                    setError({
-                                        ...error,
-                                        startDate: "",
-                                    });
-                                    handleChange(e);
-                                }}
-                                style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
-                            />
+                            <div>
+                                <DatePicker
+                                    dateFormat="dd-MM-yyyy"
+                                    className='form-control'
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                />
+                            </div>
                             {error.startDate && <p style={{ color: "red", fontSize: "60%" }}>{error.startDate} </p>}
                         </div>
                     </div>
@@ -223,20 +247,14 @@ const AssignmentForm = () => {
 
                         <div className="col-sm-6 form-group">
                             <label htmlFor="mobile">End Date</label>
-                            <SoftInput
-                                type="date"
-                                name="endDate"
-                                value={addAssignment?.endDate}
-                                onChange={(e) => {
-                                    setError({
-                                        ...error,
-                                        endDate: "",
-                                    });
-                                    handleChange(e);
-                                }}
-                                style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
-
-                            />
+                            <div>
+                                <DatePicker
+                                    dateFormat="dd-MM-yyyy"
+                                    className='form-control'
+                                    selected={endDate}
+                                    onChange={(date) => setEndDate(date)}
+                                />
+                            </div>
                             {error.endDate && <p style={{ color: "red", fontSize: "60%" }}>{error.endDate} </p>}
 
                         </div>

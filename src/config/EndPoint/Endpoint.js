@@ -8,6 +8,11 @@ export const EndPoint = {
     USER_VERIFY_EMAIL:'/auth/send-otp' ,
     USER_VERIFY_OTP:'auth/verify-otp',
     USER_FORGOT_PASSWORD:'/auth/forgot-password',
-    ASSIGNMENT_CREATE:'/v1/assignments/create',
-    ASSIGNMENT_GET:'/v1/assignments/get',
+    ASSIGNMENT_CREATE:'assignments/create',
+    ASSIGNMENT_GET:'assignments/get',
+    ASSIGNMENT_UPDATE:'assignments/update',
+    ASSIGNMENT_DELETE:'assignments/delete',
+    TODOS_CREATE:'todos/create',
+    TODOS_GET:'todos/get',
+    TODOS_UPDATE:'todos/update',
 }

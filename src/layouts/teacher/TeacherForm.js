@@ -105,7 +105,7 @@ const TeacherForm = () => {
         }
         if (location?.state) {
             console.log(location?.state, "hhhhhhhhh")
-            ApiPut(`${EndPoint.USER_UPDATE}?id=${location?.state?.id}`, body)
+            ApiPut(`${EndPoint.USER_UPDATE}/${location?.state?.id}`, body)
 
                 .then((res) => {
                     console.log("update", res);
