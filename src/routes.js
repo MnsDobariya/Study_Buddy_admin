@@ -54,7 +54,7 @@ import Addtodos from "layouts/to-dos/Addtodos";
 import Assignment from "layouts/authentication/assignments";
 import TeacherForm from "layouts/teacher/TeacherForm";
 import AssignmentForm from "layouts/authentication/assignments/assignmentForm";
-// import AssignmentList from "layouts/authentication/assignments/assignmentList";
+import AssignmentList from "layouts/authentication/assignments/assignmentList";
 
 
 const routes = [
@@ -221,15 +221,15 @@ const routes = [
     component: <AssignmentForm />,
     noCollapse: true,
   },
-  // {
-  //   // type: "collapse",
-  //   name: "assignment List",
-  //   key: "assignmentlist",
-  //   route: "/assignments/assignmentList",
-  //   icon: <SpaceShip size="12px" />,
-  //   component: <AssignmentList />,
-  //   noCollapse: true,
-  // },
+  {
+    // type: "collapse",
+    name: "assignment List",
+    key: "assignmentlist",
+    route: "/assignments/assignmentList",
+    icon: <SpaceShip size="12px" />,
+    component: <AssignmentList />,
+    noCollapse: true,
+  },
   // {
   //   type: "collapse",
   //   name: "Form3",

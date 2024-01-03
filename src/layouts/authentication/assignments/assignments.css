@@ -33,14 +33,9 @@ body {
 #ads .card-notify-year {
     position: absolute;
     right: 5%;
-    top:4%;
-    background: #ffffff;
     text-align: center;
     color: #fff;
     font-size: 14px;
-    width: 40px;
-    height: 40px;
-    padding: 15px 0 0 0;
 }
 
 .finished {
@@ -122,17 +117,18 @@ body {
 
 .container1 {
 
-    margin-left: 17.5%;
+    margin-left: 14%;
     max-width: 84%;
 }
 
-.card {
+.card-asgn {
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1)0ms;
-    box-shadow: 0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05);
-    width: 100%;
-    border: 1px solid var(--color-three);
+    box-shadow: 0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.125);
+    border: 2px solid var(--color-three);
     margin-bottom: 15%;
     border-radius: 1.25rem;
+    width: 427px;
+    margin-left: 12%;
 }
 
 .lbl {
