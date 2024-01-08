@@ -142,6 +142,19 @@ function SignUp() {
 
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+            
+            const textRegex = /^[A-Za-z\s]+$/;
+          
+            if (name === "FirstName" || name === "LastName") {
+              if (!textRegex.test(value)) {
+                setError({
+                  ...error,
+                  [name]: "Please enter text only",
+                });
+                return; 
+              }
+            }
     setRegFormData({
       ...regFormData,
       [e.target.name]: e.target.value,
@@ -214,11 +227,20 @@ function SignUp() {
                   value={regFormData.Mobile}
                   placeholder="Mobile"
                   onChange={(e) => {
-                    setError({
-                      ...error,
-                      Mobile: ""
-                    })
-                    handleChange(e)
+                    const input = e.target.value;
+                    const regex = /^[0-9\b]+$/; 
+                    if (input === '' || regex.test(input)) {
+                      setError({
+                        ...error,
+                        Mobile: "",
+                      });
+                      handleChange(e);
+                    } else {
+                      setError({
+                        ...error,
+                        Mobile: "Please enter numbers only",
+                      });
+                    }
                   }}
                 />
                 {error.Mobile && <p style={{ color: "red", fontSize: "60%" }}>{error.Mobile} </p>}
