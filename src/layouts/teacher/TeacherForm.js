@@ -27,7 +27,20 @@ const TeacherForm = () => {
         console.log((addTeacher));
     }, [addTeacher])
 
-    const handleChange = (e) => {
+        const handleChange = (e) => {
+            const { name, value } = e.target;
+            
+            const textRegex = /^[A-Za-z\s]+$/;
+          
+            if (name === "firstName" || name === "lastName") {
+              if (!textRegex.test(value)) {
+                setError({
+                  ...error,
+                  [name]: "Please enter text only",
+                });
+                return; 
+              }
+            }
         setAddTeacher({
             ...addTeacher,
             [e.target.name]: e.target.value,
@@ -59,7 +72,7 @@ const TeacherForm = () => {
             error.lastName = "Please LastName Required";
         }
 
-        const mobileRegex = /^\d+$/;
+        const mobileRegex = /^^\+[0-9]{2,3}-[0-9]\d{10}$/;
         if (!addTeacher.phone) {
             error.phone = "Please Mobile Required";
         } else if (!mobileRegex.test(addTeacher.phone)) {
@@ -253,13 +266,22 @@ const TeacherForm = () => {
                                     name="phone"
                                     value={addTeacher?.phone}
                                     placeholder="Mobile No"
-                                    onChange={(e) => {
-                                        setError({
+                                     onChange={(e) => {
+                                        const input = e.target.value;
+                                        const regex = /^[0-9\b]+$/; 
+                                        if (input === '' || regex.test(input)) {
+                                          setError({
                                             ...error,
                                             phone: "",
-                                        });
-                                        handleChange(e);
-                                    }}
+                                          });
+                                          handleChange(e);
+                                        } else {
+                                          setError({
+                                            ...error,
+                                            phone: "Please enter numbers only",
+                                          });
+                                        }
+                                      }}
                                     style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
                                 />

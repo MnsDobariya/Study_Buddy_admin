@@ -55,6 +55,7 @@ import Assignment from "layouts/authentication/assignments";
 import TeacherForm from "layouts/teacher/TeacherForm";
 import AssignmentForm from "layouts/authentication/assignments/assignmentForm";
 import AssignmentList from "layouts/authentication/assignments/assignmentList";
+import Calendar from "layouts/authentication/calendar/calendar";
 
 
 const routes = [
@@ -87,22 +88,40 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "To_dos",
-    key: "to_dos",
+    name: "To-dos",
+    key: "to-dos",
     route: "/todos",
     icon: <Office size="12px" />,
-    component: <To_dos />,
+    component: <To-dos />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Calendar",
+    key: "calendar",
+    route: "/calendar",
+    icon: <Office size="12px" />,
+    component: <Calendar />,
     noCollapse: true,
   },
   {
     // type: "collapse",
-    name: "Add To_dos",
+    name: "Add To-dos",
     key: "addtodos",
     route: "/todos/addtodos",
     icon: <Office size="12px" />,
     component: <Addtodos />,
     noCollapse: true,
   },
+  {
+    type: "collapse",
+    name: "Resources",
+    key: "resources",
+    route: "/resources",
+    icon: <Office size="12px" />,
+    component: <Resources />,
+    noCollapse: true,
+  },
   {
     type: "collapse",
     name: "Billing",
@@ -143,7 +162,6 @@ const routes = [
     noCollapse: true,
   },
   {
-    type: "collapse",
     name: "Sign In",
     key: "sign-in",
     route: "/authentication/sign-in",
@@ -152,7 +170,6 @@ const routes = [
     noCollapse: true,
   },
   {
-    type: "collapse",
     name: "Sign Up",
     key: "sign-up",
     route: "/authentication/sign-up",
@@ -160,6 +177,7 @@ const routes = [
     component: <SignUp />,
     noCollapse: true,
   },
+  
   {
     type: "collapse",
     name: "Forgort Password",

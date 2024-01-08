@@ -5,11 +5,15 @@ import SoftInput from 'components/SoftInput';
 import { ApiPost } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
 import React, { useEffect, useState } from 'react'
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from "react-datepicker";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ApiPut } from 'config/Api/ApiData';
+import { DatePicker, DateRangePicker, LocalizationProvider } from '@mui/x-date-pickers-pro';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
+import dayjs from 'dayjs';
 
 
 const categoryDropDown = [
@@ -17,6 +21,8 @@ const categoryDropDown = [
     { label: "Pending", value: "Pending" },
     { label: "Finished", value: "Finished" },
 ];
+const today = dayjs();
+const tomorrow = dayjs().add(1, 'day');
 
 const AssignmentForm = () => {
 
@@ -53,9 +59,9 @@ const AssignmentForm = () => {
     };
 
     useEffect(() => {
-        // if (location?.state) {
-        //     setAddAssignment(location?.state);
-        // }
+        if (location?.state) {
+            setAddAssignment(location?.state);
+        }
         console.log(location?.state);
     }, []);
 
@@ -97,9 +103,8 @@ const AssignmentForm = () => {
         }
 
         if (location?.state) {
-            console.log(location?.state, "hhhhhhhhh")
-            ApiPut(`${EndPoint.ASSIGNMENT_UPDATE}?id=${location?.state?.id}`, body,
-                { headers: { "Authorization": `Bearer ${token}` } })
+            ApiPut(`${EndPoint.ASSIGNMENT_UPDATE}/${location?.state?.id}`, body)
+
                 .then((res) => {
                     console.log("update", res);
                     toast.success("Update successfully");
@@ -139,8 +144,8 @@ const AssignmentForm = () => {
 
     return (
         <>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
             <SoftBox mt={4} mb={1}>
-
                 <div className="container" style={{ marginTop: "8%", marginLeft: "21.5%" }}>
                     {/* <form className="add-assignments"> */}
                     {/* <div className="row jumbotron box2"> */}
@@ -230,34 +235,16 @@ const AssignmentForm = () => {
                             {error.assignmentSummary && <p style={{ color: "red", fontSize: "60%" }}>{error.assignmentSummary} </p>}
 
                         </div>
-                        <div className="col-sm-6 form-group">
-                            <label htmlFor="password">Start Data</label>
-                            <div>
-                                <DatePicker
-                                    dateFormat="dd-MM-yyyy"
-                                    className='form-control'
-                                    selected={startDate}
-                                    onChange={(date) => setStartDate(date)}
-                                />
-                            </div>
+                        <div className="col-sm-6 form-group mt-2">
+                            <label htmlFor="password"></label>
+                          
+                                <DateRangePicker defaultValue={[today, tomorrow]} minDate={tomorrow} />
                             {error.startDate && <p style={{ color: "red", fontSize: "60%" }}>{error.startDate} </p>}
                         </div>
                     </div>
                     <div style={{ display: "flex" }}>
 
-                        <div className="col-sm-6 form-group">
-                            <label htmlFor="mobile">End Date</label>
-                            <div>
-                                <DatePicker
-                                    dateFormat="dd-MM-yyyy"
-                                    className='form-control'
-                                    selected={endDate}
-                                    onChange={(date) => setEndDate(date)}
-                                />
-                            </div>
-                            {error.endDate && <p style={{ color: "red", fontSize: "60%" }}>{error.endDate} </p>}
-
-                        </div>
+                    
                         <div className="col-sm-6 form-group">
                             <label htmlFor="mobile">Project Description</label>
                             <SoftInput
@@ -283,8 +270,9 @@ const AssignmentForm = () => {
 
 
                         <SoftButton className="add-teacher" variant="gradient" color="info" fullWidth onClick={createAssignment} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
-                            Add Assignment
-                        </SoftButton>
+                            {/* Add Assignment */}
+                        {location?.state ? "Update" : "Add"} Game
+                    </SoftButton> 
                         <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={() => { navigate('/authentication/assignments') }} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
                             Cancel
                         </SoftButton>
@@ -294,6 +282,7 @@ const AssignmentForm = () => {
                 </div>
 
             </SoftBox >
+            </LocalizationProvider>
         </>
     )
 }

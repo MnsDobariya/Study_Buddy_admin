@@ -15,4 +15,12 @@ export const EndPoint = {
     TODOS_CREATE:'todos/create',
     TODOS_GET:'todos/get',
     TODOS_UPDATE:'todos/update',
+    EVENT_CREATE:'/event/create',
+    EVENT_GET:'/event/get',
+    EVENT_PUT:'/event/update',
+    RESOURCES_CREATE:'resources/create',
+    RESOURCES_GET:'resources/get',
+    RESOURCES_UPDATE:'resources/update',
+    PROFILE_GET:'users/teacher/me',
+    PROFILE_UPDATE:'users/teacher/updateme',
 }
