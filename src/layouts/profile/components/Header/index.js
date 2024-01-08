@@ -39,31 +39,14 @@ import { Tooltip } from "@mui/material";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Header = ({ userProfile,imagePreview,profilePicture,updateData}) => {
-  // console.log("userProfileuserProfile",userProfile);
-  // console.log("userProfileuserProfile",imagePreview);
+const Header = ({userProfile,imagePreview,handleImageChange}) => {
+  
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-  // const [userProfile, setUserProfile] = useState();
 
-
-
-  // const token = localStorage.getItem("token");
-
-  // const getProfileUser = () => {
-  //   axios.get("http://localhost:3000/api/v1/users/teacher/me", { headers: { "Authorization": `Bearer ${token}` } })
-  //     .then((res) => {
-  //       // console.log(res, "qqqqqqqqq");
-  //       setUserProfile(res?.data)
-
-  //     })
-  // }
-
-  // useEffect(() => {
-  //   getProfileUser("")
-  // }, [])
-
-
+  const handleClick = () => {
+     document.getElementById("imageUpload");
+  };
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -150,10 +133,8 @@ const Header = ({ userProfile,imagePreview,profilePicture,updateData}) => {
             </SoftTypography> */}
             <SoftAvatar
               // src={burceMars}
-              // src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profileImage}`}
-              src={imagePreview ? imagePreview :`http://localhost:3000/${profilePicture}`}
+              src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profilePicture}`}
               alt="profile-image"
-              // style={{width:50,height:50}}
               variant="rounded"
               size="xl"
               shadow="sm"
@@ -162,25 +143,28 @@ const Header = ({ userProfile,imagePreview,profilePicture,updateData}) => {
             {/* <label htmlFor="imageUpload" className="button">
               <span className="">Upload</span>
             </label> */}
-            {/* <input
+            <input
               type="file"
               id="imageUpload"
               style={{ display: "none" }}
               onChange={(e) => {
                 handleImageChange(e);
               }}
-            /> */}
+            />
+            <SoftTypography component={Link}  variant="body2" color="secondary">
+              <Tooltip placement="top" onClick={()=> handleClick()} >
+                <Icon>edit</Icon>
+              </Tooltip>
+            </SoftTypography>
           </Grid>
 
           <Grid item>
             <SoftBox height="100%" mt={0.5} lineHeight={1}>
               <SoftTypography variant="h5" fontWeight="medium">
                 {/* Alex Thompson */}
-                {userProfile?.firstName}
               </SoftTypography>
               <SoftTypography variant="button" color="text" fontWeight="medium">
                 {/* CEO / Co-Founder */}
-                {userProfile?.lastName}
               </SoftTypography>
             </SoftBox>
           </Grid>

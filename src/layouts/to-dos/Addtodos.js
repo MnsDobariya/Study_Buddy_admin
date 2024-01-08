@@ -5,10 +5,13 @@ import SoftInput from "components/SoftInput";
 import '../to-dos/Addtodos.css';
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from "react-datepicker";
 import { ApiPost } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
+import { ApiPut } from "config/Api/ApiData";
+import { toast } from "react-toastify";
+import hotkeys from "hotkeys-js";
 
 
 
@@ -19,6 +22,7 @@ const categoryDropDown = [
 ];
 
 const Addtodos = () => {
+    const location = useLocation();
     const [addTodos, setAddTodos] = useState({
         // deadlinedate: "",
         task: "",
@@ -28,11 +32,10 @@ const Addtodos = () => {
     const [startDate, setStartDate] = useState(new Date());
     // console.log(startDate, "startDate");
 
-    const location = useLocation();
+  
     
 
     const [error, setError] = useState({
-        // deadlinedate: "",
         task: "",
         portable: "",
         description: ""
@@ -49,27 +52,36 @@ const Addtodos = () => {
         })
     }
 
-    console.log(location?.state,"aqaqaqaqaqa");
-    // useEffect(() => {
-    // })
+    // console.log(location?.state,"aqaqaqaqaqa");
+    useEffect(() => {
+        if(location?.state){
+            setAddTodos(location?.state)
+        }
+    },[location])
 
     const Addtodos = () => {
         const error = {};
 
-        // if (!addTodos.deadlinedate) {
-        //     error.deadlinedate = "Please Date Required";
-        // }
+        if (!addTodos.deadlinedate) {
+            error.deadlinedate = "Please Date Required";
+        }
 
+        const taskRegex = /^[a-zA-Z]{2,40}([a-zA-Z]{2,40})+$/;
         if (!addTodos.task) {
             error.task = "Please Task Required";
+        }else if(!taskRegex.test(!addTodos?.task)){
+            error.task = "Invalid Task";
         }
 
         if (!addTodos.portable) {
             error.portable = "Please Portable Required";
         }
 
+        const descriptionRegex  = /^[a-zA-Z]{2,40}([a-zA-Z]{2,40})+$/;
         if (!addTodos.description) {
             error.description = "Please Description Required";
+        }else if(!descriptionRegex.test(!addTodos.description)){
+            error.description = "Invalid Description";
         }
 
         if (error.deadlinedate || error.task || error.portable || error.description) {
@@ -92,7 +104,15 @@ const Addtodos = () => {
         //         console.log(res, "res");
         //     })
 
-
+        if(location?.state){
+            // console.log("location?.state",location?.state);
+            ApiPut(`${EndPoint.TODOS_UPDATE}/${location?.state?.id}`,body)
+            .then((res) => {
+                // console.log("updateres",res);
+                toast.success("Update Successfully");
+                navigate("/todos");
+            });
+        }else{
         ApiPost(`${EndPoint.TODOS_CREATE}`, body,
             { headers: { "Authorization": `Bearer ${token}` } })
             .then((res) => {
@@ -104,9 +124,10 @@ const Addtodos = () => {
                         description: ""
                     })
                 }
-                navigate("/todos")
+                navigate("/todos");
+                toast.success("Add To-dos Successfully");
             })
-
+        }
     }
 
     const onKeyBtn = (e) => {
@@ -118,6 +139,16 @@ const Addtodos = () => {
     const cancelBtn = () => {
         navigate("/todos");
     }
+
+    useEffect(() => {
+        hotkeys("alt + c",(e) => {
+            e.preventDefault();
+            navigate("/todos");
+        });
+        return () => {
+            hotkeys.unbind("alt + c");
+        }
+    })
 
     return (
         <>
@@ -143,7 +174,7 @@ const Addtodos = () => {
                         <div className="form-row" style={{ display: "flex", marginTop: "6%", paddingLeft: "41px", paddingRight: "41px" }}>
                             <div className="col-sm-6 form-group">
                                 <label htmlFor="name-f" style={{ fontWeight: "500" }} >DeadlineDate</label>
-                                {/* <SoftInput
+                                <SoftInput
                                     type="date"
                                     name="deadlinedate"
                                     value={addTodos?.deadlinedate}
@@ -154,19 +185,27 @@ const Addtodos = () => {
                                             deadlinedate: ""
                                         })
                                         handleChange(e)
-                                    }} */}
+                                    }}
+                                    />
+                                    {/* <DatePicker
+                                    className="form-control"
+                                    selected={startDate}
+                                    onChange={(date) =>
+                                        setStartDate(date)
+                                    }
+                                    /> */}
 
                                 {/* // style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }} */}
                                 {/* /> */}
                                 <div>
-                                    <DatePicker
+                                    {/* <DatePicker
                                         dateFormat="dd-MM-yyyy"
                                         className="form-control"
                                         selected={startDate}
                                         onChange={(date) =>
                                             setStartDate(date)
                                         }
-                                    />
+                                    /> */}
                                 </div>
                                 {/* {error.deadlinedate && <p>{error.deadlinedate}</p>} */}
                             </div>
