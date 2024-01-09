@@ -37,11 +37,25 @@ const Calendar = () => {
     }
 
     const handleClose = () => {
-        getCalendarRecord()
-        setOpen(false)
+        getCalendarRecord();
+        setOpen(false);
     }
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        const textRegex = /^[A-Za-z\s]+$/;
+
+        if (name === "title") {
+            if (!textRegex.test(value)) {
+                setError({
+                    ...error,
+                    [name]: "",
+                });
+                return;
+            }
+        }
+
         setCalendarEvent({
             ...calendarEvent,
             [e.target.name]: e.target.value
@@ -50,19 +64,18 @@ const Calendar = () => {
     const getCalendarRecord = () => {
         ApiGet(`${EndPoint.EVENT_GET}`)
             .then((res) => {
-                let updated = res?.data?.map((x) => ({
-                    ...x,
-                    title: x?.Title,
-                    start: x?.StartDate,
-                    end: x?.EndDate
-                }))
+                // let updated = res?.data?.map((x) => ({
+                //     ...x,
+                //     title: x?.Title,
+                //     start: x?.StartDate,
+                //     end: x?.EndDate
+                // }))
 
                 setCalendarEvent(updated);
             })
     };
     useEffect(() => {
         getCalendarRecord();
-
     }, [])
 
     const handleClick = (e) => {
@@ -110,18 +123,21 @@ const Calendar = () => {
                         startdate: "",
                         enddate: ""
                     })
-                    getCalendarRecord()
-                    navigate('/calendar')
-                    handleClose()
-                    toast.success('Add Event Successfully')
+                    getCalendarRecord();
+                    navigate('/calendar');
+                    handleClose();
+                    toast.success('Add Event Successfully');
                 }
             })
     }
 
     const onKeyBtn = (e) => {
         if(e.key === "Enter"){
-           updateEvent();
-           Save(); 
+            if (calendarEvent?.id) {
+                updateEvent();
+            } else {
+                Save();
+            }
         }
     }
 
@@ -302,6 +318,7 @@ const Calendar = () => {
                                 <SoftInput
                                     type="date"
                                     name="enddate"
+                                    placeholder="dd/MM/yyyy"
                                     value={calendarEvent?.enddate}
                                     onChange={(e) => {
                                         handleChange(e);
