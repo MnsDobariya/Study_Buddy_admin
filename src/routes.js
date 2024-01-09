@@ -41,7 +41,6 @@ import Cube from "examples/Icons/Cube";
 import Teacher from "layouts/teacher/Teacher";
 import ForgotPassword from "layouts/authentication/forgot-password";
 import EmailVerify from "layouts/authentication/verify-email";
-import To_dos from "layouts/to-dos/To_dos";
 import Addtodos from "layouts/to-dos/Addtodos";
 // import Form from "layouts/authentication/form";
 // import Assignment from "layouts/authentication/assignments";
@@ -56,6 +55,8 @@ import TeacherForm from "layouts/teacher/TeacherForm";
 import AssignmentForm from "layouts/authentication/assignments/assignmentForm";
 import AssignmentList from "layouts/authentication/assignments/assignmentList";
 import Calendar from "layouts/authentication/calendar/calendar";
+import Todos from "layouts/to-dos/Todos";
+import Resources from "layouts/resources/Resources";
 
 
 const routes = [
@@ -92,7 +93,7 @@ const routes = [
     key: "to-dos",
     route: "/todos",
     icon: <Office size="12px" />,
-    component: <To-dos />,
+    component: <Todos />,
     noCollapse: true,
   },
   {
@@ -120,8 +121,8 @@ const routes = [
     route: "/resources",
     icon: <Office size="12px" />,
     component: <Resources />,
-    noCollapse: true,
-  },
+    noCollapse:true,
+},
   {
     type: "collapse",
     name: "Billing",
