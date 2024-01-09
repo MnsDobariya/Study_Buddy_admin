@@ -17,6 +17,8 @@ import { useNavigate } from 'react-router-dom';
 import { ApiGet } from 'config/Api/ApiData';
 import { ApiPut } from 'config/Api/ApiData';
 import { object } from 'prop-types';
+import hotkeys from 'hotkeys-js';
+import '../calendar/calendar.css';
 
 
 const Calendar = () => {
@@ -90,7 +92,7 @@ const Calendar = () => {
                 handleClose();
                 getCalendarRecord();
             });
-            
+
     }
     const Save = () => {
 
@@ -115,6 +117,23 @@ const Calendar = () => {
                 }
             })
     }
+
+    const onKeyBtn = (e) => {
+        if(e.key === "Enter"){
+           updateEvent();
+           Save(); 
+        }
+    }
+
+    useEffect(() => {
+        hotkeys("alt + c",(e) => {
+            e.preventDefault();
+            handleClose();
+        });
+        return () => {
+            hotkeys.unbind("alt + c");
+        }
+    })
 
     return (
         <>
@@ -147,7 +166,7 @@ const Calendar = () => {
                     />
                 </form>
             </div >
-            <SoftBox mt={4} mb={1}>
+            {/* <SoftBox mt={4} mb={1}>
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -235,6 +254,80 @@ const Calendar = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </Modal>
+            </SoftBox> */}
+            <SoftBox mt={4} mb={1}>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <div className="container" style={{ marginTop: "10%" }}>
+                        <form className="calender">
+                            {/* <div className="row jumbotron box8"> */}
+                            <div className="col-sm-12 mx-t3 mb-4">
+                                <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%", color: "#344767" }}>
+                                    Event
+                                </h3>
+                                {/* <h2 className="text-center" style={{ paddingTop: "5%", color: "#344767" }}></h2> */}
+                            </div>
+                            <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+                                <label htmlFor="name-f" style={{ color: "#344767" }}>Title</label>
+                                <SoftInput
+                                    type="text"
+                                    name="title"
+                                    value={calendarEvent?.title}
+                                    placeholder="Title"
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                    }}
+                                />
+                            </div>
+                            <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+                                <label htmlFor="name-l" style={{ color: "#344767" }}>Start</label>
+                                <SoftInput
+                                    type="date"
+                                    name="startdate"
+                                    value={calendarEvent?.startdate}
+                                    placeholder="dd/MM/yyyy"
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                    }}
+                                />
+                            </div>
+                            <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+                                <label htmlFor="file" style={{ color: "#344767" }}>End</label>
+                                <SoftInput
+                                    type="date"
+                                    name="enddate"
+                                    value={calendarEvent?.enddate}
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                    }}
+                                    onKeyPress={(e) => onKeyBtn(e)}
+                                />
+                            </div>
+                            <FormGroup style={{ marginTop: "0%", marginLeft: "13%" }}>
+                                <FormControlLabel control={<Checkbox />} label="All Day Event?" />
+                            </FormGroup>
+                            <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%",marginTop:"4%" }}>
+                                {calendarEvent?.id ?
+                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" }} onClick={updateEvent}>
+                                        update
+                                    </SoftButton> :
+                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" }} onClick={Save}>
+                                        Save
+                                    </SoftButton>
+                                }
+                                <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" }} onClick={handleClose}>
+                                    cancle
+                                </SoftButton>
+                            </SoftBox>
+
+                            {/* </div> */}
+                        </form>
                     </div>
                 </Modal>
             </SoftBox>

@@ -11,9 +11,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ApiPut } from 'config/Api/ApiData';
 import { DatePicker, DateRangePicker, LocalizationProvider } from '@mui/x-date-pickers-pro';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 
 
 const categoryDropDown = [
@@ -21,8 +21,8 @@ const categoryDropDown = [
     { label: "Pending", value: "Pending" },
     { label: "Finished", value: "Finished" },
 ];
-const today = dayjs();
-const tomorrow = dayjs().add(1, 'day');
+// const today = dayjs();
+// const tomorrow = dayjs().add(1, 'day');
 
 const AssignmentForm = () => {
 
@@ -144,7 +144,7 @@ const AssignmentForm = () => {
 
     return (
         <>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs}> */}
             <SoftBox mt={4} mb={1}>
                 <div className="container" style={{ marginTop: "8%", marginLeft: "21.5%" }}>
                     {/* <form className="add-assignments"> */}
@@ -238,7 +238,7 @@ const AssignmentForm = () => {
                         <div className="col-sm-6 form-group mt-2">
                             <label htmlFor="password"></label>
                           
-                                <DateRangePicker defaultValue={[today, tomorrow]} minDate={tomorrow} />
+                                {/* <DateRangePicker defaultValue={[today, tomorrow]} minDate={tomorrow} /> */}
                             {error.startDate && <p style={{ color: "red", fontSize: "60%" }}>{error.startDate} </p>}
                         </div>
                     </div>
@@ -282,7 +282,7 @@ const AssignmentForm = () => {
                 </div>
 
             </SoftBox >
-            </LocalizationProvider>
+            {/* </LocalizationProvider> */}
         </>
     )
 }
