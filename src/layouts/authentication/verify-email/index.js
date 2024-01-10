@@ -136,30 +136,30 @@ function EmailVerify() {
                 Email
               </SoftTypography>
             </SoftBox>
-            <SoftBox style={{ display: "flex"}}>
-
-              {/* <FontAwesomeIcon icon={faEnvelope} style={{marginTop:"3%"}}/> */}
-              <SoftInput
-                type="email"
-                name="email"
-                value={vrfyEmail.email}
-                placeholder="Email"
-                onChange={(e) => {
-                  setError({
-                    ...error,
-                    email: "",
-                  })
-                  handleChange(e);
-                }}
-                onKeyPress={(e) => onKeyBtn(e)}
-              />
+            <SoftBox>
+              <div style={{ display: "flex" }}>
+                {/* <FontAwesomeIcon icon={faEnvelope} style={{marginTop:"3%"}}/> */}
+                <SoftInput
+                  type="email"
+                  name="email"
+                  value={vrfyEmail.email}
+                  placeholder="Email"
+                  onChange={(e) => {
+                    setError({
+                      ...error,
+                      email: "",
+                    })
+                    handleChange(e);
+                  }}
+                  onKeyPress={(e) => onKeyBtn(e)}
+                />
+                {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email}</p>}
+                <SoftButton variant="gradient" color="info" onClick={getOTP} style={{position:"absolute",left:"39%",width:"100px"}}>
+                  Get OTP
+                </SoftButton>
+              </div>
             </SoftBox>
-            {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email}</p>}
           </SoftBox>
-          <SoftButton variant="gradient" color="info" onClick={getOTP}>
-            Get OTP
-          </SoftButton>
-
           <SoftBox mb={1} >
             <SoftBox mb={1} ml={0.5}>
               <SoftTypography component="label" variant="caption" fontWeight="bold">
@@ -188,7 +188,7 @@ function EmailVerify() {
           </SoftBox>
 
         </SoftBox>
-      </CoverLayout>
+      </CoverLayout >
       <ToastContainer />
     </>
   );

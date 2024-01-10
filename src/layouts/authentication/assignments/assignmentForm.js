@@ -131,10 +131,9 @@ const AssignmentForm = () => {
                         navigate('/authentication/assignments');
                         toast.success(<p style={{ fontSize: "78%" }}>{"Add Assignment Successfully"}</p>);
                     }
-
                 }).catch((error) => {
                     console.log("error", error);
-                    if (error.error === "assignment already exists") {
+                    if (error.error === "assignments already exists") {
                         toast.error(<p style={{ fontSize: "80%" }}>{"Assignment Already Registered"}</p>, {
                             position: "top-center",
                         });
@@ -303,7 +302,7 @@ const AssignmentForm = () => {
 
                         <SoftButton className="add-teacher" variant="gradient" color="info" fullWidth onClick={createAssignment} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
                             {/* Add Assignment */}
-                            {location?.state ? "Update" : "Add"} Game
+                            {location?.state ? "Update" : "Add"} 
                         </SoftButton>
                         <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={() => { navigate('/authentication/assignments') }} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
                             Cancel

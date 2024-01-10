@@ -1,6 +1,6 @@
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { List, Menu, MenuItem, TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, Menu, MenuItem, TextField } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import axios from 'axios';
 import SoftButton from 'components/SoftButton';
@@ -61,7 +61,9 @@ const AssignmentList = () => {
         setAnchorEl(null);
         setSelectedRowId(null);
     };
-
+    const handlePopupClose = () => {
+        setOpenPopUp(false);
+    }
 
     const columns = [
         { field: "index", headerName: "Id", width: 90 },
@@ -118,7 +120,6 @@ const AssignmentList = () => {
         handleClose();
     };
 
-
     return (
         <>
             <div className="mt-5" style={{ marginLeft: "20%" }}>
@@ -164,16 +165,43 @@ const AssignmentList = () => {
                     />
                 </div>
 
-                {/* <div className="search" >
-                <TextField
-                    id="outlined-basic"
-                    onChange={inputHandler}
-                    variant="outlined"
-                    label="Search"
-                    style={{}}
-                />
-            </div >
-            <List input={inputText} /> */}
+                <Dialog
+                open={openPopUp}
+                onClose={handlePopupClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                sx={{
+                    "& .MuiDialog-container": {
+                        "& .MuiPaper-root": {
+                            width: "100%",
+                            maxWidth: "500px",  // Set your width here
+                        },
+                    },
+                }}
+            >
+                <DialogTitle id="alert-dialog-title">
+                    Delete
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Are you sure Delete?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    {/* <Button className="btn btn-primary" onClick={() => {
+                        deleteRecord(deleteId)
+                        handleClose(true)
+                    }}>Yes</Button> */}
+                    {/* <Button className="btn btn-secondary" onClick={handleClose} autoFocus>
+                        No
+                    </Button> */}
+                    <button type="button" className="btn btn-danger" onClick={() => {
+                        deleteRecord(selectedRowId)
+                        handlePopupClose(true)
+                    }}>Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} >No</button>
+                </DialogActions>
+            </Dialog>
 
         </>
     )

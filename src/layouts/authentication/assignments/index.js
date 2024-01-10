@@ -16,6 +16,7 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { ApiDelete } from "config/Api/ApiData";
 import { toast } from "react-toastify";
+import { element } from "prop-types";
 
 const Assignment = () => {
 
@@ -64,7 +65,8 @@ const Assignment = () => {
 
 
 
-    const deleteRecords = (id) => {
+    const 
+    deleteRecords = (id) => {
         axios.delete(`http://localhost:3000/api/v1/assignments/delete/${id}`)
             .then((res) => {
                 // console.log(res,"delete ass");
@@ -74,26 +76,26 @@ const Assignment = () => {
     }
 
     const handleUpdate = (item) => {
-        const selectedData = assignmentRecord?.find((item) => item?.id )
-        navigate('/assignments/assignmentform', { state: selectedData })
+        const selectedData = assignmentRecord?.find((item) => item?.id );
+        navigate('/assignments/assignmentform', { state: selectedData });
     }
 
     const handleDelete = (item) => {
-        // console.log(item.id, "helllooooooo");
         deleteRecords(item.id);
-        // setOpenPopUp(false);
-        handleClose();
+          handleClose();
     };
 
     const renderMenu = (item) => {
+
         return (
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={() => handleDelete(item)}>Delete</MenuItem>
+                <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
                 <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
+            
                 {/* Add more menu items for other actions if needed */}
             </Menu>
         );
@@ -131,7 +133,7 @@ const Assignment = () => {
                                             <div className="assignment" >
                                                 <div className="card-asgn">
                                                     <div>
-                                                        <div className="card-notify-year mt-4"><FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e)} style={{ marginLeft: "5%", color: "black" }} /></div>
+                                                        <div className="card-notify-year mt-4"><FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e,item)} style={{ marginLeft: "5%", color: "black" }} /></div>
                                                         {renderMenu(item)}
 
                                                         <h5 className="mt-2 p-4" style={{ textAlign: "center" }}><b>{item?.title}</b></h5>
@@ -150,7 +152,7 @@ const Assignment = () => {
                                                             <label>FM</label>
                                                         </div>
                                                         <label className={item.status === 'Pending' ? 'pending' : item.status === 'Started' ? 'started' : 'finished'}>
-                                                            <span className=''><b>{item?.status}</b></span>
+                                                            <span style={{textAlign:"center",}}><b>{item?.status}</b></span>
                                                         </label>
                                                         <label className='date'>
                                                             <span className=''><p>{formatDate(item?.endDate)}</p></span>
