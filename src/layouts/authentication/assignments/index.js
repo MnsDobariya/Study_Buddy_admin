@@ -73,19 +73,17 @@ const Assignment = () => {
             })
     }
 
-    const handleUpdate = (updateId) => {
-        const selectedData = assignmentRecord?.find((element) => element?.id == updateId)
+    const handleUpdate = (item) => {
+        const selectedData = assignmentRecord?.find((item) => item?.id )
         navigate('/assignments/assignmentform', { state: selectedData })
     }
 
     const handleDelete = (item) => {
-        console.log(item.id, "helllooooooo");
+        // console.log(item.id, "helllooooooo");
         deleteRecords(item.id);
         // setOpenPopUp(false);
         handleClose();
     };
-
-
 
     const renderMenu = (item) => {
         return (

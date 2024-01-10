@@ -11,7 +11,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ApiPut } from 'config/Api/ApiData';
 import { DatePicker, DateRangePicker, LocalizationProvider } from '@mui/x-date-pickers-pro';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import hotkeys from 'hotkeys-js';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 // import dayjs from 'dayjs';
 
@@ -141,6 +142,16 @@ const AssignmentForm = () => {
                 });
         }
     }
+    useEffect(() => {
+        hotkeys("alt + c", (e) => {
+            e.preventDefault();
+            navigate('/authentication/assignments');
+        });
+        return () => {
+            hotkeys.unbind("alt + c");
+        }
+
+    })
 
     return (
         <>
@@ -236,15 +247,36 @@ const AssignmentForm = () => {
 
                         </div>
                         <div className="col-sm-6 form-group mt-2">
-                            <label htmlFor="password"></label>
-                          
-                                {/* <DateRangePicker defaultValue={[today, tomorrow]} minDate={tomorrow} /> */}
+                            <label htmlFor="date"></label>
+                            <SoftInput
+                                type="date"
+                                name="startDate"
+                                value={addAssignment?.startDate}
+                                placeholder="dd/MM/yyyy"
+                                onChange={(e) => {
+                                    handleChange(e);
+                                }}
+                            />
+                            {/* <DateRangePicker defaultValue={[today, tomorrow]} minDate={tomorrow} /> */}
                             {error.startDate && <p style={{ color: "red", fontSize: "60%" }}>{error.startDate} </p>}
                         </div>
                     </div>
                     <div style={{ display: "flex" }}>
+                    <div className="col-sm-6 form-group mt-2">
+                            <label htmlFor="date"></label>
+                            <SoftInput
+                                type="date"
+                                name="endDate"
+                                value={addAssignment?.endDate}
+                                placeholder="dd/MM/yyyy"
+                                onChange={(e) => {
+                                    handleChange(e);
+                                }}
+                            />
+                            {/* <DateRangePicker defaultValue={[today, tomorrow]} minDate={tomorrow} /> */}
+                            {error.startDate && <p style={{ color: "red", fontSize: "60%" }}>{error.startDate} </p>}
+                        </div>
 
-                    
                         <div className="col-sm-6 form-group">
                             <label htmlFor="mobile">Project Description</label>
                             <SoftInput
@@ -271,8 +303,8 @@ const AssignmentForm = () => {
 
                         <SoftButton className="add-teacher" variant="gradient" color="info" fullWidth onClick={createAssignment} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
                             {/* Add Assignment */}
-                        {location?.state ? "Update" : "Add"} Game
-                    </SoftButton> 
+                            {location?.state ? "Update" : "Add"} Game
+                        </SoftButton>
                         <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={() => { navigate('/authentication/assignments') }} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
                             Cancel
                         </SoftButton>

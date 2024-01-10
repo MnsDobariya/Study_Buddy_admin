@@ -13,7 +13,6 @@ import { Save } from '@mui/icons-material';
 import { ApiPost } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { ApiGet } from 'config/Api/ApiData';
 import { ApiPut } from 'config/Api/ApiData';
 import { object } from 'prop-types';
@@ -29,11 +28,16 @@ const Calendar = () => {
         enddate: ""
     });
 
-    const [open, setOpen] = useState()
-    const navigate = useNavigate();
+    const [open, setOpen] = useState();
+
+    const [error, setError] = useState({
+        title: "",
+        startdate: "",
+        enddate: ""
+    })
 
     const handleOpen = () => {
-        setOpen(true)
+        setOpen(true);
     }
 
     const handleClose = () => {
@@ -55,7 +59,6 @@ const Calendar = () => {
                 return;
             }
         }
-
         setCalendarEvent({
             ...calendarEvent,
             [e.target.name]: e.target.value
@@ -64,13 +67,12 @@ const Calendar = () => {
     const getCalendarRecord = () => {
         ApiGet(`${EndPoint.EVENT_GET}`)
             .then((res) => {
-                // let updated = res?.data?.map((x) => ({
-                //     ...x,
-                //     title: x?.Title,
-                //     start: x?.StartDate,
-                //     end: x?.EndDate
-                // }))
-
+                let updated = res?.data?.map((x) => ({
+                    ...x,
+                    title: x?.Title,
+                    start: x?.StartDate,
+                    end: x?.EndDate
+                }))
                 setCalendarEvent(updated);
             })
     };
@@ -78,8 +80,8 @@ const Calendar = () => {
         getCalendarRecord();
     }, [])
 
-    const handleClick = (e) => {
 
+    const handleClick = (e) => {
         const data = { ...e?.event?._def?.extendedProps }
         data.id = e?.event?._def?.publicId
 
@@ -89,23 +91,23 @@ const Calendar = () => {
             enddate: data?.EndDate,
             id: data?.id
         })
-        handleOpen();
+        handleOpen(true);
     }
 
     const updateEvent = () => {
+
         const body = {
             Title: calendarEvent?.title,
             StartDate: calendarEvent?.startdate,
-            EndDate: calendarEvent?.enddate
+            EndDate: calendarEvent?.enddate,
         }
-        ApiPut(`${EndPoint.EVENT_PUT}/${calendarEvent?.id}`, body)
 
+        ApiPut(`${EndPoint.EVENT_PUT}/${calendarEvent?.id}`, body)
             .then((res) => {
                 toast.success("Update successfully");
                 handleClose();
                 getCalendarRecord();
             });
-
     }
     const Save = () => {
 
@@ -124,7 +126,6 @@ const Calendar = () => {
                         enddate: ""
                     })
                     getCalendarRecord();
-                    navigate('/calendar');
                     handleClose();
                     toast.success('Add Event Successfully');
                 }
@@ -132,7 +133,7 @@ const Calendar = () => {
     }
 
     const onKeyBtn = (e) => {
-        if(e.key === "Enter"){
+        if (e.key === "Enter") {
             if (calendarEvent?.id) {
                 updateEvent();
             } else {
@@ -142,13 +143,15 @@ const Calendar = () => {
     }
 
     useEffect(() => {
-        hotkeys("alt + c",(e) => {
+        hotkeys("alt + c", (e) => {
             e.preventDefault();
             handleClose();
         });
+
         return () => {
             hotkeys.unbind("alt + c");
         }
+
     })
 
     return (
@@ -175,104 +178,14 @@ const Calendar = () => {
                         weekends={true}
                         events={calendarEvent}
                         eventClick={(data) => {
-                            handleClick(data)
+                            handleClick(data);
                         }
                         }
 
                     />
                 </form>
             </div >
-            {/* <SoftBox mt={4} mb={1}>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <div className="form_wrapper">
-                        <div className="form_container">
-                            <div className="row clearfix">
-                                <div className="">
-                                    <form>
-                                        <div className="input_field">
-                                            <SoftBox mb={0.5}>
-                                                <SoftBox mb={0} ml={0.5}>
-                                                    <SoftTypography component="label" variant="caption" fontWeight="bold">
-                                                        Title
-                                                    </SoftTypography>
-                                                </SoftBox>
-                                                <SoftInput
-                                                    type="text"
-                                                    name="title"
-                                                    value={calendarEvent?.title}
-                                                    placeholder="Title"
-                                                    onChange={(e) => {
-                                                        handleChange(e);
-                                                    }}
-                                                />
-                                            </SoftBox>
-                                        </div>
-                                        <div className="input_field">
-                                            <SoftBox mb={0.5}>
-                                                <SoftBox mb={0} ml={0.5}>
-                                                    <SoftTypography component="label" variant="caption" fontWeight="bold">
-                                                        Start
-                                                    </SoftTypography>
-                                                </SoftBox>
-                                                <SoftInput
-                                                    type="date"
-                                                    name="startdate"
-                                                    value={calendarEvent?.startdate}
-                                                    placeholder="dd/MM/yyyy"
-                                                    onChange={(e) => {
-                                                        handleChange(e);
-                                                    }}
-                                                />
-                                            </SoftBox>
-                                        </div>
-                                        <div className="input_field">
-                                            <SoftBox mb={0.5}>
-                                                <SoftBox mb={0} ml={0.5}>
-                                                    <SoftTypography component="label" variant="caption" fontWeight="bold" >
-                                                        End
-                                                    </SoftTypography>
-                                                </SoftBox>
-                                                <SoftInput
-                                                    type="date"
-                                                    name="enddate"
-                                                    value={calendarEvent?.enddate}
-                                                    placeholder="dd/MM/yyyy"
-                                                    onChange={(e) => {
-                                                        handleChange(e);
-                                                    }}
-                                                />
-                                            </SoftBox>
-                                        </div>
-                                        <FormGroup style={{ marginTop: "10%", marginLeft: "7%" }}>
-                                            <FormControlLabel control={<Checkbox />} label="All Day Event?" />
-                                        </FormGroup>
 
-                                        <SoftBox mt={4} mb={1} style={{ display: "flex", justifyContent: "center", justifyContent: "space-between" }}>
-                                            {
-                                                calendarEvent?.id ?
-                                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={updateEvent} >
-                                                        update
-                                                    </SoftButton> : <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={Save} >
-                                                        Save
-                                                    </SoftButton>
-
-                                            }
-                                            <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={handleClose} >
-                                                Cancel
-                                            </SoftButton>
-                                        </SoftBox>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Modal>
-            </SoftBox> */}
             <SoftBox mt={4} mb={1}>
                 <Modal
                     open={open}
@@ -290,7 +203,7 @@ const Calendar = () => {
                                 {/* <h2 className="text-center" style={{ paddingTop: "5%", color: "#344767" }}></h2> */}
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                <label htmlFor="name-f" style={{ color: "#344767" }}>Title</label>
+                                <label htmlFor="name-f" >Title</label>
                                 <SoftInput
                                     type="text"
                                     name="title"
@@ -302,7 +215,7 @@ const Calendar = () => {
                                 />
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                <label htmlFor="name-l" style={{ color: "#344767" }}>Start</label>
+                                <label htmlFor="name-l" >Start</label>
                                 <SoftInput
                                     type="date"
                                     name="startdate"
@@ -314,7 +227,7 @@ const Calendar = () => {
                                 />
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                <label htmlFor="file" style={{ color: "#344767" }}>End</label>
+                                <label htmlFor="name-1" >End</label>
                                 <SoftInput
                                     type="date"
                                     name="enddate"
@@ -329,7 +242,8 @@ const Calendar = () => {
                             <FormGroup style={{ marginTop: "0%", marginLeft: "13%" }}>
                                 <FormControlLabel control={<Checkbox />} label="All Day Event?" />
                             </FormGroup>
-                            <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%",marginTop:"4%" }}>
+                            <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginTop: "4%" }}>
+
                                 {calendarEvent?.id ?
                                     <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" }} onClick={updateEvent}>
                                         update

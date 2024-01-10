@@ -123,6 +123,15 @@ const routes = [
     component: <Resources />,
     noCollapse:true,
 },
+{
+  type: "collapse",
+  name: "Assignment ",
+  key: "assignments",
+  route: "/authentication/assignments",
+  icon: <SpaceShip size="12px" />,
+  component: <Assignment />,
+  noCollapse: true,
+},
   {
     type: "collapse",
     name: "Billing",
@@ -180,7 +189,6 @@ const routes = [
   },
   
   {
-    type: "collapse",
     name: "Forgort Password",
     key: "forgot-password",
     route: "/authentication/forgot-password",
@@ -189,7 +197,6 @@ const routes = [
     noCollapse: true,
   },
   {
-    type: "collapse",
     name: "Verify Email",
     key: "verify-email",
     route: "/authentication/verify-email",
@@ -212,15 +219,7 @@ const routes = [
   //   component: <Form1 />,
   //   noCollapse: true,
   // },
-  {
-    type: "collapse",
-    name: "Assignment ",
-    key: "assignments",
-    route: "/authentication/assignments",
-    icon: <SpaceShip size="12px" />,
-    component: <Assignment />,
-    noCollapse: true,
-  },
+ 
 
   {
     // type: "collapse",

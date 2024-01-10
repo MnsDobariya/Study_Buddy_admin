@@ -8,6 +8,8 @@ import { ApiPut } from 'config/Api/ApiData';
 import { ApiPost } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
 import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -21,26 +23,33 @@ const TeacherForm = () => {
         email: "",
         phone: "",
         password: "",
-        gender: ""
+        gender: "male"
     })
     useEffect(() => {
         console.log((addTeacher));
     }, [addTeacher])
 
-        const handleChange = (e) => {
-            const { name, value } = e.target;
-            
-            const textRegex = /^[A-Za-z\s]+$/;
-          
-            if (name === "firstName" || name === "lastName") {
-              if (!textRegex.test(value)) {
+    const [passwordVisible, setPasswordVisible] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        const textRegex = /^[A-Za-z\s]+$/;
+
+        if (name === "firstName" || name === "lastName") {
+            if (!textRegex.test(value)) {
                 setError({
-                  ...error,
-                  [name]: "Please enter text only",
+                    ...error,
+                    [name]: "Please enter text only",
                 });
-                return; 
-              }
+                return;
             }
+        }
+
         setAddTeacher({
             ...addTeacher,
             [e.target.name]: e.target.value,
@@ -157,6 +166,19 @@ const TeacherForm = () => {
     const cancelBtn = () => {
         navigate("/teacher");
     };
+
+    useEffect(() => {
+        hotkeys("alt + c", (e) => {
+            e.preventDefault();
+            navigate("/teacher");
+
+        });
+        return () => {
+            hotkeys.unbind("alt + c");
+        }
+
+    })
+
     return (
         <>
             <SoftBox mt={4} mb={1}>
@@ -173,7 +195,7 @@ const TeacherForm = () => {
                     <form className="teacherForm" >
                         <div style={{ display: "flex", marginTop: "6%" }}>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="name-f" >First Name</label>
+                                <label htmlFor="name-f" >First Name *</label>
                                 <SoftInput
                                     type="text"
                                     name="firstName"
@@ -194,7 +216,7 @@ const TeacherForm = () => {
 
                             </div>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="name-l">Last Name</label>
+                                <label htmlFor="name-l">Last Name *</label>
                                 <SoftInput
                                     type="text"
                                     name="lastName"
@@ -217,7 +239,7 @@ const TeacherForm = () => {
                         </div>
                         <div style={{ display: "flex" }}>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="email">Email *</label>
                                 <SoftInput
                                     type="email"
                                     name="email"
@@ -238,12 +260,14 @@ const TeacherForm = () => {
 
                             </div>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="password">Password</label>
+                                <label htmlFor="password">Password *</label>
+                                <div style={{display:"flex"}}>
                                 <SoftInput
-                                    type="password"
+                                    type={passwordVisible ? "text" : "password"}
                                     name="password"
                                     value={addTeacher?.password}
                                     placeholder="Password"
+                                    required
                                     onChange={(e) => {
                                         setError({
                                             ...error,
@@ -251,10 +275,23 @@ const TeacherForm = () => {
                                         });
                                         handleChange(e);
                                     }}
-                                    style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
-
+                                    style={{transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
                                 />
+                                <div className='input-group-append'>
+                                    <span
+                                        className=''
+                                        onClick={togglePasswordVisibility}
+                                        style={{ cursor: "pointer" }}
+                                    >
+                                        {passwordVisible ? (
+                                            <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
+                                        ) : (
+                                            <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
+                                        )}
+                                    </span>
+                                </div>
+                                </div>
                                 {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password} </p>}
                             </div>
                         </div>
@@ -266,22 +303,9 @@ const TeacherForm = () => {
                                     name="phone"
                                     value={addTeacher?.phone}
                                     placeholder="Mobile No"
-                                     onChange={(e) => {
-                                        const input = e.target.value;
-                                        const regex = /^[0-9\b]+$/; 
-                                        if (input === '' || regex.test(input)) {
-                                          setError({
-                                            ...error,
-                                            phone: "",
-                                          });
-                                          handleChange(e);
-                                        } else {
-                                          setError({
-                                            ...error,
-                                            phone: "Please enter numbers only",
-                                          });
-                                        }
-                                      }}
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                    }}
                                     style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
                                 />
