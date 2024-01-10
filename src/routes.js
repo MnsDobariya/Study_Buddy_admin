@@ -89,8 +89,8 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "To-dos",
-    key: "to-dos",
+    name: "Todos",
+    key: "todos",
     route: "/todos",
     icon: <Office size="12px" />,
     component: <Todos />,

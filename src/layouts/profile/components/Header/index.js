@@ -40,13 +40,14 @@ import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Header = ({userProfile,imagePreview,handleImageChange}) => {
+  console.log(userProfile,"imagePreview");
+
+  const [image,setImage] = useState();
   
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
-  const handleClick = () => {
-     document.getElementById("imageUpload");
-  };
+ 
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -69,9 +70,25 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
-  //  const handleClick = () => {
-  //   document.getElementById("imageUpload").click();
-  //  }
+
+//   const token = localStorage.getItem("token");
+
+   const handleClick = () => {
+    document.getElementById("imageUpload").click();
+   }
+
+// const getImage = () => {
+//   axios.get("http://localhost:3000/api/v1/users/teacher/image",
+//   { headers: { "Authorization": `Bearer ${token}` } })
+//   .then((res) => {
+//     console.log(res,"Image");
+//   })
+
+// }
+
+// useEffect(() => {
+//   getImage();
+// },[]);
 
   return (
     <SoftBox position="relative">
@@ -131,9 +148,12 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
                 <Icon>edit</Icon>
               </Tooltip>
             </SoftTypography> */}
+            {
+              console.log(userProfile?.profilePicture,'userProfile?.profilePicture')
+            }
             <SoftAvatar
               // src={burceMars}
-              src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profilePicture}`}
+              src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profileImage}`}
               alt="profile-image"
               variant="rounded"
               size="xl"

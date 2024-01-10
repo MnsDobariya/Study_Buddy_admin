@@ -73,7 +73,7 @@ const Resources = () => {
 
     const handleImageChange = (e) => {
         e.preventDefault();
-        
+
         setResources({
             ...resources,
             file: e.target.files[0]
@@ -107,10 +107,10 @@ const Resources = () => {
 
 
     const columns = [
-        { field: "index", headerName: "Id", width: 90 },
-        { field: "title", headerName: "Title", width: 150 },
-        { field: "description", headerName: "Description", width: 150 },
-        { field: "file", headerName: "File", width: 130 },
+        { field: "index", headerName: "Id", width: 150 },
+        { field: "title", headerName: "Title", width: 200 },
+        { field: "description", headerName: "Description", width: 290 },
+        { field: "file", headerName: "File", width: 300 },
         // { field: "phone", headerName: "Mobile_No", width: 160 },
         // { field: "gender", headerName: "Gender", width: 150 },
 
@@ -286,7 +286,7 @@ const Resources = () => {
 
     return (
         <>
-            <div style={{ width: "70%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
+            <div style={{ width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
                 <h3 style={{ color: " #344767" }}>Resources</h3>
                 <DataGrid
                     rows={indexedData}
@@ -422,11 +422,11 @@ const Resources = () => {
                     {/* <Button className="btn btn-secondary" onClick={handleClose} autoFocus>
                         No
                     </Button> */}
-                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} >No</button>
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteResources(deleteId)
                         handlePopupClose(true)
                     }}>Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} >No</button>
                 </DialogActions>
             </Dialog>
 
