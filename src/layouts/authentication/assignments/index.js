@@ -149,7 +149,7 @@ const Assignment = () => {
                                                         <div className="lbl1" >
                                                             <label>FM</label>
                                                         </div>
-                                                        <label className='pending'>
+                                                        <label className={item.status === 'Pending' ? 'pending' : item.status === 'Started' ? 'started' : 'finished'}>
                                                             <span className=''><b>{item?.status}</b></span>
                                                         </label>
                                                         <label className='date'>

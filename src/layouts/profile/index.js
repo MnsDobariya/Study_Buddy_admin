@@ -68,8 +68,7 @@ function Overview() {
   const token = localStorage.getItem("token");
 
   const getUserProfile = () => {
-    ApiGet(`${EndPoint.PROFILE_GET}`,
-      { headers: { "Authorization": `Bearer ${token}` } })
+    ApiGet(`${EndPoint.PROFILE_GET}`)
       .then((res) => {
         // console.log(res,"userProfile");
         setUserProfile(res?.data)
@@ -101,6 +100,8 @@ function Overview() {
   };
 
   const handleImageChange = (e) => {
+    e.preventDefault();
+
     const file = e.target.files[0];
 
     if (file && file.type.startsWith("image/")) {
@@ -127,11 +128,14 @@ function Overview() {
     form_data.append("email", userProfile?.email)
     form_data.append("phone", userProfile?.phone)
     form_data.append("gender", userProfile?.gender)
-    form_data.append("profileImage", userProfile?.profilePicture)
+    if(userProfile?.profilePicture){
+      form_data.append("profileImage", userProfile?.profilePicture)
+    }
+
 
     ApiPut(`${EndPoint.PROFILE_UPDATE}`, form_data)
       .then((res) => {
-        // console.log(res,"userProfileupdate");
+        console.log(res,"userProfileupdate");
         toast.success(<p style={{ fontSize: "80%" }}>{"Profile Update Successfully"}</p>);
       })
       .catch((error) => {
@@ -334,7 +338,7 @@ function Overview() {
                     if (input === '' || mobileRegex.test(input)) {
                       setError({
                         ...error,
-                        phone: "",
+                        phone: "",  
                       });
                       handleChange(e);
                     } else {

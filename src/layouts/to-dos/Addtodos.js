@@ -16,9 +16,9 @@ import hotkeys from "hotkeys-js";
 
 
 const categoryDropDown = [
-    { label: "low", value: "low" },
-    { label: "high", value: "high" },
-    { label: "medium", value: "medium" }
+    { label: "Low", value: "Low" },
+    { label: "High ", value: "High" },
+    { label: "Medium", value: "Medium" }
 ];
 
 const Addtodos = () => {
@@ -156,7 +156,7 @@ const Addtodos = () => {
                 <h2 style={{ textAlign: "left", marginTop: "5%", marginLeft: "20%" }}>
                     {/* {" "}
                             {addTeacher?.id ? "Update" : "Add"}  */}
-                    To-dos
+                    Todos
 
                 </h2>
 
@@ -341,7 +341,7 @@ const Addtodos = () => {
                             <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={Addtodos} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}
                             >
                                 {/* {location?.state ? "Update" : "Add"}  */}
-                                Add To-dos
+                                Add Todos
                             </SoftButton>
 
                             {/* <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher()} >
