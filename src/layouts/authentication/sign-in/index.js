@@ -51,7 +51,9 @@ function SignIn() {
       ...lgnFormData,
       [e.target.name]: e.target.value
     })
+    
   }
+
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -136,9 +138,9 @@ function SignIn() {
               </SoftTypography>
             </SoftBox>
             <SoftBox style={{ display: "flex" }}>
-              <div className="input-group-prepend">
-                <span className="input-group-text"><FontAwesomeIcon icon={faEnvelope} style={{ color: "black", marginTop: "3%" }} /></span>
-              </div>
+              {/* <div className="input-group-prepend">
+                <span ><FontAwesomeIcon icon={faEnvelope} style={{ color: "black", marginTop: "3%" }} /></span>
+              </div> */}
               <SoftInput
                 type="email"
                 name="email"
@@ -162,11 +164,11 @@ function SignIn() {
               </SoftTypography>
             </SoftBox>
             <SoftBox style={{ display: "flex" }}>
-              <div className="input-group-prepend">
-                <span className="input-group-text"><FontAwesomeIcon icon={faKey} style={{ color: "black", marginTop: "3%" }} /></span>
-              </div>
+
+              {/* <div style={{ display: "flex" }}> */}
+
               <SoftInput
-                type="password"
+                type={passwordVisible ? "text" : "password"}
                 name="password"
                 value={lgnFormData.password}
                 placeholder="Password"
@@ -179,17 +181,29 @@ function SignIn() {
                 }}
                 onKeyPress={(e) => onKeyBtn(e)}
               />
-              {/* <span
-                className='input-group-text'
-                onClick={togglePasswordVisibility}
-                style={{ cursor: "pointer", marginTop: "1%" }}
-              >
-                {passwordVisible ? (
-                  <FontAwesomeIcon icon={faEye} />
-                ) : (
-                  <FontAwesomeIcon icon={faEyeSlash} />
-                )}
-              </span> */}
+              <div className='input-group-append'>
+                <span
+                  className=''
+                  onClick={togglePasswordVisibility}
+                  style={{
+                    position: 'absolute',
+                    // right: '40%',
+                    // top: '431px',  
+                    // right:"1px",
+                    left: "38%",
+                    transform: 'translateY(11%)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {passwordVisible ? (
+                    <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
+                  ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
+                  )}
+                </span>
+                {/* </div> */}
+              </div>
+
             </SoftBox>
             {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password}</p>}
           </SoftBox>

@@ -27,6 +27,8 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { ApiPost } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function SignUp() {
   const [agreement, setAgremment] = useState(true);
@@ -48,7 +50,11 @@ function SignUp() {
     Password: "",
     ConfirmPassword: "",
   });
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   // const toastify = () => {
   //   console.log("error");
   // }
@@ -117,7 +123,7 @@ function SignUp() {
 
 
     ApiPost(`${EndPoint.USER_REGISTER}`, body)
-      .then((res) => { 
+      .then((res) => {
         if (res.status === 201) {
           setRegFormData({
             FirstName: "",
@@ -143,18 +149,18 @@ function SignUp() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-            
-            const textRegex = /^[A-Za-z\s]+$/;
-          
-            if (name === "FirstName" || name === "LastName") {
-              if (!textRegex.test(value)) {
-                setError({
-                  ...error,
-                  [name]: "Please enter text only",
-                });
-                return; 
-              }
-            }
+
+    const textRegex = /^[A-Za-z\s]+$/;
+
+    if (name === "FirstName" || name === "LastName") {
+      if (!textRegex.test(value)) {
+        setError({
+          ...error,
+          [name]: "Please enter text only",
+        });
+        return;
+      }
+    }
     setRegFormData({
       ...regFormData,
       [e.target.name]: e.target.value,
@@ -177,7 +183,7 @@ function SignUp() {
       >
         <Card >
           <SoftBox p={3} mb={0} textAlign="center">
-            <SoftTypography variant="h5" fontWeight="medium"> 
+            <SoftTypography variant="h5" fontWeight="medium">
               Register with
             </SoftTypography>
           </SoftBox>
@@ -220,7 +226,7 @@ function SignUp() {
                 {error.LastName && <p style={{ color: "red", fontSize: "60%" }}>{error.LastName} </p>}
 
               </SoftBox>
-              <SoftBox mb={1}mt={0}>
+              <SoftBox mb={1} mt={0}>
                 <SoftInput
                   type="text"
                   name="Mobile"
@@ -228,8 +234,8 @@ function SignUp() {
                   placeholder="Mobile"
                   onChange={(e) => {
                     const input = e.target.value;
-                    const regex = /^[0-9\b]+$/; 
-                    if (input === '' || regex.test(input)) {
+                    const regex = /^[0-9\b]+$/;
+                    if (input === '' || regex.test(input) && input.length <= 10 ) {
                       setError({
                         ...error,
                         Mobile: "",
@@ -238,8 +244,8 @@ function SignUp() {
                     } else {
                       setError({
                         ...error,
-                        Mobile: "Please enter numbers only",
-                      });
+                        Mobile: "Please enter valid 10-digit mobile number",
+                      })
                     }
                   }}
                 />
@@ -265,7 +271,7 @@ function SignUp() {
               </SoftBox>
               <SoftBox mb={2}>
                 <SoftInput
-                  type="password"
+                  type={passwordVisible ? "text" : "password"}
                   name="Password"
                   value={regFormData.Password}
                   placeholder="Password"
@@ -278,6 +284,28 @@ function SignUp() {
                   }}
                   onKeyPress={(e) => onKeyBtn(e)}
                 />
+                <div className='input-group-append'>
+                  <span
+                    className='icon'
+                    onClick={togglePasswordVisibility}
+                    style={{
+                      position: 'absolute',
+                      // right: '40%',
+                      // top: '66%',
+                      right:"30px",
+                      // left: "48%",
+                      transform: 'translateY(-110%)',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {passwordVisible ? (
+                      <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
+                    )}
+                  </span>
+                  {/* </div> */}
+                </div>
                 {error.Password && <p style={{ color: "red", fontSize: "60%" }}>{error.Password} </p>}
 
               </SoftBox>

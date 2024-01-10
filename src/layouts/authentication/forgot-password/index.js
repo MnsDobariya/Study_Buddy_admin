@@ -140,35 +140,46 @@ function ForgotEmail() {
                 Password
               </SoftTypography>
             </SoftBox>
-            <SoftBox style={{display:"flex"}}>
+            <SoftBox style={{ display: "flex" }}>
               {/* <FontAwesomeIcon icon={faKey} style={{marginTop:"3%"}}/> */}
-            <SoftInput
-              type={passwordVisible ? "text" : "password"}
-              name="password"
-              value={forgotPasswd.password}
-              placeholder="Password"
-              onChange={(e) => {
-                setError({
-                  ...error,
-                  password: "",
-                })
-                handleChange(e);
-              }}
-              
-            />
-            <span
-              className='input-group-text'
-              onClick={togglePasswordVisibility}
-              style={{ cursor: "pointer" }}
-            >
-              {passwordVisible ? (
-                <FontAwesomeIcon icon={faEye} />
-              ) : (
-                <FontAwesomeIcon icon={faEyeSlash} />
-              )}
-            </span>
-            {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password}</p>}
-          </SoftBox>
+              <SoftInput
+                type={passwordVisible ? "text" : "password"}
+                name="password"
+                value={forgotPasswd.password}
+                placeholder="Password"
+                onChange={(e) => {
+                  setError({
+                    ...error,
+                    password: "",
+                  })
+                  handleChange(e);
+                }}
+
+              />
+              <div className='input-group-append'>
+                <span
+                  className=''
+                  onClick={togglePasswordVisibility}
+                  style={{
+                    position: 'absolute',
+                    // right: '40%',
+                    top: '343.5px',
+                    // right:"1px",
+                    left: "38%",
+                    transform: 'translateY(-50%)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {passwordVisible ? (
+                    <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
+                  ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
+                  )}
+                </span>
+                {/* </div> */}
+              </div>
+              {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password}</p>}
+            </SoftBox>
           </SoftBox>
 
           <SoftBox mb={1} >
@@ -177,33 +188,43 @@ function ForgotEmail() {
                 Confirm Password
               </SoftTypography>
             </SoftBox>
-            <SoftBox style={{display:"flex"}}>
-            {/* <FontAwesomeIcon icon={faKey}  style={{marginTop:"3%"}}/> */}
-            <SoftInput
-              type={passwordVisible ? "text" : "password"}
-              name="confirmPassword"
-              value={forgotPasswd.confirmPassword}
-              placeholder="confirm Password"
-              onChange={(e) => {
-                setError({
-                  ...error,
-                  confirmPassword: "",
-                })
-                handleChange(e);
-              }}
-              onKeyPress={(e) => onKeyBtn(e)}
-            />
-            <span
-              className='input-group-text'
-              onClick={togglePasswordVisibility}
-              style={{ cursor: "pointer" }}
-            >
-              {passwordVisible ? (
-                <FontAwesomeIcon icon={faEye} />
-              ) : (
-                <FontAwesomeIcon icon={faEyeSlash} />
-              )}
-            </span>
+            <SoftBox style={{ display: "flex" }}>
+              {/* <FontAwesomeIcon icon={faKey}  style={{marginTop:"3%"}}/> */}
+              <SoftInput
+                type={passwordVisible ? "text" : "password"}
+                name="confirmPassword"
+                value={forgotPasswd.confirmPassword}
+                placeholder="confirm Password"
+                onChange={(e) => {
+                  setError({
+                    ...error,
+                    confirmPassword: "",
+                  })
+                  handleChange(e);
+                }}
+                onKeyPress={(e) => onKeyBtn(e)}
+              />
+               <div className='input-group-append'>
+                <span
+                  className=''
+                  onClick={togglePasswordVisibility}
+                  style={{
+                    position: 'absolute',
+                    // right: '40%',
+                    top: '431px',
+                    // right:"1px",
+                    left: "38%",
+                    transform: 'translateY(-50%)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {passwordVisible ? (
+                    <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
+                  ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
+                  )}
+                </span>
+                </div>
             </SoftBox>
             {error.confirmPassword && <p style={{ color: "red", fontSize: "60%" }}>{error.confirmPassword}</p>}
           </SoftBox>

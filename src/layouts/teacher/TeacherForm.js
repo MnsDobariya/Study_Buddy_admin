@@ -80,8 +80,7 @@ const TeacherForm = () => {
         if (!addTeacher.lastName) {
             error.lastName = "Please LastName Required";
         }
-
-        const mobileRegex = /^^\+[0-9]{2,3}-[0-9]\d{10}$/;
+        const mobileRegex = /^\d+$/;
         if (!addTeacher.phone) {
             error.phone = "Please Mobile Required";
         } else if (!mobileRegex.test(addTeacher.phone)) {
@@ -261,36 +260,41 @@ const TeacherForm = () => {
                             </div>
                             <div className="col-sm-6 form-group">
                                 <label htmlFor="password">Password *</label>
-                                <div style={{display:"flex"}}>
-                                <SoftInput
-                                    type={passwordVisible ? "text" : "password"}
-                                    name="password"
-                                    value={addTeacher?.password}
-                                    placeholder="Password"
-                                    required
-                                    onChange={(e) => {
-                                        setError({
-                                            ...error,
-                                            password: "",
-                                        });
-                                        handleChange(e);
-                                    }}
+                                <div style={{ display: "flex" }}>
+                                    <SoftInput
+                                        type={passwordVisible ? "text" : "password"}
+                                        name="password"
+                                        value={addTeacher?.password}
+                                        placeholder="Password"
+                                        required
+                                        onChange={(e) => {
+                                            setError({
+                                                ...error,
+                                                password: "",
+                                            });
+                                            handleChange(e);
+                                        }}
 
-                                    style={{transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
-                                />
-                                <div className='input-group-append'>
-                                    <span
-                                        className=''
-                                        onClick={togglePasswordVisibility}
-                                        style={{ cursor: "pointer" }}
-                                    >
-                                        {passwordVisible ? (
-                                            <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
-                                        ) : (
-                                            <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
-                                        )}
-                                    </span>
-                                </div>
+                                        style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+                                    />
+                                    <div className='input-group-append'>
+                                        <span
+                                            className=''
+                                            onClick={togglePasswordVisibility}
+                                            style={{
+                                                position: 'absolute',
+                                                right: '4%',
+                                                transform: 'translateY(9%)',
+                                                cursor: 'pointer',
+                                            }}
+                                        >
+                                            {passwordVisible ? (
+                                                <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
+                                            ) : (
+                                                <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
+                                            )}
+                                        </span>
+                                    </div>
                                 </div>
                                 {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password} </p>}
                             </div>
@@ -304,7 +308,20 @@ const TeacherForm = () => {
                                     value={addTeacher?.phone}
                                     placeholder="Mobile No"
                                     onChange={(e) => {
-                                        handleChange(e);
+                                        const input = e.target.value;
+                                        const regex = /^[0-9\b]+$/;
+                                        if (input === '' || regex.test(input) && input.length <= 10) {
+                                            setError({
+                                                ...error,
+                                                Mobile: "",
+                                            });
+                                            handleChange(e);
+                                        } else {
+                                            setError({
+                                                ...error,
+                                                Mobile: "Please enter valid 10-digit mobile number",
+                                            })
+                                        }
                                     }}
                                     style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
