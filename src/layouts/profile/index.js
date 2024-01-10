@@ -284,7 +284,7 @@ function Overview() {
           <form className="profile">
             <div className="col-sm-12 mx-t3 mb-3">
             </div>
-            <div className="form-row" style={{ display: "flex", marginTop: "6%", paddingLeft: "41px", paddingRight: "41px" }}>
+            <div className="form-row" style={{ display: "flex", marginTop: "10%", paddingLeft: "41px", paddingRight: "41px" }}>
               <div className="col-sm-6 form-group">
                 <label htmlFor="name-f" style={{ fontWeight: "500" }} >FirstName</label>
                 <SoftInput
@@ -316,6 +316,7 @@ function Overview() {
                 <SoftInput
                   type="email"
                   name="email"
+                  disabled
                   value={userProfile?.email}
                   placeholder="Email"
                 // onChange={(e) => {
@@ -332,20 +333,18 @@ function Overview() {
                   placeholder="Phone"
                   onChange={(e) => {
                     const input = e.target.value;
-                    // const mobileRegex = /^[0-9\b]+$/;
-                    const mobileRegex = /^\+?[1-9][0-9]{7,9}$/;
-                    // const mobileRegex = /^\d+$/;
-                    if (input === '' || mobileRegex.test(input)) {
+                    const regex = /^[0-9\b]+$/;
+                    if (input === '' || regex.test(input) && input.length <= 10 ) {
                       setError({
                         ...error,
-                        phone: "",  
+                        Mobile: "",
                       });
                       handleChange(e);
                     } else {
                       setError({
                         ...error,
-                        phone: "",
-                      });
+                        Mobile: "Please enter valid 10-digit mobile number",
+                      })
                     }
                   }}
                 />

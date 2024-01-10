@@ -13,6 +13,8 @@ import { ApiGet } from 'config/Api/ApiData';
 import { ApiPut } from 'config/Api/ApiData';
 import axios from 'axios';
 import hotkeys from 'hotkeys-js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 const Resources = () => {
     const [open, setOpen] = useState();
@@ -104,13 +106,44 @@ const Resources = () => {
         setOpen(false);
     }
 
+    const handleDownload = (data) => {
+        const fileUrl = window.URL.createObjectURL(
+            new Blob([data]),
+        );
+
+        //  const  fileUrl = ' http://localhost:3000' + data?.file;
+        const downloadLink = document.createElement('a');
+        downloadLink.href = fileUrl;
+        downloadLink.setAttribute(
+            'download',
+            `FileName.pdf`,
+        );
+        // downloadLink.download = 'Abc.pdf';
+
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    };
+
 
 
     const columns = [
         { field: "index", headerName: "Id", width: 150 },
         { field: "title", headerName: "Title", width: 200 },
         { field: "description", headerName: "Description", width: 290 },
-        { field: "file", headerName: "File", width: 300 },
+        {
+            field: "file", headerName: "File", width: 270,
+            renderCell: (params) => {
+                // console.log(params,"params");
+                return (
+                    <>
+                        <FontAwesomeIcon icon={faFileArrowDown} onClick={() => handleDownload(params?.row)} />
+
+                    </>
+                )
+            }
+        },
+
         // { field: "phone", headerName: "Mobile_No", width: 160 },
         // { field: "gender", headerName: "Gender", width: 150 },
 
@@ -122,6 +155,7 @@ const Resources = () => {
                 return (
                     <>
                         {/* Edit */}
+                        {/* <FontAwesomeIcon icon={faFileArrowDown} /> */}
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
                             fill='none'
