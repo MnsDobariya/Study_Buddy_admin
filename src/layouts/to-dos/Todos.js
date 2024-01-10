@@ -62,7 +62,7 @@ const Todos = () => {
             <div className="to-dos" style={{ display: "flex", marginTop: "5%" }}>
                 <p style={{ marginLeft: "20%", fontWeight: "700", color: "#344767" }}>To-dos List</p>
                 <SoftButton variant="gradient" color="info" style={{ marginBottom: "1%", marginLeft: "58%" }} onClick={() => navigate("/todos/addtodos")}>
-                    Add To-dos
+                    Add Todos
                 </SoftButton>
             </div>
             {todosData && todosData?.map((item) => (
@@ -73,7 +73,7 @@ const Todos = () => {
 
                             <div style={{ display: "flex" }}>
                                 <p className="card-title">{item?.task}</p>
-                                <label className='medium'>
+                                <label className={item.portable === 'High' ? 'high' : item.portable === 'Medium' ? 'medium' : 'low'}>
                                     <span className=''>{item?.portable}</span>
                                 </label>
                                 <div style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
@@ -165,15 +165,15 @@ const Todos = () => {
                 aria-describedby="alert-dialog-description"
                 sx={{
                     "& .MuiDialog-container": {
-                      "& .MuiPaper-root": {
-                        width: "100%",
-                        maxWidth: "500px",  // Set your width here
-                      },
+                        "& .MuiPaper-root": {
+                            width: "100%",
+                            maxWidth: "500px",  // Set your width here
+                        },
                     },
-                  }}
+                }}
             >
                 <DialogTitle id="alert-dialog-title">
-                    Delete 
+                    Delete
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
