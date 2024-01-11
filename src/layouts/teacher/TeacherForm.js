@@ -129,15 +129,12 @@ const TeacherForm = () => {
             ApiPut(`${EndPoint.USER_UPDATE}/${location?.state?.id}`, body)
 
                 .then((res) => {
-                    console.log("update", res);
                     toast.success("Update successfully");
-
                     navigate("/teacher");
                 });
         } else {
             ApiPost(`${EndPoint.USER_CREATE}`, body)
                 .then((res) => {
-                    console.log("res", res);
                     if (res.status == 201) {
                         setAddTeacher({
                             firstName: "",
@@ -152,7 +149,6 @@ const TeacherForm = () => {
                     }
 
                 }).catch((error) => {
-                    console.log("error", error);
                     if (error.error === "email already exists") {
                         toast.error(<p style={{ fontSize: "80%" }}>{"Teacher Already Registered"}</p>, {
                             position: "top-center",
@@ -194,7 +190,7 @@ const TeacherForm = () => {
                     <form className="teacherForm" >
                         <div style={{ display: "flex", marginTop: "6%" }}>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="name-f" >First Name *</label>
+                                <label htmlFor="name-f" >First Name </label>
                                 <SoftInput
                                     type="text"
                                     name="firstName"
@@ -215,7 +211,7 @@ const TeacherForm = () => {
 
                             </div>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="name-l">Last Name *</label>
+                                <label htmlFor="name-l">Last Name </label>
                                 <SoftInput
                                     type="text"
                                     name="lastName"
@@ -238,7 +234,7 @@ const TeacherForm = () => {
                         </div>
                         <div style={{ display: "flex" }}>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="email">Email *</label>
+                                <label htmlFor="email">Email </label>
                                 <SoftInput
                                     type="email"
                                     name="email"
@@ -259,7 +255,7 @@ const TeacherForm = () => {
 
                             </div>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="password">Password *</label>
+                                <label htmlFor="password">Password </label>
                                 <div style={{ display: "flex" }}>
                                     <SoftInput
                                         type={passwordVisible ? "text" : "password"}
