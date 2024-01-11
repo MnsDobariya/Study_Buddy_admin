@@ -122,7 +122,7 @@ const Resources = () => {
 
         document.body.appendChild(downloadLink);
         downloadLink.click();
-        document.body.removeChild(downloadLink);
+        downloadLink.parentNode.removeChild(downloadLink);
     };
 
 
@@ -138,7 +138,6 @@ const Resources = () => {
                 return (
                     <>
                         <FontAwesomeIcon icon={faFileArrowDown} onClick={() => handleDownload(params?.row)} />
-
                     </>
                 )
             }

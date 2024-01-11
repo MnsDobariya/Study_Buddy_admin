@@ -123,11 +123,11 @@ function Overview() {
   const updateuserProfile = () => {
     const error = {};
 
-    if(!userProfile?.phone){
+    if (!userProfile?.phone) {
       error.phone = "Please Phone Required"
     }
 
-    if(error.phone){
+    if (error.phone) {
       setError(error)
       return;
     }
@@ -141,14 +141,14 @@ function Overview() {
     form_data.append("email", userProfile?.email)
     form_data.append("phone", userProfile?.phone)
     form_data.append("gender", userProfile?.gender)
-    if(userProfile?.profilePicture){
+    if (userProfile?.profilePicture) {
       form_data.append("profileImage", userProfile?.profilePicture)
     }
 
 
     ApiPut(`${EndPoint.PROFILE_UPDATE}`, form_data)
       .then((res) => {
-        console.log(res,"userProfileupdate");
+        console.log(res, "userProfileupdate");
         toast.success(<p style={{ fontSize: "80%" }}>{"Profile Update Successfully"}</p>);
       })
       .catch((error) => {
@@ -158,6 +158,7 @@ function Overview() {
 
   return (
     <DashboardLayout>
+
       <Header userProfile={userProfile} imagePreview={imagePreview} handleImageChange={handleImageChange} />
       {/* <SoftBox mt={5} mb={3}>
         <Grid container spacing={3}>
@@ -285,19 +286,15 @@ function Overview() {
           </SoftBox>
         </Card>
       </SoftBox> */}
-      <SoftBox mt={4} mb={1}>
-        {/* <h2 style={{ textAlign: "left", marginTop: "5%" }}>
+      <h1 style={{ textAlign:"left",marginLeft:"1.5%", marginTop: "3%" ,marginBottom:"7%"}}>
         Profile
-        </h2> */}
-
+      </h1>
+      <SoftBox mt={4} mb={1}>
         <div className="container" style={{ marginTop: "0%", marginRight: "5%" }}>
-          <h2 style={{ textAlign: "left" }}>
-            Profile
-          </h2>
           <form className="profile">
             <div className="col-sm-12 mx-t3 mb-3">
             </div>
-            <div className="form-row" style={{ display: "flex", marginTop: "10%", paddingLeft: "41px", paddingRight: "41px" }}>
+            <div className="form-row" style={{ display: "flex", marginTop: "5%", paddingLeft: "41px", paddingRight: "41px" }}>
               <div className="col-sm-6 form-group">
                 <label htmlFor="name-f" style={{ fontWeight: "500" }} >FirstName</label>
                 <SoftInput
@@ -347,7 +344,7 @@ function Overview() {
                   onChange={(e) => {
                     const input = e.target.value;
                     const regex = /^[0-9\b]+$/;
-                    if (input === '' || regex.test(input) && input.length <= 10 ) {
+                    if (input === '' || regex.test(input) && input.length <= 10) {
                       setError({
                         ...error,
                         Mobile: "",
