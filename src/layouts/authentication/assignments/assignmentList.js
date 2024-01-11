@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 
 const AssignmentList = () => {
     const [assignmentRecord, setAssignmentRecord] = useState([]);
-    const [deleteRecord, setDeleteRecord] = useState();
+    // const [deleteRecord, setDeleteRecord] = useState();
 
     const [inputText, setInputText] = useState("");
     const inputHandler = (e) => {
@@ -89,7 +89,9 @@ const AssignmentList = () => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleDelete}>Delete</MenuItem>
+                            <MenuItem onClick={()=> {
+                                handleDelete(params.row.id)
+                            }}>Delete</MenuItem>
                             <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
 
                         </Menu>
@@ -115,8 +117,8 @@ const AssignmentList = () => {
 
     const handleDelete = () => {
         //   console.log(selectedRowId,"helllooooooo");
-        deleteRecords(selectedRowId);
-        setOpenPopUp(false);
+        setDeleteRowId(selectedRowId);
+        setOpenPopUp(true);
         handleClose();
     };
 
@@ -196,7 +198,7 @@ const AssignmentList = () => {
                         No
                     </Button> */}
                     <button type="button" className="btn btn-danger" onClick={() => {
-                        deleteRecord(selectedRowId)
+                        deleteRecords(deleteRowId)
                         handlePopupClose(true)
                     }}>Yes</button>
                     <button type="button" className="btn btn-secondary" onClick={handlePopupClose} >No</button>

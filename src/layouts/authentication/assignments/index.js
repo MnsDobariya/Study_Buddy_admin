@@ -5,7 +5,7 @@ import SoftButton from "components/SoftButton";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { ApiPost } from "config/Api/ApiData";
 import SoftInput from "components/SoftInput";
-import { Grid, Menu, MenuItem, Modal } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Menu, MenuItem, Modal } from "@mui/material";
 import PlaceholderCard from "examples/Cards/PlaceholderCard";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
@@ -23,6 +23,7 @@ const Assignment = () => {
     const [assignmentRecord, setAssignmentRecord] = useState([]);
     const [open, setOpen] = useState(false);
     const [openPopUp, setOpenPopUp] = useState(false);
+    const [deleteId, setDeleteId] = useState();
 
     const handleOpen = () => {
         setOpen(true);
@@ -52,9 +53,9 @@ const Assignment = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedRowId, setSelectedRowId] = useState(null);
 
-    const handleClick = (event, rowId) => {
+    const handleClick = (event, data) => {
         setAnchorEl(event.currentTarget);
-        setSelectedRowId(rowId);
+        setSelectedRowId(data);
     };
 
     const handleClose = () => {
@@ -63,26 +64,29 @@ const Assignment = () => {
         setOpen(false);
     };
 
-
-
-    const 
-    deleteRecords = (id) => {
-        axios.delete(`http://localhost:3000/api/v1/assignments/delete/${id}`)
-            .then((res) => {
-                // console.log(res,"delete ass");
-                toast.success("Delete Successfully");
-                getAssignmentRecord();
-            })
+    const handlePopupClose = () => {
+        setOpenPopUp(false);
     }
 
-    const handleUpdate = (item) => {
-        const selectedData = assignmentRecord?.find((item) => item?.id );
-        navigate('/assignments/assignmentform', { state: selectedData });
+
+    const
+        deleteRecords = (id) => {
+            axios.delete(`http://localhost:3000/api/v1/assignments/delete/${id}`)
+                .then((res) => {
+                    // console.log(res,"delete ass");
+                    toast.success("Delete Successfully");
+                    getAssignmentRecord();
+                })
+        }
+
+    const handleUpdate = () => {
+        navigate('/assignments/assignmentform', { state: selectedRowId });
     }
 
     const handleDelete = (item) => {
-        deleteRecords(item.id);
-          handleClose();
+        setOpenPopUp(true);
+        setDeleteId(item.id);
+        handleClose();
     };
 
     const renderMenu = (item) => {
@@ -95,7 +99,7 @@ const Assignment = () => {
             >
                 <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
                 <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
-            
+
                 {/* Add more menu items for other actions if needed */}
             </Menu>
         );
@@ -126,52 +130,86 @@ const Assignment = () => {
                             </SoftButton>
                         </SoftBox>
                     </div>
-                            <div className="row" id="ads">
-                                {assignmentRecord && assignmentRecord?.map((item) => (
-                                    <div key={item.id} className="col-md-4" id="ads">
-                                        <div className="row" id="ads" >
-                                            <div className="assignment" >
-                                                <div className="card-asgn">
-                                                    <div>
-                                                        <div className="card-notify-year mt-4"><FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e,item)} style={{ marginLeft: "5%", color: "black" }} /></div>
-                                                        {renderMenu(item)}
+                    <div className="row" id="ads">
+                        {assignmentRecord && assignmentRecord?.map((item) => (
+                            <div key={item.id} className="col-md-4" id="ads">
+                                <div className="row" id="ads" >
+                                    <div className="assignment" >
+                                        <div className="card-asgn">
+                                            <div>
+                                                <div className="card-notify-year mt-4"><FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e, item)} style={{ marginLeft: "5%", color: "black" }} /></div>
+                                                {renderMenu(item)}
 
-                                                        <h5 className="mt-2 p-4" style={{ textAlign: "center" }}><b>{item?.title}</b></h5>
-                                                    </div>
-                                                    <div className="card-image-overlay mt-3" style={{ fontSize: "medium", color: "gray", marginLeft: "7%" }}>
-                                                        <p>{item?.assignmentSummary}</p>
-                                                    </div>
-                                                    <div className="card-image-overlay mt-3" style={{ fontSize: "medium", color: "gray", marginLeft: "7%" }}>
-                                                        <p>{item?.projectDescription}</p>
-                                                    </div>
-                                                    <div className="card-body text-center" style={{ display: "flex", justifyContent: "start" }}>
-                                                        <div className="lbl" >
-                                                            <label>MM</label>
-                                                        </div>
-                                                        <div className="lbl1" >
-                                                            <label>FM</label>
-                                                        </div>
-                                                        <label className={item.status === 'Pending' ? 'pending' : item.status === 'Started' ? 'started' : 'finished'}>
-                                                            <span style={{textAlign:"center",}}><b>{item?.status}</b></span>
-                                                        </label>
-                                                        <label className='date'>
-                                                            <span className=''><p>{formatDate(item?.endDate)}</p></span>
-                                                        </label>
-                                                        <div className="ad-title m-auto">
-                                                        </div>
-                                                    </div>
-
+                                                <h5 className="mt-2 p-4" style={{ textAlign: "center" }}><b>{item?.title}</b></h5>
+                                            </div>
+                                            <div className="card-image-overlay mt-3" style={{ fontSize: "medium", color: "gray", marginLeft: "7%" }}>
+                                                <p>{item?.assignmentSummary}</p>
+                                            </div>
+                                            <div className="card-image-overlay mt-3" style={{ fontSize: "medium", color: "gray", marginLeft: "7%" }}>
+                                                <p>{item?.projectDescription}</p>
+                                            </div>
+                                            <div className="card-body text-center" style={{ display: "flex", justifyContent: "start" }}>
+                                                <div className="lbl" >
+                                                    <label>MM</label>
+                                                </div>
+                                                <div className="lbl1" >
+                                                    <label>FM</label>
+                                                </div>
+                                                <label className={item.status === 'Pending' ? 'pending' : item.status === 'Started' ? 'started' : 'finished'}>
+                                                    <span style={{ textAlign: "center", }}><b>{item?.status}</b></span>
+                                                </label>
+                                                <label className='date'>
+                                                    <span className=''><p>{formatDate(item?.endDate)}</p></span>
+                                                </label>
+                                                <div className="ad-title m-auto">
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
-                                ))}
+                                </div>
                             </div>
-
-                        </div>
-
+                        ))}
+                    </div>
                 </div>
-
+            </div>
+            <Dialog
+                open={openPopUp}
+                onClose={handlePopupClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                sx={{
+                    "& .MuiDialog-container": {
+                        "& .MuiPaper-root": {
+                            width: "100%",
+                            maxWidth: "500px",  // Set your width here
+                        },
+                    },
+                }}
+            >
+                <DialogTitle id="alert-dialog-title">
+                    Delete
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Are you sure Delete?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    {/* <Button className="btn btn-primary" onClick={() => {
+                        deleteRecord(deleteId)
+                        handleClose(true)
+                    }}>Yes</Button> */}
+                    {/* <Button className="btn btn-secondary" onClick={handleClose} autoFocus>
+                        No
+                    </Button> */}
+                    <button type="button" className="btn btn-danger" onClick={() => {
+                        deleteRecords(deleteId)
+                        handlePopupClose(true)
+                    }}>Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} >No</button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }
