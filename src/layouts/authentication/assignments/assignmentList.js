@@ -25,10 +25,8 @@ const AssignmentList = () => {
         // axios.get("http://localhost:3000/api/v1/users/teacher/get",
         ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
             .then((res) => {
-                // console.log(res, "helloo");
                 setAssignmentRecord(res?.data);
             }).catch((error) => {
-                console.log(error, "errorrrrr");
             })
     };
     useEffect((e) => {
@@ -52,7 +50,6 @@ const AssignmentList = () => {
     const [selectedRowId, setSelectedRowId] = useState(null);
 
     const handleClick = (event, rowId) => {
-        console.log(rowId, 'rowId')
         setAnchorEl(event.currentTarget);
         setSelectedRowId(rowId);
     };
@@ -76,7 +73,6 @@ const AssignmentList = () => {
             headerName: "Action",
             width: 150,
             renderCell: (params) => {
-                // console.log(params,"abccccc");
                 return (
                     <>
                         <FontAwesomeIcon
@@ -109,14 +105,12 @@ const AssignmentList = () => {
     const deleteRecords = (id) => {
         axios.delete(`http://localhost:3000/api/v1/assignments/delete/${id}`)
             .then((res) => {
-                // console.log(res,"delete ass");
                 toast.success("Delete Successfully");
                 getAssignmentRecord();
             })
     }
 
     const handleDelete = () => {
-        //   console.log(selectedRowId,"helllooooooo");
         setDeleteRowId(selectedRowId);
         setOpenPopUp(true);
         handleClose();
@@ -161,7 +155,6 @@ const AssignmentList = () => {
                         }}
                         style={{ height: "70vh", width: "150vh", padding: "2%"}}
                         onRowClick={(e) => {
-                            // console.log(e);
                         }}
                         className='custom-data-grid'
                     />

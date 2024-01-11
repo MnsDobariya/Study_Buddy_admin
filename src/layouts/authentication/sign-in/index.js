@@ -46,7 +46,6 @@ function SignIn() {
   });
 
   const handleChange = (e) => {
-    // console.log("lgnFormData",e.target.value);
     setLgnFormData({
       ...lgnFormData,
       [e.target.name]: e.target.value
@@ -90,25 +89,20 @@ function SignIn() {
       password: lgnFormData.password,
     }
 
-    // axios.post("http://localhost:3000/api/v1/admin/login", body)
     ApiPost(`${EndPoint.USER_LOGIN}`, body)
-
       .then((res) => {
-        // console.log("res", res);
         if (res.status === 200) {
           setLgnFormData({
             email: '',
             password: '',
           })
         }
-        // console.log("token", res);
         localStorage.setItem("token", res.data.token.access.token)
         localStorage.setItem("firstName", res.data.admin.firstName)
         navigate('/dashboard')
       })
 
       .catch((error) => {
-        console.log("err", error);
         if (error.response.data.message === "Incorrect email or password") {
           toast.error(<p style={{ fontSize: "80%" }}>{"Incorrect email or password..!"}</p>, {
             position: "top-center",

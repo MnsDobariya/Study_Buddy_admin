@@ -85,11 +85,9 @@ function ForgotEmail() {
 
     // axios.post("http://localhost:3000/api/v1/auth/forgot-password", body,
 
-    console.log("265555");
     ApiPost(`${EndPoint.USER_FORGOT_PASSWORD}`, body)
       .then((res) => {
 
-        console.log("res", res);
         if (res.status === 200) {
           setForgotPasswd({
             password: '',
@@ -105,7 +103,6 @@ function ForgotEmail() {
       })
 
       .catch((error) => {
-        console.log("err", error);
         // if (error.response.data.message === "Incorrect email or password") {
         //   toast.error(<p style={{ fontSize: "80%" }}>{"Incorrect email or password..!"}</p>, {
         //     position: "top-center",
@@ -115,7 +112,6 @@ function ForgotEmail() {
       });
   };
   const handleChange = (e) => {
-    // console.log("lgnFormData",e.target.value);
     setForgotPasswd({
       ...forgotPasswd,
       [e.target.name]: e.target.value

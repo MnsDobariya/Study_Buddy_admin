@@ -45,7 +45,6 @@ function EmailVerify() {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    // console.log( e.target.name,e.target.value);
     setVrfyEmail({
       ...vrfyEmail,
       [e.target.name]: e.target.value
@@ -74,14 +73,12 @@ function EmailVerify() {
     // axios.post("http://localhost:3000/api/v1/auth/send-otp", body)
     ApiPost(`${EndPoint.USER_VERIFY_EMAIL}`, body)
       .then((res) => {
-        console.log(res, "ressssssssseeeee");
         if (res.status === 200) {
           toast.success(<p style={{ fontSize: "80%" }}>{"OTP sent your Email"}</p>, {
             position: "top-center"
           })
         }
       }).catch((error) => {
-        // console.log("err", error);
         if (error.response.data.message === "email not found") {
           toast.error(<p style={{ fontSize: "80%" }}>{"email not found..!"}</p>, {
             position: "top-center",
@@ -100,7 +97,6 @@ function EmailVerify() {
     // axios.post("http://localhost:3000/api/v1/auth/verify-otp", body)
     ApiPost(`${EndPoint.USER_VERIFY_OTP}`, body,)
       .then((res) => {
-        console.log(res, "55555555");
         if (res.status === 200) {
           toast.success(<p style={{ fontSize: "80%" }}>{"OTP Verification Successfully"}</p>, {
             position: "top-center"
@@ -109,7 +105,6 @@ function EmailVerify() {
         navigate("/authentication/forgot-password", { state: { token: res.data.newAdmin.token } })
 
       }).catch((error) => {
-        console.log("err", error);
         if (error.error === "Invalid OTP.") {
           toast.error(<p style={{ fontSize: "80%" }}>{"Invalid OTP...!"}</p>, {
             position: "top-center",
@@ -154,7 +149,7 @@ function EmailVerify() {
                   onKeyPress={(e) => onKeyBtn(e)}
                 />
                 {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email}</p>}
-                <SoftButton variant="gradient" color="info" onClick={getOTP} style={{position:"absolute",left:"39%",width:"100px"}}>
+                <SoftButton variant="gradient" color="info" onClick={getOTP} style={{ position: "absolute", left: "39%", width: "100px" }}>
                   Get OTP
                 </SoftButton>
               </div>
@@ -174,19 +169,13 @@ function EmailVerify() {
               inputStyle={{ width: "3rem", height: "2.5rem" }}
               renderInput={(props) => <input{...props} />}
             />
-            {/* <ResendOTP handelResendClick={() => console.log("Resend clicked")} /> */}
 
           </SoftBox>
           <SoftBox mt={4} mb={1} style={{ display: "flex", justifyContent: "center", justifyContent: "space-evenly" }}>
             <SoftButton variant="gradient" color="info" onClick={handleVerify}>
               Verify OTP
             </SoftButton>
-            {/* <SoftButton variant="gradient" color="info"  onClick={send}>
-              Send
-            </SoftButton> */}
-
           </SoftBox>
-
         </SoftBox>
       </CoverLayout >
       <ToastContainer />

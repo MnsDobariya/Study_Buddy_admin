@@ -52,7 +52,6 @@ const AssignmentForm = () => {
     });
 
     const handleChange = (e) => {
-        // console.log(e.target.value,"hello");
         setAddAssignment({
             ...addAssignment,
             [e.target.name]: e.target.value,
@@ -63,7 +62,6 @@ const AssignmentForm = () => {
         if (location?.state) {
             setAddAssignment(location?.state);
         }
-        console.log(location?.state);
     }, []);
 
 
@@ -107,7 +105,6 @@ const AssignmentForm = () => {
             ApiPut(`${EndPoint.ASSIGNMENT_UPDATE}/${location?.state?.id}`, body)
 
                 .then((res) => {
-                    console.log("update", res);
                     toast.success("Update successfully");
 
                     navigate('/authentication/assignments');
@@ -118,7 +115,6 @@ const AssignmentForm = () => {
             ApiPost(`${EndPoint.ASSIGNMENT_CREATE}`, body,
                 { headers: { "Authorization": `Bearer ${token}` } })
                 .then((res) => {
-                    console.log("res", res);
                     if (res.status == 201) {
                         setAddAssignment({
                             title: "",
@@ -132,7 +128,6 @@ const AssignmentForm = () => {
                         toast.success(<p style={{ fontSize: "78%" }}>{"Add Assignment Successfully"}</p>);
                     }
                 }).catch((error) => {
-                    console.log("error", error);
                     if (error.error === "assignments already exists") {
                         toast.error(<p style={{ fontSize: "80%" }}>{"Assignment Already Registered"}</p>, {
                             position: "top-center",

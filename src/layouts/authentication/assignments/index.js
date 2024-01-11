@@ -35,7 +35,6 @@ const Assignment = () => {
 
             // ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
             .then((res) => {
-                // console.log(res, "eeeee")
                 setAssignmentRecord(res.data);
             })
 
@@ -73,7 +72,6 @@ const Assignment = () => {
         deleteRecords = (id) => {
             axios.delete(`http://localhost:3000/api/v1/assignments/delete/${id}`)
                 .then((res) => {
-                    // console.log(res,"delete ass");
                     toast.success("Delete Successfully");
                     getAssignmentRecord();
                 })
