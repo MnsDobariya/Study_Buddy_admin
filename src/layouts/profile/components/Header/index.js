@@ -40,7 +40,7 @@ import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Header = ({userProfile,imagePreview,handleImageChange}) => {
-  console.log(userProfile,"imagePreview");
+  // console.log(userProfile,"imagePreview");
 
   const [image,setImage] = useState();
   
@@ -148,9 +148,9 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
                 <Icon>edit</Icon>
               </Tooltip>
             </SoftTypography> */}
-            {
+            {/* {
               console.log(userProfile?.profilePicture,'userProfile?.profilePicture')
-            }
+            } */}
             <SoftAvatar
               // src={burceMars}
               src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profileImage}`}

@@ -60,7 +60,7 @@ const Todos = () => {
     return (
         <>
             <div className="to-dos" style={{ display: "flex", marginTop: "5%" }}>
-                <h3 style={{ marginLeft: "20%", fontWeight: "500", color: "#344767" }}>To-dos List</h3>
+                <h3 style={{ marginLeft: "20%", fontWeight: "500", color: "#344767" }}>Todos List</h3>
                 <SoftButton variant="gradient" color="info" style={{ marginBottom: "1%", marginLeft: "58%" }} onClick={() => navigate("/todos/addtodos")}>
                     Add Todos
                 </SoftButton>
@@ -86,7 +86,7 @@ const Todos = () => {
                                     }} />
                                 </div>
                             </div>
-                            <p className="card-text">Finish by:{formatDate(item?.deadlinedate)}</p>
+                            <p className="card-text">Finish by : {formatDate(item?.deadlinedate)}</p>
                         </div>
                         {/* <a href="#" className="btn btn-primary">Button</a> */}
                     </div>
@@ -167,7 +167,8 @@ const Todos = () => {
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
                             width: "100%",
-                            maxWidth: "500px",  // Set your width here
+                            maxWidth: "500px", 
+                            borderRadius:"0.5rem", // Set your width here
                         },
                     },
                 }}

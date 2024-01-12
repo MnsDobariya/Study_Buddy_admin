@@ -107,22 +107,31 @@ const Resources = () => {
     }
 
     const handleDownload = (data) => {
-        const fileUrl = window.URL.createObjectURL(
-            new Blob([data]),
-        );
+        // const fileUrl = window.URL.createObjectURL(
+        //     new Blob([data?.file]),
+        // );
 
-        //  const  fileUrl = ' http://localhost:3000' + data?.file;
+        fetch(` http://localhost:3000`+ data?.file).then((x) => {
+            x.blob().then((blob) => {
+
+        // Creating new object of PDF file
+        const fileURL =
+            window.URL.createObjectURL(blob);
+
+        // const fileURL = ' http://localhost:3000' + data?.file;
         const downloadLink = document.createElement('a');
-        downloadLink.href = fileUrl;
-        downloadLink.setAttribute(
-            'download',
-            `FileName.pdf`,
-        );
-        // downloadLink.download = 'Abc.pdf';
+        downloadLink.href = fileURL;
+        // downloadLink.setAttribute(   
+        //     'download',
+        //      `FileName.pdf`,
+        // );
+        downloadLink.download = data?.file;
 
         document.body.appendChild(downloadLink);
         downloadLink.click();
-        downloadLink.parentNode.removeChild(downloadLink);
+        document.body.removeChild(downloadLink);
+            });
+        });
     };
 
 

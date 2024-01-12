@@ -44,6 +44,34 @@ import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { ApiPut } from "config/Api/ApiData";
 
+
+const genderDropDown = [
+  { label: "Male", value: "Male" },
+  { label: "Female", value: "Female" }
+];
+
+const yearDropDown = [
+  { label: "FYBCA", value: "FYBCA" },
+  { label: "SYBCA", value: "SYBCA" },
+  { label: "TYBCA", value: "TYBCA" }
+];
+
+const semesterDropDown = [
+  { label: "Semester1", value: "Semester1" },
+  { label: "Semester2", value: "Semester2" },
+  { label: "Semester3", value: "Semester3" },
+  { label: "Semester4", value: "Semester4" },
+  { label: "Semester5", value: "Semester5" },
+  { label: "Semester6", value: "Semester6" }
+];
+
+const divisionDropDown = [
+  { label: "DivisionA", value: "DivisionA" },
+  { label: "DivisionB", value: "DivisionB" },
+  { label: "DivisionC", value: "DivisionC" },
+  { label: "DivisionD", value: "DivisionD" },
+];
+
 function Overview() {
   const [userProfile, setUserProfile] = useState({
     firstName: "",
@@ -51,8 +79,14 @@ function Overview() {
     email: "",
     phone: "",
     gender: "",
-    profilePicture: ""
+    profilePicture: "",
+    birthday: "",
+    spId: "",
+    year: "",
+    semester: "",
+    division: ""
   });
+  // console.log(userProfile,"userProfile");
 
   const [error, setError] = useState({
     firstName: "",
@@ -60,12 +94,17 @@ function Overview() {
     email: "",
     phone: "",
     gender: "",
-    profilePicture: ""
+    profilePicture: "",
+    birthday: "",
+    spId: "",
+    year: "",
+    semester: "",
+    division: ""
   });
 
   const [imagePreview, setImagePreview] = useState(null);
 
-  const token = localStorage.getItem("token");
+  // const role = localStorage.getItem("role");
 
   const getUserProfile = () => {
     ApiGet(`${EndPoint.PROFILE_GET}`)
@@ -126,7 +165,7 @@ function Overview() {
     if (!userProfile?.phone) {
       error.phone = "Please Phone Required"
     }
-
+    
     if (error.phone) {
       setError(error)
       return;
@@ -136,11 +175,17 @@ function Overview() {
 
     const form_data = new FormData();
 
+
     form_data.append("firstName", userProfile?.firstName)
     form_data.append("lastName", userProfile?.lastName)
     form_data.append("email", userProfile?.email)
     form_data.append("phone", userProfile?.phone)
     form_data.append("gender", userProfile?.gender)
+    form_data.append("birthday", userProfile?.birthday)
+    form_data.append("spId", userProfile?.spId)
+    form_data.append("year", userProfile?.year)
+    form_data.append("semester", userProfile?.semester)
+    form_data.append("division", userProfile?.division)
     if (userProfile?.profilePicture) {
       form_data.append("profileImage", userProfile?.profilePicture)
     }
@@ -148,8 +193,9 @@ function Overview() {
 
     ApiPut(`${EndPoint.PROFILE_UPDATE}`, form_data)
       .then((res) => {
-        console.log(res, "userProfileupdate");
+        // console.log(res, "userProfileupdate");
         toast.success(<p style={{ fontSize: "80%" }}>{"Profile Update Successfully"}</p>);
+        getUserProfile();
       })
       .catch((error) => {
         console.log(error, "error");
@@ -286,12 +332,12 @@ function Overview() {
           </SoftBox>
         </Card>
       </SoftBox> */}
-      <h1 style={{ textAlign:"left",marginLeft:"1.5%", marginTop: "3%" ,marginBottom:"7%"}}>
+      <h1 style={{ textAlign: "left", marginLeft: "1.5%", marginTop: "3%", marginBottom: "7%" }}>
         Profile
       </h1>
       <SoftBox mt={4} mb={1}>
         <div className="container" style={{ marginTop: "0%", marginRight: "5%" }}>
-          <form className="profile">
+          <form className={userProfile?.role === 'Teacher' ? 'profileTeacher' : 'profileUser'}>
             <div className="col-sm-12 mx-t3 mb-3">
             </div>
             <div className="form-row" style={{ display: "flex", marginTop: "5%", paddingLeft: "41px", paddingRight: "41px" }}>
@@ -322,7 +368,7 @@ function Overview() {
             </div>
             <div className="form-row" style={{ display: "flex", paddingLeft: "41px", paddingRight: "41px" }}>
               <div className="col-sm-6 form-group">
-                <label htmlFor="portable" style={{ fontWeight: "500" }}>Email</label>
+                <label htmlFor="email" style={{ fontWeight: "500" }}>Email</label>
                 <SoftInput
                   type="email"
                   name="email"
@@ -335,7 +381,7 @@ function Overview() {
                 />
               </div>
               <div className="col-sm-6 form-group">
-                <label htmlFor="description" style={{ fontWeight: "500" }} >Phone</label>
+                <label htmlFor="phone" style={{ fontWeight: "500" }} >Phone</label>
                 <SoftInput
                   type="text"
                   name="phone"
@@ -358,11 +404,12 @@ function Overview() {
                     }
                   }}
                 />
-                {error.phone && <p style={{ color: "red", fontSize: "60%" }}>{error.phone}</p>}
+                {error.phone && <p>{error.phone}</p>}
               </div>
             </div>
-            <div className="form-row" style={{ display: "flex", paddingLeft: "41px", paddingRight: "41px" }}>
-              <div className="col-sm-6 form-group mt-1">
+
+            <div className="form-row" style={{ paddingLeft: "41px", paddingRight: "41px" }}>
+              {/* <div className="col-sm-6 form-group mt-1">
                 <h5 style={{ display: "flex" }}>
                   <label htmlFor='Gender' style={{ fontWeight: "500" }} >Gender :{""}</label>
                 </h5>
@@ -391,10 +438,141 @@ function Overview() {
                   }}
                 />
                 Female
+              </div> */}
+
+              <div className="col-sm-6 form-group">
+                <label htmlFor="gender" style={{ fontWeight: "500" }} >Gender</label>
+                <select
+                  name="gender"
+                  id="year"
+                  className="form-control"
+                  value={userProfile?.gender}
+                  style={{ borderRadius: "0.5rem" }}
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                >
+                  {/* <option key="">Select Gender</option> */}
+                  {genderDropDown &&
+                    genderDropDown?.map((x) => (
+                      <option key={x.value}>{x.value}</option>
+                    ))
+                  }
+                </select>
               </div>
             </div>
+            {userProfile?.role === "User" &&
+              <>
+                <div className="" >
+                  <div className="col-sm-6 form-group" style={{position: "absolute", transform: "translateY(-118%)",marginLeft: "46.4%",paddingRight:"64px"}}>
+                    <label htmlFor="birthday" style={{ fontWeight: "500" }} >Birthday</label>
+                    <SoftInput
+                      type="date"
+                      name="birthday"
+                      value={userProfile?.birthday}
+                      placeholder="birthday"
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="form-row" style={{ display: "flex", paddingLeft: "41px", paddingRight: "41px" }}>
+                  <div className="col-sm-6 form-group">
+                    <label htmlFor="spId" style={{ fontWeight: "500" }}>SPID</label>
+                    <SoftInput
+                      type="text"
+                      name="spId"
+                      value={userProfile?.spId}
+                      placeholder="SPID"
+                      onChange={(e) => {
+                        const input = e.target.value;
+                        const regex = /^[0-9\b]+$/;
+                        if (input === '' || regex.test(input) && input.length <= 10) {
+                          setError({
+                            ...error,
+                            spId: "",
+                          });
+                          handleChange(e);
+                        } else {
+                          setError({
+                            ...error,
+                            spId: "Please enter valid 12-digit mobile number",
+                          })
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="col-sm-6 form-group">
+                    <label htmlFor="year" style={{ fontWeight: "500" }} >Year</label>
+                    <select
+                      name="year"
+                      id="year"
+                      className="form-control"
+                      value={userProfile?.year}
+                      style={{ borderRadius: "0.5rem" }}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    >
+                      {/* <option key="">Select Year</option> */}
+                      {yearDropDown &&
+                        yearDropDown?.map((x) => (
+                          <option key={x.value}>{x.value}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                </div>
+                <div className="form-row" style={{ display: "flex", paddingLeft: "41px", paddingRight: "41px" }}>
+                  <div className="col-sm-6 form-group">
+                    <label htmlFor="semester" style={{ fontWeight: "500" }}>Semester</label>
+                    <select
+                      name="semester"
+                      id="semester"
+                      className="form-control"
+                      value={userProfile?.semester}
+                      style={{ borderRadius: "0.5rem" }}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    >
+                      {/* <option key="">Select Semester</option> */}
+                      {semesterDropDown &&
+                        semesterDropDown?.map((x) => (
+                          <option key={x.value}>{x.value}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                  <div className="col-sm-6 form-group">
+                    <label htmlFor="division" style={{ fontWeight: "500" }} >Divivsion</label>
+                    <select
+                      name="division"
+                      id="division"
+                      className="form-control"
+                      value={userProfile?.division}
+                      style={{ borderRadius: "0.5rem" }}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    >
+                      {/* <option key="">Select Division</option> */}
+                      {divisionDropDown &&
+                        divisionDropDown?.map((x) => (
+                          <option key={x.value}>{x.value}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                </div>
+              </>
+            }
             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "32%", width: "30%" }}>
-              <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={updateuserProfile} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}
+              <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={() => {
+                updateuserProfile();
+              }}
+                 style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}
               >
                 Update
               </SoftButton>
