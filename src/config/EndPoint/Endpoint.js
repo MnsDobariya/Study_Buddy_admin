@@ -23,4 +23,8 @@ export const EndPoint = {
     RESOURCES_UPDATE:'resources/update',
     PROFILE_GET:'users/teacher/me',
     PROFILE_UPDATE:'users/teacher/updateme',
+    NOTIFICATION_GET:'/notification/get',
+    NOTIFICATION_CREATE:'/notification/create',
+    NOTIFICATION_UPDATE:'/notification/update',
+    NOTIFICATION_DELETE:'/notification/delete',
 }
