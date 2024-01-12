@@ -116,4 +116,12 @@ const navbarMobileMenu = ({ breakpoints }) => ({
   },
 });
 
+export const newNotificationCircle = {
+  width: "8px",
+  height: "8px",
+  backgroundColor: "green",
+  borderRadius: "50%",
+  marginRight: "8px",
+};
+
 export { navbar, navbarContainer, navbarRow, navbarIconButton, navbarMobileMenu };

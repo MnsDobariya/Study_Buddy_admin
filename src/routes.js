@@ -57,6 +57,7 @@ import AssignmentList from "layouts/authentication/assignments/assignmentList";
 import Calendar from "layouts/authentication/calendar/calendar";
 import Todos from "layouts/to-dos/Todos";
 import Resources from "layouts/resources/Resources";
+import Notification from "layouts/notification/notification";
 
 
 const routes = [
@@ -169,6 +170,15 @@ const routes = [
     route: "/profile",
     icon: <CustomerSupport size="12px" />,
     component: <Profile />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Notification",
+    key: "notification",
+    route: "/notification",
+    icon: <CustomerSupport size="12px" />,
+    component: <Notification />,
     noCollapse: true,
   },
   {

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 // react-router components
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -44,6 +44,8 @@ import {
 // Images
 import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
+import { ApiGet } from "config/Api/ApiData";
+import { EndPoint } from "config/EndPoint/Endpoint";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -84,7 +86,25 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleCloseMenu = () => setOpenMenu(false);
 
   // Render the notifications menu
+  const [notification, setNotification] = useState();
+  const [seenNotifications, setSeenNotifications] = useState([]);
+
+  const getNotificationData = () => {
+    ApiGet(`${EndPoint.NOTIFICATION_GET}`)
+      .then((res) => {
+        console.log(res, "response");
+        setNotification(res?.data)
+      })
+  }
+
+  useEffect(() => {
+    getNotificationData("")
+  }, [])
+
+  const navigate = useNavigate();
   const renderMenu = () => (
+
+
     <Menu
       anchorEl={openMenu}
       anchorReference={null}
@@ -96,29 +116,26 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem
-        image={<img src={team2} alt="person" />}
-        title={["New message", "from Laur"]}
-        date="13 minutes ago"
-        onClick={handleCloseMenu}
-      />
+      {notification &&
+        notification.map((item) => (
+          <div key={item.id} className="rowtodos" id="adstodos">
+            <NotificationItem
+              image={<img src={team2} alt="person" />}
+              title={["New ", item.title]}
+              date={"13 minutes ago"}
+              onClick={() => {
+                navigate('/notification');
+              }}
+            />
+          </div>
+        ))}
+      {/* 
       <NotificationItem
         image={<img src={logoSpotify} alt="person" />}
         title={["New album", "by Travis Scott"]}
         date="1 day"
         onClick={handleCloseMenu}
-      />
-      <NotificationItem
-        color="secondary"
-        image={
-          <Icon fontSize="small" sx={{ color: ({ palette: { white } }) => white.main }}>
-            payment
-          </Icon>
-        }
-        title={["", "Payment successfully completed"]}
-        date="2 days"
-        onClick={handleCloseMenu}
-      />
+      /> */}
     </Menu>
   );
 
