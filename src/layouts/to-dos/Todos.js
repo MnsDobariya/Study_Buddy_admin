@@ -9,6 +9,7 @@ import { EndPoint } from "config/EndPoint/Endpoint";
 import data from "layouts/dashboard/components/Projects/data";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Menu, MenuItem } from "@mui/material";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Todos = () => {
     const [todosData, setTodosData] = useState();
@@ -48,6 +49,7 @@ const Todos = () => {
             .then((res) => {
                 // console.log(res,'resdetele');
                 getTodosData();
+                toast.success("Delete Successfully");
             })
     }
 
@@ -167,8 +169,8 @@ const Todos = () => {
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
                             width: "100%",
-                            maxWidth: "500px", 
-                            borderRadius:"0.5rem", // Set your width here
+                            maxWidth: "500px",
+                            borderRadius: "0.5rem", // Set your width here
                         },
                     },
                 }}
@@ -189,11 +191,11 @@ const Todos = () => {
                     {/* <Button className="btn btn-secondary" onClick={handleClose} autoFocus>
                         No
                     </Button> */}
-                    <button type="button" className="btn btn-secondary" onClick={handleClose} >No</button>
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteRecord(deleteId)
                         handleClose(true)
                     }}>Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handleClose} >No</button>
                 </DialogActions>
             </Dialog>
         </>

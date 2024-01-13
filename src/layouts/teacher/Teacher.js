@@ -273,7 +273,8 @@ const Teacher = () => {
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
                             width: "100%",
-                            maxWidth: "500px",  // Set your width here
+                            maxWidth: "500px",
+                            borderRadius:"0.5rem",  // Set your width here
                         },
                     },
                 }}

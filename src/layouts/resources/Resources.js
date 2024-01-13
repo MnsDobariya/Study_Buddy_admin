@@ -287,7 +287,12 @@ const Resources = () => {
                     handleClose();
                     getResources();
                 }).catch((error) => {
-                    console.log(error, "error");
+                    // console.log(error, "error");
+                    if(error.error === "Title already exits"){
+                        toast.error(<p style={{fontSize:"80%"}}>{"Title Already Exits"}</p>,{
+                            position:"top-center",
+                        });
+                    }
                 });
         }
     }
@@ -443,7 +448,8 @@ const Resources = () => {
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
                             width: "100%",
-                            maxWidth: "500px",  // Set your width here
+                            maxWidth: "500px",
+                            borderRadius:"0.5rem",  // Set your width here
                         },
                     },
                 }}
