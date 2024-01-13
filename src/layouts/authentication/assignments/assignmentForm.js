@@ -10,20 +10,19 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ApiPut } from 'config/Api/ApiData';
-import { DatePicker, DateRangePicker, LocalizationProvider } from '@mui/x-date-pickers-pro';
 import hotkeys from 'hotkeys-js';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
-// import dayjs from 'dayjs';
-
 
 const categoryDropDown = [
     { label: "Started", value: "Started" },
     { label: "Pending", value: "Pending" },
     { label: "Finished", value: "Finished" },
 ];
-// const today = dayjs();
-// const tomorrow = dayjs().add(1, 'day');
+const today = dayjs();
+const tomorrow = dayjs().add(1, 'day');
 
 const AssignmentForm = () => {
 
@@ -241,22 +240,25 @@ const AssignmentForm = () => {
 
                         </div>
                         <div className="col-sm-6 form-group mt-2">
-                            <label htmlFor="date"></label>
-                            <SoftInput
-                                type="date"
-                                name="startDate"
-                                value={addAssignment?.startDate}
-                                placeholder="dd/MM/yyyy"
-                                onChange={(e) => {
-                                    handleChange(e);
-                                }}
-                            />
-                            {/* <DateRangePicker defaultValue={[today, tomorrow]} minDate={tomorrow} /> */}
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer
+                                    components={['DatePicker', 'DateTimePicker', 'DateRangePicker']}
+                                >
+                                    <DemoItem label="DatePicker">
+                                        <DatePicker
+                                            defaultValue={today}
+                                            minDate={tomorrow}
+                                            views={['year', 'month', 'day']}
+                                        />
+                                    </DemoItem>
+                                </DemoContainer>
+                            </LocalizationProvider>
+
                             {error.startDate && <p style={{ color: "red", fontSize: "60%" }}>{error.startDate} </p>}
                         </div>
                     </div>
                     <div style={{ display: "flex" }}>
-                    <div className="col-sm-6 form-group mt-2">
+                        <div className="col-sm-6 form-group mt-2">
                             <label htmlFor="date"></label>
                             <SoftInput
                                 type="date"
@@ -297,7 +299,7 @@ const AssignmentForm = () => {
 
                         <SoftButton className="add-teacher" variant="gradient" color="info" fullWidth onClick={createAssignment} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
                             {/* Add Assignment */}
-                            {location?.state ? "Update" : "Add"} 
+                            {location?.state ? "Update" : "Add"}
                         </SoftButton>
                         <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={() => { navigate('/authentication/assignments') }} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
                             Cancel
@@ -308,7 +310,7 @@ const AssignmentForm = () => {
                 </div>
 
             </SoftBox >
-            {/* </LocalizationProvider> */}
+            
         </>
     )
 }
