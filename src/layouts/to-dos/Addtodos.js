@@ -12,6 +12,7 @@ import { EndPoint } from "config/EndPoint/Endpoint";
 import { ApiPut } from "config/Api/ApiData";
 import { toast } from "react-toastify";
 import hotkeys from "hotkeys-js";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 
 
 
@@ -32,8 +33,8 @@ const Addtodos = () => {
     const [startDate, setStartDate] = useState(new Date());
     // console.log(startDate, "startDate");
 
-  
-    
+
+
 
     const [error, setError] = useState({
         task: "",
@@ -54,10 +55,10 @@ const Addtodos = () => {
 
     // console.log(location?.state,"aqaqaqaqaqa");
     useEffect(() => {
-        if(location?.state){
+        if (location?.state) {
             setAddTodos(location?.state)
         }
-    },[location])
+    }, [location])
 
     const Addtodos = () => {
         const error = {};
@@ -69,7 +70,7 @@ const Addtodos = () => {
         const taskRegex = /^[a-zA-Z]{2,40}([a-zA-Z]{2,40})+$/;
         if (!addTodos.task) {
             error.task = "Please Task Required";
-        }else if(!taskRegex.test(!addTodos?.task)){
+        } else if (!taskRegex.test(!addTodos?.task)) {
             error.task = "Invalid Task";
         }
 
@@ -77,10 +78,10 @@ const Addtodos = () => {
             error.portable = "Please Portable Required";
         }
 
-        const descriptionRegex  = /^[a-zA-Z]{2,40}([a-zA-Z]{2,40})+$/;
+        const descriptionRegex = /^[a-zA-Z]{2,40}([a-zA-Z]{2,40})+$/;
         if (!addTodos.description) {
             error.description = "Please Description Required";
-        }else if(!descriptionRegex.test(!addTodos.description)){
+        } else if (!descriptionRegex.test(!addTodos.description)) {
             error.description = "Invalid Description";
         }
 
@@ -104,29 +105,36 @@ const Addtodos = () => {
         //         console.log(res, "res");
         //     })
 
-        if(location?.state){
+        if (location?.state) {
             // console.log("location?.state",location?.state);
-            ApiPut(`${EndPoint.TODOS_UPDATE}/${location?.state?.id}`,body)
-            .then((res) => {
-                // console.log("updateres",res);
-                toast.success("Update Successfully");
-                navigate("/todos");
-            });
-        }else{
-        ApiPost(`${EndPoint.TODOS_CREATE}`, body,
-            { headers: { "Authorization": `Bearer ${token}` } })
-            .then((res) => {
-                // console.log(res,"res");
-                if (res.status === 201) {
-                    setAddTodos({
-                        task: "",
-                        portable: "",
-                        description: ""
-                    })
-                }
-                navigate("/todos");
-                toast.success("Add To-dos Successfully");
-            })
+            ApiPut(`${EndPoint.TODOS_UPDATE}/${location?.state?.id}`, body)
+                .then((res) => {
+                    // console.log("updateres",res);
+                    toast.success("Update Successfully");
+                    navigate("/todos");
+                });
+        } else {
+            ApiPost(`${EndPoint.TODOS_CREATE}`, body,
+                { headers: { "Authorization": `Bearer ${token}` } })
+                .then((res) => {
+                    // console.log(res,"res");
+                    if (res.status === 201) {
+                        setAddTodos({
+                            task: "",
+                            portable: "",
+                            description: ""
+                        });
+                        navigate("/todos");
+                        toast.success("Add To-dos Successfully");
+                    }
+                }).catch((error) => {
+                    // console.log(error,"error");
+                    if(error.error === "Task already exits"){
+                        toast.error(<p style={{fontSize:"80%"}}>{"Task Already Exits"}</p>,{
+                            position:"top-center",
+                        });
+                    }
+                });
         }
     }
 
@@ -141,7 +149,7 @@ const Addtodos = () => {
     }
 
     useEffect(() => {
-        hotkeys("alt + c",(e) => {
+        hotkeys("alt + c", (e) => {
             e.preventDefault();
             navigate("/todos");
         });
@@ -152,6 +160,7 @@ const Addtodos = () => {
 
     return (
         <>
+        {/* <LocalizationProvider dateAdapter={AdapterDayjs}></LocalizationProvider> */}
             <SoftBox mt={4} mb={1}>
                 <h2 style={{ textAlign: "left", marginTop: "5%", marginLeft: "20%" }}>
                     {/* {" "}
@@ -174,7 +183,7 @@ const Addtodos = () => {
                         <div className="form-row" style={{ display: "flex", marginTop: "6%", paddingLeft: "41px", paddingRight: "41px" }}>
                             <div className="col-sm-6 form-group">
                                 <label htmlFor="name-f" style={{ fontWeight: "500" }} >DeadlineDate</label>
-                                <SoftInput
+                                {/* <SoftInput
                                     type="date"
                                     name="deadlinedate"
                                     value={addTodos?.deadlinedate}
@@ -186,8 +195,8 @@ const Addtodos = () => {
                                         })
                                         handleChange(e)
                                     }}
-                                    />
-                                    {/* <DatePicker
+                                /> */}
+                                {/* <DatePicker
                                     className="form-control"
                                     selected={startDate}
                                     onChange={(date) =>

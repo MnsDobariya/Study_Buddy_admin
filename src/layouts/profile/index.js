@@ -57,19 +57,19 @@ const yearDropDown = [
 ];
 
 const semesterDropDown = [
-  { label: "Semester1", value: "Semester1" },
-  { label: "Semester2", value: "Semester2" },
-  { label: "Semester3", value: "Semester3" },
-  { label: "Semester4", value: "Semester4" },
-  { label: "Semester5", value: "Semester5" },
-  { label: "Semester6", value: "Semester6" }
+  { label: "Semester1", value: "Semester 1" },
+  { label: "Semester2", value: "Semester 2" },
+  { label: "Semester3", value: "Semester 3" },
+  { label: "Semester4", value: "Semester 4" },
+  { label: "Semester5", value: "Semester 5" },
+  { label: "Semester6", value: "Semester 6" }
 ];
 
 const divisionDropDown = [
-  { label: "DivisionA", value: "DivisionA" },
-  { label: "DivisionB", value: "DivisionB" },
-  { label: "DivisionC", value: "DivisionC" },
-  { label: "DivisionD", value: "DivisionD" },
+  { label: "DivisionA", value: "A" },
+  { label: "DivisionB", value: "B" },
+  { label: "DivisionC", value: "C" },
+  { label: "DivisionD", value: "D" },
 ];
 
 function Overview() {
