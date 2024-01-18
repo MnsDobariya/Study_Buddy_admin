@@ -31,6 +31,8 @@ const Teacher = () => {
     const [teacherRecord, setTeacherRecord] = useState([]);
     // const token = localStorage.getItem("token")
 
+    const filterTeacher = teacherRecord.filter((x) => x.role == "Teacher")
+
     const getTeacherRecord = () => {
         // axios.get("http://localhost:3000/api/v1/users/teacher/get",
         ApiGet(`${EndPoint.USER_GET}`)
@@ -45,7 +47,7 @@ const Teacher = () => {
         getTeacherRecord();
 
     }, []);
-    const indexedData = teacherRecord.map((item, index) => ({
+    const indexedData = filterTeacher.map((item, index) => ({
         ...item,
         index: index + 1,
     }));
@@ -71,12 +73,12 @@ const Teacher = () => {
     };
 
     const columns = [
-        { field: "index", headerName: "Id", width: 90 },
-        { field: "firstName", headerName: "FirstName", width: 150 },
-        { field: "lastName", headerName: "LastName", width: 150 },
-        { field: "email", headerName: "Email", width: 130 },
-        { field: "phone", headerName: "Mobile_No", width: 160 },
-        { field: "gender", headerName: "Gender", width: 150 },
+        { field: "index", headerName: "Id", width: 110 },
+        { field: "firstName", headerName: "FirstName", width: 160 },
+        { field: "lastName", headerName: "LastName", width: 155 },
+        { field: "email", headerName: "Email", width: 200 },
+        { field: "phone", headerName: "Mobile_No", width: 190 },
+        { field: "gender", headerName: "Gender", width: 130 },
 
         // action
         {
@@ -157,7 +159,7 @@ const Teacher = () => {
 
     return (
         <>
-            <div className="mt-5" style={{ marginLeft: "20%" }}>
+            {/* <div className="mt-5" style={{ marginLeft: "20%" }}>
                 <h3>Teacher List</h3>
             </div>
                 <div style={{ width: "70%", padding: "1%", marginLeft: "75%" }}>
@@ -167,8 +169,9 @@ const Teacher = () => {
                     }} >
                         Add Teacher
                     </SoftButton>
-                </div>
-            <div style={{ width: "70%", padding: "1%", marginLeft: "20%" }}>
+                </div> */}
+            <div style={{ width: "77.5%", padding: "1%", marginLeft: "20%",marginTop:"2%" }}>
+            <h3 style={{ color: " #344767" }}>Teacher List</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
@@ -184,6 +187,11 @@ const Teacher = () => {
                                 }}
                             >
                                 <GridToolbar />
+                               <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {
+                                    navigate('/teacher/teacherform')
+                                }}>
+                                    Add Teacher
+                                </SoftButton>
 
                             </div>
                         ),

@@ -43,7 +43,13 @@ import { toast } from "react-toastify";
 import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { ApiPut } from "config/Api/ApiData";
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
+// const today = dayjs();
+// const tomorrow = dayjs().add(1, 'day');
 
 const genderDropDown = [
   { label: "Male", value: "Male" },
@@ -66,10 +72,10 @@ const semesterDropDown = [
 ];
 
 const divisionDropDown = [
-  { label: "DivisionA", value: "A" },
-  { label: "DivisionB", value: "B" },
-  { label: "DivisionC", value: "C" },
-  { label: "DivisionD", value: "D" },
+  { label: "A", value: "A" },
+  { label: "B", value: "B" },
+  { label: "C", value: "C" },
+  { label: "D", value: "D" },
 ];
 
 function Overview() {
@@ -80,13 +86,16 @@ function Overview() {
     phone: "",
     gender: "",
     profilePicture: "",
-    birthday: "",
+    // birthday: "",
     spId: "",
     year: "",
     semester: "",
     division: ""
   });
   // console.log(userProfile,"userProfile");
+
+  const [isAuthorSelect, setIsAuthorSelect] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
 
   const [error, setError] = useState({
     firstName: "",
@@ -95,7 +104,7 @@ function Overview() {
     phone: "",
     gender: "",
     profilePicture: "",
-    birthday: "",
+    // birthday: "",
     spId: "",
     year: "",
     semester: "",
@@ -135,6 +144,7 @@ function Overview() {
     setUserProfile({
       ...userProfile,
       [name]: value,
+
     });
   };
 
@@ -165,7 +175,7 @@ function Overview() {
     if (!userProfile?.phone) {
       error.phone = "Please Phone Required"
     }
-    
+
     if (error.phone) {
       setError(error)
       return;
@@ -181,7 +191,7 @@ function Overview() {
     form_data.append("email", userProfile?.email)
     form_data.append("phone", userProfile?.phone)
     form_data.append("gender", userProfile?.gender)
-    form_data.append("birthday", userProfile?.birthday)
+    form_data.append("birthday", startDate)
     form_data.append("spId", userProfile?.spId)
     form_data.append("year", userProfile?.year)
     form_data.append("semester", userProfile?.semester)
@@ -464,9 +474,9 @@ function Overview() {
             {userProfile?.role === "User" &&
               <>
                 <div className="" >
-                  <div className="col-sm-6 form-group" style={{position: "absolute", transform: "translateY(-118%)",marginLeft: "46.4%",paddingRight:"64px"}}>
+                  <div className="col-sm-6 form-group" style={{ position: "absolute", transform: "translateY(-118%)", marginLeft: "46.4%", paddingRight: "64px" }}>
                     <label htmlFor="birthday" style={{ fontWeight: "500" }} >Birthday</label>
-                    <SoftInput
+                    {/* <SoftInput
                       type="date"
                       name="birthday"
                       value={userProfile?.birthday}
@@ -474,7 +484,27 @@ function Overview() {
                       onChange={(e) => {
                         handleChange(e);
                       }}
-                    />
+                    /> */}
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoItem label="">
+                        <DatePicker
+                          selected={startDate}
+                          onChange={(date) => setStartDate(date)}
+                          selectsStart
+                          startDate={startDate}
+                          // endDate={endDate}
+                          // defaultValue={today}
+                          // minDate={tomorrow}
+                          format="DD/MM/YYYY"
+                          views={['year', 'month', 'day']}
+                          sx={{
+                            "& .MuiSvgIcon-root": {
+                              marginLeft: "19rem",
+                            }
+                          }}
+                        />
+                      </DemoItem>
+                    </LocalizationProvider>
                   </div>
                 </div>
                 <div className="form-row" style={{ display: "flex", paddingLeft: "41px", paddingRight: "41px" }}>
@@ -555,6 +585,8 @@ function Overview() {
                       style={{ borderRadius: "0.5rem" }}
                       onChange={(e) => {
                         handleChange(e);
+                        const selectedDivision = e.target.value;
+                        setIsAuthorSelect(selectedDivision === "Author Select");
                       }}
                     >
                       {/* <option key="">Select Division</option> */}
@@ -563,8 +595,23 @@ function Overview() {
                           <option key={x.value}>{x.value}</option>
                         ))
                       }
+                      <option key="author Select">Author Select</option>
                     </select>
                   </div>
+                  {isAuthorSelect && (
+                    <div className="col-sm-6 form-group">
+                      {/* <label htmlFor="authorInput" style={{ fontSize: "500" }}>Author Select</label> */}
+                      <SoftInput
+                        type="text"
+                        name="authorInput"
+                        value={userProfile?.authorInput}
+                        placeholder="Author Input"
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               </>
             }
@@ -572,7 +619,7 @@ function Overview() {
               <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={() => {
                 updateuserProfile();
               }}
-                 style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}
+                style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}
               >
                 Update
               </SoftButton>

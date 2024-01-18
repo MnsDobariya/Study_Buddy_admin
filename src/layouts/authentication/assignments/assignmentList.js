@@ -84,6 +84,13 @@ const AssignmentList = () => {
                             anchorEl={anchorEl}
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
+                            sx={{
+                                "& .css-cmyovl-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
+                                    border: " 0 solid rgba(0, 0, 0, 0.125)",
+                                    borderRadius: "1rem",
+                                    boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0)",
+                                }
+                            }}
                         >
                             <MenuItem onClick={()=> {
                                 handleDelete(params.row.id)

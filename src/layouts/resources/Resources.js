@@ -111,25 +111,25 @@ const Resources = () => {
         //     new Blob([data?.file]),
         // );
 
-        fetch(` http://localhost:3000`+ data?.file).then((x) => {
+        fetch(` http://localhost:3000` + data?.file).then((x) => {
             x.blob().then((blob) => {
 
-        // Creating new object of PDF file
-        const fileURL =
-            window.URL.createObjectURL(blob);
+                // Creating new object of PDF file
+                const fileURL =
+                    window.URL.createObjectURL(blob);
 
-        // const fileURL = ' http://localhost:3000' + data?.file;
-        const downloadLink = document.createElement('a');
-        downloadLink.href = fileURL;
-        // downloadLink.setAttribute(   
-        //     'download',
-        //      `FileName.pdf`,
-        // );
-        downloadLink.download = data?.file;
+                // const fileURL = ' http://localhost:3000' + data?.file;
+                const downloadLink = document.createElement('a');
+                downloadLink.href = fileURL;
+                // downloadLink.setAttribute(   
+                //     'download',
+                //      `FileName.pdf`,
+                // );
+                downloadLink.download = data?.file;
 
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
             });
         });
     };
@@ -146,7 +146,7 @@ const Resources = () => {
                 // console.log(params,"params");
                 return (
                     <>
-                        <FontAwesomeIcon icon={faFileArrowDown} onClick={() => handleDownload(params?.row)} />
+                        <FontAwesomeIcon icon={faFileArrowDown} onClick={() => handleDownload(params?.row)} style={{ cursor: "pointer" }} />
                     </>
                 )
             }
@@ -288,9 +288,9 @@ const Resources = () => {
                     getResources();
                 }).catch((error) => {
                     // console.log(error, "error");
-                    if(error.error === "Title already exits"){
-                        toast.error(<p style={{fontSize:"80%"}}>{"Title Already Exits"}</p>,{
-                            position:"top-center",
+                    if (error.error === "Title already exits") {
+                        toast.error(<p style={{ fontSize: "80%" }}>{"Title Already Exits"}</p>, {
+                            position: "top-center",
                         });
                     }
                 });
@@ -357,11 +357,22 @@ const Resources = () => {
                             </div>
                         ),
                     }}
-                    style={{ height: "90vh", width: "100%", padding: "2%" }}
+                    style={{ height: "90vh", width: "100%", padding: "2%", cursor: "pointer" }}
                     // onRowClick={(e) => {
                     //     // console.log(e);
                     // }}
                     className='custom-data-grid'
+                    // {...data}
+                    initialState={{
+                        // ...data.initialState,
+                        pagination: { paginationModel: { pageSize: 5 } },
+                    }}
+                    pageSizeOptions={[5, 10, 25]}
+                    sx={{
+                        "& .css-1ui3wbn-MuiInputBase-root-MuiTablePagination-select":{
+                            width:"20%!important"
+                        }
+                    }}
                 />
             </div>
 
@@ -449,7 +460,7 @@ const Resources = () => {
                         "& .MuiPaper-root": {
                             width: "100%",
                             maxWidth: "500px",
-                            borderRadius:"0.5rem",  // Set your width here
+                            borderRadius: "0.5rem",  // Set your width here
                         },
                     },
                 }}

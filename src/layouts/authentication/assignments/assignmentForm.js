@@ -241,17 +241,28 @@ const AssignmentForm = () => {
                         </div>
                         <div className="col-sm-6 form-group mt-2">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DemoContainer
+                                {/* <DemoContainer
                                     components={['DatePicker', 'DateTimePicker', 'DateRangePicker']}
-                                >
-                                    <DemoItem label="DatePicker">
-                                        <DatePicker
-                                            defaultValue={today}
-                                            minDate={tomorrow}
-                                            views={['year', 'month', 'day']}
-                                        />
-                                    </DemoItem>
-                                </DemoContainer>
+                                > */}
+                                <DemoItem label="DatePicker">
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        selectsStart
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        defaultValue={today}
+                                        minDate={tomorrow}
+                                        format="DD/MM/YYYY"
+                                        views={['year', 'month', 'day']}
+                                        sx={{
+                                            "& .MuiSvgIcon-root": {
+                                                marginLeft: "18rem",
+                                            }
+                                        }}
+                                    />
+                                </DemoItem>
+                                {/* </DemoContainer> */}
                             </LocalizationProvider>
 
                             {error.startDate && <p style={{ color: "red", fontSize: "60%" }}>{error.startDate} </p>}
@@ -259,7 +270,7 @@ const AssignmentForm = () => {
                     </div>
                     <div style={{ display: "flex" }}>
                         <div className="col-sm-6 form-group mt-2">
-                            <label htmlFor="date"></label>
+                            {/* <label htmlFor="date"></label>
                             <SoftInput
                                 type="date"
                                 name="endDate"
@@ -268,9 +279,34 @@ const AssignmentForm = () => {
                                 onChange={(e) => {
                                     handleChange(e);
                                 }}
-                            />
+                            /> */}
                             {/* <DateRangePicker defaultValue={[today, tomorrow]} minDate={tomorrow} /> */}
-                            {error.startDate && <p style={{ color: "red", fontSize: "60%" }}>{error.startDate} </p>}
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                {/* <DemoContainer
+                                    components={['DatePicker', 'DateTimePicker', 'DateRangePicker']}
+                                > */}
+                                <DemoItem label="DatePicker">
+                                    <DatePicker
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        selectsEnd
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        minDate={startDate}
+                                        defaultValue={today}
+                                        // minDate={tomorrow}
+                                        format="DD/MM/YYYY"
+                                        views={['year', 'month', 'day']}
+                                        sx={{
+                                            "& .MuiSvgIcon-root": {
+                                                marginLeft: "18rem",
+                                            }
+                                        }}
+                                    />
+                                </DemoItem>
+                                {/* </DemoContainer> */}
+                            </LocalizationProvider>
+                            {error.endDate && <p style={{ color: "red", fontSize: "60%" }}>{error.endDate} </p>}
                         </div>
 
                         <div className="col-sm-6 form-group">
@@ -310,7 +346,7 @@ const AssignmentForm = () => {
                 </div>
 
             </SoftBox >
-            
+
         </>
     )
 }

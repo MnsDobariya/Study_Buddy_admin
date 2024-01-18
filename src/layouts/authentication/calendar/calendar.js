@@ -18,7 +18,13 @@ import { ApiPut } from 'config/Api/ApiData';
 import { object } from 'prop-types';
 import hotkeys from 'hotkeys-js';
 import '../calendar/calendar.css';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
+const today = dayjs();
+const tomorrow = dayjs().add(1, 'day');
 
 const Calendar = () => {
 
@@ -29,6 +35,9 @@ const Calendar = () => {
     });
 
     const [open, setOpen] = useState();
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     const [error, setError] = useState({
         title: "",
@@ -98,8 +107,8 @@ const Calendar = () => {
 
         const body = {
             Title: calendarEvent?.title,
-            StartDate: calendarEvent?.startdate,
-            EndDate: calendarEvent?.enddate,
+            StartDate: startDate,
+            EndDate: endDate,
         }
 
         ApiPut(`${EndPoint.EVENT_PUT}/${calendarEvent?.id}`, body)
@@ -113,8 +122,8 @@ const Calendar = () => {
 
         const body = {
             Title: calendarEvent?.title,
-            StartDate: calendarEvent?.startdate,
-            EndDate: calendarEvent?.enddate
+            StartDate: startDate,
+            EndDate: endDate,
         }
 
         ApiPost(`${EndPoint.EVENT_CREATE}`, body)
@@ -215,7 +224,7 @@ const Calendar = () => {
                                 />
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                <label htmlFor="name-l" >Start</label>
+                                {/* <label htmlFor="name-l" >Start</label>
                                 <SoftInput
                                     type="date"
                                     name="startdate"
@@ -224,10 +233,30 @@ const Calendar = () => {
                                     onChange={(e) => {
                                         handleChange(e);
                                     }}
-                                />
+                                /> */}
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoItem label="DatePicker">
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        selectsStart
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        defaultValue={today}
+                                        minDate={tomorrow}
+                                        format="DD/MM/YYYY"
+                                        views={['year', 'month', 'day']}
+                                        sx={{
+                                            "& .MuiSvgIcon-root": {
+                                                marginLeft: "18rem",
+                                            }
+                                        }}
+                                    />
+                                </DemoItem>
+                                </LocalizationProvider>
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                <label htmlFor="name-1" >End</label>
+                                {/* <label htmlFor="name-1" >End</label>
                                 <SoftInput
                                     type="date"
                                     name="enddate"
@@ -237,7 +266,27 @@ const Calendar = () => {
                                         handleChange(e);
                                     }}
                                     onKeyPress={(e) => onKeyBtn(e)}
-                                />
+                                /> */}
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoItem label="DatePicker">
+                                    <DatePicker
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        selectsEnd
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        minDate={startDate}
+                                        defaultValue={today}
+                                        // minDate={tomorrow}
+                                        views={['year', 'month', 'day']}
+                                        sx={{
+                                            "& .MuiSvgIcon-root": {
+                                                marginLeft: "18rem",
+                                            }
+                                        }}
+                                    />
+                                </DemoItem>
+                                </LocalizationProvider>
                             </div>
                             <FormGroup style={{ marginTop: "0%", marginLeft: "13%" }}>
                                 <FormControlLabel control={<Checkbox />} label="All Day Event?" />

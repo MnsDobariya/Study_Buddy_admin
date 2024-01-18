@@ -148,11 +148,12 @@ function EmailVerify() {
                   }}
                   onKeyPress={(e) => onKeyBtn(e)}
                 />
-                {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email}</p>}
-                <SoftButton variant="gradient" color="info" onClick={getOTP} style={{ position: "absolute", left: "39%", width: "100px" }}>
-                  Get OTP
+                <SoftButton variant="gradient" color="info" onClick={getOTP} style={{ position: "absolute", transform: 'translateY(0%)', left: "38.1%",  cursor: 'pointer',width: "60px" }}>
+                  send
                 </SoftButton>
               </div>
+                {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email}</p>}
+
             </SoftBox>
           </SoftBox>
           <SoftBox mb={1} >
@@ -166,13 +167,27 @@ function EmailVerify() {
               onChange={setOTP}
               numInputs={6}
               renderSeparator={<span> -</span>}
-              inputStyle={{ width: "3rem", height: "2.5rem" }}
+              inputStyle={{ width: "3.5rem", height: "2.5rem" }}
               renderInput={(props) => <input{...props} />}
             />
 
           </SoftBox>
-          <SoftBox mt={4} mb={1} style={{ display: "flex", justifyContent: "center", justifyContent: "space-evenly" }}>
-            <SoftButton variant="gradient" color="info" onClick={handleVerify}>
+           
+            <SoftTypography
+              component={Link}
+              to="/authentication/verify-email"
+              variant="button"
+              color="info"
+              ml={30}
+              onClick={getOTP}
+              fontWeight="medium"
+              textGradient
+            >
+              Resend OTP
+            </SoftTypography>
+
+          <SoftBox mt={4} mb={1} >
+            <SoftButton variant="gradient" color="info" style={{width:"110.3%"}} onClick={handleVerify}>
               Verify OTP
             </SoftButton>
           </SoftBox>

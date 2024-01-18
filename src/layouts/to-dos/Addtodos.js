@@ -12,7 +12,10 @@ import { EndPoint } from "config/EndPoint/Endpoint";
 import { ApiPut } from "config/Api/ApiData";
 import { toast } from "react-toastify";
 import hotkeys from "hotkeys-js";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
 
@@ -21,6 +24,9 @@ const categoryDropDown = [
     { label: "High ", value: "High" },
     { label: "Medium", value: "Medium" }
 ];
+
+const today = dayjs();
+const tomorrow = dayjs().add(1, 'day');
 
 const Addtodos = () => {
     const location = useLocation();
@@ -63,9 +69,9 @@ const Addtodos = () => {
     const Addtodos = () => {
         const error = {};
 
-        if (!addTodos.deadlinedate) {
-            error.deadlinedate = "Please Date Required";
-        }
+        // if (!addTodos.deadlinedate) {
+        //     error.deadlinedate = "Please Date Required";
+        // }
 
         const taskRegex = /^[a-zA-Z]{2,40}([a-zA-Z]{2,40})+$/;
         if (!addTodos.task) {
@@ -85,7 +91,7 @@ const Addtodos = () => {
             error.description = "Invalid Description";
         }
 
-        if (error.deadlinedate || error.task || error.portable || error.description) {
+        if (error.task || error.portable || error.description) {
             setError(error)
             return;
         }
@@ -129,9 +135,9 @@ const Addtodos = () => {
                     }
                 }).catch((error) => {
                     // console.log(error,"error");
-                    if(error.error === "Task already exits"){
-                        toast.error(<p style={{fontSize:"80%"}}>{"Task Already Exits"}</p>,{
-                            position:"top-center",
+                    if (error.error === "Task already exits") {
+                        toast.error(<p style={{ fontSize: "80%" }}>{"Task Already Exits"}</p>, {
+                            position: "top-center",
                         });
                     }
                 });
@@ -160,7 +166,7 @@ const Addtodos = () => {
 
     return (
         <>
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}></LocalizationProvider> */}
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs}></LocalizationProvider> */}
             <SoftBox mt={4} mb={1}>
                 <h2 style={{ textAlign: "left", marginTop: "5%", marginLeft: "20%" }}>
                     {/* {" "}
@@ -206,8 +212,8 @@ const Addtodos = () => {
 
                                 {/* // style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }} */}
                                 {/* /> */}
-                                <div>
-                                    {/* <DatePicker
+                                {/* <div> */}
+                                {/* <DatePicker
                                         dateFormat="dd-MM-yyyy"
                                         className="form-control"
                                         selected={startDate}
@@ -215,7 +221,34 @@ const Addtodos = () => {
                                             setStartDate(date)
                                         }
                                     /> */}
-                                </div>
+                                {/* </div> */}
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DemoItem label="">
+                                        <DatePicker
+                                            selected={startDate}
+                                            onChange={(date) => setStartDate(date)}
+                                            selectsStart
+                                            startDate={startDate}
+                                            // endDate={endDate}
+                                            defaultValue={today}
+                                            minDate={tomorrow}
+                                            format="DD/MM/YYYY"
+                                            views={['year', 'month', 'day']}
+                                            sx={{
+                                                "& .MuiSvgIcon-root": {
+                                                    marginLeft: "19rem",
+                                                },
+                                                // "& .MuiButtonBase-root": {
+                                                    // "& .MuiPickersDay-root": {
+                                                        "& .Mui-selected": {
+                                                            backgroundColor: "black",
+                                                        }
+                                                    // }
+                                                // }
+                                            }}
+                                        />
+                                    </DemoItem>
+                                </LocalizationProvider>
                                 {/* {error.deadlinedate && <p>{error.deadlinedate}</p>} */}
                             </div>
                             <div className="col-sm-6 form-group">
