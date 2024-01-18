@@ -58,6 +58,7 @@ import Calendar from "layouts/authentication/calendar/calendar";
 import Todos from "layouts/to-dos/Todos";
 import Resources from "layouts/resources/Resources";
 import Notification from "layouts/notification/notification";
+import Chat from "layouts/chat/Chat";
 
 
 const routes = [
@@ -256,6 +257,15 @@ const routes = [
     route: "/assignments/assignmentList",
     icon: <SpaceShip size="12px" />,
     component: <AssignmentList />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Chat",
+    key: "chat",
+    route: "/chat",
+    icon: <SpaceShip size="12px" />,
+    component: <Chat />,
     noCollapse: true,
   },
   // {

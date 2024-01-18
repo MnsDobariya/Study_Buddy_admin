@@ -94,6 +94,26 @@ const Assignment = () => {
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
+                sx={{
+                    "& .css-cmyovl-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
+                        border: " 0 solid rgba(0, 0, 0, 0.125)",
+                        borderRadius: "1rem",
+                        boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0)",
+                    }
+                }}
+            // sx={{
+            //     "& .MuiPaper-root":{
+            //         "& .MuiMenu-paper":{
+            //             "& .MuiPopover-paper":{
+            //                 // transition:" box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+            //                 // backgroundColor: "#ffffff",
+            //                 // border:" 0 solid rgba(0, 0, 0, 0.125)",
+            //                 // borderRadius: "1rem",
+            //                 // boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)"
+            //             }
+            //         }
+            //     }
+            // }}
             >
                 <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
                 <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>

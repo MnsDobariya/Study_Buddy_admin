@@ -81,11 +81,15 @@ const Todos = () => {
                                 <div style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
                                     <FontAwesomeIcon icon={faPen} onClick={() => {
                                         handleEdit(item)
-                                    }} />
+                                    }}
+                                    style={{cursor:"pointer"}}
+                                    />
                                     <FontAwesomeIcon icon={faTrash} onClick={() => {
                                         setOpen(true);
                                         setDeleteId(item.id);
-                                    }} />
+                                    }} 
+                                    style={{cursor:"pointer"}}
+                                    />
                                 </div>
                             </div>
                             <p className="card-text">Finish by : {formatDate(item?.deadlinedate)}</p>
