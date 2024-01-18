@@ -117,7 +117,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
       sx={{ mt: 2 }}
     >
       {notification &&
-        notification.map((item) => (
+        notification.slice(-3).reverse().map((item) => (
           <div key={item.id} className="rowtodos" id="adstodos">
             <NotificationItem
               image={<img src={team2} alt="person" />}
