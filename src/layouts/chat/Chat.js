@@ -1,8 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../chat/Chat.css';
 import SoftInput from 'components/SoftInput';
+import axios from 'axios';
+import { ApiGet } from 'config/Api/ApiData';
+import { EndPoint } from 'config/EndPoint/Endpoint';
+import { ApiPost } from 'config/Api/ApiData';
 
 const Chat = () => {
+    const [room, setRoom] = useState({
+        receiverId: "",
+
+    })
+    const [roomRecord, setRoomRecord] = useState([]);
+
+    const [chat, setChat] = useState({
+        receiverId: "",
+        roomId: "",
+        message: ""
+    })
+    const [chatRecord, setChatRecord] = useState([]);
+
+    const createRoom = () => {
+        const body = {
+            receiverId: room?.receiverId,
+        }
+
+        ApiPost(`${EndPoint.ROOM_CREATE}`, body)
+            .then((res) => {
+                // console.log(res, "aaaaaaaaaaaaaaaaaa");
+            })
+    }
+
+    const getRoom = () => {
+        ApiGet(`${EndPoint.ROOM_GET}`)
+            .then((res) => {
+                console.log(res, "response");
+                setRoomRecord(res?.data)
+            })
+    }
+
+    const createChat = () => {
+        const body = {
+            receiverId: chat?.receiverId,
+            roomId: chat?.roomId,
+            message: chat?.message
+        }
+
+        ApiPost(`${EndPoint.CHAT_CREATE}`, body)
+            .then((res) => {
+                // console.log(res, "aaaaaaaaaaaaaaaaaa");
+            })
+    }
+
+    const getChat = () => {
+        ApiGet(`${EndPoint.CHAT_GET}`)
+            .then((res) => {
+                console.log(res, "responsechat");
+            })
+    }
+
+    useEffect(() => {
+        getRoom("")
+        getChat("")
+    }, [])
+
     return (
         <>
             <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
@@ -29,101 +90,25 @@ const Chat = () => {
                                         </span> </div>
                                 </div>
                             </div>
-                            <div className="inbox_chat">
-                                <div className="chat_list active_chat">
-                                    <div className="chat_people">
-                                        <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                        <div className="chat_ib">
-                                            <h5>Sunil Rajput <span className="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
+                            {roomRecord && roomRecord?.map((item) => (
+                                <div key={item.id} className="rowroom" id="adstodos">
+                                    <div className="inbox_chat">
+                                        <div className="chat_list active_chat">
+                                            <div className="chat_people">
+                                                <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
+                                                <div className="chat_ib">
+                                                    <h5>{item?.sender?.firstName} <span className="chat_date">Dec 25</span></h5>
+                                                    <p>{item?.messager?.message}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="chat_list">
-                                    <div className="chat_people">
-                                        <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                        <div className="chat_ib">
-                                            <h5>Sunil Rajput <span className="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="chat_list">
-                                    <div className="chat_people">
-                                        <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                        <div className="chat_ib">
-                                            <h5>Sunil Rajput <span className="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="chat_list">
-                                    <div className="chat_people">
-                                        <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                        <div className="chat_ib">
-                                            <h5>Sunil Rajput <span className="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="chat_list">
-                                    <div className="chat_people">
-                                        <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                        <div className="chat_ib">
-                                            <h5>Sunil Rajput <span className="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="chat_list">
-                                    <div className="chat_people">
-                                        <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                        <div className="chat_ib">
-                                            <h5>Sunil Rajput <span className="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="chat_list">
-                                    <div className="chat_people">
-                                        <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                        <div className="chat_ib">
-                                            <h5>Sunil Rajput <span className="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="chat_list">
-                                    <div className="chat_people">
-                                        <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                        <div className="chat_ib">
-                                            <h5>Sunil Rajput <span className="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="chat_list">
-                                    <div className="chat_people">
-                                        <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                        <div className="chat_ib">
-                                            <h5>Sunil Rajput <span className="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                         <div className="mesgs">
                             <div className="msg_history">
+
                                 <div className="incoming_msg">
                                     <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
                                     <div className="received_msg">
@@ -139,7 +124,7 @@ const Chat = () => {
                                             solutions</p>
                                         <span className="time_date"> 11:01 AM    |    June 9</span> </div>
                                 </div>
-                                <div className="incoming_msg">
+                                {/* <div className="incoming_msg">
                                     <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
                                     <div className="received_msg">
                                         <div className="received_withd_msg">
@@ -181,12 +166,12 @@ const Chat = () => {
                                     <div className="sent_msg">
                                         <p>Apollo University, Delhi, India Test</p>
                                         <span className="time_date"> 11:01 AM    |    Today</span> </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="type_msg">
                                 <div className="input_msg_write">
                                     <SoftInput type="text" className="write_msg" placeholder="Type a message" />
-                                    <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                    <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
                                 </div>
                             </div>
                         </div>
