@@ -17,7 +17,7 @@ const Notification = () => {
   const getNotificationData = () => {
     ApiGet(`${EndPoint.NOTIFICATION_GET}`)
       .then((res) => {
-        console.log(res, "response");
+        // console.log(res, "response");
         setNotificationDate(res?.data)
       })
   }

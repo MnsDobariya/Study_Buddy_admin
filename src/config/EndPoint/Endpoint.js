@@ -31,4 +31,5 @@ export const EndPoint = {
     ROOM_GET:'room/get',
     CHAT_CREATE:'chat/create',
     CHAT_GET:'chat/get',
+    SEARCH_GET:'users/teacher/get/search',
 }

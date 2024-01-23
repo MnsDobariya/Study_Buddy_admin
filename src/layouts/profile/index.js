@@ -90,11 +90,13 @@ function Overview() {
     spId: "",
     year: "",
     semester: "",
-    division: ""
+    division: "",
+    otherDivision:""
   });
-  // console.log(userProfile,"userProfile");
+  console.log(userProfile?.otherDivision,"userProfile");
 
   const [isAuthorSelect, setIsAuthorSelect] = useState(false);
+
   const [startDate, setStartDate] = useState(new Date());
 
   const [error, setError] = useState({
@@ -129,6 +131,7 @@ function Overview() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(e.target,"e.target");
     const textRegex = /^[A-Za-z\s]+$/;
 
     if (name === "firstName" || name === "lastName" || name === "email" || name === "gender") {
@@ -195,7 +198,7 @@ function Overview() {
     form_data.append("spId", userProfile?.spId)
     form_data.append("year", userProfile?.year)
     form_data.append("semester", userProfile?.semester)
-    form_data.append("division", userProfile?.division)
+    form_data.append("division", userProfile?.otherDivision ? userProfile?.otherDivision : userProfile?.division)
     if (userProfile?.profilePicture) {
       form_data.append("profileImage", userProfile?.profilePicture)
     }
@@ -603,8 +606,8 @@ function Overview() {
                       {/* <label htmlFor="authorInput" style={{ fontSize: "500" }}>Author Select</label> */}
                       <SoftInput
                         type="text"
-                        name="authorInput"
-                        value={userProfile?.authorInput}
+                        name="otherDivision"
+                        value={userProfile?.otherDivision}
                         placeholder="Author Input"
                         onChange={(e) => {
                           handleChange(e);
