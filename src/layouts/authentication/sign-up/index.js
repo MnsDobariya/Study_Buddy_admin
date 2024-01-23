@@ -136,7 +136,7 @@ function SignUp() {
         navigate('/authentication/sign-in')
       })
       .catch((error) => {
-        if (error.response.data.message === "User already registered") {
+        if (error.error === "User already register") {
           toast.error(<p style={{ fontSize: "80%" }}>{"User already registered"}</p>, {
             position: "top-center",
           });

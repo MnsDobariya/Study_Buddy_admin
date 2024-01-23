@@ -99,11 +99,12 @@ function SignIn() {
         }
         localStorage.setItem("token", res.data.token.access.token)
         localStorage.setItem("firstName", res.data.admin.firstName)
+        localStorage.setItem("id", res.data.admin.id)
         navigate('/dashboard')
       })
 
       .catch((error) => {
-        if (error.response.data.message === "Incorrect email or password") {
+        if (error.error === "Incorrect Email or Password") {
           toast.error(<p style={{ fontSize: "80%" }}>{"Incorrect email or password..!"}</p>, {
             position: "top-center",
 

@@ -19,6 +19,16 @@ const Chat = () => {
         message: ""
     })
     const [chatRecord, setChatRecord] = useState([]);
+    // console.log(chatRecord,"chatRecord");
+
+    const [search, setSearch] = useState();
+
+    // const handleChange = (e) => {
+    //     setChat({
+    //         ...chat,
+    //         [e.target.name]:e.target.value
+    //     })
+    // }
 
     const createRoom = () => {
         const body = {
@@ -34,7 +44,7 @@ const Chat = () => {
     const getRoom = () => {
         ApiGet(`${EndPoint.ROOM_GET}`)
             .then((res) => {
-                console.log(res, "response");
+                // console.log(res, "response");
                 setRoomRecord(res?.data)
             })
     }
@@ -49,19 +59,57 @@ const Chat = () => {
         ApiPost(`${EndPoint.CHAT_CREATE}`, body)
             .then((res) => {
                 // console.log(res, "aaaaaaaaaaaaaaaaaa");
+                if (res?.status === 201) {
+                    setChat({
+                        ...chat,
+                        message: ""
+                    })
+                }
+                getChat(chat?.roomId);
             })
     }
 
-    const getChat = () => {
-        ApiGet(`${EndPoint.CHAT_GET}`)
+    const getChat = (roomId) => {
+        ApiGet(`${EndPoint.CHAT_GET}?roomId=${roomId}`)
             .then((res) => {
                 console.log(res, "responsechat");
+                setChatRecord(res?.data);
             })
     }
+
+    const getSearch = () => {
+        ApiGet(`${EndPoint.SEARCH_GET}`)
+            .then((res) => {
+                // console.log(res,"aaaaaaaaaaaaaaaaaaa");  
+            })
+    }
+
+    const handleRoomId = (item) => {
+        if (localStorage.getItem("id") != item?.receiver?._id) {
+            setChat({ ...chat, receiverId: item?.receiver?._id, roomId: item?._id })
+        } else {
+            setChat({ ...chat, receiverId: item?.sender?._id, roomId: item?._id })
+        }
+
+        getChat(item?._id);
+    }
+    const handleChat = (item) => {
+        if (localStorage.getItem("id") != item?.receiver?._id) {
+            setChat({ ...chat, receiverId: item?.receiver?._id, roomId: item?._id })
+        } else {
+            setChat({ ...chat, receiverId: item?.sender?._id, roomId: item?._id })
+        }
+
+        getChat(item?._id);
+    }
+
+
+
 
     useEffect(() => {
         getRoom("")
-        getChat("")
+        // getChat("")
+        // getSearch("")
     }, [])
 
     return (
@@ -96,7 +144,7 @@ const Chat = () => {
                                         <div className="chat_list active_chat">
                                             <div className="chat_people">
                                                 <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                                <div className="chat_ib">
+                                                <div className="chat_ib" onClick={() => handleRoomId(item)}>
                                                     <h5>{item?.sender?.firstName} <span className="chat_date">Dec 25</span></h5>
                                                     <p>{item?.messager?.message}</p>
                                                 </div>
@@ -109,21 +157,34 @@ const Chat = () => {
                         <div className="mesgs">
                             <div className="msg_history">
 
-                                <div className="incoming_msg">
-                                    <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                    <div className="received_msg">
-                                        <div className="received_withd_msg">
-                                            <p>Test which is a new approach to have all
-                                                solutions</p>
-                                            <span className="time_date"> 11:01 AM    |    June 9</span></div>
+
+                                {chatRecord && chatRecord?.map((item) => (
+                                    <div key={item.id} className="rowchat" id="adstodos">
+                                        {(localStorage.getItem("id") == item?.senderId) ?
+                                            <div className="outgoing_msg">
+                                                <div className="sent_msg" onClick={() => handleChat(item)}>
+                                                    {/* <p>Test which is a new approach to have all
+                                                                     solutions</p> */}
+                                                    <p>{item?.message}</p>
+                                                    <span className="time_date">{item?.createdAt} </span> </div>
+                                            </div>
+                                            :
+                                            <div className="incoming_msg">
+                                                <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
+                                                <div className="received_msg">
+                                                    <div className="received_withd_msg">
+                                                        <p>{item?.message}</p>
+                                                        <span className="time_date"> {item?.createdAt}</span>
+                                                        {/* <span className="time_date"> 11:01 AM    |    June 9</span> */}
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        }
+
+
+
                                     </div>
-                                </div>
-                                <div className="outgoing_msg">
-                                    <div className="sent_msg">
-                                        <p>Test which is a new approach to have all
-                                            solutions</p>
-                                        <span className="time_date"> 11:01 AM    |    June 9</span> </div>
-                                </div>
+                                ))}
                                 {/* <div className="incoming_msg">
                                     <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
                                     <div className="received_msg">
@@ -170,14 +231,18 @@ const Chat = () => {
                             </div>
                             <div className="type_msg">
                                 <div className="input_msg_write">
-                                    <SoftInput type="text" className="write_msg" placeholder="Type a message" />
+                                    <SoftInput
+                                        type="text"
+                                        className="write_msg"
+                                        placeholder="Type a message"
+                                        value={chat?.message}
+                                        onChange={e => setChat(prev => ({ ...prev, message: e.target.value }))}
+                                    />
                                     <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                     {/* <p className="text-center top_spac"> Design by <a target="_blank" href="https://www.linkedin.com/in/sunil-rajput-nattho-singh/">Sunil Rajput</a></p> */}
 
                 </div>
