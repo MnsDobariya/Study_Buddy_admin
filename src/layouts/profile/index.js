@@ -97,6 +97,7 @@ function Overview() {
   });
 //   console.log(userProfile?.otherDivision, "userProfile");
 
+  console.log(userProfile?.otherDivision,"userProfile");
 
   const [isAuthorSelect, setIsAuthorSelect] = useState(false);
 
@@ -137,6 +138,7 @@ function Overview() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log(e.target, "e.target");
+    console.log(e.target,"e.target");
     const textRegex = /^[A-Za-z\s]+$/;
 
     if (name === "firstName" || name === "lastName" || name === "email" || name === "gender") {
