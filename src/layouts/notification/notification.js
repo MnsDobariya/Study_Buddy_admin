@@ -17,7 +17,6 @@ const Notification = () => {
   const getNotificationData = () => {
     ApiGet(`${EndPoint.NOTIFICATION_GET}`)
       .then((res) => {
-        // console.log(res, "response");
         setNotificationDate(res?.data)
       })
   }
@@ -34,7 +33,6 @@ const Notification = () => {
   const deleteRecord = (id) => {
     axios.delete(`http://localhost:3000/api/v1/notification/delete/${id}`)
         .then((res) => {
-            // console.log(res,'resdetele');
             getNotificationData();
         })
         toast.success("Delete successfully")

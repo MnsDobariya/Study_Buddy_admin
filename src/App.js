@@ -35,7 +35,6 @@ export default function App() {
 
   const ueseTeacher = "teacher";
   const filterRout = routes.filter((roles)=> roles.role !== ueseTeacher);
-  // console.log("filterRout",filterRout);
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
@@ -78,7 +77,6 @@ export default function App() {
   const getRoutes = (allRoutes) =>
   
     allRoutes.map((route) => {
-      // console.log("route",route.route, "***",route.component);
       if (localStorage.getItem("token")) {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
         // <Route exact path={"/dashboard"} element={<Dashboard />} key={"sign-up"}/>;
@@ -100,7 +98,6 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {/* {console.log(layout,"qqqqqq")} */}
       {layout === "dashboard" && (
         <>
           <Sidenav

@@ -19,7 +19,6 @@ const Todos = () => {
     const getTodosData = () => {
         ApiGet(`${EndPoint.TODOS_GET}`)
             .then((res) => {
-                // console.log(res, "response");
                 setTodosData(res?.data)
             })
     }
@@ -29,16 +28,12 @@ const Todos = () => {
     }, [])
 
     const handleEdit = (ele) => {
-        // console.log(ele, "ssssssss");
         navigate(`/todos/addtodos`, { state: ele });
     }
 
     const [open, setOpen] = useState(false);
     const [deleteId, setDeleteId] = useState();
 
-    // const handleClickOpen = () => {
-    //     setOpen(true);
-    // };
 
     const handleClose = () => {
         setOpen(false);
@@ -47,7 +42,6 @@ const Todos = () => {
     const deleteRecord = (id) => {
         axios.delete(`http://localhost:3000/api/v1/todos/delete/${id}`)
             .then((res) => {
-                // console.log(res,'resdetele');
                 getTodosData();
                 toast.success("Delete Successfully");
             })
@@ -94,76 +88,10 @@ const Todos = () => {
                             </div>
                             <p className="card-text">Finish by : {formatDate(item?.deadlinedate)}</p>
                         </div>
-                        {/* <a href="#" className="btn btn-primary">Button</a> */}
                     </div>
 
                 </div >
             ))}
-            {/* <div className="cardtodos w-75">
-                <div className="card-body">
-                    <div style={{ display: "flex" }}>
-                        <p className="card-title">With supporting text below as a natural lead-in to additional content.</p>
-                        <label className='high'>
-                            <span className=''>HIGH</span>
-                        </label>
-                        <div style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
-                            <FontAwesomeIcon icon={faPen} />
-                            <FontAwesomeIcon icon={faTrash} />
-                        </div>
-                    </div>
-                    <p className="card-text">Finish by:31 Des 2023</p>
-                    <a href="#" className="btn btn-primary">Button</a>
-                </div>
-            </div>
-            <div className="cardtodos w-75">
-                <div className="card-body">
-                    <div style={{ display: "flex" }}>
-                        <p className="card-title">With supporting text below as a natural lead-in to additional content.</p>
-                        <label className='medium'>
-                            <span className=''>MEDIUM</span>
-                        </label>
-                        <div style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
-                            <FontAwesomeIcon icon={faPen} />
-                            <FontAwesomeIcon icon={faTrash} />
-                        </div>
-                    </div>
-                    <p className="card-text">Finish by:31 Des 2023</p>
-                    <a href="#" className="btn btn-primary">Button</a>
-                </div>
-            </div>
-            <div className="cardtodos w-75">
-                <div className="card-body">
-                    <div style={{ display: "flex" }}>
-                        <p className="card-title">With supporting text below as a natural lead-in to additional content.</p>
-                        <label className='low'>
-                            <span className=''>LOW</span>
-                        </label>
-                        <div style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
-                            <FontAwesomeIcon icon={faPen} />
-                            <FontAwesomeIcon icon={faTrash} />
-                        </div>
-                    </div>
-                    <p className="card-text">Finish by:31 Des 2023</p>
-                    <a href="#" className="btn btn-primary">Button</a>
-                </div>
-            </div>
-            <div className="cardtodos w-75">
-                <div className="card-body">
-                    <div style={{ display: "flex" }}>
-                        <p className="card-title">With supporting text below as a natural lead-in to additional content.</p>
-                        <label className='high'>
-                            <span className=''>HIGH</span>
-                        </label>
-                        <div style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
-                            <FontAwesomeIcon icon={faPen} />
-                            <FontAwesomeIcon icon={faTrash} />
-                        </div>
-                    </div>
-                    <p className="card-text">Finish by:31 Des 2023</p>
-                    <a href="#" className="btn btn-primary">Button</a>
-                </div>
-            </div> */}
-
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -188,13 +116,6 @@ const Todos = () => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    {/* <Button className="btn btn-primary" onClick={() => {
-                        deleteRecord(deleteId)
-                        handleClose(true)
-                    }}>Yes</Button> */}
-                    {/* <Button className="btn btn-secondary" onClick={handleClose} autoFocus>
-                        No
-                    </Button> */}
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteRecord(deleteId)
                         handleClose(true)

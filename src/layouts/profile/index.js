@@ -126,7 +126,6 @@ function Overview() {
   const getUserProfile = () => {
     ApiGet(`${EndPoint.PROFILE_GET}`)
       .then((res) => {
-        // console.log(res,"userProfile");
         setUserProfile(res?.data)
       })
   }
@@ -210,12 +209,10 @@ function Overview() {
 
     ApiPut(`${EndPoint.PROFILE_UPDATE}`, form_data)
       .then((res) => {
-        // console.log(res, "userProfileupdate");
         toast.success(<p style={{ fontSize: "80%" }}>{"Profile Update Successfully"}</p>);
         getUserProfile();
       })
       .catch((error) => {
-        console.log(error, "error");
       })
 
 

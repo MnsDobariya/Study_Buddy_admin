@@ -5,13 +5,13 @@ import axios from 'axios';
 import { ApiGet } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
 import { ApiPost } from 'config/Api/ApiData';
+import Moment from 'react-moment/dist';
+import moment from 'moment';
+import { Category } from '@mui/icons-material';
 
 const Chat = () => {
-    const [room, setRoom] = useState({
-        receiverId: "",
-
-    })
     const [roomRecord, setRoomRecord] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
 
     const [chat, setChat] = useState({
         receiverId: "",
@@ -19,7 +19,6 @@ const Chat = () => {
         message: ""
     })
     const [chatRecord, setChatRecord] = useState([]);
-    // console.log(chatRecord,"chatRecord");
 
     const [search, setSearch] = useState();
 
@@ -30,22 +29,22 @@ const Chat = () => {
     //     })
     // }
 
-    const createRoom = () => {
+    const createRoom = (receiverUserData) => {
         const body = {
-            receiverId: room?.receiverId,
+            receiverId : receiverUserData?.id
         }
 
         ApiPost(`${EndPoint.ROOM_CREATE}`, body)
             .then((res) => {
-                // console.log(res, "aaaaaaaaaaaaaaaaaa");
+                getRoom();
             })
     }
 
     const getRoom = () => {
         ApiGet(`${EndPoint.ROOM_GET}`)
             .then((res) => {
-                // console.log(res, "response");
-                setRoomRecord(res?.data)
+                setRoomRecord(res?.data);
+                setSearchResults([])
             })
     }
 
@@ -58,7 +57,6 @@ const Chat = () => {
 
         ApiPost(`${EndPoint.CHAT_CREATE}`, body)
             .then((res) => {
-                // console.log(res, "aaaaaaaaaaaaaaaaaa");
                 if (res?.status === 201) {
                     setChat({
                         ...chat,
@@ -72,44 +70,48 @@ const Chat = () => {
     const getChat = (roomId) => {
         ApiGet(`${EndPoint.CHAT_GET}?roomId=${roomId}`)
             .then((res) => {
-                console.log(res, "responsechat");
                 setChatRecord(res?.data);
             })
     }
 
     const getSearch = () => {
-        ApiGet(`${EndPoint.SEARCH_GET}`)
+        ApiGet(`${EndPoint.SEARCH_GET}?firstName=${search}`)
             .then((res) => {
-                // console.log(res,"aaaaaaaaaaaaaaaaaaa");  
+                setSearchResults(res?.data);
             })
     }
 
     const handleRoomId = (item) => {
-        if (localStorage.getItem("id") != item?.receiver?._id) {
-            setChat({ ...chat, receiverId: item?.receiver?._id, roomId: item?._id })
+        if (localStorage.getItem("id") !== item?.receiver?._id) {
+            setChat({ ...chat, receiverId: item?.receiver?._id, roomId: item?._id });
         } else {
-            setChat({ ...chat, receiverId: item?.sender?._id, roomId: item?._id })
+            setChat({ ...chat, receiverId: item?.sender?._id, roomId: item?._id });
         }
-
+    
         getChat(item?._id);
+        // setSearchResults(item?._id);
     }
-    const handleChat = (item) => {
-        if (localStorage.getItem("id") != item?.receiver?._id) {
-            setChat({ ...chat, receiverId: item?.receiver?._id, roomId: item?._id })
-        } else {
-            setChat({ ...chat, receiverId: item?.sender?._id, roomId: item?._id })
-        }
+     
+    // const handleChat = (item) => {
+    //     if (localStorage.getItem("id") != item?.receiver?._id) {
+    //         setChat({ ...chat, receiverId: item?.receiver?._id, roomId: item?._id })
+    //     } else {
+    //         setChat({ ...chat, receiverId: item?.sender?._id, roomId: item?._id })
+    //     }
 
-        getChat(item?._id);
-    }
+    //     getChat(item?._id);
+    // }
 
 
-
+    // const handleChange = (e) => {
+    //     setSearch({
+    //         ...search,
+    //         [e.target.name]:e.target.value,
+    //     })
+    // }
 
     useEffect(() => {
         getRoom("")
-        // getChat("")
-        // getSearch("")
     }, [])
 
     return (
@@ -132,20 +134,46 @@ const Chat = () => {
                                 </div>
                                 <div className="srch_bar">
                                     <div className="stylish-input-group">
-                                        <input type="text" className="search-bar" placeholder="Search" />
+                                        <input
+                                            type="text"
+                                            name='search'
+                                            className="search-bar"
+                                            // value={search}
+                                            placeholder="Search"
+                                            onChange={(e) => {
+                                                // handleChange(e);
+                                                setSearch(e.target.value);
+                                            }}
+                                        />
                                         <span className="input-group-addon">
-                                            <button type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
-                                        </span> </div>
+                                            <button type="button" onClick={(e) => {
+                                                setSearch(e.target.value);
+                                                getSearch();
+                                            }}> <i className="fa fa-search" aria-hidden="true"></i> </button>
+                                        </span>
+                                        {searchResults &&
+                                            searchResults.map((item) => (
+                                                <option key={item.id} onClick={() => createRoom(item)}>
+                                                    {item.firstName}
+                                                </option>
+                                            ))
+                                        }
+
+                                        {/* {firstName && firstName?.map((item)=>(
+                                            <option key={item.value}>{item?.value}</option>
+                                        ))} */}
+                                    </div>
                                 </div>
                             </div>
+
                             {roomRecord && roomRecord?.map((item) => (
                                 <div key={item.id} className="rowroom" id="adstodos">
                                     <div className="inbox_chat">
                                         <div className="chat_list active_chat">
                                             <div className="chat_people">
-                                                <div className="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
+                                                <div className="chat_img"> <img src={`http://localhost:3000${item?.receiver?.profileImage}`} /> </div>
                                                 <div className="chat_ib" onClick={() => handleRoomId(item)}>
-                                                    <h5>{item?.sender?.firstName} <span className="chat_date">Dec 25</span></h5>
+                                                    <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">Dec 25</span></h5>
                                                     <p>{item?.messager?.message}</p>
                                                 </div>
                                             </div>
@@ -162,9 +190,7 @@ const Chat = () => {
                                     <div key={item.id} className="rowchat" id="adstodos">
                                         {(localStorage.getItem("id") == item?.senderId) ?
                                             <div className="outgoing_msg">
-                                                <div className="sent_msg" onClick={() => handleChat(item)}>
-                                                    {/* <p>Test which is a new approach to have all
-                                                                     solutions</p> */}
+                                                <div className="sent_msg">
                                                     <p>{item?.message}</p>
                                                     <span className="time_date">{item?.createdAt} </span> </div>
                                             </div>
@@ -174,9 +200,12 @@ const Chat = () => {
                                                 <div className="received_msg">
                                                     <div className="received_withd_msg">
                                                         <p>{item?.message}</p>
-                                                        <span className="time_date"> {item?.createdAt}</span>
-                                                        {/* <span className="time_date"> 11:01 AM    |    June 9</span> */}
-                                                        </div>
+                                                        <span>
+                                                            <Moment className="time_date" format="hh:mm:ss / DD-MM-YYYY" >
+                                                                {item?.createdAt}
+                                                            </Moment>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         }

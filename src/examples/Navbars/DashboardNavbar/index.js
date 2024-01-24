@@ -92,7 +92,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const getNotificationData = () => {
     ApiGet(`${EndPoint.NOTIFICATION_GET}`)
       .then((res) => {
-        console.log(res, "response");
         setNotification(res?.data)
       })
   }
