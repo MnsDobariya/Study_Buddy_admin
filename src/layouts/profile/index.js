@@ -93,7 +93,6 @@ function Overview() {
     division: "",
     otherDivision:""
   });
-  console.log(userProfile?.otherDivision,"userProfile");
 
   const [isAuthorSelect, setIsAuthorSelect] = useState(false);
 
@@ -120,7 +119,6 @@ function Overview() {
   const getUserProfile = () => {
     ApiGet(`${EndPoint.PROFILE_GET}`)
       .then((res) => {
-        // console.log(res,"userProfile");
         setUserProfile(res?.data)
       })
   }
@@ -131,7 +129,6 @@ function Overview() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(e.target,"e.target");
     const textRegex = /^[A-Za-z\s]+$/;
 
     if (name === "firstName" || name === "lastName" || name === "email" || name === "gender") {
@@ -206,12 +203,10 @@ function Overview() {
 
     ApiPut(`${EndPoint.PROFILE_UPDATE}`, form_data)
       .then((res) => {
-        // console.log(res, "userProfileupdate");
         toast.success(<p style={{ fontSize: "80%" }}>{"Profile Update Successfully"}</p>);
         getUserProfile();
       })
       .catch((error) => {
-        console.log(error, "error");
       })
   }
 

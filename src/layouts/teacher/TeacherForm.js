@@ -26,7 +26,6 @@ const TeacherForm = () => {
         gender: "male"
     })
     useEffect(() => {
-        console.log((addTeacher));
     }, [addTeacher])
 
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -68,7 +67,6 @@ const TeacherForm = () => {
         if (location?.state) {
             setAddTeacher(location?.state);
         }
-        console.log(location?.state);
     }, [location]);
 
     const addNewTeacher = () => {
@@ -125,7 +123,6 @@ const TeacherForm = () => {
             gender: addTeacher?.gender
         }
         if (location?.state) {
-            console.log(location?.state, "hhhhhhhhh")
             ApiPut(`${EndPoint.USER_UPDATE}/${location?.state?.id}`, body)
 
                 .then((res) => {

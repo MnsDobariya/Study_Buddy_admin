@@ -68,7 +68,7 @@
     padding: 18px 16px 10px;
   }
   .inbox_chat { 
-    height: 700px; 
+    /* height: 610px;  */
     /* height: 550px; */
     overflow-y: scroll;
 } 
@@ -154,7 +154,7 @@
   }
   .messaging { padding: 0 0 0 0;}
   .msg_history {
-    height: 650px;
+    height: 610px;
     /* height: 516px; */
     overflow-y: auto;
   }

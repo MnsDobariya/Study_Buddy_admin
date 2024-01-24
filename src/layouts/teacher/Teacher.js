@@ -34,12 +34,9 @@ const Teacher = () => {
     const filterTeacher = teacherRecord.filter((x) => x.role == "Teacher")
 
     const getTeacherRecord = () => {
-        // axios.get("http://localhost:3000/api/v1/users/teacher/get",
         ApiGet(`${EndPoint.USER_GET}`)
 
-            // { headers: { "Authorization": Bearer ${token} } })
             .then((res) => {
-                // console.log("helloo",res);
                 setTeacherRecord(res.data);
             });
     };
@@ -52,21 +49,13 @@ const Teacher = () => {
         index: index + 1,
     }));
 
-    // const handleOpen = () => {
-    //     setOpen(true);
-    // };
     const handleClose = () => {
         setOpen(false);
     };
 
-    // const [openPopUp, setOpenPopUp] = useState(false);
-    // const [deleteRowId, setDeleteRowId] = useState();
-
     const deleteRecord = (id) => {
-        // ApiDelete(${EndPoint.USER_DELETE})
         axios.delete(`http://localhost:3000/api/v1/users/teacher/delete/${id}`)
             .then((res) => {
-                // console.log("res.data",res.data);
                 toast.success("Deleted successfully");
                 getTeacherRecord();
             });
@@ -80,7 +69,6 @@ const Teacher = () => {
         { field: "phone", headerName: "Mobile_No", width: 190 },
         { field: "gender", headerName: "Gender", width: 130 },
 
-        // action
         {
             field: "action",
             headerName: "Action",
@@ -88,7 +76,6 @@ const Teacher = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        {/* Edit */}
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
                             fill='none'
@@ -98,13 +85,7 @@ const Teacher = () => {
                             height='20px'
                             width='30px'
                             className='edit-icon'
-                            // onClick={(e) => {
-                            //     // console.log("e",params.row.id);
-                            //     setOpenPopUp(true);
-                            //     setDeleteRowId(params.row.id);
-                            // }}
                             onClick={() => {
-                                // console.log(params.row);
                                 navigate('/teacher/teacherform', { state: params.row })
 
                             }}
@@ -129,7 +110,6 @@ const Teacher = () => {
                             data-toggle='modal'
                             data-target='#exampleModal'
                             onClick={(e) => {
-                                // console.log("e",params.row.id);
                                 setOpen(true);
                                 setDeleteRowId(params.row.id);
                             }}
@@ -146,30 +126,10 @@ const Teacher = () => {
             },
         },
     ];
-    // const deleteRecord = (id) => {
-    //     // ApiDelete(${EndPoint.USER_DELETE})
-    //     axios.delete(http://localhost:3000/api/v1/users/teacher/delete/${id})
-    //         .then((res) => {
-    //             // console.log("res.data",res.data);
-    //             toast.success("Deleted successfully");
-    //             getTeacherRecord();
-    //         });
-    // };
-
-
+ 
     return (
         <>
-            {/* <div className="mt-5" style={{ marginLeft: "20%" }}>
-                <h3>Teacher List</h3>
-            </div>
-                <div style={{ width: "70%", padding: "1%", marginLeft: "75%" }}>
-
-                    <SoftButton variant="gradient" color="info" marginLeft="60%" onClick={() => {
-                        navigate('/teacher/teacherform')
-                    }} >
-                        Add Teacher
-                    </SoftButton>
-                </div> */}
+           
             <div style={{ width: "77.5%", padding: "1%", marginLeft: "20%",marginTop:"2%" }}>
             <h3 style={{ color: " #344767" }}>Teacher List</h3>
                 <DataGrid
@@ -198,78 +158,9 @@ const Teacher = () => {
                     }}
                     style={{ height: "90vh", width: "100%", padding: "2%" }}
                     onRowClick={(e) => {
-                        // console.log(e);
                     }}
                     className='custom-data-grid'
                 />
-
-                {/* {openPopUp && (
-                    <div>
-
-                        hello
-                <button onClick={()=>deleteRecord(deleteRowId)}>Yes</button>
-                <button onClick={()=>{setOpenPopUp(false)}}>No</button>
-
-                        <div
-                            className='modal fade'
-                            id='exampleModal'
-                            tabIndex='-1'
-                            role='dialog'
-                            aria-labelledby='exampleModalLabel'
-                            aria-hidden='true'
-                        >
-                            <div className='modal-dialog' role='document'>
-                                <div className='modal-content'>
-                                    <div className='modal-header'>
-                                        <h5 className='modal-title' id='exampleModalLabel'>
-                                            Delete
-                                        </h5>
-                                        <button
-                                            type='button'
-                                            className='close'
-                                            data-dismiss='modal'
-                                            aria-label='Close'
-                                        >
-                                            <span aria-hidden='true'>&times;</span>
-                                        </button>
-                                    </div>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            fontSize: "18px",
-                                            padding: "10px 20px",
-                                        }}
-                                    >
-                                        Are you sure Delete?
-                                    </div>
-                                    <div className='modal-footer'>
-                                        <button
-                                            type='button'
-                                            className='btn btn-secondary'
-                                            data-dismiss='modal'
-                                            onClick={() => {
-                                                setOpenPopUp(false);
-                                            }}
-                                        >
-                                            No
-                                        </button>
-                                        <button
-                                            type='button'
-                                            className='btn btn-danger'
-                                            data-dismiss='modal'
-                                            onClick={() => {
-                                                deleteRecord(deleteRowId)
-                                                setOpenPopUp(false)
-                                            }}
-                                        >
-                                            Yes
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )} */}
             </div >
 
             <Dialog
@@ -296,13 +187,6 @@ const Teacher = () => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    {/* <Button className="btn btn-primary" onClick={() => {
-                        deleteRecord(deleteId)
-                        handleClose(true)
-                    }}>Yes</Button> */}
-                    {/* <Button className="btn btn-secondary" onClick={handleClose} autoFocus>
-                        No
-                    </Button> */}
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteRecord(deleteRowId)
                         handleClose(true)

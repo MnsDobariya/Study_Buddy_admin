@@ -42,7 +42,6 @@ const Resources = () => {
     const deleteResources = (id) => {
         axios.delete(`http://localhost:3000/api/v1/resources/delete/${id}`)
             .then((res) => {
-                // console.log(res,"delete");
                 toast.success("Delete Successfully");
                 getResources();
             })
@@ -52,7 +51,6 @@ const Resources = () => {
 
 
     const handleChange = (e) => {
-        // console.log(resources,'resources++++++++++++++');
         const { name, value } = e.target;
 
         const textRegex = /^[A-Za-z\s]+$/;
@@ -80,17 +78,7 @@ const Resources = () => {
             ...resources,
             file: e.target.files[0]
         });
-        // if (file && file.type.startsWith("image/")) {
-        //     const render = new FileReader();
-        //     render.onloadend = () => {
-        //         setResources({
-        //             ...resources,
-        //             file: file,
-        //         });
-        //         // setResources(render.result);
-        //     };
-        //     render.readAsDataURL(file);
-        // }
+       
     }
 
     const handleOpen = () => {
@@ -107,24 +95,17 @@ const Resources = () => {
     }
 
     const handleDownload = (data) => {
-        // const fileUrl = window.URL.createObjectURL(
-        //     new Blob([data?.file]),
-        // );
+        
 
         fetch(` http://localhost:3000` + data?.file).then((x) => {
             x.blob().then((blob) => {
 
-                // Creating new object of PDF file
                 const fileURL =
                     window.URL.createObjectURL(blob);
 
-                // const fileURL = ' http://localhost:3000' + data?.file;
                 const downloadLink = document.createElement('a');
                 downloadLink.href = fileURL;
-                // downloadLink.setAttribute(   
-                //     'download',
-                //      `FileName.pdf`,
-                // );
+               
                 downloadLink.download = data?.file;
 
                 document.body.appendChild(downloadLink);
@@ -143,7 +124,6 @@ const Resources = () => {
         {
             field: "file", headerName: "File", width: 270,
             renderCell: (params) => {
-                // console.log(params,"params");
                 return (
                     <>
                         <FontAwesomeIcon icon={faFileArrowDown} onClick={() => handleDownload(params?.row)} style={{ cursor: "pointer" }} />
@@ -152,9 +132,6 @@ const Resources = () => {
             }
         },
 
-        // { field: "phone", headerName: "Mobile_No", width: 160 },
-        // { field: "gender", headerName: "Gender", width: 150 },
-
         {
             field: "action",
             headerName: "Action",
@@ -162,8 +139,7 @@ const Resources = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        {/* Edit */}
-                        {/* <FontAwesomeIcon icon={faFileArrowDown} /> */}
+                      
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
                             fill='none'
@@ -174,7 +150,6 @@ const Resources = () => {
                             width='30px'
                             className='edit-icon'
                             onClick={() => {
-                                // console.log(params.row);
                                 setResources(params.row);
                                 handleOpen();
                             }}
@@ -219,7 +194,6 @@ const Resources = () => {
     const getResources = () => {
         ApiGet(`${EndPoint.RESOURCES_GET}`)
             .then((res) => {
-                // console.log(res?.data,"getresourcesadat");
                 setResourcesRecord(res?.data);
             });
     }
@@ -227,7 +201,6 @@ const Resources = () => {
 
     useEffect(() => {
         getResources();
-        // console.log(resources,"update");
     }, []);
 
     const indexedData = resourecesRecord.map((item, index) => ({
@@ -236,17 +209,7 @@ const Resources = () => {
     }))
 
     const AddResources = () => {
-        // const error = {};
-
-        // if (!resources?.file) {
-        //     error.file = "please Image required";
-        // }
-
-        // if (error.file) {
-        //     setError(error)
-        //     return;
-        // }
-
+       
         const form_data = new FormData();
 
         form_data.append("title", resources?.title)
@@ -254,10 +217,8 @@ const Resources = () => {
         form_data.append("file", resources?.file)
 
         if (resources?.id) {
-            // console.log(resources?.id,"resources?.id");
             ApiPut(`${EndPoint.RESOURCES_UPDATE}/${resources?.id}`, form_data)
                 .then((res) => {
-                    // console.log(res,"update");
                     if (res?.status === 200) {
                         setResources({
                             title: "",
@@ -265,7 +226,6 @@ const Resources = () => {
                             file: ""
                         });
                     }
-                    // console.log(res, "updateresources");
                     toast.success("Update Successfully");
                     handleClose();
                     getResources();
@@ -275,7 +235,6 @@ const Resources = () => {
             ApiPost(`${EndPoint.RESOURCES_CREATE}`, form_data,
                 { headers: { "Authorization": `Bearer ${token}` } })
                 .then((res) => {
-                    console.log(res, "AddResources");
                     if (res?.status === 201) {
                         setResources({
                             title: "",
@@ -287,7 +246,6 @@ const Resources = () => {
                     handleClose();
                     getResources();
                 }).catch((error) => {
-                    // console.log(error, "error");
                     if (error.error === "Title already exits") {
                         toast.error(<p style={{ fontSize: "80%" }}>{"Title Already Exits"}</p>, {
                             position: "top-center",
@@ -296,24 +254,6 @@ const Resources = () => {
                 });
         }
     }
-
-    // const updateResources = () => {
-    //     const form_data = new FormData();
-
-    //     form_data.append("title", resources?.title)
-    //     form_data.append("description", resources?.description)
-    //     form_data.append("file", resources?.file)
-    //     // console.log(resources?.id,"aaaaaaaaaaaaaa");
-
-    //     // axios.put(`http://localhost:3000/api/v1/resources/update/${id}`,form_data)
-    //     ApiPut(`${EndPoint.RESOURCES_UPDATE}/${resources?.id}`, form_data)
-    //         .then((res) => {
-    //             // console.log(res, "updateresources");
-    //             toast.success("Update Successfully");
-    //             handleClose();
-    //             getResources();
-    //         });
-    // }
 
     const onKeyBtn = (e) => {
         if (e.key === "Enter") {
@@ -358,13 +298,9 @@ const Resources = () => {
                         ),
                     }}
                     style={{ height: "90vh", width: "100%", padding: "2%", cursor: "pointer" }}
-                    // onRowClick={(e) => {
-                    //     // console.log(e);
-                    // }}
+                    
                     className='custom-data-grid'
-                    // {...data}
                     initialState={{
-                        // ...data.initialState,
                         pagination: { paginationModel: { pageSize: 5 } },
                     }}
                     pageSizeOptions={[5, 10, 25]}
@@ -385,12 +321,10 @@ const Resources = () => {
                 >
                     <div className="container" style={{ marginTop: "10%" }}>
                         <form className="addresources">
-                            {/* <div className="row jumbotron box8"> */}
                             <div className="col-sm-12 mx-t3 mb-4">
                                 <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%", color: "#344767" }}>
                                     Resources
                                 </h3>
-                                {/* <h2 className="text-center" style={{ paddingTop: "5%", color: "#344767" }}></h2> */}
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <label htmlFor="name-f" style={{ color: "#344767" }}>Title</label>
@@ -433,9 +367,6 @@ const Resources = () => {
                             </div>
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
 
-                                {/* <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" }} onClick={updateResources}>
-                                        update
-                                    </SoftButton>  */}
                                 <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" }} onClick={AddResources}>
                                     Resources
                                 </SoftButton>
@@ -445,7 +376,6 @@ const Resources = () => {
                                 </SoftButton>
                             </SoftBox>
 
-                            {/* </div> */}
                         </form>
                     </div>
                 </Modal>
@@ -474,13 +404,7 @@ const Resources = () => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    {/* <Button className="btn btn-primary" onClick={() => {
-                        deleteRecord(deleteId)
-                        handleClose(true)
-                    }}>Yes</Button> */}
-                    {/* <Button className="btn btn-secondary" onClick={handleClose} autoFocus>
-                        No
-                    </Button> */}
+                   
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteResources(deleteId)
                         handlePopupClose(true)
