@@ -78,6 +78,8 @@ const divisionDropDown = [
   { label: "D", value: "D" },
 ];
 
+
+
 function Overview() {
   const [userProfile, setUserProfile] = useState({
     firstName: "",
@@ -91,9 +93,10 @@ function Overview() {
     year: "",
     semester: "",
     division: "",
-    otherDivision:""
+    otherDivision: ""
   });
-  console.log(userProfile?.otherDivision,"userProfile");
+//   console.log(userProfile?.otherDivision, "userProfile");
+
 
   const [isAuthorSelect, setIsAuthorSelect] = useState(false);
 
@@ -117,6 +120,9 @@ function Overview() {
 
   // const role = localStorage.getItem("role");
 
+  divisionDropDown.push({ label: userProfile?.otherDivision, value: userProfile?.otherDivision });
+
+
   const getUserProfile = () => {
     ApiGet(`${EndPoint.PROFILE_GET}`)
       .then((res) => {
@@ -131,7 +137,7 @@ function Overview() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(e.target,"e.target");
+    console.log(e.target, "e.target");
     const textRegex = /^[A-Za-z\s]+$/;
 
     if (name === "firstName" || name === "lastName" || name === "email" || name === "gender") {
@@ -169,8 +175,6 @@ function Overview() {
       reader.readAsDataURL(file);
     }
   }
-
-
 
   const updateuserProfile = () => {
     const error = {};
@@ -213,6 +217,11 @@ function Overview() {
       .catch((error) => {
         console.log(error, "error");
       })
+
+
+
+    // divisionDropDown.push({ label: userProfile?.otherDivision, value: userProfile?.otherDivision });
+
   }
 
   return (
