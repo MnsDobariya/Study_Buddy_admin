@@ -9,7 +9,15 @@
     box-shadow: 0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05);
   }
   
-  img{ max-width:100%;}
+  img{    vertical-align: middle;
+    border-style: none;
+    background-color: #ffffff;
+    border-radius: 11rem;
+    height: 45px;
+    width: 45px;
+   margin-bottom: 2%;
+
+  }
   .inbox_people {
     /* background: #f8f8f8 none repeat scroll 0 0; */
     float: left;
@@ -54,6 +62,7 @@
   .chat_img {
     float: left;
     width: 11%;
+    margin-right: 1%;
   }
   .chat_ib {
     float: left;
@@ -78,6 +87,13 @@
   .incoming_msg_img {
     display: inline-block;
     width: 6%;
+    
+  }
+  .outgoing_msg_img {
+    display: inline-block;
+    width: 6%;
+   margin-left:46.2% ;
+    
   }
   .received_msg {
     display: inline-block;
@@ -157,4 +173,12 @@
     height: 610px;
     /* height: 516px; */
     overflow-y: auto;
+  }
+
+  .background-img{
+    background-image: url('../../layouts/img/book1.avif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
   }

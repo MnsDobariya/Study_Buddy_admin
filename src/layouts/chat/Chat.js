@@ -7,11 +7,15 @@ import { EndPoint } from 'config/EndPoint/Endpoint';
 import { ApiPost } from 'config/Api/ApiData';
 import Moment from 'react-moment/dist';
 import moment from 'moment';
-import { Category } from '@mui/icons-material';
+import { Category, HideImage } from '@mui/icons-material';
+import { Menu, MenuItem } from '@mui/material';
 
 const Chat = () => {
     const [roomRecord, setRoomRecord] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
+    const [showBackgroundImage, setShowBackgroundImage] = useState(true);
+
+    console.log('showBackgroundImage', showBackgroundImage)
 
     const [chat, setChat] = useState({
         receiverId: "",
@@ -19,9 +23,15 @@ const Chat = () => {
         message: ""
     })
     const [chatRecord, setChatRecord] = useState([]);
-
+    const [anchorEl, setAnchorEl] = useState(null);
     const [search, setSearch] = useState();
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    }
     // const handleChange = (e) => {
     //     setChat({
     //         ...chat,
@@ -31,7 +41,7 @@ const Chat = () => {
 
     const createRoom = (receiverUserData) => {
         const body = {
-            receiverId : receiverUserData?.id
+            receiverId: receiverUserData?.id
         }
 
         ApiPost(`${EndPoint.ROOM_CREATE}`, body)
@@ -87,11 +97,11 @@ const Chat = () => {
         } else {
             setChat({ ...chat, receiverId: item?.sender?._id, roomId: item?._id });
         }
-    
+
         getChat(item?._id);
         // setSearchResults(item?._id);
     }
-     
+
     // const handleChat = (item) => {
     //     if (localStorage.getItem("id") != item?.receiver?._id) {
     //         setChat({ ...chat, receiverId: item?.receiver?._id, roomId: item?._id })
@@ -114,6 +124,12 @@ const Chat = () => {
         getRoom("")
     }, [])
 
+    const onKeyBtn = (e) => {
+        if (e.key === "Enter")
+        e.preventDefault();
+            createChat();
+    }
+
     return (
         <>
             <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
@@ -126,6 +142,7 @@ const Chat = () => {
             <div className="chat " style={{ marginLeft: "18%" }}>
                 {/* <h3 className=" text-center">Messaging</h3> */}
                 <div className="messaging">
+                    
                     <div className="inbox_msg">
                         <div className="inbox_people">
                             <div className="headind_srch">
@@ -144,24 +161,50 @@ const Chat = () => {
                                                 // handleChange(e);
                                                 setSearch(e.target.value);
                                             }}
+                                            onKeyPress={(e) => {
+                                                if (e.key === "Enter") {
+                                                    e.preventDefault();
+                                                    getSearch();
+                                                    handleClick(e);
+                                                }
+                                            }}
                                         />
                                         <span className="input-group-addon">
                                             <button type="button" onClick={(e) => {
                                                 setSearch(e.target.value);
                                                 getSearch();
+                                                handleClick(e);
                                             }}> <i className="fa fa-search" aria-hidden="true"></i> </button>
                                         </span>
-                                        {searchResults &&
-                                            searchResults.map((item) => (
-                                                <option key={item.id} onClick={() => createRoom(item)}>
-                                                    {item.firstName}
-                                                </option>
-                                            ))
-                                        }
-
-                                        {/* {firstName && firstName?.map((item)=>(
-                                            <option key={item.value}>{item?.value}</option>
-                                        ))} */}
+                                        <Menu
+                                            anchorEl={anchorEl}
+                                            open={Boolean(anchorEl)}
+                                            // open={handleOpen}
+                                            onClose={handleClose}
+                                            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                                            transformOrigin={{ horizontal: "right" }}
+                                            
+                                            sx={{
+                                                "& .css-cmyovl-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
+                                                    border: " 0 solid rgba(0, 0, 0, 0.125)",
+                                                    borderRadius: "1rem",
+                                                    boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0)",
+                                                },
+                                            }}
+                                        >
+                                            {/* Add more menu items for other actions if needed */}
+                                            {searchResults &&
+                                                searchResults.map((item) => (
+                                                    <MenuItem key={item.id} onClick={() => createRoom(item)}>
+                                                        <div style={{ display: "flex", alignItems: "center" }}>
+                                                        <img src={`http://localhost:3000${item?.profileImage}`} alt="Profile" style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }}/>
+                                                        {item.firstName}
+                                                        </div>
+                                                    </MenuItem>
+                                                ))
+                                            }
+                                        </Menu>
+                                    
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +215,10 @@ const Chat = () => {
                                         <div className="chat_list active_chat">
                                             <div className="chat_people">
                                                 <div className="chat_img"> <img src={`http://localhost:3000${item?.receiver?.profileImage}`} /> </div>
-                                                <div className="chat_ib" onClick={() => handleRoomId(item)}>
+                                                <div className="chat_ib" onClick={() => {
+                                                    handleRoomId(item)
+                                                    setShowBackgroundImage(false)
+                                                }}>
                                                     <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">Dec 25</span></h5>
                                                     <p>{item?.messager?.message}</p>
                                                 </div>
@@ -183,91 +229,48 @@ const Chat = () => {
                             ))}
                         </div>
                         <div className="mesgs">
-                            <div className="msg_history">
+                            <div className={`${showBackgroundImage ? 'background-img' : 'bg-transparent'}`}>
+                                <div className="msg_history">
+                                    {chatRecord && chatRecord?.map((item) => (
+                                        <div key={item.id} className="rowchat " id="adstodos">
+                                            {(localStorage.getItem("id") == item?.senderId?.id) ?
+                                                <div className="outgoing_msg">
+                                                    <div className="outgoing_msg_img"> <img src={`http://localhost:3000${item?.receiverId?.profileImage}`} /> </div>
 
-
-                                {chatRecord && chatRecord?.map((item) => (
-                                    <div key={item.id} className="rowchat" id="adstodos">
-                                        {(localStorage.getItem("id") == item?.senderId) ?
-                                            <div className="outgoing_msg">
-                                                <div className="sent_msg">
-                                                    <p>{item?.message}</p>
-                                                    <span className="time_date">{item?.createdAt} </span> </div>
-                                            </div>
-                                            :
-                                            <div className="incoming_msg">
-                                                <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                                <div className="received_msg">
-                                                    <div className="received_withd_msg">
+                                                    <div className="sent_msg">
                                                         <p>{item?.message}</p>
-                                                        <span>
-                                                            <Moment className="time_date" format="hh:mm:ss / DD-MM-YYYY" >
-                                                                {item?.createdAt}
-                                                            </Moment>
-                                                        </span>
+                                                        {/* <span className="time_date">{item?.createdAt} </span>  */}
+                                                        </div>
+                                                </div>
+                                                :
+                                                <div className="incoming_msg">
+                                                    <div className="incoming_msg_img"> <img src={`http://localhost:3000${item?.receiverId?.profileImage}`} /> </div>
+                                                    <div className="received_msg">
+                                                        <div className="received_withd_msg">
+                                                            <p>{item?.message}</p>
+                                                            <span>
+                                                            {/* {moment(item?.createdAt).format('MMM Do YYYY,h:mm')} */}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
+                                            }
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="type_msg">
+                                    <div className="input_msg_write">
+                                        <SoftInput
+                                            type="text"
+                                            className="write_msg"
+                                            placeholder="Type a message"
+                                            value={chat?.message}
+                                            onChange={e => setChat(prev => ({ ...prev, message: e.target.value }))}
+                                            onKeyPress={(e) => onKeyBtn(e)}
 
-
-
+                                        />
+                                        <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
                                     </div>
-                                ))}
-                                {/* <div className="incoming_msg">
-                                    <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                    <div className="received_msg">
-                                        <div className="received_withd_msg">
-                                            <p>Test, which is a new approach to have</p>
-                                            <span className="time_date"> 11:01 AM    |    Yesterday</span></div>
-                                    </div>
-                                </div>
-                                <div className="outgoing_msg">
-                                    <div className="sent_msg">
-                                        <p>Apollo University, Delhi, India Test</p>
-                                        <span className="time_date"> 11:01 AM    |    Today</span> </div>
-                                </div>
-                                <div className="incoming_msg">
-                                    <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                    <div className="received_msg">
-                                        <div className="received_withd_msg">
-                                            <p>We work directly with our designers and suppliers,
-                                                and sell direct to you, which means quality, exclusive
-                                                products, at a price anyone can afford.</p>
-                                            <span className="time_date"> 11:01 AM    |    Today</span></div>
-                                    </div>
-                                </div>
-                                <div className="outgoing_msg">
-                                    <div className="sent_msg">
-                                        <p>Apollo University, Delhi, India Test</p>
-                                        <span className="time_date"> 11:01 AM    |    Today</span> </div>
-                                </div>
-                                <div className="incoming_msg">
-                                    <div className="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" /> </div>
-                                    <div className="received_msg">
-                                        <div className="received_withd_msg">
-                                            <p>We work directly with our designers and suppliers,
-                                                and sell direct to you, which means quality, exclusive
-                                                products, at a price anyone can afford.</p>
-                                            <span className="time_date"> 11:01 AM    |    Today</span></div>
-                                    </div>
-                                </div>
-                                <div className="outgoing_msg">
-                                    <div className="sent_msg">
-                                        <p>Apollo University, Delhi, India Test</p>
-                                        <span className="time_date"> 11:01 AM    |    Today</span> </div>
-                                </div> */}
-                            </div>
-                            <div className="type_msg">
-                                <div className="input_msg_write">
-                                    <SoftInput
-                                        type="text"
-                                        className="write_msg"
-                                        placeholder="Type a message"
-                                        value={chat?.message}
-                                        onChange={e => setChat(prev => ({ ...prev, message: e.target.value }))}
-                                    />
-                                    <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
                                 </div>
                             </div>
                         </div>

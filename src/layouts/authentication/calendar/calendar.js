@@ -204,12 +204,10 @@ const Calendar = () => {
                 >
                     <div className="container" style={{ marginTop: "10%" }}>
                         <form className="calender">
-                            {/* <div className="row jumbotron box8"> */}
                             <div className="col-sm-12 mx-t3 mb-4">
                                 <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%", color: "#344767" }}>
                                     Event
                                 </h3>
-                                {/* <h2 className="text-center" style={{ paddingTop: "5%", color: "#344767" }}></h2> */}
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <label htmlFor="name-f" >Title</label>
@@ -224,16 +222,6 @@ const Calendar = () => {
                                 />
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                {/* <label htmlFor="name-l" >Start</label>
-                                <SoftInput
-                                    type="date"
-                                    name="startdate"
-                                    value={calendarEvent?.startdate}
-                                    placeholder="dd/MM/yyyy"
-                                    onChange={(e) => {
-                                        handleChange(e);
-                                    }}
-                                /> */}
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DemoItem label="DatePicker">
                                     <DatePicker
@@ -256,17 +244,6 @@ const Calendar = () => {
                                 </LocalizationProvider>
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                {/* <label htmlFor="name-1" >End</label>
-                                <SoftInput
-                                    type="date"
-                                    name="enddate"
-                                    placeholder="dd/MM/yyyy"
-                                    value={calendarEvent?.enddate}
-                                    onChange={(e) => {
-                                        handleChange(e);
-                                    }}
-                                    onKeyPress={(e) => onKeyBtn(e)}
-                                /> */}
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DemoItem label="DatePicker">
                                     <DatePicker
@@ -277,7 +254,6 @@ const Calendar = () => {
                                         endDate={endDate}
                                         minDate={startDate}
                                         defaultValue={today}
-                                        // minDate={tomorrow}
                                         views={['year', 'month', 'day']}
                                         sx={{
                                             "& .MuiSvgIcon-root": {
@@ -305,8 +281,6 @@ const Calendar = () => {
                                     cancle
                                 </SoftButton>
                             </SoftBox>
-
-                            {/* </div> */}
                         </form>
                     </div>
                 </Modal>
