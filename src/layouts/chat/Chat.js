@@ -8,6 +8,7 @@ import { ApiPost } from 'config/Api/ApiData';
 import Moment from 'react-moment/dist';
 import moment from 'moment';
 import { Category, HideImage } from '@mui/icons-material';
+import { Category } from '@mui/icons-material';
 import { Menu, MenuItem } from '@mui/material';
 
 const Chat = () => {
@@ -16,6 +17,7 @@ const Chat = () => {
     const [showBackgroundImage, setShowBackgroundImage] = useState(true);
 
     console.log('showBackgroundImage', showBackgroundImage)
+    // console.log(searchResults,"searchsearch");
 
     const [chat, setChat] = useState({
         receiverId: "",
@@ -23,15 +25,26 @@ const Chat = () => {
         message: ""
     })
     const [chatRecord, setChatRecord] = useState([]);
-    const [anchorEl, setAnchorEl] = useState(null);
+    // console.log(chatRecord,"chatRecord");
+
     const [search, setSearch] = useState();
+    // const [open,setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    // const open = Boolean(anchorEl);
+
+    // const handleOpen = () => {
+    //     setOpen(true);
+    //     console.log(open,"openopen");
+    // }
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    }
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
-        setAnchorEl(null);
-    }
+  
     // const handleChange = (e) => {
     //     setChat({
     //         ...chat,
@@ -67,6 +80,7 @@ const Chat = () => {
 
         ApiPost(`${EndPoint.CHAT_CREATE}`, body)
             .then((res) => {
+                // console.log(res,"reresres");
                 if (res?.status === 201) {
                     setChat({
                         ...chat,
@@ -80,6 +94,7 @@ const Chat = () => {
     const getChat = (roomId) => {
         ApiGet(`${EndPoint.CHAT_GET}?roomId=${roomId}`)
             .then((res) => {
+                // console.log(res,"resres");
                 setChatRecord(res?.data);
             })
     }
@@ -120,14 +135,20 @@ const Chat = () => {
     //     })
     // }
 
+    // const messageDate = () => {
+    //     moment().format('MMMM Do YYYY,h:mm:ss a');
+    // }
+
+    // console.log( moment().format('MMMM Do YYYY,h:mm:ss a'),"messagedate");
+
     useEffect(() => {
         getRoom("")
     }, [])
 
     const onKeyBtn = (e) => {
         if (e.key === "Enter")
-        e.preventDefault();
-            createChat();
+            e.preventDefault();
+        createChat();
     }
 
     return (
@@ -142,7 +163,7 @@ const Chat = () => {
             <div className="chat " style={{ marginLeft: "18%" }}>
                 {/* <h3 className=" text-center">Messaging</h3> */}
                 <div className="messaging">
-                    
+
                     <div className="inbox_msg">
                         <div className="inbox_people">
                             <div className="headind_srch">
@@ -175,6 +196,15 @@ const Chat = () => {
                                                 getSearch();
                                                 handleClick(e);
                                             }}> <i className="fa fa-search" aria-hidden="true"></i> </button>
+                                            <button type="button"
+                                                aria-controls="simple-menu"
+                                                aria-haspopup="true"
+                                                onClick={(e) => {
+                                                    setSearch(e.target.value);
+                                                    getSearch();
+                                                    // handleOpen(true);
+                                                    handleClick(e);
+                                                }}> <i className="fa fa-search" aria-hidden="true"></i> </button>
                                         </span>
                                         <Menu
                                             anchorEl={anchorEl}
@@ -183,7 +213,7 @@ const Chat = () => {
                                             onClose={handleClose}
                                             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                                             transformOrigin={{ horizontal: "right" }}
-                                            
+
                                             sx={{
                                                 "& .css-cmyovl-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
                                                     border: " 0 solid rgba(0, 0, 0, 0.125)",
@@ -197,20 +227,27 @@ const Chat = () => {
                                                 searchResults.map((item) => (
                                                     <MenuItem key={item.id} onClick={() => createRoom(item)}>
                                                         <div style={{ display: "flex", alignItems: "center" }}>
-                                                        <img src={`http://localhost:3000${item?.profileImage}`} alt="Profile" style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }}/>
-                                                        {item.firstName}
+                                                            <img src={`http://localhost:3000${item?.profileImage}`} alt="Profile" style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }} />
+                                                            {item.firstName}
                                                         </div>
+                                                        {item.firstName}
                                                     </MenuItem>
                                                 ))
                                             }
                                         </Menu>
-                                    
+
+
+                                        {/* {firstName && firstName?.map((item)=>(
+                                            <option key={item.value}>{item?.value}</option>
+                                        ))} */}
                                     </div>
                                 </div>
                             </div>
 
+
                             {roomRecord && roomRecord?.map((item) => (
                                 <div key={item.id} className="rowroom" id="adstodos">
+
                                     <div className="inbox_chat">
                                         <div className="chat_list active_chat">
                                             <div className="chat_people">
@@ -227,12 +264,14 @@ const Chat = () => {
                                     </div>
                                 </div>
                             ))}
+
                         </div>
                         <div className="mesgs">
                             <div className={`${showBackgroundImage ? 'background-img' : 'bg-transparent'}`}>
                                 <div className="msg_history">
                                     {chatRecord && chatRecord?.map((item) => (
                                         <div key={item.id} className="rowchat " id="adstodos">
+
                                             {(localStorage.getItem("id") == item?.senderId?.id) ?
                                                 <div className="outgoing_msg">
                                                     <div className="outgoing_msg_img"> <img src={`http://localhost:3000${item?.receiverId?.profileImage}`} /> </div>
@@ -240,7 +279,7 @@ const Chat = () => {
                                                     <div className="sent_msg">
                                                         <p>{item?.message}</p>
                                                         {/* <span className="time_date">{item?.createdAt} </span>  */}
-                                                        </div>
+                                                    </div>
                                                 </div>
                                                 :
                                                 <div className="incoming_msg">
@@ -249,7 +288,7 @@ const Chat = () => {
                                                         <div className="received_withd_msg">
                                                             <p>{item?.message}</p>
                                                             <span>
-                                                            {/* {moment(item?.createdAt).format('MMM Do YYYY,h:mm')} */}
+                                                                {/* {moment(item?.createdAt).format('MMM Do YYYY,h:mm')} */}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -257,33 +296,64 @@ const Chat = () => {
                                             }
                                         </div>
                                     ))}
-                                </div>
-                                <div className="type_msg">
-                                    <div className="input_msg_write">
-                                        <SoftInput
-                                            type="text"
-                                            className="write_msg"
-                                            placeholder="Type a message"
-                                            value={chat?.message}
-                                            onChange={e => setChat(prev => ({ ...prev, message: e.target.value }))}
-                                            onKeyPress={(e) => onKeyBtn(e)}
 
-                                        />
-                                        <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
+
+                                    {chatRecord && chatRecord?.map((item) => (
+                                        <div key={item.id} className="rowchat" id="adstodos">
+                                            {(localStorage.getItem("id") == item?.senderId) ?
+                                                <div className="outgoing_msg">
+                                                    <div className="sent_msg">
+                                                        <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
+                                                        <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('l LTS')}</p>
+                                                        {/* <span className="time_date">{moment(item?.createdAt).format('MMM Do YYYY h:mm')} </span>  */}
+                                                    </div>
+                                                </div>
+                                                :
+                                                <div className="incoming_msg">
+                                                    <div className="incoming_msg_img"> <img src={`http://localhost:3000${item?.receiver?.profileImage}`} alt="sunil" /> </div>
+                                                    <div className="received_msg" >
+                                                        <div className="received_withd_msg">
+                                                            <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
+                                                            <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('l LTS')}</p>
+                                                            <span>
+                                                                {/* <Moment className="time_date" format="hh:mm:ss / DD-MM-YYYY" > */}
+                                                                {/* {moment(item?.createdAt).format('MMM Do YYYY h:mm')} */}
+                                                                {/* </Moment> */}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        </div>
+                                    ))}
+                                    <div className="type_msg">
+                                        <div className="input_msg_write">
+                                            <SoftInput
+                                                type="text"
+                                                className="write_msg"
+                                                placeholder="Type a message"
+                                                value={chat?.message}
+                                                onChange={e => setChat(prev => ({ ...prev, message: e.target.value }))}
+                                                onKeyPress={(e) => onKeyBtn(e)}
+
+                                            />
+                                            <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
+                                        </div>
                                     </div>
                                 </div>
+
+                                {/* <p className="text-center top_spac"> Design by <a target="_blank" href="https://www.linkedin.com/in/sunil-rajput-nattho-singh/">Sunil Rajput</a></p> */}
+
                             </div>
                         </div>
                     </div>
-                    {/* <p className="text-center top_spac"> Design by <a target="_blank" href="https://www.linkedin.com/in/sunil-rajput-nattho-singh/">Sunil Rajput</a></p> */}
-
-                </div>
-            </div>
+                    </div>
+                    </div>
 
 
-
-        </>
-    )
+                </>
+                )
 }
 
-export default Chat;
+                export default Chat;
