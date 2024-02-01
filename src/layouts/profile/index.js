@@ -97,7 +97,6 @@ function Overview() {
   });
 //   console.log(userProfile?.otherDivision, "userProfile");
 
-  console.log(userProfile?.otherDivision,"userProfile");
 
   const [isAuthorSelect, setIsAuthorSelect] = useState(false);
 
