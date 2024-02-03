@@ -16,7 +16,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 const Chat = () => {
     const [roomRecord, setRoomRecord] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
-    console.log(searchResults,"searcgResult");
     const [showBackgroundImage, setShowBackgroundImage] = useState(true);
     const [showBackgroundHeader, setShowBackgroundHeader] = useState(true);
     const [showBackgroundChat, setShowBackgroundChat] = useState(true);
@@ -50,8 +49,9 @@ const Chat = () => {
     // }
 
     const createRoom = (receiverUserData) => {
+        console.log(receiverUserData,'receiverUserData')
         const body = {
-            receiverId: receiverUserData?.id
+            receiverId: receiverUserData?._id
         }
 
         ApiPost(`${EndPoint.ROOM_CREATE}`, body)
@@ -63,8 +63,15 @@ const Chat = () => {
     const getRoom = () => {
         ApiGet(`${EndPoint.ROOM_GET}`)
             .then((res) => {
-                setRoomRecord(res?.data);
-                setSearchResults([])
+                // Populate last message for each room
+                const updatedRoomRecord = res?.data.map(room => {
+                    return {
+                        ...room,
+                        lastMessage: room?.messager?.message || "No messages"
+                    };
+                });
+                setRoomRecord(updatedRoomRecord);
+                setSearchResults([]);
             })
     }
 
@@ -208,7 +215,7 @@ const Chat = () => {
                                                         // handleClick(e);
                                                         setIsSearchShow(true)
                                                     }}>
-                                                        <FontAwesomeIcon icon={faPlus} style={{ marginRight: "6px", marginBottom: "1%" }} />
+                                                    <FontAwesomeIcon icon={faPlus} style={{ marginRight: "6px", marginBottom: "1%" }} />
                                                     {/* <FontAwesomeIcon icon={faPlus} style={{paddingRight:"3px",marginBottom:"1%"}}/>  */}
                                                     New Chat
                                                 </SoftButton>
@@ -280,7 +287,6 @@ const Chat = () => {
                                         <div className="chat_list active_chat">
                                             <div className="chat_people">
                                                 <div className="chat_img">
-                                                    {/* <img src={`http://localhost:3000${item?.receiver?.profileImage}`} /> / */}
                                                     <img src={getProfileImage(item?.receiver?.profileImage)} />
                                                 </div>
                                                 <div className="chat_ib" onClick={() => {
@@ -289,7 +295,7 @@ const Chat = () => {
                                                     setShowBackgroundHeader(false)
                                                     setShowBackgroundChat(false)
                                                 }}>
-                                                    <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">Dec 25</span></h5>
+                                                    <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">{item?.messager?.createdAt}</span></h5>
                                                     <p>{item?.messager?.message}</p>
                                                 </div>
                                             </div>
@@ -336,7 +342,7 @@ const Chat = () => {
 
                                                     <div className="sent_msg">
                                                         <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
-                                                        <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('l LTS')}</p>
+                                                        <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('lLTS')}</p>
                                                         {/* <span className="time_date">{item?.createdAt} </span>  */}
                                                     </div>
                                                 </div>
@@ -346,7 +352,7 @@ const Chat = () => {
                                                     <div className="received_msg">
                                                         <div className="received_withd_msg">
                                                             <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
-                                                            <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('l LTS')}</p>
+                                                            <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('lLTS')}</p>
                                                             <span>
                                                                 {/* {moment(item?.createdAt).format('MMM Do YYYY,h:mm')} */}
                                                             </span>
@@ -371,7 +377,7 @@ const Chat = () => {
                                         <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
                                     </div>
                                 </div> */}
-                                 <div className='type_msg'>
+                                <div className='type_msg'>
                                     <div className={`${showBackgroundChat ? 'bg-transparent' : 'input_msg_write'}`}>
                                         <div className='input_msg_write'>
                                             {!showBackgroundChat &&
