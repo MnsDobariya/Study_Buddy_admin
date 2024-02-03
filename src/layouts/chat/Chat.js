@@ -10,15 +10,19 @@ import moment from 'moment';
 import { Category, HideImage } from '@mui/icons-material';
 import { Menu, MenuItem } from '@mui/material';
 import SoftButton from 'components/SoftButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Chat = () => {
     const [roomRecord, setRoomRecord] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
+    console.log(searchResults,"searcgResult");
     const [showBackgroundImage, setShowBackgroundImage] = useState(true);
     const [showBackgroundHeader, setShowBackgroundHeader] = useState(true);
-    const [isSearchShow, setIsSearchShow] = useState(false);    
+    const [showBackgroundChat, setShowBackgroundChat] = useState(true);
+    const [isSearchShow, setIsSearchShow] = useState(false);
 
-    console.log('showBackgroundImage', showBackgroundImage)
+    // console.log('showBackgroundImage', showBackgroundImage);
 
     const [chat, setChat] = useState({
         receiverId: "",
@@ -93,6 +97,7 @@ const Chat = () => {
     const getSearch = () => {
         ApiGet(`${EndPoint.SEARCH_GET}?firstName=${search}`)
             .then((res) => {
+                // console.log(res,"resnposesearch");
                 setSearchResults(res?.data);
             })
     }
@@ -130,14 +135,18 @@ const Chat = () => {
     //     })
     // }
 
+    const getProfileImage = (image) => {
+        // console.log(image,"image");
+        return image ? `http://localhost:3000${image}` : 'https://static.vecteezy.com/system/resources/previews/009/734/564/non_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg';
+    }
+
     useEffect(() => {
         getRoom("")
     }, [])
 
     const onKeyBtn = (e) => {
         if (e.key === "Enter")
-            e.preventDefault();
-        createChat();
+            createChat();
     }
 
     return (
@@ -198,12 +207,17 @@ const Chat = () => {
                                                         // // handleOpen(true);
                                                         // handleClick(e);
                                                         setIsSearchShow(true)
-                                                    }}> New Chat
+                                                    }}>
+                                                        <FontAwesomeIcon icon={faPlus} style={{ marginRight: "6px", marginBottom: "1%" }} />
+                                                    {/* <FontAwesomeIcon icon={faPlus} style={{paddingRight:"3px",marginBottom:"1%"}}/>  */}
+                                                    New Chat
                                                 </SoftButton>
                                                 :
-                                                <button type="button"
+                                                <button
+                                                    type="button"
                                                     aria-controls="simple-menu"
                                                     aria-haspopup="true"
+                                                    style={{ background: "none", height: "32px", border: "0", outline: "0" }}
                                                     onClick={(e) => {
                                                         setSearch(e.target.value);
                                                         getSearch();
@@ -213,7 +227,7 @@ const Chat = () => {
                                                     }}> <i className="fa fa-search" aria-hidden="true"></i>
                                                 </button>
                                         }
-                                       
+
                                         <Menu
                                             anchorEl={anchorEl}
                                             open={Boolean(anchorEl)}
@@ -231,19 +245,28 @@ const Chat = () => {
                                                 "& .MuiPaper-root": {
                                                     left: "274px !important",
                                                     width: "21.8%"
-                                                }
+                                                }
                                             }}
                                         >
                                             {/* Add more menu items for other actions if needed */}
-                                            {searchResults &&
+                                            {(searchResults && searchResults.length) ?
                                                 searchResults.map((item) => (
                                                     <MenuItem key={item.id} onClick={() => createRoom(item)}>
                                                         <div style={{ display: "flex", alignItems: "center" }}>
-                                                            <img src={`http://localhost:3000${item?.profileImage}`} alt="Profile" style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }} />
-                                                            {item.firstName}
+                                                            <img src={getProfileImage(item?.profileImage)} alt="Profile" style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }} />
+                                                            {item?.firstName}
                                                         </div>
                                                     </MenuItem>
                                                 ))
+
+                                                :
+                                                (
+                                                    <MenuItem >
+                                                        <div style={{ display: "flex", alignItems: "center" }}>
+                                                            NO RECORD FOUND
+                                                        </div>
+                                                    </MenuItem>
+                                                )
                                             }
                                         </Menu>
 
@@ -256,11 +279,15 @@ const Chat = () => {
                                     <div className="inbox_chat">
                                         <div className="chat_list active_chat">
                                             <div className="chat_people">
-                                                <div className="chat_img"> <img src={`http://localhost:3000${item?.receiver?.profileImage}`} /> </div>
+                                                <div className="chat_img">
+                                                    {/* <img src={`http://localhost:3000${item?.receiver?.profileImage}`} /> / */}
+                                                    <img src={getProfileImage(item?.receiver?.profileImage)} />
+                                                </div>
                                                 <div className="chat_ib" onClick={() => {
                                                     handleRoomId(item)
                                                     setShowBackgroundImage(false)
                                                     setShowBackgroundHeader(false)
+                                                    setShowBackgroundChat(false)
                                                 }}>
                                                     <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">Dec 25</span></h5>
                                                     <p>{item?.messager?.message}</p>
@@ -277,7 +304,7 @@ const Chat = () => {
 
                                 {/* <img className="rounded float-left" style={{ width: " 50px", height: "50px" }} src="https://i.pinimg.com/736x/5c/24/69/5c24695df36eee73abfbdd8274085ecd--cute-anime-guys-anime-boys.jpg" /> */}
                                 {
-                                    !showBackgroundHeader && <img className="float-left" style={{ width: " 45px", height: "45px" }} src={`http://localhost:3000${headerImage?.profileImage}`} />
+                                    !showBackgroundHeader && <img className="float-left" style={{ width: " 45px", height: "45px" }} src={getProfileImage(headerImage?.profileImage)} />
                                 }
 
                                 <h6 className="float-left" style={{ margin: "0px", marginLeft: "10px" }}>{headerImage?.firstName}
@@ -305,7 +332,7 @@ const Chat = () => {
                                         <div key={item.id} className="rowchat " id="adstodos">
                                             {(localStorage.getItem("id") == item?.senderId?.id) ?
                                                 <div className="outgoing_msg">
-                                                    <div className="outgoing_msg_img"> <img src={`http://localhost:3000${item?.senderId?.profileImage}`} /> </div>
+                                                    <div className="outgoing_msg_img"> <img src={getProfileImage(item?.senderId?.profileImage)} /> </div>
 
                                                     <div className="sent_msg">
                                                         <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
@@ -315,7 +342,7 @@ const Chat = () => {
                                                 </div>
                                                 :
                                                 <div className="incoming_msg">
-                                                    <div className="incoming_msg_img"> <img src={`http://localhost:3000${item?.senderId?.profileImage}`} /> </div>
+                                                    <div className="incoming_msg_img"> <img src={getProfileImage(item?.senderId?.profileImage)} /> </div>
                                                     <div className="received_msg">
                                                         <div className="received_withd_msg">
                                                             <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
@@ -330,7 +357,7 @@ const Chat = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <div className='type_msg'>
+                                {/* <div className='type_msg'>
                                     <div className='input_msg_write'>
                                         <SoftInput
                                             type="text"
@@ -342,6 +369,25 @@ const Chat = () => {
 
                                         />
                                         <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
+                                    </div>
+                                </div> */}
+                                 <div className='type_msg'>
+                                    <div className={`${showBackgroundChat ? 'bg-transparent' : 'input_msg_write'}`}>
+                                        <div className='input_msg_write'>
+                                            {!showBackgroundChat &&
+                                                <SoftInput
+                                                    type="text"
+                                                    className="write_msg"
+                                                    placeholder="Type a message"
+                                                    value={chat?.message}
+                                                    onChange={e => setChat(prev => ({ ...prev, message: e.target.value }))}
+                                                    onKeyPress={(e) => onKeyBtn(e)}
+
+                                                />}
+                                            {!showBackgroundChat &&
+                                                <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
