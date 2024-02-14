@@ -47,12 +47,12 @@ const Notification = () => {
       {notificationData && notificationData?.map((item) => (
         <div key={item.id} className="rowtodos mt-1" id="adstodos">
 
-          <div className="cardnotification" style={{ width: 500 }}>
+          <div className="cardnotification" style={{ width: 750 ,marginLeft:'34%',height:100}}>
             <div className="card-body">
               <div style={{ display: "flex" }}>
                 <p className="cardnotification-title">{item.title}</p>
                 <div style={{ marginLeft: "auto", display: "flex" ,marginRight:"3%",marginTop:"1%"}} >
-                  <FontAwesomeIcon icon={faTrash} onClick={() => {
+                  <FontAwesomeIcon icon={faTrash} style={{cursor: 'pointer'}} onClick={() => {
                     setOpen(true);
                     setDeleteId(item.id);
                   }} />

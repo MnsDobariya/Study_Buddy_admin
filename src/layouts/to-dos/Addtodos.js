@@ -106,7 +106,7 @@ const Addtodos = () => {
                             description: ""
                         });
                         navigate("/todos");
-                        toast.success("Add To-dos Successfully");
+                        toast.success("Add Todos Successfully");
                     }
                 }).catch((error) => {
                     if (error.error === "Task already exits") {
@@ -152,7 +152,7 @@ const Addtodos = () => {
                         </div>
                         <div className="form-row" style={{ display: "flex", marginTop: "6%", paddingLeft: "41px", paddingRight: "41px" }}>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="name-f" style={{ fontWeight: "500" }} >DeadlineDate</label>
+                                <label htmlFor="name-f" style={{ fontWeight: "500" }} >Deadline Date</label>
                                 
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoItem label="">
@@ -198,7 +198,7 @@ const Addtodos = () => {
                         </div>
                         <div className="form-row" style={{ display: "flex", paddingLeft: "41px", paddingRight: "41px", marginTop: "2%" }}>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="portable" style={{ fontWeight: "500" }}>Portable</label>
+                                <label htmlFor="portable" style={{ fontWeight: "500" }}>Priority</label>
                                
                                 <select
                                     name="portable"
@@ -214,7 +214,7 @@ const Addtodos = () => {
                                         handleChange(e)
                                     }}
                                 >
-                                    <option key="">Select Portable</option>
+                                    <option key="">Select Priority</option>
                                     {categoryDropDown &&
                                         categoryDropDown?.map((x) => (
                                             <option key={x.value}>{x.value}</option>

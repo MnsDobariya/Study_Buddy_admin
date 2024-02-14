@@ -50,7 +50,6 @@ import Addtodos from "layouts/to-dos/Addtodos";
 // import Form3 from "layouts/form/Form3";
 // import To_dos from "layouts/to-dos/To_dos";
 
-import Assignment from "layouts/authentication/assignments";
 import TeacherForm from "layouts/teacher/TeacherForm";
 import AssignmentForm from "layouts/authentication/assignments/assignmentForm";
 import AssignmentList from "layouts/authentication/assignments/assignmentList";
@@ -59,6 +58,7 @@ import Todos from "layouts/to-dos/Todos";
 import Resources from "layouts/resources/Resources";
 import Notification from "layouts/notification/notification";
 import Chat from "layouts/chat/Chat";
+import Assignments from "layouts/authentication/assignments";
 
 
 const routes = [
@@ -69,15 +69,6 @@ const routes = [
     route: "/dashboard",
     icon: <Shop size="12px" />,
     component: <Dashboard />,
-    noCollapse: true,
-  },
-  {
-    type: "collapse",
-    name: "Tables",
-    key: "tables",
-    route: "/tables",
-    icon: <Office size="12px" />,
-    component: <Tables />,
     noCollapse: true,
   },
   {
@@ -125,13 +116,23 @@ const routes = [
     component: <Resources />,
     noCollapse:true,
 },
+  {
+    type: "collapse",
+    name: "Assignments",
+    key: "assignments",
+    route: "/assignments",
+    icon: <Office size="12px" />,
+    component: <Assignments />,
+    noCollapse:true,
+},
+
 {
   type: "collapse",
-  name: "Assignment ",
-  key: "assignments",
-  route: "/authentication/assignments",
+  name: "Chat",
+  key: "chat",
+  route: "/chat",
   icon: <SpaceShip size="12px" />,
-  component: <Assignment />,
+  component: <Chat />,
   noCollapse: true,
 },
   {
@@ -163,7 +164,6 @@ const routes = [
   //   component: <RTL />,
   //   noCollapse: true,
   // },
-  { type: "title", title: "Account Pages", key: "account-pages" },
   {
     type: "collapse",
     name: "Profile",
@@ -259,15 +259,7 @@ const routes = [
     component: <AssignmentList />,
     noCollapse: true,
   },
-  {
-    type: "collapse",
-    name: "Chat",
-    key: "chat",
-    route: "/chat",
-    icon: <SpaceShip size="12px" />,
-    component: <Chat />,
-    noCollapse: true,
-  },
+
   // {
   //   type: "collapse",
   //   name: "Form3",

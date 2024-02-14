@@ -295,7 +295,7 @@ const Chat = () => {
                                                     setShowBackgroundHeader(false)
                                                     setShowBackgroundChat(false)
                                                 }}>
-                                                    <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">{item?.messager?.createdAt}</span></h5>
+                                                    <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</span></h5>
                                                     <p>{item?.messager?.message}</p>
                                                 </div>
                                             </div>
@@ -342,7 +342,7 @@ const Chat = () => {
 
                                                     <div className="sent_msg">
                                                         <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
-                                                        <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('lLTS')}</p>
+                                                        <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
                                                         {/* <span className="time_date">{item?.createdAt} </span>  */}
                                                     </div>
                                                 </div>
@@ -352,7 +352,7 @@ const Chat = () => {
                                                     <div className="received_msg">
                                                         <div className="received_withd_msg">
                                                             <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
-                                                            <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('lLTS')}</p>
+                                                            <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
                                                             <span>
                                                                 {/* {moment(item?.createdAt).format('MMM Do YYYY,h:mm')} */}
                                                             </span>
