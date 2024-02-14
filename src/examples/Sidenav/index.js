@@ -163,6 +163,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             color={color}
             fullWidth
             onClick={logout}
+            style={{color: 'white'}}
           >Log Out
           </SoftButton>
         </SoftBox>

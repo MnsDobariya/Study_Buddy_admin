@@ -204,8 +204,8 @@ const Calendar = () => {
                 >
                     <div className="container" style={{ marginTop: "10%" }}>
                         <form className="calender">
-                            <div className="col-sm-12 mx-t3 mb-4">
-                                <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%", color: "#344767" }}>
+                            <div className="col-sm-12 mx-t3 mb-5">
+                                <h3 style={{ textAlign: "center", paddingTop: "6%", color: "#344767" }}>
                                     Event
                                 </h3>
                             </div>
@@ -223,49 +223,50 @@ const Calendar = () => {
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DemoItem label="DatePicker">
-                                    <DatePicker
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        defaultValue={today}
-                                        minDate={tomorrow}
-                                        format="DD/MM/YYYY"
-                                        views={['year', 'month', 'day']}
-                                        sx={{
-                                            "& .MuiSvgIcon-root": {
-                                                marginLeft: "18rem",
-                                            }
-                                        }}
-                                    />
-                                </DemoItem>
+                                    <DemoItem label="DatePicker">
+                                        <DatePicker
+                                            selected={startDate}
+                                            onChange={(date) => setStartDate(date)}
+                                            selectsStart
+                                            startDate={startDate}
+                                            endDate={endDate}
+                                            defaultValue={today}
+                                            minDate={tomorrow}
+                                            format="DD/MM/YYYY"
+                                            views={['year', 'month', 'day']}
+                                            sx={{
+                                                "& .MuiSvgIcon-root": {
+                                                    marginLeft: "18rem",
+                                                }
+                                            }}
+                                        />
+                                    </DemoItem>
                                 </LocalizationProvider>
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DemoItem label="DatePicker">
-                                    <DatePicker
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        defaultValue={today}
-                                        views={['year', 'month', 'day']}
-                                        sx={{
-                                            "& .MuiSvgIcon-root": {
-                                                marginLeft: "18rem",
-                                            }
-                                        }}
-                                    />
-                                </DemoItem>
+                                    <DemoItem label="DatePicker">
+                                        <DatePicker
+                                            selected={endDate}
+                                            onChange={(date) => setEndDate(date)}
+                                            selectsEnd
+                                            startDate={startDate}
+                                            endDate={endDate}
+                                            minDate={startDate}
+                                            defaultValue={today}
+                                            format="DD/MM/YYYY"
+                                            views={['year', 'month', 'day']}
+                                            sx={{
+                                                "& .MuiSvgIcon-root": {
+                                                    marginLeft: "18rem",
+                                                }
+                                            }}
+                                        />
+                                    </DemoItem>
                                 </LocalizationProvider>
                             </div>
                             <FormGroup style={{ marginTop: "0%", marginLeft: "13%" }}>
-                                <FormControlLabel control={<Checkbox />} label="All Day Event?" />
+                                {/* <FormControlLabel control={<Checkbox />} label="All Day Event?" /> */}
                             </FormGroup>
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginTop: "4%" }}>
 

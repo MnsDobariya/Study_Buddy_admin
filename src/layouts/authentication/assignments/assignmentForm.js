@@ -106,7 +106,7 @@ const AssignmentForm = () => {
                 .then((res) => {
                     toast.success("Update successfully");
 
-                    navigate('/authentication/assignments');
+                    navigate('/assignments');
 
                 });
 
@@ -123,7 +123,7 @@ const AssignmentForm = () => {
                             endDate: "",
                             projectDescription: ""
                         });
-                        navigate('/authentication/assignments');
+                        navigate('/assignments');
                         toast.success(<p style={{ fontSize: "78%" }}>{"Add Assignment Successfully"}</p>);
                     }
                 }).catch((error) => {
@@ -138,7 +138,7 @@ const AssignmentForm = () => {
     useEffect(() => {
         hotkeys("alt + c", (e) => {
             e.preventDefault();
-            navigate('/authentication/assignments');
+            navigate('/assignments');
         });
         return () => {
             hotkeys.unbind("alt + c");
@@ -220,7 +220,7 @@ const AssignmentForm = () => {
                     <div style={{ display: "flex" }}>
 
                         <div className="col-sm-6 form-group">
-                            <label htmlFor="email">AssignmentSummary</label>
+                            <label htmlFor="email">Assignment Summary</label>
                             <SoftInput
                                 type="text"
                                 name="assignmentSummary"
@@ -239,29 +239,28 @@ const AssignmentForm = () => {
                             {error.assignmentSummary && <p style={{ color: "red", fontSize: "60%" }}>{error.assignmentSummary} </p>}
 
                         </div>
-                        <div className="col-sm-6 form-group mt-2">
+                        <div className="col-sm-6 form-group ">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 {/* <DemoContainer
                                     components={['DatePicker', 'DateTimePicker', 'DateRangePicker']}
                                 > */}
-                                <DemoItem label="DatePicker">
-                                    <DatePicker
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        defaultValue={today}
-                                        minDate={tomorrow}
-                                        format="DD/MM/YYYY"
-                                        views={['year', 'month', 'day']}
-                                        sx={{
-                                            "& .MuiSvgIcon-root": {
-                                                marginLeft: "18rem",
-                                            }
-                                        }}
-                                    />
-                                </DemoItem>
+                                <label htmlFor='email'>DatePicker</label>
+                                <DatePicker
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    selectsStart
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    defaultValue={today}
+                                    minDate={tomorrow}
+                                    format="DD/MM/YYYY"
+                                    views={['year', 'month', 'day']}
+                                    sx={{
+                                        "& .MuiSvgIcon-root": {
+                                            marginLeft: "18rem",
+                                        }
+                                    }}
+                                />
                                 {/* </DemoContainer> */}
                             </LocalizationProvider>
 
@@ -269,7 +268,7 @@ const AssignmentForm = () => {
                         </div>
                     </div>
                     <div style={{ display: "flex" }}>
-                        <div className="col-sm-6 form-group mt-2">
+                        <div className="col-sm-6 form-group ">
                             {/* <label htmlFor="date"></label>
                             <SoftInput
                                 type="date"
@@ -285,67 +284,66 @@ const AssignmentForm = () => {
                                 {/* <DemoContainer
                                     components={['DatePicker', 'DateTimePicker', 'DateRangePicker']}
                                 > */}
-                                <DemoItem label="DatePicker">
-                                    <DatePicker
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        defaultValue={today}
-                                        // minDate={tomorrow}
-                                        format="DD/MM/YYYY"
-                                        views={['year', 'month', 'day']}
-                                        sx={{
-                                            "& .MuiSvgIcon-root": {
-                                                marginLeft: "18rem",
-                                            }
-                                        }}
-                                    />
-                                </DemoItem>
-                                {/* </DemoContainer> */}
-                            </LocalizationProvider>
-                            {error.endDate && <p style={{ color: "red", fontSize: "60%" }}>{error.endDate} </p>}
-                        </div>
-
-                        <div className="col-sm-6 form-group">
-                            <label htmlFor="mobile">Project Description</label>
-                            <SoftInput
-                                type="text"
-                                name="projectDescription"
-                                value={addAssignment?.projectDescription}
-                                placeholder="Project Description"
-                                onChange={(e) => {
-                                    setError({
-                                        ...error,
-                                        projectDescription: "",
-                                    });
-                                    handleChange(e);
-                                }}
-                                style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
-
-                            />
-                            {error.projectDescription && <p style={{ color: "red", fontSize: "60%" }}>{error.projectDescription} </p>}
-
-                        </div>
+                                <label htmlFor='email'>DatePicker</label>
+                                <DatePicker
+                                    selected={endDate}
+                                    onChange={(date) => setEndDate(date)}
+                                    selectsEnd
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    minDate={startDate}
+                                    defaultValue={today}
+                                    // minDate={tomorrow}
+                                    format="DD/MM/YYYY"
+                                    views={['year', 'month', 'day']}
+                                    sx={{
+                                        "& .MuiSvgIcon-root": {
+                                            marginLeft: "18rem",
+                                        }
+                                    }}
+                                />
+                            {/* </DemoContainer> */}
+                        </LocalizationProvider>
+                        {error.endDate && <p style={{ color: "red", fontSize: "60%" }}>{error.endDate} </p>}
                     </div>
-                    <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "30%", width: "40%" }}>
 
+                    <div className="col-sm-6 form-group">
+                        <label htmlFor="mobile">Project Description</label>
+                        <SoftInput
+                            type="text"
+                            name="projectDescription"
+                            value={addAssignment?.projectDescription}
+                            placeholder="Project Description"
+                            onChange={(e) => {
+                                setError({
+                                    ...error,
+                                    projectDescription: "",
+                                });
+                                handleChange(e);
+                            }}
+                            style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
-                        <SoftButton className="add-teacher" variant="gradient" color="info" fullWidth onClick={createAssignment} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
-                            {/* Add Assignment */}
-                            {location?.state ? "Update" : "Add"}
-                        </SoftButton>
-                        <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={() => { navigate('/authentication/assignments') }} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
-                            Cancel
-                        </SoftButton>
-                    </SoftBox>
-                    {/* </div> */}
-                    {/* </form> */}
+                        />
+                        {error.projectDescription && <p style={{ color: "red", fontSize: "60%" }}>{error.projectDescription} </p>}
+
+                    </div>
                 </div>
+                <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "30%", width: "40%" }}>
 
-            </SoftBox >
+
+                    <SoftButton className="add-teacher" variant="gradient" color="info" fullWidth onClick={createAssignment} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
+                        {/* Add Assignment */}
+                        {location?.state ? "Update" : "Add"}
+                    </SoftButton>
+                    <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={() => { navigate('/assignments') }} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
+                        Cancel
+                    </SoftButton>
+                </SoftBox>
+                {/* </div> */}
+                {/* </form> */}
+            </div>
+
+        </SoftBox >
 
         </>
     )
