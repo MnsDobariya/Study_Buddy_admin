@@ -39,14 +39,14 @@ import { Tooltip } from "@mui/material";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Header = ({userProfile,imagePreview,handleImageChange}) => {
+const Header = ({ userProfile, imagePreview, handleImageChange }) => {
 
-  const [image,setImage] = useState();
-  
+  const [image, setImage] = useState();
+
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
- 
+
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -70,9 +70,9 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
 
-   const handleClick = () => {
+  const handleClick = () => {
     document.getElementById("imageUpload").click();
-   }
+  }
 
 
   return (
@@ -109,7 +109,7 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-           
+
             <SoftAvatar
               // src={burceMars}
               src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profileImage}`}
@@ -117,7 +117,16 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
               variant="rounded"
               size="xl"
               shadow="sm"
-            />
+              style={{alignItems:"end"}}
+              >
+              <SoftTypography component={Link} variant="body2" color="secondary">
+                <Tooltip placement="top" onClick={() => handleClick()} >
+                  <Icon style={{marginLeft:"10vh"}}>edit</Icon>
+                </Tooltip>
+              </SoftTypography>
+            </SoftAvatar>
+
+
 
             {/* <label htmlFor="imageUpload" className="button">
               <span className="">Upload</span>
@@ -130,11 +139,11 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
                 handleImageChange(e);
               }}
             />
-            <SoftTypography component={Link}  variant="body2" color="secondary">
+            {/* <SoftTypography component={Link}  variant="body2" color="secondary">
               <Tooltip placement="top" onClick={()=> handleClick()} >
                 <Icon>edit</Icon>
               </Tooltip>
-            </SoftTypography>
+            </SoftTypography> */}
           </Grid>
 
           <Grid item>

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal, Stack } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import SoftBox from 'components/SoftBox';
 import SoftButton from 'components/SoftButton';
@@ -14,7 +14,7 @@ import { ApiPut } from 'config/Api/ApiData';
 import axios from 'axios';
 import hotkeys from 'hotkeys-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faFileArrowDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const Resources = () => {
     const [open, setOpen] = useState();
@@ -55,20 +55,25 @@ const Resources = () => {
 
         const textRegex = /^[A-Za-z\s]+$/;
 
+        setResources({
+            ...resources,
+            [name]: value,
+        });
+
         if (name === "title" || name === "description") {
             if (!textRegex.test(value)) {
                 setError({
                     ...error,
-                    [name]: "",
+                    [name]: "please Enter Text Only",
                 });
-                return;
+            } else {
+                setError({
+                    ...error,
+                    [name]: "",
+                })
             }
         }
-
-        setResources({
-            ...resources,
-            [e.target.name]: e.target.value,
-        });
+        return;
     };
 
     const handleImageChange = (e) => {
@@ -78,7 +83,7 @@ const Resources = () => {
             ...resources,
             file: e.target.files[0]
         });
-       
+
     }
 
     const handleOpen = () => {
@@ -95,7 +100,7 @@ const Resources = () => {
     }
 
     const handleDownload = (data) => {
-        
+
 
         fetch(` http://localhost:3000` + data?.file).then((x) => {
             x.blob().then((blob) => {
@@ -105,7 +110,7 @@ const Resources = () => {
 
                 const downloadLink = document.createElement('a');
                 downloadLink.href = fileURL;
-               
+
                 downloadLink.download = data?.file;
 
                 document.body.appendChild(downloadLink);
@@ -139,7 +144,7 @@ const Resources = () => {
             renderCell: (params) => {
                 return (
                     <>
-                      
+
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
                             fill='none'
@@ -209,7 +214,7 @@ const Resources = () => {
     }))
 
     const AddResources = () => {
-       
+
         const form_data = new FormData();
 
         form_data.append("title", resources?.title)
@@ -280,6 +285,11 @@ const Resources = () => {
                     columns={columns}
                     pageSize={5}
                     components={{
+                        NoRowsOverlay: () => (
+                            <Stack height="100%" alignItems="center" justifyContent="center">
+                                No Record
+                            </Stack>
+                        ),
                         Toolbar: () => (
                             <div
                                 style={{
@@ -298,19 +308,22 @@ const Resources = () => {
                         ),
                     }}
                     style={{ height: "90vh", width: "100%", padding: "2%", cursor: "pointer" }}
-                    
+
                     className='custom-data-grid'
                     initialState={{
                         pagination: { paginationModel: { pageSize: 5 } },
                     }}
                     pageSizeOptions={[5, 10, 25]}
                     sx={{
-                        "& .css-1ui3wbn-MuiInputBase-root-MuiTablePagination-select":{
-                            width:"20%!important"
+                        "& .css-1ui3wbn-MuiInputBase-root-MuiTablePagination-select": {
+                            width: "20%!important"
+                        },
+                        "& .css-1y1mi5n-MuiTablePagination-root": {
+                            overflow: "hidden !important",
                         }
                     }}
                 />
-            </div>
+            </div >
 
             <SoftBox mt={4} mb={1}>
                 <Modal
@@ -388,6 +401,7 @@ const Resources = () => {
                 sx={{
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
+                            height: "40%",
                             width: "100%",
                             maxWidth: "500px",
                             borderRadius: "0.5rem",  // Set your width here
@@ -396,20 +410,31 @@ const Resources = () => {
                 }}
             >
                 <DialogTitle id="alert-dialog-title">
-                    Delete
+                    {/* Delete */}
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%" }} />
                 </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
+                </svg>
+                {/* <FontAwesomeIcon icon={faCircleXmark} /> */}
+                {/* <link  rel="shortcut icon" href="https://image.similarpng.com/very-thumbnail/2020/11/InCorrect-icon-in-sticker-style-on-transparent-background-PNG.png" /> */}
+                <DialogContent style={{overflowY:"hidden"}}>
+                    <DialogContentText id="alert-dialog-description" style={{textAlign:"center"}}>
                         Are you sure Delete?
                     </DialogContentText>
+                    <DialogContentText style={{textAlign:"center"}}>
+                        Do you really want to delete these record?
+                    </DialogContentText>
                 </DialogContent>
-                <DialogActions>
-                   
+                <DialogActions style={{ marginRight: "25%",paddingBottom:"5%" }}>
+
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteResources(deleteId)
                         handlePopupClose(true)
-                    }}>Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} >No</button>
+                    }}
+                        style={{ width: "30%" }}
+                    >Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%" }} >No</button>
                 </DialogActions>
             </Dialog>
 
