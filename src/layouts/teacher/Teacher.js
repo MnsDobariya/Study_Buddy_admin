@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal, Typography } from '@mui/material';
+import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal, Stack, Typography } from '@mui/material';
 
 import SoftButton from 'components/SoftButton';
 // import image from 'Images/Screenshot (231).png'
@@ -66,7 +66,7 @@ const Teacher = () => {
         { field: "firstName", headerName: "FirstName", width: 160 },
         { field: "lastName", headerName: "LastName", width: 155 },
         { field: "email", headerName: "Email", width: 200 },
-        { field: "phone", headerName: "Mobile_No", width: 190 },
+        { field: "phone", headerName: "Mobile No", width: 190 },
         { field: "gender", headerName: "Gender", width: 130 },
 
         {
@@ -126,17 +126,23 @@ const Teacher = () => {
             },
         },
     ];
- 
+
     return (
         <>
-           
-            <div style={{ width: "77.5%", padding: "1%", marginLeft: "20%",marginTop:"2%" }}>
-            <h3 style={{ color: " #344767" }}>Teacher List</h3>
+
+            <div style={{ width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
+                <h3 style={{ color: " #344767" }}>Teacher List</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
                     pageSize={5}
+
                     components={{
+                        NoRowsOverlay: () => (
+                            <Stack height="100%" alignItems="center" justifyContent="center">
+                                No Record
+                            </Stack>
+                        ),
                         Toolbar: () => (
                             <div
                                 style={{
@@ -146,8 +152,13 @@ const Teacher = () => {
                                     alignItems: "center",
                                 }}
                             >
+                                {/* sx={{
+                                    "& .MuiButtonBase-root": {
+                                        webkitTransform: "0px",
+                                    }
+                                }} */}
                                 <GridToolbar />
-                               <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {
+                                <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {
                                     navigate('/teacher/teacherform')
                                 }}>
                                     Add Teacher
@@ -160,6 +171,18 @@ const Teacher = () => {
                     onRowClick={(e) => {
                     }}
                     className='custom-data-grid'
+                    initialState={{
+                        pagination: { paginationModel: { pageSize: 5 } },
+                    }}
+                    pageSizeOptions={[5, 10, 25]}
+                    sx={{
+                        "& .css-1ui3wbn-MuiInputBase-root-MuiTablePagination-select": {
+                            width: "20%!important",
+                        },
+                        "& .css-1y1mi5n-MuiTablePagination-root": {
+                            overflow: "hidden !important",
+                        }
+                    }}
                 />
             </div >
 
@@ -173,7 +196,7 @@ const Teacher = () => {
                         "& .MuiPaper-root": {
                             width: "100%",
                             maxWidth: "500px",
-                            borderRadius:"0.5rem",  // Set your width here
+                            borderRadius: "0.5rem",  // Set your width here
                         },
                     },
                 }}

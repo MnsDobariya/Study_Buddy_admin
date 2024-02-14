@@ -61,37 +61,45 @@ const Todos = () => {
                     Add Todos
                 </SoftButton>
             </div>
-            {todosData && todosData?.map((item) => (
-                <div key={item.id} className="rowtodos" id="adstodos">
-                    <div className="cardtodos w-75">
+            {(todosData && todosData.length) ?
+                todosData?.map((item) => (
+                    <div key={item.id} className="rowtodos" id="adstodos">
+                        <div className="cardtodos w-75">
 
-                        <div className="card-body">
+                            <div className="card-body">
 
-                            <div style={{ display: "flex" }}>
-                                <p className="card-title">{item?.task}</p>
-                                <label className={item.portable === 'High' ? 'high' : item.portable === 'Medium' ? 'medium' : 'low'}>
-                                    <span className=''>{item?.portable}</span>
-                                </label>
-                                <div style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
-                                    <FontAwesomeIcon icon={faPen} onClick={() => {
-                                        handleEdit(item)
-                                    }}
-                                    style={{cursor:"pointer"}}
-                                    />
-                                    <FontAwesomeIcon icon={faTrash} onClick={() => {
-                                        setOpen(true);
-                                        setDeleteId(item.id);
-                                    }} 
-                                    style={{cursor:"pointer"}}
-                                    />
+                                <div style={{ display: "flex" }}>
+                                    <p className="card-title">{item?.task}</p>
+                                    <label className={item.portable === 'High' ? 'high' : item.portable === 'Medium' ? 'medium' : 'low'}>
+                                        <span className=''>{item?.portable}</span>
+                                    </label>
+                                    <div style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
+                                        <FontAwesomeIcon icon={faPen} onClick={() => {
+                                            handleEdit(item)
+                                        }}
+                                            style={{ cursor: "pointer" }}
+                                        />
+                                        <FontAwesomeIcon icon={faTrash} onClick={() => {
+                                            setOpen(true);
+                                            setDeleteId(item.id);
+                                        }}
+                                            style={{ cursor: "pointer" }}
+                                        />
+                                    </div>
                                 </div>
+                                <p className="card-text">Finish by : {formatDate(item?.deadlinedate)}</p>
                             </div>
-                            <p className="card-text">Finish by : {formatDate(item?.deadlinedate)}</p>
                         </div>
-                    </div>
 
-                </div >
-            ))}
+                    </div >
+                ))
+                :
+                (
+                    <div className="noRecord" style={{marginLeft:"50%",marginTop:"15%"}}>
+                    <p>No Record</p>
+                    </div>
+                )
+            }
             <Dialog
                 open={open}
                 onClose={handleClose}

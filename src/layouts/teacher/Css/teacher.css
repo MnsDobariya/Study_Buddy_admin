@@ -31,3 +31,28 @@ label {
   margin-top: 0px;
   margin-bottom: 0px;  
 }
+
+.fa-times {
+  opacity: 0;
+}
+
+.fa-check {
+  opacity: 1;
+}
+
+.validation p span {
+  font-size: 22px;
+  margin-left: 45px;
+}
+
+.validation p .icon {
+  position: absolute;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+  font-size: large;
+  border-radius: 50%;
+  color: rgb(26, 43, 68);
+  border: 2px solid rgb(26, 43, 68);
+}

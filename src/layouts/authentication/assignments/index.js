@@ -18,7 +18,7 @@ import { ApiDelete } from "config/Api/ApiData";
 import { toast } from "react-toastify";
 import { element } from "prop-types";
 
-const Assignment = () => {
+const Assignments = () => {
 
     const [assignmentRecord, setAssignmentRecord] = useState([]);
     const [open, setOpen] = useState(false);
@@ -149,7 +149,8 @@ const Assignment = () => {
                         </SoftBox>
                     </div>
                     <div className="row" id="ads">
-                        {assignmentRecord && assignmentRecord?.map((item) => (
+                        {(assignmentRecord && assignmentRecord.length) ? 
+                        assignmentRecord?.map((item) => (
                             <div key={item.id} className="col-md-4" id="ads">
                                 <div className="row" id="ads" >
                                     <div className="assignment" >
@@ -168,10 +169,10 @@ const Assignment = () => {
                                             </div>
                                             <div className="card-body text-center" style={{ display: "flex", justifyContent: "start" }}>
                                                 <div className="lbl" >
-                                                    <label>MM</label>
+                                                    <label1>MM</label1>
                                                 </div>
                                                 <div className="lbl1" >
-                                                    <label>FM</label>
+                                                    <label1>FM</label1>
                                                 </div>
                                                 <label className={item.status === 'Pending' ? 'pending' : item.status === 'Started' ? 'started' : 'finished'}>
                                                     <span style={{ textAlign: "center", }}><b>{item?.status}</b></span>
@@ -187,7 +188,14 @@ const Assignment = () => {
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                        ))
+                    :
+                    (
+                        <div className="noRecord" style={{marginLeft:"49%",marginTop:"15%"}}>
+                            <p>No Record</p>
+                        </div>
+                    )
+                    }
                     </div>
                 </div>
             </div>
@@ -232,4 +240,4 @@ const Assignment = () => {
     )
 }
 
-export default Assignment;
+export default Assignments;

@@ -134,6 +134,7 @@ function SignUp() {
           })
         }
         navigate('/authentication/sign-in')
+        toast.success("Register Successfully");
       })
       .catch((error) => {
         if (error.error === "User already register") {
@@ -149,20 +150,27 @@ function SignUp() {
     const { name, value } = e.target;
 
     const textRegex = /^[A-Za-z\s]+$/;
+    
+    setRegFormData({
+      ...regFormData,
+      [name]: value,
+    });
 
     if (name === "FirstName" || name === "LastName") {
       if (!textRegex.test(value)) {
         setError({
           ...error,
-          [name]: "Please enter text only",
+          [name]: "Please Enter Text Only",
         });
-        return;
+      }else{
+        setError({
+          ...error,
+          [name]:"",
+        })
       }
     }
-    setRegFormData({
-      ...regFormData,
-      [e.target.name]: e.target.value,
-    });
+    return;
+    
   };
   const handleSetAgremment = () => setAgremment(!agreement);
   const navigate = useNavigate();
@@ -182,13 +190,11 @@ function SignUp() {
         <Card >
           <SoftBox p={3} mb={0} textAlign="center">
             <SoftTypography variant="h5" fontWeight="medium">
-              Register with
+              Register 
             </SoftTypography>
           </SoftBox>
           <SoftBox mb={1} >
-            <Socials />
           </SoftBox>
-          <Separator />
           <SoftBox pt={2} pb={3} px={3}>
             <SoftBox component="form" role="form" height="100%">
               <SoftBox mb={1} mt={0}>

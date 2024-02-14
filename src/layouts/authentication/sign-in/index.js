@@ -46,11 +46,29 @@ function SignIn() {
   });
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    const textRegex = /^[A-Za-z\s]+$/;
+
     setLgnFormData({
       ...lgnFormData,
-      [e.target.name]: e.target.value
-    })
-    
+      [name]: value,
+    });
+
+    if (name === "firstName" || name === "lastName") {
+      if (!textRegex.test(value)) {
+        setError({
+          ...error,
+          [name]: "Please Enter Text Only",
+        });
+      } else {
+        setError({
+          ...error,
+          [name]: "",
+        })
+      }
+    }
+    return;
   }
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -101,6 +119,7 @@ function SignIn() {
         localStorage.setItem("firstName", res.data.admin.firstName)
         localStorage.setItem("id", res.data.admin.id)
         navigate('/dashboard')
+        toast.success("Login Successfully");
       })
 
       .catch((error) => {

@@ -120,7 +120,7 @@ function Overview() {
 
   // const role = localStorage.getItem("role");
 
-  divisionDropDown.push({ label: userProfile?.otherDivision, value: userProfile?.otherDivision });
+  // divisionDropDown.push({ label: userProfile?.otherDivision, value: userProfile?.otherDivision });
 
 
   const getUserProfile = () => {
@@ -136,25 +136,28 @@ function Overview() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(e.target, "e.target");
-    console.log(e.target,"e.target");
     const textRegex = /^[A-Za-z\s]+$/;
-
-    if (name === "firstName" || name === "lastName" || name === "email" || name === "gender") {
-      if (!textRegex.test(value)) {
-        setError({
-          ...error,
-          [name]: "",
-        });
-        return;
-      }
-    }
 
     setUserProfile({
       ...userProfile,
       [name]: value,
 
     });
+
+    if (name === "firstName" || name === "lastName" || name === "email" || name === "gender") {
+      if (!textRegex.test(value)) {
+        setError({
+          ...error,
+          [name]: "Please Enter Text Only",
+        });
+      }else {
+        setError({
+          ...error,
+          [name]:"",
+        })
+      }
+    }
+    return;    
   };
 
   const handleImageChange = (e) => {
@@ -202,7 +205,10 @@ function Overview() {
     form_data.append("spId", userProfile?.spId)
     form_data.append("year", userProfile?.year)
     form_data.append("semester", userProfile?.semester)
-    form_data.append("division", userProfile?.otherDivision ? userProfile?.otherDivision : userProfile?.division)
+    form_data.append("division", userProfile?.division)
+    if(userProfile?.otherDivision){
+      form_data.append("otherDivision", userProfile?.otherDivision)
+    }
     if (userProfile?.profilePicture) {
       form_data.append("profileImage", userProfile?.profilePicture)
     }
@@ -472,7 +478,7 @@ function Overview() {
                     handleChange(e);
                   }}
                 >
-                  {/* <option key="">Select Gender</option> */}
+                  <option key="">Select Gender</option>
                   {genderDropDown &&
                     genderDropDown?.map((x) => (
                       <option key={x.value}>{x.value}</option>
@@ -555,7 +561,7 @@ function Overview() {
                         handleChange(e);
                       }}
                     >
-                      {/* <option key="">Select Year</option> */}
+                      <option key="">Select Year</option>
                       {yearDropDown &&
                         yearDropDown?.map((x) => (
                           <option key={x.value}>{x.value}</option>
@@ -577,7 +583,7 @@ function Overview() {
                         handleChange(e);
                       }}
                     >
-                      {/* <option key="">Select Semester</option> */}
+                      <option key="">Select Semester</option>
                       {semesterDropDown &&
                         semesterDropDown?.map((x) => (
                           <option key={x.value}>{x.value}</option>
@@ -586,7 +592,7 @@ function Overview() {
                     </select>
                   </div>
                   <div className="col-sm-6 form-group">
-                    <label htmlFor="division" style={{ fontWeight: "500" }} >Divivsion</label>
+                    <label htmlFor="division" style={{ fontWeight: "500" }} >Division</label>
                     <select
                       name="division"
                       id="division"
@@ -594,30 +600,36 @@ function Overview() {
                       value={userProfile?.division}
                       style={{ borderRadius: "0.5rem" }}
                       onChange={(e) => {
-                        handleChange(e);
+                        // handleChange(e);
                         const selectedDivision = e.target.value;
-                        setIsAuthorSelect(selectedDivision === "Author Select");
+                        setUserProfile({
+                          ...userProfile,
+                          division : selectedDivision
+                        })
+                        // setIsAuthorSelect(selectedDivision === "Other Select");
                       }}
                     >
-                      {/* <option key="">Select Division</option> */}
-                      {divisionDropDown &&
+                      <option key="">Select Division</option>
+                      {(divisionDropDown && divisionDropDown?.length > 0) &&
                         divisionDropDown?.map((x) => (
                           <option key={x.value}>{x.value}</option>
                         ))
                       }
-                      <option key="author Select">Author Select</option>
+                      <option key="other" value={"other"}>Other Select</option>
                     </select>
                   </div>
-                  {isAuthorSelect && (
+                  {(userProfile?.division == "other") && (
                     <div className="col-sm-6 form-group">
-                      {/* <label htmlFor="authorInput" style={{ fontSize: "500" }}>Author Select</label> */}
                       <SoftInput
                         type="text"
                         name="otherDivision"
                         value={userProfile?.otherDivision}
-                        placeholder="Author Input"
+                        placeholder="Other Division"
                         onChange={(e) => {
-                          handleChange(e);
+                          setUserProfile({
+                            ...userProfile,
+                            otherDivision : e.target.value
+                          })
                         }}
                       />
                     </div>
@@ -625,22 +637,22 @@ function Overview() {
                 </div>
               </>
             }
-            <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "32%", width: "30%" }}>
+            <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "32%", width: "30%",marginTop:"0px" }}>
               <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={() => {
                 updateuserProfile();
               }}
-                style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}
+                style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",marginBottom:"11px"}}
               >
                 Update
               </SoftButton>
-              <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}>
+              <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",marginBottom:"11px"}}>
                 Cancel
               </SoftButton>
             </SoftBox>
           </form>
         </div >
       </SoftBox >
-      <Footer />
+      {/* <Footer /> */}
 
 
       {/* <Modal>
