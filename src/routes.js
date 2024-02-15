@@ -59,6 +59,8 @@ import Resources from "layouts/resources/Resources";
 import Notification from "layouts/notification/notification";
 import Chat from "layouts/chat/Chat";
 import Assignments from "layouts/authentication/assignments";
+import { faBell, faCalendarDays, faListCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const routes = [
@@ -85,7 +87,7 @@ const routes = [
     name: "Todos",
     key: "todos",
     route: "/todos",
-    icon: <Office size="12px" />,
+    icon: <FontAwesomeIcon icon={faListCheck} size="xs"/>,
     component: <Todos />,
     noCollapse: true,
   },
@@ -94,7 +96,7 @@ const routes = [
     name: "Calendar",
     key: "calendar",
     route: "/calendar",
-    icon: <Office size="12px" />,
+    icon: <FontAwesomeIcon icon={faCalendarDays} size="xs"/>,
     component: <Calendar />,
     noCollapse: true,
   },
@@ -178,7 +180,8 @@ const routes = [
     name: "Notification",
     key: "notification",
     route: "/notification",
-    icon: <CustomerSupport size="12px" />,
+    // icon: <NotificationBell size="12px" />,
+    icon:<FontAwesomeIcon icon={faBell} size="xs"/>,
     component: <Notification />,
     noCollapse: true,
   },
