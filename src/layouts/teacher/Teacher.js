@@ -13,6 +13,8 @@ import { ApiPut } from "config/Api/ApiData";
 import { ApiPost } from "config/Api/ApiData";
 import { ApiGet } from "config/Api/ApiData";
 import { ApiDelete } from 'config/Api/ApiData';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { ApiDelete } from 'config/Api/ApiData';
 
 
@@ -202,19 +204,28 @@ const Teacher = () => {
                 }}
             >
                 <DialogTitle id="alert-dialog-title">
-                    Delete
+                    {/* Delete */}
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%" }} />
                 </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
+                </svg>
+                <DialogContent style={{overflowY:"hidden"}}>
+                    <DialogContentText id="alert-dialog-description" style={{textAlign:"center"}}>
                         Are you sure Delete?
                     </DialogContentText>
+                    <DialogContentText style={{textAlign:"center"}}>
+                        Do you really want to delete these record?
+                    </DialogContentText>
                 </DialogContent>
-                <DialogActions>
+                <DialogActions style={{ marginRight: "25%",paddingBottom:"5%" }}>
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteRecord(deleteRowId)
                         handleClose(true)
-                    }}>Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handleClose} >No</button>
+                    }}
+                    style={{ width: "30%" }}
+                    >Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handleClose} style={{ width: "30%" }}>No</button>
                 </DialogActions>
             </Dialog>
         </>
