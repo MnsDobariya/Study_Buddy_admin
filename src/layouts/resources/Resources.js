@@ -284,6 +284,9 @@ const Resources = () => {
                     rows={indexedData}
                     columns={columns}
                     pageSize={5}
+                    localeText={{
+                        toolbarExportPrint:"PDF",
+                    }}
                     components={{
                         NoRowsOverlay: () => (
                             <Stack height="100%" alignItems="center" justifyContent="center">
@@ -418,15 +421,15 @@ const Resources = () => {
                 </svg>
                 {/* <FontAwesomeIcon icon={faCircleXmark} /> */}
                 {/* <link  rel="shortcut icon" href="https://image.similarpng.com/very-thumbnail/2020/11/InCorrect-icon-in-sticker-style-on-transparent-background-PNG.png" /> */}
-                <DialogContent style={{overflowY:"hidden"}}>
-                    <DialogContentText id="alert-dialog-description" style={{textAlign:"center"}}>
+                <DialogContent style={{ overflowY: "hidden" }}>
+                    <DialogContentText id="alert-dialog-description" style={{ textAlign: "center" }}>
                         Are you sure Delete?
                     </DialogContentText>
-                    <DialogContentText style={{textAlign:"center"}}>
+                    <DialogContentText style={{ textAlign: "center" }}>
                         Do you really want to delete these record?
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions style={{ marginRight: "25%",paddingBottom:"5%" }}>
+                <DialogActions style={{ marginRight: "25%", paddingBottom: "5%" }}>
 
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteResources(deleteId)

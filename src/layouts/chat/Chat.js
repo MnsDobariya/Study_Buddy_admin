@@ -49,7 +49,7 @@ const Chat = () => {
     // }
 
     const createRoom = (receiverUserData) => {
-        console.log(receiverUserData,'receiverUserData')
+        console.log(receiverUserData, 'receiverUserData')
         const body = {
             receiverId: receiverUserData?._id
         }
@@ -144,7 +144,7 @@ const Chat = () => {
 
     const getProfileImage = (image) => {
         // console.log(image,"image");
-        return image ? `http://localhost:3000${image}` : 'https://static.vecteezy.com/system/resources/previews/009/734/564/non_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg';
+        return image ? `http://localhost:3000${image}` : 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg';
     }
 
     useEffect(() => {
@@ -238,7 +238,6 @@ const Chat = () => {
                                         <Menu
                                             anchorEl={anchorEl}
                                             open={Boolean(anchorEl)}
-                                            // open={handleOpen}
                                             onClose={handleClose}
                                             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                                             transformOrigin={{ horizontal: "right" }}
@@ -255,7 +254,6 @@ const Chat = () => {
                                                 }
                                             }}
                                         >
-                                            {/* Add more menu items for other actions if needed */}
                                             {(searchResults && searchResults.length) ?
                                                 searchResults.map((item) => (
                                                     <MenuItem key={item.id} onClick={() => createRoom(item)}>
@@ -276,7 +274,6 @@ const Chat = () => {
                                                 )
                                             }
                                         </Menu>
-
                                     </div>
                                 </div>
                             </div>
@@ -287,7 +284,7 @@ const Chat = () => {
                                         <div className="chat_list active_chat">
                                             <div className="chat_people">
                                                 <div className="chat_img">
-                                                    <img src={getProfileImage(item?.receiver?.profileImage)} />
+                                                    <img src={getProfileImage(item?.receiverId?.profileImage)} />
                                                 </div>
                                                 <div className="chat_ib" onClick={() => {
                                                     handleRoomId(item)
@@ -307,31 +304,12 @@ const Chat = () => {
                         <div className="mesgs">
 
                             <div className={`${showBackgroundHeader ? 'bg-transparent' : 'card-header p-1 bg-light border border-top-0 border-left-0 border-right-0'}`} style={{ color: " rgba(96, 125, 139,1.0)", height: "55px" }}>
-
-                                {/* <img className="rounded float-left" style={{ width: " 50px", height: "50px" }} src="https://i.pinimg.com/736x/5c/24/69/5c24695df36eee73abfbdd8274085ecd--cute-anime-guys-anime-boys.jpg" /> */}
                                 {
-                                    !showBackgroundHeader && <img className="float-left" style={{ width: " 45px", height: "45px" }} src={getProfileImage(headerImage?.profileImage)} />
+                                    !showBackgroundHeader && <img className="float-left" style={{ width: " 45px", height: "45px" }} src={getProfileImage(headerImage?.receiverId?.profileImage)} />
                                 }
-
                                 <h6 className="float-left" style={{ margin: "0px", marginLeft: "10px" }}>{headerImage?.firstName}
-                                    {/* <i className="fa fa-check text-primary" title="Onaylanmış Hesap!" aria-hidden="true"></i>  <small> İstanbul, TR </small>/ */}
                                 </h6>
-
-                                {/* <div className="dropdown show">
-
-                                    <a id="dropdownMenuLink" data-toggle="dropdown" className="btn btn-sm float-right text-secondary" role="button"><h5><i className="fa fa-ellipsis-h" title="Ayarlar!" aria-hidden="true"></i>&nbsp;</h5></a>
-
-                                    <div className="dropdown-menu dropdown-menu-right border p-0" aria-labelledby="dropdownMenuLink">
-
-                                        <a className="dropdown-item p-2 text-secondary" href="#"> <i className="fa fa-user m-1" aria-hidden="true"></i> Profile </a>
-                                        <hr className="my-1"></hr>
-                                        <a className="dropdown-item p-2 text-secondary" href="#"> <i className="fa fa-trash m-1" aria-hidden="true"></i> Delete </a>
-
-                                    </div>
-                                </div> */}
                             </div>
-
-
                             <div className={`${showBackgroundImage ? 'background-img' : 'bg-transparent'}`}>
                                 <div className="msg_history">
                                     {chatRecord && chatRecord?.map((item) => (
@@ -343,7 +321,6 @@ const Chat = () => {
                                                     <div className="sent_msg">
                                                         <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
                                                         <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
-                                                        {/* <span className="time_date">{item?.createdAt} </span>  */}
                                                     </div>
                                                 </div>
                                                 :
@@ -354,7 +331,6 @@ const Chat = () => {
                                                             <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
                                                             <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
                                                             <span>
-                                                                {/* {moment(item?.createdAt).format('MMM Do YYYY,h:mm')} */}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -363,20 +339,7 @@ const Chat = () => {
                                         </div>
                                     ))}
                                 </div>
-                                {/* <div className='type_msg'>
-                                    <div className='input_msg_write'>
-                                        <SoftInput
-                                            type="text"
-                                            className="write_msg"
-                                            placeholder="Type a message"
-                                            value={chat?.message}
-                                            onChange={e => setChat(prev => ({ ...prev, message: e.target.value }))}
-                                            onKeyPress={(e) => onKeyBtn(e)}
 
-                                        />
-                                        <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
-                                    </div>
-                                </div> */}
                                 <div className='type_msg'>
                                     <div className={`${showBackgroundChat ? 'bg-transparent' : 'input_msg_write'}`}>
                                         <div className='input_msg_write'>
@@ -399,8 +362,6 @@ const Chat = () => {
                             </div>
                         </div>
                     </div>
-                    {/* <p className="text-center top_spac"> Design by <a target="_blank" href="https://www.linkedin.com/in/sunil-rajput-nattho-singh/">Sunil Rajput</a></p> */}
-
                 </div>
             </div>
 
