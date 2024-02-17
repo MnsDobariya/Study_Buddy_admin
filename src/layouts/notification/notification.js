@@ -44,7 +44,8 @@ const Notification = () => {
         <h3 style={{ marginLeft: "20%",marginBottom:"2%", fontWeight: "500", color: "#344767" }}>Notification List</h3>
       </div>
 
-      {notificationData && notificationData?.map((item) => (
+      {(notificationData && notificationData.length) ?
+      notificationData?.map((item) => (
         <div key={item.id} className="rowtodos mt-1" id="adstodos">
 
           <div className="cardnotification" style={{ width: 750 ,marginLeft:'34%',height:100}}>
@@ -62,7 +63,14 @@ const Notification = () => {
             </div>
           </div>
         </div>
-      ))}
+      ))  
+      :
+      (
+        <div className='noRecord' style={{marginLeft:"50%",marginTop:"15%"}}>
+          <p>No Record</p>
+        </div>
+      )
+    }
 
       <Dialog
         open={open}

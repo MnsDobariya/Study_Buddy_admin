@@ -117,13 +117,16 @@ const Header = ({ userProfile, imagePreview, handleImageChange }) => {
               variant="rounded"
               size="xl"
               shadow="sm"
-              style={{alignItems:"end"}}
-              >
-              <SoftTypography component={Link} variant="body2" color="secondary">
+              style={{ alignItems: "end" }}
+            >
+              <Icon style={{ position: "absolute", bottom: "0", right: "0", background: "white", borderRadius: "50%", padding: "4px", cursor: "pointer" }}>
+                edit
+              </Icon>
+              {/* <SoftTypography component={Link} variant="body2" color="secondary">
                 <Tooltip placement="top" onClick={() => handleClick()} >
-                  <Icon style={{marginLeft:"10vh"}}>edit</Icon>
+                  <Icon style={{ marginLeft: "10vh" }}>edit</Icon>
                 </Tooltip>
-              </SoftTypography>
+              </SoftTypography> */}
             </SoftAvatar>
 
 
@@ -139,8 +142,8 @@ const Header = ({ userProfile, imagePreview, handleImageChange }) => {
                 handleImageChange(e);
               }}
             />
-            {/* <SoftTypography component={Link}  variant="body2" color="secondary">
-              <Tooltip placement="top" onClick={()=> handleClick()} >
+            {/* <SoftTypography component={Link} variant="body2" color="secondary">
+              <Tooltip placement="top" onClick={() => handleClick()} >
                 <Icon>edit</Icon>
               </Tooltip>
             </SoftTypography> */}
