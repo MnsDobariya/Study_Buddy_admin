@@ -27,8 +27,9 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { ApiPost } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
+import '../sign-up/SignUp.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function SignUp() {
   const [agreement, setAgremment] = useState(true);
@@ -58,6 +59,27 @@ function SignUp() {
   // const toastify = () => {
   // }
 
+  const valid = (item, v_icon, inv_icon) => {
+    const text = document.querySelector(`#${item}`);
+    text.style.opacity = "1";
+
+    const valid_icon = document.querySelector(`#${item} .${v_icon}`);
+    valid_icon.style.opacity = "1";
+
+    const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
+    invalid_icon.style.opacity = "0";
+  };
+
+  const Invalid = (item, v_icon, inv_icon) => {
+    const text = document.querySelector(`#${item}`);
+    text.style.opacity = ".5";
+
+    const valid_icon = document.querySelector(`#${item} .${v_icon}`);
+    valid_icon.style.opacity = "0";
+
+    const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
+    invalid_icon.style.opacity = "1";
+  };
   const SignUp = () => {
 
 
@@ -134,9 +156,10 @@ function SignUp() {
           })
         }
         navigate('/authentication/sign-in')
+        toast.success("Register Successfully");
       })
       .catch((error) => {
-        if (error.response.data.message === "User already registered") {
+        if (error.error === "User already register") {
           toast.error(<p style={{ fontSize: "80%" }}>{"User already registered"}</p>, {
             position: "top-center",
           });
@@ -150,19 +173,50 @@ function SignUp() {
 
     const textRegex = /^[A-Za-z\s]+$/;
 
+    setRegFormData({
+      ...regFormData,
+      [name]: value,
+    });
+
     if (name === "FirstName" || name === "LastName") {
       if (!textRegex.test(value)) {
         setError({
           ...error,
-          [name]: "Please enter text only",
+          [name]: "Please Enter Text Only",
         });
-        return;
+      } else {
+        setError({
+          ...error,
+          [name]: "",
+        })
       }
     }
-    setRegFormData({
-      ...regFormData,
-      [e.target.name]: e.target.value,
-    });
+
+    if (name === "Password") {
+      if (value.match(/[A-Z]/) != null) {
+        valid('capital', 'fa-check', 'fa-times');
+      } else {
+        Invalid("capital", "fa-check", "fa-times");
+      }
+      if (value.match(/[0-9]/) != null) {
+        valid('num', 'fa-check', 'fa-times');
+      } else {
+        Invalid("num", "fa-check", "fa-times");
+      }
+      if (value.match(/[!@#$%^&*]/) != null) {
+        valid('char', 'fa-check', 'fa-times');
+      } else {
+        Invalid("char", "fa-check", "fa-times");
+      }
+      if (value.length > 7) {
+        valid('more8', 'fa-check', 'fa-times');
+      } else {
+        Invalid("more8", "fa-check", "fa-times");
+      }
+    }
+
+    return;
+
   };
   const handleSetAgremment = () => setAgremment(!agreement);
   const navigate = useNavigate();
@@ -182,13 +236,11 @@ function SignUp() {
         <Card >
           <SoftBox p={3} mb={0} textAlign="center">
             <SoftTypography variant="h5" fontWeight="medium">
-              Register with
+              Register
             </SoftTypography>
           </SoftBox>
           <SoftBox mb={1} >
-            <Socials />
           </SoftBox>
-          <Separator />
           <SoftBox pt={2} pb={3} px={3}>
             <SoftBox component="form" role="form" height="100%">
               <SoftBox mb={1} mt={0}>
@@ -233,7 +285,7 @@ function SignUp() {
                   onChange={(e) => {
                     const input = e.target.value;
                     const regex = /^[0-9\b]+$/;
-                    if (input === '' || regex.test(input) && input.length <= 10 ) {
+                    if (input === '' || regex.test(input) && input.length <= 10) {
                       setError({
                         ...error,
                         Mobile: "",
@@ -290,7 +342,7 @@ function SignUp() {
                       position: 'absolute',
                       // right: '40%',
                       // top: '66%',
-                      right:"30px",
+                      right: "30px",
                       // left: "48%",
                       transform: 'translateY(-110%)',
                       cursor: 'pointer',
@@ -305,6 +357,32 @@ function SignUp() {
                   {/* </div> */}
                 </div>
                 {error.Password && <p style={{ color: "red", fontSize: "60%" }}>{error.Password} </p>}
+                <div className='validation'>
+                  <p id='capital'>
+                    {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
+                    <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
+                    <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
+                    <span>Capital Letters</span>
+                  </p>
+                  <p id='char'>
+                    {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
+                    <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
+                    <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
+                    <span>Special Characters</span>
+                  </p>
+                  <p id='num'>
+                    {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
+                    <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
+                    <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
+                    <span>Use Number</span>
+                  </p>
+                  <p id='more8'>
+                    {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
+                    <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
+                    <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
+                    <span>8. characters</span>
+                  </p>
+                </div>
 
               </SoftBox>
 

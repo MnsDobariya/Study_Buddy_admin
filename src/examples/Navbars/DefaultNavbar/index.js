@@ -58,7 +58,7 @@ function DefaultNavbar({ transparent, light, action }) {
 
   return (
     <Container>
-      <SoftBox
+      {/* <SoftBox
         py={1.5}
         px={{ xs: transparent ? 4 : 5, sm: transparent ? 2 : 5, lg: transparent ? 0 : 5 }}
         my={2}
@@ -77,13 +77,13 @@ function DefaultNavbar({ transparent, light, action }) {
           backgroundColor: transparent ? transparentColor.main : rgba(white.main, 0.8),
           backdropFilter: transparent ? "none" : `saturate(200%) blur(30px)`,
         })}
-      >
-        <SoftBox component={Link} to="/" py={transparent ? 1.5 : 0.75} lineHeight={1}>
+      > */}
+        {/* <SoftBox component={Link} to="/" py={transparent ? 1.5 : 0.75} lineHeight={1}>
           <SoftTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
             Soft UI Dashboard
           </SoftTypography>
-        </SoftBox>
-        <SoftBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
+        </SoftBox> */}
+        {/* <SoftBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
           <DefaultNavbarLink icon="donut_large" name="dashboard" route="/dashboard" light={light} />
           <DefaultNavbarLink icon="person" name="profile" route="/profile" light={light} />
           <DefaultNavbarLink
@@ -98,7 +98,7 @@ function DefaultNavbar({ transparent, light, action }) {
             route="/authentication/sign-in"
             light={light}
           />
-        </SoftBox>
+        </SoftBox> */}
         {action &&
           (action.type === "internal" ? (
             <SoftBox display={{ xs: "none", lg: "inline-block" }}>
@@ -140,7 +140,7 @@ function DefaultNavbar({ transparent, light, action }) {
         >
           <Icon fontSize="default">{mobileNavbar ? "close" : "menu"}</Icon>
         </SoftBox>
-      </SoftBox>
+      {/* </SoftBox> */}
       {mobileView && <DefaultNavbarMobile open={mobileNavbar} close={closeMobileNavbar} />}
     </Container>
   );

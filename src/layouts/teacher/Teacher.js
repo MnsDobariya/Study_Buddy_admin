@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal, Typography } from '@mui/material';
+import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal, Stack, Typography } from '@mui/material';
 
 import SoftButton from 'components/SoftButton';
 // import image from 'Images/Screenshot (231).png'
@@ -13,6 +13,8 @@ import { ApiPut } from "config/Api/ApiData";
 import { ApiPost } from "config/Api/ApiData";
 import { ApiGet } from "config/Api/ApiData";
 import { ApiDelete } from 'config/Api/ApiData';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { ApiDelete } from 'config/Api/ApiData';
 
 
@@ -34,12 +36,9 @@ const Teacher = () => {
     const filterTeacher = teacherRecord.filter((x) => x.role == "Teacher")
 
     const getTeacherRecord = () => {
-        // axios.get("http://localhost:3000/api/v1/users/teacher/get",
         ApiGet(`${EndPoint.USER_GET}`)
 
-            // { headers: { "Authorization": Bearer ${token} } })
             .then((res) => {
-                // console.log("helloo",res);
                 setTeacherRecord(res.data);
             });
     };
@@ -52,21 +51,13 @@ const Teacher = () => {
         index: index + 1,
     }));
 
-    // const handleOpen = () => {
-    //     setOpen(true);
-    // };
     const handleClose = () => {
         setOpen(false);
     };
 
-    // const [openPopUp, setOpenPopUp] = useState(false);
-    // const [deleteRowId, setDeleteRowId] = useState();
-
     const deleteRecord = (id) => {
-        // ApiDelete(${EndPoint.USER_DELETE})
         axios.delete(`http://localhost:3000/api/v1/users/teacher/delete/${id}`)
             .then((res) => {
-                // console.log("res.data",res.data);
                 toast.success("Deleted successfully");
                 getTeacherRecord();
             });
@@ -77,10 +68,9 @@ const Teacher = () => {
         { field: "firstName", headerName: "FirstName", width: 160 },
         { field: "lastName", headerName: "LastName", width: 155 },
         { field: "email", headerName: "Email", width: 200 },
-        { field: "phone", headerName: "Mobile_No", width: 190 },
+        { field: "phone", headerName: "Mobile No", width: 190 },
         { field: "gender", headerName: "Gender", width: 130 },
 
-        // action
         {
             field: "action",
             headerName: "Action",
@@ -88,7 +78,6 @@ const Teacher = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        {/* Edit */}
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
                             fill='none'
@@ -98,13 +87,7 @@ const Teacher = () => {
                             height='20px'
                             width='30px'
                             className='edit-icon'
-                            // onClick={(e) => {
-                            //     // console.log("e",params.row.id);
-                            //     setOpenPopUp(true);
-                            //     setDeleteRowId(params.row.id);
-                            // }}
                             onClick={() => {
-                                // console.log(params.row);
                                 navigate('/teacher/teacherform', { state: params.row })
 
                             }}
@@ -129,7 +112,6 @@ const Teacher = () => {
                             data-toggle='modal'
                             data-target='#exampleModal'
                             onClick={(e) => {
-                                // console.log("e",params.row.id);
                                 setOpen(true);
                                 setDeleteRowId(params.row.id);
                             }}
@@ -146,37 +128,23 @@ const Teacher = () => {
             },
         },
     ];
-    // const deleteRecord = (id) => {
-    //     // ApiDelete(${EndPoint.USER_DELETE})
-    //     axios.delete(http://localhost:3000/api/v1/users/teacher/delete/${id})
-    //         .then((res) => {
-    //             // console.log("res.data",res.data);
-    //             toast.success("Deleted successfully");
-    //             getTeacherRecord();
-    //         });
-    // };
-
 
     return (
         <>
-            {/* <div className="mt-5" style={{ marginLeft: "20%" }}>
-                <h3>Teacher List</h3>
-            </div>
-                <div style={{ width: "70%", padding: "1%", marginLeft: "75%" }}>
 
-                    <SoftButton variant="gradient" color="info" marginLeft="60%" onClick={() => {
-                        navigate('/teacher/teacherform')
-                    }} >
-                        Add Teacher
-                    </SoftButton>
-                </div> */}
-            <div style={{ width: "77.5%", padding: "1%", marginLeft: "20%",marginTop:"2%" }}>
-            <h3 style={{ color: " #344767" }}>Teacher List</h3>
+            <div style={{ width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
+                <h3 style={{ color: " #344767" }}>Teacher List</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
                     pageSize={5}
+
                     components={{
+                        NoRowsOverlay: () => (
+                            <Stack height="100%" alignItems="center" justifyContent="center">
+                                No Record
+                            </Stack>
+                        ),
                         Toolbar: () => (
                             <div
                                 style={{
@@ -186,8 +154,13 @@ const Teacher = () => {
                                     alignItems: "center",
                                 }}
                             >
+                                {/* sx={{
+                                    "& .MuiButtonBase-root": {
+                                        webkitTransform: "0px",
+                                    }
+                                }} */}
                                 <GridToolbar />
-                               <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {
+                                <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {
                                     navigate('/teacher/teacherform')
                                 }}>
                                     Add Teacher
@@ -198,78 +171,21 @@ const Teacher = () => {
                     }}
                     style={{ height: "90vh", width: "100%", padding: "2%" }}
                     onRowClick={(e) => {
-                        // console.log(e);
                     }}
                     className='custom-data-grid'
+                    initialState={{
+                        pagination: { paginationModel: { pageSize: 5 } },
+                    }}
+                    pageSizeOptions={[5, 10, 25]}
+                    sx={{
+                        "& .css-1ui3wbn-MuiInputBase-root-MuiTablePagination-select": {
+                            width: "20%!important",
+                        },
+                        "& .css-1y1mi5n-MuiTablePagination-root": {
+                            overflow: "hidden !important",
+                        }
+                    }}
                 />
-
-                {/* {openPopUp && (
-                    <div>
-
-                        hello
-                <button onClick={()=>deleteRecord(deleteRowId)}>Yes</button>
-                <button onClick={()=>{setOpenPopUp(false)}}>No</button>
-
-                        <div
-                            className='modal fade'
-                            id='exampleModal'
-                            tabIndex='-1'
-                            role='dialog'
-                            aria-labelledby='exampleModalLabel'
-                            aria-hidden='true'
-                        >
-                            <div className='modal-dialog' role='document'>
-                                <div className='modal-content'>
-                                    <div className='modal-header'>
-                                        <h5 className='modal-title' id='exampleModalLabel'>
-                                            Delete
-                                        </h5>
-                                        <button
-                                            type='button'
-                                            className='close'
-                                            data-dismiss='modal'
-                                            aria-label='Close'
-                                        >
-                                            <span aria-hidden='true'>&times;</span>
-                                        </button>
-                                    </div>
-                                    <div
-                                        style={{
-                                            textAlign: "center",
-                                            fontSize: "18px",
-                                            padding: "10px 20px",
-                                        }}
-                                    >
-                                        Are you sure Delete?
-                                    </div>
-                                    <div className='modal-footer'>
-                                        <button
-                                            type='button'
-                                            className='btn btn-secondary'
-                                            data-dismiss='modal'
-                                            onClick={() => {
-                                                setOpenPopUp(false);
-                                            }}
-                                        >
-                                            No
-                                        </button>
-                                        <button
-                                            type='button'
-                                            className='btn btn-danger'
-                                            data-dismiss='modal'
-                                            onClick={() => {
-                                                deleteRecord(deleteRowId)
-                                                setOpenPopUp(false)
-                                            }}
-                                        >
-                                            Yes
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )} */}
             </div >
 
             <Dialog
@@ -282,32 +198,34 @@ const Teacher = () => {
                         "& .MuiPaper-root": {
                             width: "100%",
                             maxWidth: "500px",
-                            borderRadius:"0.5rem",  // Set your width here
+                            borderRadius: "0.5rem",  // Set your width here
                         },
                     },
                 }}
             >
                 <DialogTitle id="alert-dialog-title">
-                    Delete
+                    {/* Delete */}
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%" }} />
                 </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
+                </svg>
+                <DialogContent style={{overflowY:"hidden"}}>
+                    <DialogContentText id="alert-dialog-description" style={{textAlign:"center"}}>
                         Are you sure Delete?
                     </DialogContentText>
+                    <DialogContentText style={{textAlign:"center"}}>
+                        Do you really want to delete these record?
+                    </DialogContentText>
                 </DialogContent>
-                <DialogActions>
-                    {/* <Button className="btn btn-primary" onClick={() => {
-                        deleteRecord(deleteId)
-                        handleClose(true)
-                    }}>Yes</Button> */}
-                    {/* <Button className="btn btn-secondary" onClick={handleClose} autoFocus>
-                        No
-                    </Button> */}
+                <DialogActions style={{ marginRight: "25%",paddingBottom:"5%" }}>
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteRecord(deleteRowId)
                         handleClose(true)
-                    }}>Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handleClose} >No</button>
+                    }}
+                    style={{ width: "30%" }}
+                    >Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handleClose} style={{ width: "30%" }}>No</button>
                 </DialogActions>
             </Dialog>
         </>

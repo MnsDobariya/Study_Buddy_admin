@@ -27,4 +27,9 @@ export const EndPoint = {
     NOTIFICATION_CREATE:'/notification/create',
     NOTIFICATION_UPDATE:'/notification/update',
     NOTIFICATION_DELETE:'/notification/delete',
+    ROOM_CREATE:'room/create',
+    ROOM_GET:'room/get',
+    CHAT_CREATE:'chat/create',
+    CHAT_GET:'chat/get',
+    SEARCH_GET:'users/teacher/get/search',
 }

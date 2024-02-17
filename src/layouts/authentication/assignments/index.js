@@ -12,13 +12,13 @@ import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 import axios from "axios";
 import { ApiGet } from "config/Api/ApiData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { ApiDelete } from "config/Api/ApiData";
 import { toast } from "react-toastify";
 import { element } from "prop-types";
 
-const Assignment = () => {
+const Assignments = () => {
 
     const [assignmentRecord, setAssignmentRecord] = useState([]);
     const [open, setOpen] = useState(false);
@@ -149,7 +149,8 @@ const Assignment = () => {
                         </SoftBox>
                     </div>
                     <div className="row" id="ads">
-                        {assignmentRecord && assignmentRecord?.map((item) => (
+                        {(assignmentRecord && assignmentRecord.length) ? 
+                        assignmentRecord?.map((item) => (
                             <div key={item.id} className="col-md-4" id="ads">
                                 <div className="row" id="ads" >
                                     <div className="assignment" >
@@ -168,10 +169,10 @@ const Assignment = () => {
                                             </div>
                                             <div className="card-body text-center" style={{ display: "flex", justifyContent: "start" }}>
                                                 <div className="lbl" >
-                                                    <label>MM</label>
+                                                    <label1>MM</label1>
                                                 </div>
                                                 <div className="lbl1" >
-                                                    <label>FM</label>
+                                                    <label1>FM</label1>
                                                 </div>
                                                 <label className={item.status === 'Pending' ? 'pending' : item.status === 'Started' ? 'started' : 'finished'}>
                                                     <span style={{ textAlign: "center", }}><b>{item?.status}</b></span>
@@ -187,7 +188,14 @@ const Assignment = () => {
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                        ))
+                    :
+                    (
+                        <div className="noRecord" style={{marginLeft:"49%",marginTop:"15%"}}>
+                            <p>No Record</p>
+                        </div>
+                    )
+                    }
                     </div>
                 </div>
             </div>
@@ -206,14 +214,21 @@ const Assignment = () => {
                 }}
             >
                 <DialogTitle id="alert-dialog-title">
-                    Delete
+                    {/* Delete */}
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%" }} />
                 </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
+                </svg>
+                <DialogContent style={{overflowY:"hidden"}}>
+                    <DialogContentText id="alert-dialog-description" style={{textAlign:"center"}}>
                         Are you sure Delete?
                     </DialogContentText>
+                    <DialogContentText style={{textAlign:"center"}}>
+                        Do you really want to delete these record?
+                    </DialogContentText>    
                 </DialogContent>
-                <DialogActions>
+                <DialogActions style={{ marginRight: "25%",paddingBottom:"5%" }}>
                     {/* <Button className="btn btn-primary" onClick={() => {
                         deleteRecord(deleteId)
                         handleClose(true)
@@ -224,12 +239,14 @@ const Assignment = () => {
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteRecords(deleteId)
                         handlePopupClose(true)
-                    }}>Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} >No</button>
+                    }}
+                    style={{ width: "30%" }}
+                    >Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%" }} >No</button>
                 </DialogActions>
             </Dialog>
         </>
     )
 }
 
-export default Assignment;
+export default Assignments;

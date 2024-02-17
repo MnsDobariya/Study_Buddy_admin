@@ -6,6 +6,7 @@ import axios from 'axios';
 import SoftButton from 'components/SoftButton';
 import { ApiGet } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -66,7 +67,7 @@ const AssignmentList = () => {
         { field: "index", headerName: "Id", width: 90 },
         { field: "title", headerName: "Title", width: 250 },
         { field: "lbl", headerName: "Members", width: 150 },
-        { field: "startDate", headerName: "Start Date", width: 250 },
+        { field: "startDate", headerName: "Start Date", width: 250 ,valueFormatter:params => moment(params?.value).format("DD MMM YYYY")},
         { field: "status", headerName: "Status", width: 150 },
         {
             field: "action",
@@ -75,11 +76,12 @@ const AssignmentList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <FontAwesomeIcon
-                            icon={faEllipsisVertical}
-                            onClick={(e) => handleClick(e, params.row.id)}
-                            style={{ marginLeft: "18%", color: "black" }}
-                        />
+                            <FontAwesomeIcon
+                                icon={faEllipsisVertical}
+                                onClick={(e) => handleClick(e, params.row.id)}
+                                style={{ marginLeft: "22%", color: "black" }}
+                            />
+
                         <Menu
                             anchorEl={anchorEl}
                             open={Boolean(anchorEl)}
@@ -91,8 +93,8 @@ const AssignmentList = () => {
                                     boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0)",
                                 }
                             }}
-                        >
-                            <MenuItem onClick={()=> {
+                            >
+                            <MenuItem onClick={() => {
                                 handleDelete(params.row.id)
                             }}>Delete</MenuItem>
                             <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
@@ -125,49 +127,60 @@ const AssignmentList = () => {
 
     return (
         <>
-            <div className="mt-5" style={{ marginLeft: "20%" }}>
-                <h3>AssignmentList</h3>
+
+            <div className="mt-5" style={{ marginLeft: "21%", display: "flex" }}>
+                <h3 style={{ marginTop: "1%" }}>AssignmentList</h3>
+                <SoftButton variant="gradient" color="info" style={{ marginTop: "1%", marginInlineEnd: "50px", marginLeft: "48%" }} onClick={() => {
+                    navigate('/assignments/assignmentform')
+                }} >
+                    create Assignment
+                </SoftButton>
+                <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "1%" }} onClick={() => {
+                    navigate('/assignments')
+                }} >
+                    Assignments
+                </SoftButton>
             </div>
-            <div style={{ width: "70%", padding: "1%", marginLeft: "17.5%" }}>
-                    <SoftButton variant="gradient" color="info" style={{ marginTop:"1%", marginBottom: "2.5%", marginInlineEnd: "50px" ,marginLeft:"64%"}} onClick={() => {
-                        navigate('/assignments/assignmentform')
-                    }} >
-                        create Assignment
-                    </SoftButton>
-                    <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ marginTop:"1%" ,marginBottom: "2.5%" }} onClick={() => {
-                        navigate('/authentication/assignments')
-                    }} >
-                        Assignments
-                    </SoftButton>
-                
-                    <DataGrid
-                        rows={indexedData}
-                        columns={columns}
-                        pageSize={5}
-                        components={{
-                            Toolbar: () => (
-                                <div
-                                    style={{
+            <div style={{ padding: "1%" }}>
+                <DataGrid
+                    rows={indexedData}
+                    columns={columns}
+                    pageSize={5}
+                    components={{
+                        Toolbar: () => (
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <GridToolbar />
 
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                    }}
-                                >
-                                    <GridToolbar />
+                            </div>
 
-                                </div>
+                        ),
+                    }}
+                    style={{ height: "81.5vh", width: "77.5%", padding: "2%", marginLeft: "20%" }}
+                    onRowClick={(e) => {
+                    }}
+                    className='custom-data-grid'
+                    initialState={{
+                        pagination: { paginationModel: { pageSize: 5 } },
+                    }}
+                    pageSizeOptions={[5, 10, 25]}
+                    sx={{
+                        "& .css-1ui3wbn-MuiInputBase-root-MuiTablePagination-select": {
+                            width: "20%!important"
+                        },
+                        "& .css-1y1mi5n-MuiTablePagination-root": {
+                            overflow: "hidden !important",
+                        }
+                    }}
+                />
+            </div>
 
-                            ),
-                        }}
-                        style={{ height: "70vh", width: "150vh", padding: "2%"}}
-                        onRowClick={(e) => {
-                        }}
-                        className='custom-data-grid'
-                    />
-                </div>
-
-                <Dialog
+            <Dialog
                 open={openPopUp}
                 onClose={handlePopupClose}
                 aria-labelledby="alert-dialog-title"

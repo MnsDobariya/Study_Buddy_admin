@@ -17,7 +17,6 @@ const Notification = () => {
   const getNotificationData = () => {
     ApiGet(`${EndPoint.NOTIFICATION_GET}`)
       .then((res) => {
-        console.log(res, "response");
         setNotificationDate(res?.data)
       })
   }
@@ -34,7 +33,6 @@ const Notification = () => {
   const deleteRecord = (id) => {
     axios.delete(`http://localhost:3000/api/v1/notification/delete/${id}`)
         .then((res) => {
-            // console.log(res,'resdetele');
             getNotificationData();
         })
         toast.success("Delete successfully")
@@ -46,15 +44,16 @@ const Notification = () => {
         <h3 style={{ marginLeft: "20%",marginBottom:"2%", fontWeight: "500", color: "#344767" }}>Notification List</h3>
       </div>
 
-      {notificationData && notificationData?.map((item) => (
+      {(notificationData && notificationData.length) ?
+      notificationData?.map((item) => (
         <div key={item.id} className="rowtodos mt-1" id="adstodos">
 
-          <div className="cardnotification" style={{ width: 500 }}>
+          <div className="cardnotification" style={{ width: 750 ,marginLeft:'34%',height:100}}>
             <div className="card-body">
               <div style={{ display: "flex" }}>
                 <p className="cardnotification-title">{item.title}</p>
                 <div style={{ marginLeft: "auto", display: "flex" ,marginRight:"3%",marginTop:"1%"}} >
-                  <FontAwesomeIcon icon={faTrash} onClick={() => {
+                  <FontAwesomeIcon icon={faTrash} style={{cursor: 'pointer'}} onClick={() => {
                     setOpen(true);
                     setDeleteId(item.id);
                   }} />
@@ -64,7 +63,14 @@ const Notification = () => {
             </div>
           </div>
         </div>
-      ))}
+      ))  
+      :
+      (
+        <div className='noRecord' style={{marginLeft:"50%",marginTop:"15%"}}>
+          <p>No Record</p>
+        </div>
+      )
+    }
 
       <Dialog
         open={open}

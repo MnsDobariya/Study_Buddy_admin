@@ -9,7 +9,7 @@ import { ApiPost } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCircleXmark, faEye, faEyeSlash, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -26,7 +26,6 @@ const TeacherForm = () => {
         gender: "male"
     })
     useEffect(() => {
-        console.log((addTeacher));
     }, [addTeacher])
 
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -35,26 +34,92 @@ const TeacherForm = () => {
         setPasswordVisible(!passwordVisible);
     };
 
+    // const valid = (item, v_icon, inv_icon) => {
+    //     const text = document.querySelector(`#${item}`);
+    //     text.style.opacity = "1";
+
+    //     const valid_icon = document.querySelector(`#${item} .${v_icon}`);
+    //     valid_icon.style.opacity = "1";
+
+    //     const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
+    //     invalid_icon.style.opacity = "0";
+    // };
+
+    // const Invalid = (item, v_icon, inv_icon) => {
+    //     const text = document.querySelector(`#${item}`);
+    //     text.style.opacity = ".5";
+
+    //     const valid_icon = document.querySelector(`#${item} .${v_icon}`);
+    //     valid_icon.style.opacity = "0";
+
+    //     const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
+    //     invalid_icon.style.opacity = "1";
+    // };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 
         const textRegex = /^[A-Za-z\s]+$/;
 
+        setAddTeacher({
+            ...addTeacher,
+            [name]: value,
+        });
+
         if (name === "firstName" || name === "lastName") {
             if (!textRegex.test(value)) {
                 setError({
                     ...error,
-                    [name]: "Please enter text only",
+                    [name]: "Please Enter Text Only",
                 });
-                return;
+            } else {
+                setError({
+                    ...error,
+                    [name]: "",
+                })
             }
         }
+        
 
-        setAddTeacher({
-            ...addTeacher,
-            [e.target.name]: e.target.value,
-        });
+        // if (name === "password") {
+        //     if (value.match(/[A-Z]/) != null) {
+        //         valid('capital', 'fa-check', 'fa-times');
+        //     } else {
+        //         Invalid("capital", "fa-check", "fa-times");
+        //     }
+        //     if (value.match(/[0-9]/) != null) {
+        //         valid('num', 'fa-check', 'fa-times');
+        //     } else {
+        //         Invalid("num", "fa-check", "fa-times");
+        //     }
+        //     if (value.match(/[!@#$%^&*]/) != null) {
+        //         valid('char', 'fa-check', 'fa-times');
+        //     } else {
+        //         Invalid("char", "fa-check", "fa-times");
+        //     }
+        //     if (value.length > 7) {
+        //         valid('more8', 'fa-check', 'fa-times');
+        //     } else {
+        //         Invalid("more8", "fa-check", "fa-times");
+        //     }
+        // }
+        return;
     };
+
+    // const valid = (item, v_icon, inv_icon) => {
+    //     const text = document.querySelector(`#${item}`);
+    //     text.style.opacity = 1;
+    // };
+
+    // const handleInputChange = (e) => {
+    //     const txt = e.target.value;
+    //     // console.log(txt,"text");
+
+    //     if (txt.match(/[A-z]/) != null) {
+    //         valid('capital', 'fa-check', 'fa-times');
+    //     }
+    // }
+
     const [error, setError] = useState({
         firstName: "",
         lastName: "",
@@ -68,7 +133,6 @@ const TeacherForm = () => {
         if (location?.state) {
             setAddTeacher(location?.state);
         }
-        console.log(location?.state);
     }, [location]);
 
     const addNewTeacher = () => {
@@ -95,13 +159,13 @@ const TeacherForm = () => {
             error.email = "Invalid Email";
         }
 
-        const passwordRegex =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,10})/;
-        if (!addTeacher.password) {
-            error.password = "Please Password Required";
-        } else if (!passwordRegex.test(addTeacher.password)) {
-            error.password = "Invalid Password";
-        }
+        // const passwordRegex =
+        //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,10})/;
+        // if (!addTeacher.password) {
+        //     error.password = "Please Password Required";
+        // } else if (!passwordRegex.test(addTeacher.password)) {
+        //     error.password = "Invalid Password";
+        // }
 
 
         if (
@@ -109,7 +173,7 @@ const TeacherForm = () => {
             error.lastName ||
             error.phone ||
             error.email ||
-            error.password ||
+            // error.password ||
             error.gender
         ) {
             setError(error);
@@ -125,7 +189,6 @@ const TeacherForm = () => {
             gender: addTeacher?.gender
         }
         if (location?.state) {
-            console.log(location?.state, "hhhhhhhhh")
             ApiPut(`${EndPoint.USER_UPDATE}/${location?.state?.id}`, body)
 
                 .then((res) => {
@@ -254,46 +317,77 @@ const TeacherForm = () => {
                                 {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email} </p>}
 
                             </div>
-                            <div className="col-sm-6 form-group">
-                                <label htmlFor="password">Password </label>
-                                <div style={{ display: "flex" }}>
-                                    <SoftInput
-                                        type={passwordVisible ? "text" : "password"}
-                                        name="password"
-                                        value={addTeacher?.password}
-                                        placeholder="Password"
-                                        required
-                                        onChange={(e) => {
-                                            setError({
-                                                ...error,
-                                                password: "",
-                                            });
-                                            handleChange(e);
-                                        }}
-
-                                        style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
-                                    />
-                                    <div className='input-group-append'>
-                                        <span
-                                            className=''
-                                            onClick={togglePasswordVisibility}
-                                            style={{
-                                                position: 'absolute',
-                                                right: '4%',
-                                                transform: 'translateY(9%)',
-                                                cursor: 'pointer',
+                            {!location?.state &&
+                                <div className="col-sm-6 form-group">
+                                    <label htmlFor="password">Password </label>
+                                    <div style={{ display: "flex" }}>
+                                        <SoftInput
+                                            type={passwordVisible ? "text" : "password"}
+                                            name="password"
+                                            value={addTeacher?.password}
+                                            placeholder="Password"
+                                            required
+                                            onChange={(e) => {
+                                                // setError({
+                                                //     ...error,
+                                                //     password: "",
+                                                // });
+                                                // handleInputChange(e);
+                                                handleChange(e);
                                             }}
-                                        >
-                                            {passwordVisible ? (
-                                                <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
-                                            ) : (
-                                                <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
-                                            )}
-                                        </span>
+
+                                            style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+                                        />
+
+                                        <div className='input-group-append'>
+                                            <span
+                                                className=''
+                                                onClick={togglePasswordVisibility}
+                                                style={{
+                                                    position: 'absolute',
+                                                    right: '4%',
+                                                    transform: 'translateY(9%)',
+                                                    cursor: 'pointer',
+                                                }}
+                                            >
+                                                {passwordVisible ? (
+                                                    <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
+                                                ) : (
+                                                    <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
+                                                )}
+                                            </span>
+                                        </div>
+
                                     </div>
+                                    {/* {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password} </p>} */}
+                                    {/* <div className='validation'>
+                                        <p id='capital'>
+                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
+                                            <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
+                                            <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
+                                            <span>Capital Letters</span>
+                                        </p>
+                                        <p id='char'>
+                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
+                                            <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
+                                            <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
+                                            <span>Special Characters</span>
+                                        </p>
+                                        <p id='num'>
+                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
+                                            <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
+                                            <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
+                                            <span>Use Number</span>
+                                        </p>
+                                        <p id='more8'>
+                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
+                                            <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
+                                            <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
+                                            <span>8. characters</span>
+                                        </p>
+                                    </div> */}
                                 </div>
-                                {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password} </p>}
-                            </div>
+                            }
                         </div>
                         <div style={{ display: "flex" }}>
                             <div className="col-sm-6 form-group">
@@ -369,7 +463,7 @@ const TeacherForm = () => {
                             <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={addNewTeacher} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
                             >
-                                {location?.state ? "Update" : "Add"} Game
+                                {location?.state ? "Update" : "Add"} Teacher
                             </SoftButton>
 
                             {/* <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher()} >

@@ -46,6 +46,7 @@ import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
+import { MenuItem } from "@mui/material";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -92,7 +93,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const getNotificationData = () => {
     ApiGet(`${EndPoint.NOTIFICATION_GET}`)
       .then((res) => {
-        console.log(res, "response");
         setNotification(res?.data)
       })
   }
@@ -116,7 +116,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      {notification &&
+      {(notification && notification.length) ?
         notification.slice(-3).reverse().map((item) => (
           <div key={item.id} className="rowtodos" id="adstodos">
             <NotificationItem
@@ -128,7 +128,17 @@ function DashboardNavbar({ absolute, light, isMini }) {
               }}
             />
           </div>
-        ))}
+        ))
+      :
+      (
+        // <NotificationItem title={["no Record"]}/>
+        <MenuItem>
+        <div>
+          NO MESSAGE FOUND
+        </div>
+        </MenuItem>
+      )
+      }
       {/* 
       <NotificationItem
         image={<img src={logoSpotify} alt="person" />}
@@ -151,14 +161,14 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </SoftBox>
         {isMini ? null : (
           <SoftBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <SoftBox pr={1}>
+            {/* <SoftBox pr={1}>
               <SoftInput
                 placeholder="Type here..."
                 icon={{ component: "search", direction: "left" }}
               />
-            </SoftBox>
+            </SoftBox> */}
             <SoftBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in">
+              {/* <Link to="/authentication/sign-in">
                 <IconButton sx={navbarIconButton} size="small">
                   <Icon
                     sx={({ palette: { dark, white } }) => ({
@@ -193,7 +203,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 onClick={handleConfiguratorOpen}
               >
                 <Icon>settings</Icon>
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 size="small"
                 color="inherit"

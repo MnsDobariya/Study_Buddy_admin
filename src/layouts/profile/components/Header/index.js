@@ -39,15 +39,14 @@ import { Tooltip } from "@mui/material";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Header = ({userProfile,imagePreview,handleImageChange}) => {
-  // console.log(userProfile,"imagePreview");
+const Header = ({ userProfile, imagePreview, handleImageChange }) => {
 
-  const [image,setImage] = useState();
-  
+  const [image, setImage] = useState();
+
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
- 
+
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -65,30 +64,16 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
     // Call the handleTabsOrientation function to set the state with the initial value.
     handleTabsOrientation();
 
-    // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
-//   const token = localStorage.getItem("token");
 
-   const handleClick = () => {
+  const handleClick = () => {
     document.getElementById("imageUpload").click();
-   }
+  }
 
-// const getImage = () => {
-//   axios.get("http://localhost:3000/api/v1/users/teacher/image",
-//   { headers: { "Authorization": `Bearer ${token}` } })
-//   .then((res) => {
-//     console.log(res,"Image");
-//   })
-
-// }
-
-// useEffect(() => {
-//   getImage();
-// },[]);
 
   return (
     <SoftBox position="relative">
@@ -124,33 +109,7 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            {/* <FontAwesomeIcon icon={faPen} /> */}
-            {/* <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth='1.5'
-              stroke='currentColor'
-              height='20px'
-              width='30px'
-              className='edit-icon'
-              // type="file"
-            // style={{ marginRight: "10px", cursor: "pointer" }}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125'
-              />
-            </svg> */}
-            {/* <SoftTypography component={Link}  variant="body2" color="secondary">
-              <Tooltip placement="top" onClick={()=> handleClick()} >
-                <Icon>edit</Icon>
-              </Tooltip>
-            </SoftTypography> */}
-            {/* {
-              console.log(userProfile?.profilePicture,'userProfile?.profilePicture')
-            } */}
+
             <SoftAvatar
               // src={burceMars}
               src={imagePreview ? imagePreview : `http://localhost:3000${userProfile?.profileImage}`}
@@ -158,7 +117,20 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
               variant="rounded"
               size="xl"
               shadow="sm"
-            />
+              sx={{
+                '& .css-1v6zmq-MuiAvatar-img':{
+                  borderRadius:"0px"
+                }
+              }}
+            >
+              <SoftTypography component={Link} variant="body2" color="secondary">
+                <Tooltip placement="top" onClick={() => handleClick()} >
+                  <Icon>edit</Icon>
+                </Tooltip>
+              </SoftTypography>
+            </SoftAvatar>
+
+
 
             {/* <label htmlFor="imageUpload" className="button">
               <span className="">Upload</span>
@@ -171,11 +143,11 @@ const Header = ({userProfile,imagePreview,handleImageChange}) => {
                 handleImageChange(e);
               }}
             />
-            <SoftTypography component={Link}  variant="body2" color="secondary">
-              <Tooltip placement="top" onClick={()=> handleClick()} >
+            {/* <SoftTypography component={Link} variant="body2" color="secondary">
+              <Tooltip placement="top" onClick={() => handleClick()} >
                 <Icon>edit</Icon>
               </Tooltip>
-            </SoftTypography>
+            </SoftTypography> */}
           </Grid>
 
           <Grid item>
