@@ -9,8 +9,7 @@ import SoftTypography from 'components/SoftTypography';
 import { ApiPost } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
 import { toast } from 'react-toastify';
-import { ApiGet } from 'config/Api/ApiData';
-import { ApiPut } from 'config/Api/ApiData';
+import { ApiGet,ApiPut } from 'config/Api/ApiData';
 import axios from 'axios';
 import hotkeys from 'hotkeys-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +22,7 @@ const Resources = () => {
         description: "",
         file: ""
     });
-
+console.log("resources",resources);
     const [error, setError] = useState({
         title: "",
         description: "",
@@ -34,7 +33,7 @@ const Resources = () => {
     const [resourecesRecord, setResourcesRecord] = useState([]);
     const [openPopUp, setOpenPopUp] = useState(false);
     const [deleteId, setDeleteId] = useState();
-
+console.log("resourecesRecord",resourecesRecord);
     const handlePopupClose = () => {
         setOpenPopUp(false);
     }
@@ -123,7 +122,7 @@ const Resources = () => {
 
 
     const columns = [
-        { field: "index", headerName: "Id", width: 150 },
+        // { field: "index", headerName: "Id", width: 150 },
         { field: "title", headerName: "Title", width: 200 },
         { field: "description", headerName: "Description", width: 290 },
         {
@@ -380,6 +379,7 @@ const Resources = () => {
                                     }}
                                     onKeyPress={(e) => onKeyBtn(e)}
                                 />
+                                 {/* <label htmlFor="file">{resources ? resources?.file?.name : resources?.file}</label> */}
                             </div>
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
 
