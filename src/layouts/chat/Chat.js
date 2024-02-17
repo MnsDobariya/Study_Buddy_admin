@@ -35,6 +35,7 @@ const Chat = () => {
         firstName: "",
         profileImage: ""
     });
+    console.log(headerImage,"headerIamge");
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -120,7 +121,7 @@ const Chat = () => {
         // setSearchResults(item?._id);
         setHeaderImage({
             firstName: localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName,
-            profileImage: item?.receiver?.profileImage
+            profileImage: item?.sender?.profileImage
         });
     }
 
@@ -284,7 +285,7 @@ const Chat = () => {
                                         <div className="chat_list active_chat">
                                             <div className="chat_people">
                                                 <div className="chat_img">
-                                                    <img src={getProfileImage(item?.receiverId?.profileImage)} />
+                                                    <img src={getProfileImage(item?.sender?.profileImage)} />
                                                 </div>
                                                 <div className="chat_ib" onClick={() => {
                                                     handleRoomId(item)
@@ -305,7 +306,7 @@ const Chat = () => {
 
                             <div className={`${showBackgroundHeader ? 'bg-transparent' : 'card-header p-1 bg-light border border-top-0 border-left-0 border-right-0'}`} style={{ color: " rgba(96, 125, 139,1.0)", height: "55px" }}>
                                 {
-                                    !showBackgroundHeader && <img className="float-left" style={{ width: " 45px", height: "45px" }} src={getProfileImage(headerImage?.receiverId?.profileImage)} />
+                                    !showBackgroundHeader && <img className="float-left" style={{ width: " 45px", height: "45px" }} src={getProfileImage(headerImage?.profileImage)} />
                                 }
                                 <h6 className="float-left" style={{ margin: "0px", marginLeft: "10px" }}>{headerImage?.firstName}
                                 </h6>

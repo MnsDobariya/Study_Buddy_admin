@@ -46,6 +46,7 @@ import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
+import { MenuItem } from "@mui/material";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -115,7 +116,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      {notification &&
+      {(notification && notification.length) ?
         notification.slice(-3).reverse().map((item) => (
           <div key={item.id} className="rowtodos" id="adstodos">
             <NotificationItem
@@ -127,7 +128,17 @@ function DashboardNavbar({ absolute, light, isMini }) {
               }}
             />
           </div>
-        ))}
+        ))
+      :
+      (
+        // <NotificationItem title={["no Record"]}/>
+        <MenuItem>
+        <div>
+          NO MESSAGE FOUND
+        </div>
+        </MenuItem>
+      )
+      }
       {/* 
       <NotificationItem
         image={<img src={logoSpotify} alt="person" />}

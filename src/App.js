@@ -33,7 +33,7 @@ import EmailVerify from "layouts/authentication/verify-email";
 
 export default function App() {
 
-  const ueseTeacher = "Teacher";
+  const ueseTeacher = "teacher";
   const filterRout = routes.filter((roles) => roles.role !== ueseTeacher);
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;

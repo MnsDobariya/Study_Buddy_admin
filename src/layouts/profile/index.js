@@ -506,11 +506,13 @@ function Overview() {
                         <DatePicker
                           selected={startDate}
                           onChange={(date) => setStartDate(date)}
-                          selectsStart
+                          selectsStarts
                           startDate={startDate}
+                          // onChange={}
                           // endDate={endDate}
                           // defaultValue={today}
                           // minDate={tomorrow}
+                          value={dayjs(startDate)}
                           format="DD/MM/YYYY"
                           views={['year', 'month', 'day']}
                           sx={{
