@@ -59,7 +59,7 @@ import Resources from "layouts/resources/Resources";
 import Notification from "layouts/notification/notification";
 import Chat from "layouts/chat/Chat";
 import Assignments from "layouts/authentication/assignments";
-import { faBell, faCalendarDays, faListCheck } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCalendarDays, faCommentDots, faFileArrowDown, faFileSignature, faListCheck, faRectangleList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
@@ -78,7 +78,7 @@ const routes = [
     name: "Teacher",
     key: "teacher",
     route: "/teacher",
-    icon: <Office size="12px" />,
+    icon: <FontAwesomeIcon icon={faRectangleList} size="xs" style={{color:"#3a416f"}}/>,
     component: <Teacher />,
     noCollapse: true,
   },
@@ -87,7 +87,7 @@ const routes = [
     name: "Todos",
     key: "todos",
     route: "/todos",
-    icon: <FontAwesomeIcon icon={faListCheck} size="xs"/>,
+    icon: <FontAwesomeIcon icon={faListCheck} size="xs" style={{color:"#3a416f"}}/>,
     component: <Todos />,
     noCollapse: true,
   },
@@ -96,7 +96,7 @@ const routes = [
     name: "Calendar",
     key: "calendar",
     route: "/calendar",
-    icon: <FontAwesomeIcon icon={faCalendarDays} size="xs"/>,
+    icon: <FontAwesomeIcon icon={faCalendarDays} size="xs" style={{color:"#3a416f"}}/>,
     component: <Calendar />,
     noCollapse: true,
   },
@@ -114,7 +114,7 @@ const routes = [
     name: "Resources",
     key: "resources",
     route: "/resources",
-    icon: <Office size="12px" />,
+    icon: <FontAwesomeIcon icon={faFileArrowDown} size="sm" style={{color:"#3a416f"}}/>,
     component: <Resources />,
     noCollapse:true,
 },
@@ -123,7 +123,10 @@ const routes = [
     name: "Assignments",
     key: "assignments",
     route: "/assignments",
-    icon: <Office size="12px" />,
+    icon: <FontAwesomeIcon icon={faFileSignature} size="xs" style={{color:"#3a416f"}}/>,
+  //   icon: <svg data-slot="icon" fill="none" strokeWidth="1.5" height={20} stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  //   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z"></path>
+  // </svg>,
     component: <Assignments />,
     noCollapse:true,
 },
@@ -133,7 +136,7 @@ const routes = [
   name: "Chat",
   key: "chat",
   route: "/chat",
-  icon: <SpaceShip size="12px" />,
+  icon: <FontAwesomeIcon icon={faCommentDots} size="xs" style={{color:"#3a416f"}}/>,
   component: <Chat />,
   noCollapse: true,
 },
@@ -171,7 +174,7 @@ const routes = [
     name: "Profile",
     key: "profile",
     route: "/profile",
-    icon: <CustomerSupport size="12px" />,
+    icon: <CustomerSupport size="15px" />,
     component: <Profile />,
     noCollapse: true,
   },
@@ -181,7 +184,7 @@ const routes = [
     key: "notification",
     route: "/notification",
     // icon: <NotificationBell size="12px" />,
-    icon:<FontAwesomeIcon icon={faBell} size="xs"/>,
+    icon:<FontAwesomeIcon icon={faBell} size="xs" style={{color:"#3a416f"}}/>,
     component: <Notification />,
     noCollapse: true,
   },

@@ -29,6 +29,8 @@ import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 
 // Soft UI Dashboard React context
 import { useSoftUIController, setMiniSidenav } from "context";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useSoftUIController();
@@ -164,7 +166,9 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             fullWidth
             onClick={logout}
             style={{color: 'white'}}
-          >Log Out
+          > 
+        <FontAwesomeIcon icon={faRightFromBracket} style={{marginRight:"10px"}} />
+          Log Out              
           </SoftButton>
         </SoftBox>
       </SoftBox>
