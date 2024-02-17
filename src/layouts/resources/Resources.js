@@ -278,7 +278,7 @@ const Resources = () => {
 
     return (
         <>
-            <div style={{ width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
+            <div style={{  height: "80vh", width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
                 <h3 style={{ color: " #344767" }}>Resources</h3>
                 <DataGrid
                     rows={indexedData}
