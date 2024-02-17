@@ -117,16 +117,17 @@ const Header = ({ userProfile, imagePreview, handleImageChange }) => {
               variant="rounded"
               size="xl"
               shadow="sm"
-              style={{ alignItems: "end" }}
+              sx={{
+                '& .css-1v6zmq-MuiAvatar-img':{
+                  borderRadius:"0px"
+                }
+              }}
             >
-              <Icon style={{ position: "absolute", bottom: "0", right: "0", background: "white", borderRadius: "50%", padding: "4px", cursor: "pointer" }}>
-                edit
-              </Icon>
-              {/* <SoftTypography component={Link} variant="body2" color="secondary">
+              <SoftTypography component={Link} variant="body2" color="secondary">
                 <Tooltip placement="top" onClick={() => handleClick()} >
-                  <Icon style={{ marginLeft: "10vh" }}>edit</Icon>
+                  <Icon>edit</Icon>
                 </Tooltip>
-              </SoftTypography> */}
+              </SoftTypography>
             </SoftAvatar>
 
 

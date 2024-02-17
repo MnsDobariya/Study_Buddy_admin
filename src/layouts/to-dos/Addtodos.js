@@ -34,7 +34,7 @@ const Addtodos = () => {
         description: ""
     });
     const [startDate, setStartDate] = useState(new Date());
-   const [error, setError] = useState({
+    const [error, setError] = useState({
         task: "",
         portable: "",
         description: ""
@@ -148,12 +148,12 @@ const Addtodos = () => {
                 <div className="container" style={{ marginTop: "5%", marginLeft: "19%" }}>
                     <form className="addtodos">
                         <div className="col-sm-12 mx-t3 mb-3">
-                            
+
                         </div>
                         <div className="form-row" style={{ display: "flex", marginTop: "6%", paddingLeft: "41px", paddingRight: "41px" }}>
                             <div className="col-sm-6 form-group">
                                 <label htmlFor="name-f" style={{ fontWeight: "500" }} >Deadline Date</label>
-                                
+
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoItem label="">
                                         <DatePicker
@@ -170,9 +170,20 @@ const Addtodos = () => {
                                                 "& .MuiSvgIcon-root": {
                                                     marginLeft: "19rem",
                                                 },
-                                                        "& .Mui-selected": {
-                                                            backgroundColor: "black",
-                                                        }
+                                                "& .Mui-selected": {
+                                                    backgroundColor: "none",
+                                                    
+                                                },
+                                                "&  .MuiButtonBase-root  ":{
+                                                    border:"none",
+                                                    outline:"none"
+                                                },
+                                                // "& .css-f7464a-MuiButtonBase-root-MuiPickersDay-root.Mui-selected":{
+                                                //     background: 'none!important'
+                                                // },
+                                                "& .MuiButtonBase-root-MuiPickersDay-root.Mui-selected ":{
+                                                    background: 'none!important'
+                                                }
                                             }}
                                         />
                                     </DemoItem>
@@ -199,7 +210,7 @@ const Addtodos = () => {
                         <div className="form-row" style={{ display: "flex", paddingLeft: "41px", paddingRight: "41px", marginTop: "2%" }}>
                             <div className="col-sm-6 form-group">
                                 <label htmlFor="portable" style={{ fontWeight: "500" }}>Priority</label>
-                               
+
                                 <select
                                     name="portable"
                                     id="portable"
@@ -243,7 +254,7 @@ const Addtodos = () => {
                             </div>
                         </div>
                         <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "32%", width: "30%", marginBottom: "10vh", marginTop: "6%" }}>
-                          <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={Addtodos} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}
+                            <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={Addtodos} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}
                             >
                                 Add Todos
                             </SoftButton>

@@ -34,27 +34,27 @@ const TeacherForm = () => {
         setPasswordVisible(!passwordVisible);
     };
 
-    const valid = (item, v_icon, inv_icon) => {
-        const text = document.querySelector(`#${item}`);
-        text.style.opacity = "1";
+    // const valid = (item, v_icon, inv_icon) => {
+    //     const text = document.querySelector(`#${item}`);
+    //     text.style.opacity = "1";
 
-        const valid_icon = document.querySelector(`#${item} .${v_icon}`);
-        valid_icon.style.opacity = "1";
+    //     const valid_icon = document.querySelector(`#${item} .${v_icon}`);
+    //     valid_icon.style.opacity = "1";
 
-        const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
-        invalid_icon.style.opacity = "0";
-    };
+    //     const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
+    //     invalid_icon.style.opacity = "0";
+    // };
 
-    const Invalid = (item, v_icon, inv_icon) => {
-        const text = document.querySelector(`#${item}`);
-        text.style.opacity = ".5";
+    // const Invalid = (item, v_icon, inv_icon) => {
+    //     const text = document.querySelector(`#${item}`);
+    //     text.style.opacity = ".5";
 
-        const valid_icon = document.querySelector(`#${item} .${v_icon}`);
-        valid_icon.style.opacity = "0";
+    //     const valid_icon = document.querySelector(`#${item} .${v_icon}`);
+    //     valid_icon.style.opacity = "0";
 
-        const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
-        invalid_icon.style.opacity = "1";
-    };
+    //     const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
+    //     invalid_icon.style.opacity = "1";
+    // };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -81,28 +81,28 @@ const TeacherForm = () => {
         }
         
 
-        if (name === "password") {
-            if (value.match(/[A-Z]/) != null) {
-                valid('capital', 'fa-check', 'fa-times');
-            } else {
-                Invalid("capital", "fa-check", "fa-times");
-            }
-            if (value.match(/[0-9]/) != null) {
-                valid('num', 'fa-check', 'fa-times');
-            } else {
-                Invalid("num", "fa-check", "fa-times");
-            }
-            if (value.match(/[!@#$%^&*]/) != null) {
-                valid('char', 'fa-check', 'fa-times');
-            } else {
-                Invalid("char", "fa-check", "fa-times");
-            }
-            if (value.length > 7) {
-                valid('more8', 'fa-check', 'fa-times');
-            } else {
-                Invalid("more8", "fa-check", "fa-times");
-            }
-        }
+        // if (name === "password") {
+        //     if (value.match(/[A-Z]/) != null) {
+        //         valid('capital', 'fa-check', 'fa-times');
+        //     } else {
+        //         Invalid("capital", "fa-check", "fa-times");
+        //     }
+        //     if (value.match(/[0-9]/) != null) {
+        //         valid('num', 'fa-check', 'fa-times');
+        //     } else {
+        //         Invalid("num", "fa-check", "fa-times");
+        //     }
+        //     if (value.match(/[!@#$%^&*]/) != null) {
+        //         valid('char', 'fa-check', 'fa-times');
+        //     } else {
+        //         Invalid("char", "fa-check", "fa-times");
+        //     }
+        //     if (value.length > 7) {
+        //         valid('more8', 'fa-check', 'fa-times');
+        //     } else {
+        //         Invalid("more8", "fa-check", "fa-times");
+        //     }
+        // }
         return;
     };
 
@@ -360,32 +360,32 @@ const TeacherForm = () => {
 
                                     </div>
                                     {/* {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password} </p>} */}
-                                    <div className='validation'>
+                                    {/* <div className='validation'>
                                         <p id='capital'>
-                                            {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
+                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
                                             <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
                                             <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
                                             <span>Capital Letters</span>
                                         </p>
                                         <p id='char'>
-                                            {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
+                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
                                             <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
                                             <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
                                             <span>Special Characters</span>
                                         </p>
                                         <p id='num'>
-                                            {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
+                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
                                             <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
                                             <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
                                             <span>Use Number</span>
                                         </p>
                                         <p id='more8'>
-                                            {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
+                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
                                             <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
                                             <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
                                             <span>8. characters</span>
                                         </p>
-                                    </div>
+                                    </div> */}
                                 </div>
                             }
                         </div>
