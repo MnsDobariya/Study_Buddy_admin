@@ -10,22 +10,14 @@ import data from "layouts/dashboard/components/Projects/data";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Menu, MenuItem } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 
 const Todos = () => {
-    const [todosData, setTodosData] = useState();
+    const dispatch = useDispatch();
+    const todo = useSelector((state) => state.todo);
+    // const [todosData, setTodosData] = useState();
 
     const navigate = useNavigate();
-
-    const getTodosData = () => {
-        ApiGet(`${EndPoint.TODOS_GET}`)
-            .then((res) => {
-                setTodosData(res?.data)
-            })
-    }
-
-    useEffect(() => {
-        getTodosData("")
-    }, [])
 
     const handleEdit = (ele) => {
         navigate(`/todos/addtodos`, { state: ele });
@@ -57,12 +49,12 @@ const Todos = () => {
         <>
             <div className="to-dos" style={{ display: "flex", marginTop: "5%" }}>
                 <h3 style={{ marginLeft: "20%", fontWeight: "500", color: "#344767" }}>Todos List</h3>
-                <SoftButton variant="gradient" color="info" style={{ marginBottom: "1%", marginLeft: "58%" }} onClick={() => navigate("/todos/addtodos")}>
+                <SoftButton variant="gradient" color="info" style={{ marginBottom: "1%", marginLeft: "58%",border:"0px",outline:"none" }} onClick={() => navigate("/todos/addtodos")}>
                     Add Todos
                 </SoftButton>
             </div>
-            {(todosData && todosData.length) ?
-                todosData?.map((item) => (
+            {( todo.todoList &&  todo.todoList.length) ?
+                 todo.todoList?.map((item) => (
                     <div key={item.id} className="rowtodos" id="adstodos">
                         <div className="cardtodos w-75">
 

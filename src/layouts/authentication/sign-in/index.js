@@ -164,7 +164,9 @@ function SignIn() {
         localStorage.setItem("token", res.data.token.access.token)
         localStorage.setItem("firstName", res.data.admin.firstName)
         localStorage.setItem("id", res.data.admin.id)
-        navigate('/dashboard')
+        localStorage.setItem("role",res.data.admin.role)
+        // console.log('res.data', res.data)
+        navigate('/landingpage')
         toast.success("Login Successfully");
       })
 

@@ -57,9 +57,9 @@ const genderDropDown = [
 ];
 
 const yearDropDown = [
-  { label: "FYBCA", value: "FYBCA" },
-  { label: "SYBCA", value: "SYBCA" },
-  { label: "TYBCA", value: "TYBCA" }
+  { label: "FYBCA", value: "FY BCA" },
+  { label: "SYBCA", value: "SY BCA" },
+  { label: "TYBCA", value: "TY BCA" }
 ];
 
 const semesterDropDown = [
