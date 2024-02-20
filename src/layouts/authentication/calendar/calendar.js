@@ -22,12 +22,16 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useDispatch, useSelector } from 'react-redux';
 
 const today = dayjs();
 const tomorrow = dayjs().add(1, 'day');
 
 const Calendar = () => {
 
+    const dispatch = useDispatch();
+    const calendar = useSelector((state) => state.calendar);
+console.log('calendar', calendar)
     const [calendarEvent, setCalendarEvent] = useState({
         title: "",
         startdate: "",
@@ -168,7 +172,7 @@ const Calendar = () => {
             <div style={{ width: "80%", marginLeft: "19%", height: "50%", marginTop: "2%" }}>
                 <div style={{ display: "flex", gap: "81%" }}>
                     <h4 style={{ marginBottom: "2%", textAlign: "left" }}>Calendar</h4>
-                    <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ height: "10%" }} onClick={() => {
+                    <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ height: "10%" ,border:"0px",outline:"none"}} onClick={() => {
                         handleOpen(true)
                     }} >
                         Add Event
@@ -271,14 +275,14 @@ const Calendar = () => {
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginTop: "4%" }}>
 
                                 {calendarEvent?.id ?
-                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" }} onClick={updateEvent}>
+                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" ,border:"0px",outline:"none",}} onClick={updateEvent}>
                                         update
                                     </SoftButton> :
-                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" }} onClick={Save}>
+                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%",border:"0px",outline:"none", }} onClick={Save}>
                                         Save
                                     </SoftButton>
                                 }
-                                <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" }} onClick={handleClose}>
+                                <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%",border:"0px",outline:"none", }} onClick={handleClose}>
                                     cancle
                                 </SoftButton>
                             </SoftBox>

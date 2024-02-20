@@ -64,17 +64,21 @@ const Teacher = () => {
     };
 
     const columns = [
-        { field: "index", headerName: "Id", width: 110 },
-        { field: "firstName", headerName: "FirstName", width: 160 },
-        { field: "lastName", headerName: "LastName", width: 155 },
-        { field: "email", headerName: "Email", width: 200 },
-        { field: "phone", headerName: "Mobile No", width: 190 },
-        { field: "gender", headerName: "Gender", width: 130 },
+        // { field: "index", headerName: "Id", width: 80 },
+        { field: "firstName", headerName: "FirstName", width: 110,hideable:false },
+        { field: "lastName", headerName: "LastName", width: 110 ,hideable:false},
+        { field: "email", headerName: "Email", width: 160 ,hideable:false},
+        { field: "phone", headerName: "Mobile No", width: 120 ,hideable:false},
+        { field: "gender", headerName: "Gender", width: 90 ,hideable:false},
+        { field: "division", headerName: "Division", width: 90,hideable:false },
+        { field: "year", headerName: "Year", width: 90 ,hideable:false},
+        { field: "semester", headerName: "Semester", width: 90 ,hideable:false},
 
         {
             field: "action",
             headerName: "Action",
             width: 150,
+            hideable:false,
             renderCell: (params) => {
                 return (
                     <>
@@ -138,7 +142,9 @@ const Teacher = () => {
                     rows={indexedData}
                     columns={columns}
                     pageSize={5}
-
+                    localeText={{
+                        toolbarExportPrint: "PDF",
+                    }}
                     components={{
                         NoRowsOverlay: () => (
                             <Stack height="100%" alignItems="center" justifyContent="center">
@@ -162,7 +168,8 @@ const Teacher = () => {
                                 <GridToolbar />
                                 <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {
                                     navigate('/teacher/teacherform')
-                                }}>
+                                }}
+                                style={{border:"0px",outline:"none"}}>
                                     Add Teacher
                                 </SoftButton>
 
@@ -196,6 +203,7 @@ const Teacher = () => {
                 sx={{
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
+                            height:"35%",
                             width: "100%",
                             maxWidth: "500px",
                             borderRadius: "0.5rem",  // Set your width here
@@ -205,29 +213,30 @@ const Teacher = () => {
             >
                 <DialogTitle id="alert-dialog-title">
                     {/* Delete */}
-                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%" }} />
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%",height:"22px" }} onClick={handleClose}/>
                 </DialogTitle>
                 <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
                 </svg>
-                <DialogContent style={{overflowY:"hidden"}}>
-                    <DialogContentText id="alert-dialog-description" style={{textAlign:"center"}}>
+                <DialogContent style={{ overflowY: "hidden" }}>
+                    <DialogContentText id="alert-dialog-description" style={{ textAlign: "center" }}>
                         Are you sure Delete?
                     </DialogContentText>
-                    <DialogContentText style={{textAlign:"center"}}>
+                    <DialogContentText style={{ textAlign: "center" }}>
                         Do you really want to delete these record?
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions style={{ marginRight: "25%",paddingBottom:"5%" }}>
+                <DialogActions style={{ marginRight: "25%", paddingBottom: "2%",paddingTop:"4%" }}>
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteRecord(deleteRowId)
                         handleClose(true)
                     }}
-                    style={{ width: "30%" }}
+                        style={{ width: "30%" }}
                     >Yes</button>
                     <button type="button" className="btn btn-secondary" onClick={handleClose} style={{ width: "30%" }}>No</button>
                 </DialogActions>
-            </Dialog>
+            </Dialog>
+
         </>
     )
 }

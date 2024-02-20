@@ -7,8 +7,9 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
 // Images
+import image from '../../../img/istockphoto-533441604-612x612-removebg.png';
 import wavesWhite from "assets/images/shapes/waves-white.svg";
-import rocketWhite from "assets/images/illustrations/rocket-white.png";
+// import overview from "assets/images/illustrations/rocket-white.png";
 
 function BuildByDevelopers() {
   return (
@@ -18,17 +19,14 @@ function BuildByDevelopers() {
           <Grid item xs={12} lg={6}>
             <SoftBox display="flex" flexDirection="column" height="100%">
               <SoftBox pt={1} mb={0.5}>
-                <SoftTypography variant="body2" color="text" fontWeight="medium">
-                  Build by developers
-                </SoftTypography>
+                
               </SoftBox>
               <SoftTypography variant="h5" fontWeight="bold" gutterBottom>
-                Soft UI Dashboard
+                Overview
               </SoftTypography>
               <SoftBox mb={6}>
                 <SoftTypography variant="body2" color="text">
-                  From colors, cards, typography to complex elements, you will find the full
-                  documentation.
+                Study-Buddy, a context-aware system designed to enhance the learning experience, has been developed as a proof of concept across various everyday life domains, particularly in education.
                 </SoftTypography>
               </SoftBox>
               <SoftTypography
@@ -80,7 +78,8 @@ function BuildByDevelopers() {
                 width="100%"
                 height="100%"
               />
-              <SoftBox component="img" src={rocketWhite} alt="rocket" width="100%" pt={3} />
+              <SoftBox component="img" src={`https://media.istockphoto.com/id/533441604/photo/library-search-loupe-and-book-educational-concept.jpg?s=612x612&w=0&k=20&c=PIade-Ah3K5cyFVMn9kGhXAGqk4rTW-tJ9kp24ZuMCY=`} alt="overview" marginLeft="30px" height="35%" width="65%" borderRadius="100%"/>
+              {/* <SoftBox component="img" src={image} alt="overview" marginLeft="5px" height="60%" width="100%" borderRadius="100%"/> */}
             </SoftBox>
           </Grid>
         </Grid>

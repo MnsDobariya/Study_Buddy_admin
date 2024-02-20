@@ -6,13 +6,21 @@ import axios from 'axios';
 import SoftButton from 'components/SoftButton';
 import { ApiGet } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
+import Dashboard from 'layouts/dashboard';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { setAssignmentList } from 'store/slices/assignmentSlice';
+
 
 const AssignmentList = () => {
-    const [assignmentRecord, setAssignmentRecord] = useState([]);
+    const dispatch = useDispatch();
+  const assignment = useSelector((state) => state.assignment);
+
+    // const [assignmentCount, setAssignmentCount] = useState([]);
+    // const [assignmentRecord, setAssignmentRecord] = useState([]);
     // const [deleteRecord, setDeleteRecord] = useState();
 
     const [inputText, setInputText] = useState("");
@@ -22,27 +30,13 @@ const AssignmentList = () => {
         setInputText(lowerCase);
     };
 
-    const getAssignmentRecord = () => {
-        // axios.get("http://localhost:3000/api/v1/users/teacher/get",
-        ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
-            .then((res) => {
-                setAssignmentRecord(res?.data);
-            }).catch((error) => {
-            })
-    };
-    useEffect((e) => {
-        getAssignmentRecord();
-
-    }, []);
-
-
     const navigate = useNavigate();
 
 
     const [openPopUp, setOpenPopUp] = useState(false);
     const [deleteRowId, setDeleteRowId] = useState();
 
-    const indexedData = assignmentRecord?.map((item, index) => ({
+    const indexedData = assignment.assignmentList?.map((item, index) => ({
         ...item,
         index: index + 1,
     }))
@@ -67,7 +61,7 @@ const AssignmentList = () => {
         { field: "index", headerName: "Id", width: 90 },
         { field: "title", headerName: "Title", width: 250 },
         { field: "lbl", headerName: "Members", width: 150 },
-        { field: "startDate", headerName: "Start Date", width: 250 ,valueFormatter:params => moment(params?.value).format("DD MMM YYYY")},
+        { field: "startDate", headerName: "Start Date", width: 250, valueFormatter: params => moment(params?.value).format("DD MMM YYYY") },
         { field: "status", headerName: "Status", width: 150 },
         {
             field: "action",
@@ -76,11 +70,11 @@ const AssignmentList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                            <FontAwesomeIcon
-                                icon={faEllipsisVertical}
-                                onClick={(e) => handleClick(e, params.row.id)}
-                                style={{ marginLeft: "22%", color: "black" }}
-                            />
+                        <FontAwesomeIcon
+                            icon={faEllipsisVertical}
+                            onClick={(e) => handleClick(e, params.row.id)}
+                            style={{ marginLeft: "22%", color: "black" }}
+                        />
 
                         <Menu
                             anchorEl={anchorEl}
@@ -93,7 +87,7 @@ const AssignmentList = () => {
                                     boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0)",
                                 }
                             }}
-                            >
+                        >
                             <MenuItem onClick={() => {
                                 handleDelete(params.row.id)
                             }}>Delete</MenuItem>
@@ -106,7 +100,7 @@ const AssignmentList = () => {
         },
     ]
     const handleUpdate = (updateId) => {
-        const selectedData = assignmentRecord?.find((element) => element?.id == updateId)
+        const selectedData =  assignment.assignmentList?.find((element) => element?.id == updateId)
         navigate('/assignments/assignmentform', { state: selectedData })
     }
 
@@ -127,20 +121,21 @@ const AssignmentList = () => {
 
     return (
         <>
-
+            {/* <Dashboard assignmentCount={assignmentCount} /> */}
             <div className="mt-5" style={{ marginLeft: "21%", display: "flex" }}>
                 <h3 style={{ marginTop: "1%" }}>AssignmentList</h3>
-                <SoftButton variant="gradient" color="info" style={{ marginTop: "1%", marginInlineEnd: "50px", marginLeft: "48%" }} onClick={() => {
+                <SoftButton variant="gradient" color="info" style={{ marginTop: "1%", marginInlineEnd: "50px",border:"0px",outline:"none", marginLeft: "48%" }} onClick={() => {
                     navigate('/assignments/assignmentform')
                 }} >
                     create Assignment
                 </SoftButton>
-                <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "1%" }} onClick={() => {
+                <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "1%",border:"0px",outline:"none" }} onClick={() => {
                     navigate('/assignments')
                 }} >
                     Assignments
                 </SoftButton>
             </div>
+            
             <div style={{ padding: "1%" }}>
                 <DataGrid
                     rows={indexedData}
@@ -188,21 +183,30 @@ const AssignmentList = () => {
                 sx={{
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
+                            height:"35%",
                             width: "100%",
-                            maxWidth: "500px",  // Set your width here
+                            maxWidth: "500px",  
+                            borderRadius:"0.5rem", // Set your width here
                         },
                     },
                 }}
             >
                 <DialogTitle id="alert-dialog-title">
-                    Delete
+                    {/* Delete */}
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%",height:"22px" }} onClick={handlePopupClose} />
                 </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
+                </svg>
+                <DialogContent style={{ overflowY: "hidden" }}>
+                    <DialogContentText id="alert-dialog-description" style={{ textAlign: "center" }}>
                         Are you sure Delete?
                     </DialogContentText>
+                    <DialogContentText style={{ textAlign: "center" }}>
+                        Do you really want to delete these record?
+                    </DialogContentText>
                 </DialogContent>
-                <DialogActions>
+                <DialogActions style={{ marginRight: "25%", paddingBottom: "2%",paddingTop:"4%" }}>
                     {/* <Button className="btn btn-primary" onClick={() => {
                         deleteRecord(deleteId)
                         handleClose(true)
@@ -213,11 +217,12 @@ const AssignmentList = () => {
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteRecords(deleteRowId)
                         handlePopupClose(true)
-                    }}>Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} >No</button>
+                    }}
+                    style={{ width: "30%" }}
+                    >Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%" }}>No</button>
                 </DialogActions>
             </Dialog>
-
         </>
     )
 }

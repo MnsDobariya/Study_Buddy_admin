@@ -11,6 +11,27 @@ import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCircleXmark, faEye, faEyeSlash, faXmark } from '@fortawesome/free-solid-svg-icons';
 
+const yearDropDown = [
+    { label: "FYBCA", value: "FY BCA" },
+    { label: "SYBCA", value: "SY BCA" },
+    { label: "TYBCA", value: "TY BCA" }
+];
+
+const semesterDropDown = [
+    { label: "Semester1", value: "Sem 1" },
+    { label: "Semester2", value: "Sem 2" },
+    { label: "Semester3", value: "Sem 3" },
+    { label: "Semester4", value: "Sem 4" },
+    { label: "Semester5", value: "Sem 5" },
+    { label: "Semester6", value: "Sem 6" }
+];
+
+const divisionDropDown = [
+    { label: "A", value: "A" },
+    { label: "B", value: "B" },
+    { label: "C", value: "C" },
+    { label: "D", value: "D" },
+];
 
 
 const TeacherForm = () => {
@@ -23,7 +44,10 @@ const TeacherForm = () => {
         email: "",
         phone: "",
         password: "",
-        gender: "male"
+        gender: "male",
+        year: "",
+        semester: "",
+        division: "",
     })
     useEffect(() => {
     }, [addTeacher])
@@ -79,7 +103,7 @@ const TeacherForm = () => {
                 })
             }
         }
-        
+
 
         // if (name === "password") {
         //     if (value.match(/[A-Z]/) != null) {
@@ -126,7 +150,10 @@ const TeacherForm = () => {
         email: "",
         phone: "",
         password: "",
-        gender: ""
+        gender: "",
+        year: "",
+        semester: "",
+        division: "",
     });
 
     useEffect(() => {
@@ -186,7 +213,10 @@ const TeacherForm = () => {
             email: addTeacher?.email,
             password: addTeacher?.password,
             phone: addTeacher?.phone,
-            gender: addTeacher?.gender
+            gender: addTeacher?.gender,
+            year: addTeacher?.year,
+            semester: addTeacher?.semester,
+            division: addTeacher?.division,
         }
         if (location?.state) {
             ApiPut(`${EndPoint.USER_UPDATE}/${location?.state?.id}`, body)
@@ -205,7 +235,10 @@ const TeacherForm = () => {
                             email: "",
                             phone: "",
                             password: "",
-                            gender: ""
+                            gender: "",
+                            year: "",
+                            semester: "",
+                            division: "",
                         });
                         navigate("/teacher");
                         toast.success("Add Teacher Successfully");
@@ -359,33 +392,6 @@ const TeacherForm = () => {
                                         </div>
 
                                     </div>
-                                    {/* {error.password && <p style={{ color: "red", fontSize: "60%" }}>{error.password} </p>} */}
-                                    {/* <div className='validation'>
-                                        <p id='capital'>
-                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
-                                            <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
-                                            <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
-                                            <span>Capital Letters</span>
-                                        </p>
-                                        <p id='char'>
-                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
-                                            <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
-                                            <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
-                                            <span>Special Characters</span>
-                                        </p>
-                                        <p id='num'>
-                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
-                                            <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
-                                            <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
-                                            <span>Use Number</span>
-                                        </p>
-                                        <p id='more8'>
-                                            <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} />
-                                            <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
-                                            <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
-                                            <span>8. characters</span>
-                                        </p>
-                                    </div> */}
                                 </div>
                             }
                         </div>
@@ -403,13 +409,13 @@ const TeacherForm = () => {
                                         if (input === '' || regex.test(input) && input.length <= 10) {
                                             setError({
                                                 ...error,
-                                                Mobile: "",
+                                                phone: "",
                                             });
                                             handleChange(e);
                                         } else {
                                             setError({
                                                 ...error,
-                                                Mobile: "Please enter valid 10-digit mobile number",
+                                                phone: "Please enter valid 10-digit mobile number",
                                             })
                                         }
                                     }}
@@ -419,35 +425,116 @@ const TeacherForm = () => {
                                 {error.phone && <p style={{ color: "red", fontSize: "60%" }}>{error.phone} </p>}
 
                             </div>
-                            <div className="col-sm-6 form-group mt-1">
-                                <h5 style={{ display: "flex" }}>
-                                    <label htmlFor='Gender'>Gender :{""}</label>
-                                </h5>
-                                <input
-                                    type='radio'
-                                    name='gender'
-                                    checked={addTeacher?.gender == "male" ? true : false}
-                                    onChange={(e) =>
+                            <div className="col-sm-6 form-group">
+                                <label htmlFor="division" style={{ fontWeight: "500" }} >Division</label>
+                                <select
+                                    name="division"
+                                    id="division"
+                                    className="form-control"
+                                    value={addTeacher?.division}
+                                    onChange={(e) => {
+                                        // handleChange(e);
+                                        const selectedDivision = e.target.value;
                                         setAddTeacher({
                                             ...addTeacher,
-                                            gender: "male"
-                                        })}
+                                            division: selectedDivision
+                                        })
+                                        // setIsAuthorSelect(selectedDivision === "Other Select");
+                                    }}
+                                    style={{ borderRadius: "0.5rem", transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
-                                />
-                                Male
-                                <input
-                                    type='radio'
-                                    name='gender'
-                                    style={{ marginLeft: "20px" }}
-                                    checked={addTeacher?.gender == "female" ? true : false}
-                                    onChange={(e) =>
-                                        setAddTeacher({
-                                            ...addTeacher,
-                                            gender: "female"
-                                        })}
-                                />
-                                Female
+                                >
+                                    <option key="">Select Division</option>
+                                    {(divisionDropDown && divisionDropDown?.length > 0) &&
+                                        divisionDropDown?.map((x) => (
+                                            <option key={x.value}>{x.value}</option>
+                                        ))
+                                    }
+                                    {/* <option key="other" value={"other"}>Other Select</option> */}
+                                </select>
                             </div>
+                        </div>
+                        <div style={{ display: "flex" }}>
+                            <div className="col-sm-6 form-group">
+                                <label htmlFor="year" style={{ fontWeight: "500" }} >Year</label>
+                                <select
+                                    name="year"
+                                    id="year"
+                                    className="form-control"
+                                    value={addTeacher.year}
+                                    style={{ borderRadius: "0.5rem", transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                    }}
+                                >
+                                    <option key="">Select Year</option>
+                                    {yearDropDown &&
+                                        yearDropDown?.map((x) => (
+                                            <option key={x.value}>{x.value}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="col-sm-6 form-group">
+                                <label htmlFor="semester" style={{ fontWeight: "500" }}>Semester</label>
+                                <select
+                                    name="semester"
+                                    id="semester"
+                                    className="form-control"
+                                    value={addTeacher?.semester}
+                                    style={{ borderRadius: "0.5rem", transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                    }}
+                                >
+                                    <option key="">Select Semester</option>
+                                    {semesterDropDown &&
+                                        semesterDropDown?.map((x) => (
+                                            <option key={x.value}>{x.value}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div className="col-sm-6 form-group mt-1">
+                            <h5 style={{ display: "flex" }}>
+                                <label htmlFor='Gender'>Gender :{""}</label>
+                            </h5>
+                            <input
+                                type='radio'
+                                name='gender'
+                                checked={addTeacher?.gender == "male" ? true : false}
+                                onChange={(e) =>
+                                    setAddTeacher({
+                                        ...addTeacher,
+                                        gender: "male"
+                                    })}
+                                style={{
+                                    border: "0px",
+                                    width: '4%',
+                                    height: '1.2rem',
+                                    marginRight: '10px'
+                                }}
+                            />
+                            Male
+                            <input
+                                type='radio'
+                                name='gender'
+                                checked={addTeacher?.gender == "female" ? true : false}
+                                onChange={(e) =>
+                                    setAddTeacher({
+                                        ...addTeacher,
+                                        gender: "female"
+                                    })}
+                                style={{
+                                    border: "0px",
+                                    width: '4%',
+                                    height: '1.2rem',
+                                    marginRight: '10px',
+                                    marginLeft: "20px"
+                                }}
+                            />
+                            Female
                         </div>
                         <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "30%", width: "40%" }}>
                             {/* {
@@ -458,9 +545,9 @@ const TeacherForm = () => {
                                             Add Teacher
                                         </SoftButton>
 
-                                } */}
+                            } */}
 
-                            <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={addNewTeacher} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+                            <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={addNewTeacher} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" ,outline:"none"}}
 
                             >
                                 {location?.state ? "Update" : "Add"} Teacher
@@ -469,7 +556,7 @@ const TeacherForm = () => {
                             {/* <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" onClick={addNewTeacher()} >
                                                     {addTeacher?.id ? "Update" : "Add Teacher"}
                                                 </SoftButton> */}
-                            <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={cancelBtn} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+                            <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={cancelBtn} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" ,outline:"none"}}
                             >
                                 Cancel
                             </SoftButton>
