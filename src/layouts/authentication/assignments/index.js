@@ -137,13 +137,17 @@ const Assignments = () => {
                         <SoftBox style={{ justifyContent: "end", display: "flex", gap: "10px" }}>
                             <SoftButton variant="gradient" color="info" onClick={() => {
                                 navigate('/assignments/assignmentform')
-                            }}>
+                            }}
+                            style={{border:"0px",outline:"none"}}
+                            >
                                 Create Assignment
                             </SoftButton>
                             <SoftButton variant="gradient" color="info" onClick={() => {
                                 navigate('/assignments/assignmentList')
 
-                            }}>
+                            }}
+                            style={{border:"0px",outline:"none"}}
+                            >
                                 Assignment List
                             </SoftButton>
                         </SoftBox>
@@ -207,15 +211,17 @@ const Assignments = () => {
                 sx={{
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
+                            height:"35%",
                             width: "100%",
-                            maxWidth: "500px",  // Set your width here
+                            maxWidth: "500px",
+                            borderRadius:"0.5rem",  // Set your width here
                         },
                     },
                 }}
             >
                 <DialogTitle id="alert-dialog-title">
                     {/* Delete */}
-                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%" }} />
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%",height:"22px" }} onClick={handlePopupClose}/>
                 </DialogTitle>
                 <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
@@ -228,7 +234,7 @@ const Assignments = () => {
                         Do you really want to delete these record?
                     </DialogContentText>    
                 </DialogContent>
-                <DialogActions style={{ marginRight: "25%",paddingBottom:"5%" }}>
+                <DialogActions style={{ marginRight: "25%",paddingBottom:"2%",paddingTop:"4%" }}>
                     {/* <Button className="btn btn-primary" onClick={() => {
                         deleteRecord(deleteId)
                         handleClose(true)
