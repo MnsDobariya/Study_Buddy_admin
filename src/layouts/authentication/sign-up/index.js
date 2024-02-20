@@ -407,7 +407,7 @@ function SignUp() {
                 </SoftTypography>
               </SoftBox>
               <SoftBox mt={4} mb={1}>
-                <SoftButton variant="gradient" color="dark" fullWidth onClick={SignUp}>
+                <SoftButton variant="gradient" color="dark" fullWidth onClick={SignUp} style={{border:"0px",outline:"none"}}>
                   sign up
                 </SoftButton>
               </SoftBox>

@@ -643,11 +643,11 @@ function Overview() {
               <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={() => {
                 updateuserProfile();
               }}
-                style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",marginBottom:"11px"}}
+                style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",marginBottom:"11px",border:"0px",outline:"none"}}
               >
                 Update
               </SoftButton>
-              <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",marginBottom:"11px"}}>
+              <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",marginBottom:"11px",border:"0px",outline:"none"}}>
                 Cancel
               </SoftButton>
             </SoftBox>

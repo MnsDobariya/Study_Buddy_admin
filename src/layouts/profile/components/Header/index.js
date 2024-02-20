@@ -122,13 +122,14 @@ const Header = ({ userProfile, imagePreview, handleImageChange }) => {
                   borderRadius:"0px"
                 }
               }}
-            >
-              <SoftTypography component={Link} variant="body2" color="secondary">
+              onClick={() => handleClick()}
+            />
+              {/* <SoftTypography component={Link} variant="body2" color="secondary">
                 <Tooltip placement="top" onClick={() => handleClick()} >
                   <Icon>edit</Icon>
                 </Tooltip>
-              </SoftTypography>
-            </SoftAvatar>
+              </SoftTypography> */}
+            {/* </SoftAvatar> */}
 
 
 

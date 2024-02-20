@@ -186,6 +186,7 @@ const Chat = () => {
                                                     className="search-bar"
                                                     // value={search}
                                                     placeholder="Search"
+                                                    style={{border:"0px",outline:"none"}}
                                                     onChange={(e) => {
                                                         // handleChange(e);
                                                         setSearch(e.target.value);
@@ -215,7 +216,9 @@ const Chat = () => {
                                                         // // handleOpen(true);
                                                         // handleClick(e);
                                                         setIsSearchShow(true)
-                                                    }}>
+                                                    }}
+                                                    style={{border:"0px",outline:"none"}}
+                                                    >
                                                     <FontAwesomeIcon icon={faPlus} style={{ marginRight: "6px", marginBottom: "1%" }} />
                                                     {/* <FontAwesomeIcon icon={faPlus} style={{paddingRight:"3px",marginBottom:"1%"}}/>  */}
                                                     New Chat

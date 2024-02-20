@@ -206,6 +206,7 @@ const AssignmentForm = () => {
                                 className='form-control'
                                 value={addAssignment?.status}
                                 onChange={(e) => handleChange(e)}
+                                style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
                             // style={{marginLeft:"50%"}}
                             >
                                 <option key="">Select Status</option>
@@ -258,6 +259,10 @@ const AssignmentForm = () => {
                                     sx={{
                                         "& .MuiSvgIcon-root": {
                                             marginLeft: "18rem",
+                                        },
+                                        "&  .MuiButtonBase-root  ": {
+                                            border: "none",
+                                            outline: "none"
                                         }
                                     }}
                                 />
@@ -299,51 +304,55 @@ const AssignmentForm = () => {
                                     sx={{
                                         "& .MuiSvgIcon-root": {
                                             marginLeft: "18rem",
-                                        }
+                                        },
+                                        "&  .MuiButtonBase-root  ": {
+                                            border: "none",
+                                            outline: "none"
+                                        },
                                     }}
                                 />
-                            {/* </DemoContainer> */}
-                        </LocalizationProvider>
-                        {error.endDate && <p style={{ color: "red", fontSize: "60%" }}>{error.endDate} </p>}
+                                {/* </DemoContainer> */}
+                            </LocalizationProvider>
+                            {error.endDate && <p style={{ color: "red", fontSize: "60%" }}>{error.endDate} </p>}
+                        </div>
+
+                        <div className="col-sm-6 form-group">
+                            <label htmlFor="mobile">Project Description</label>
+                            <SoftInput
+                                type="text"
+                                name="projectDescription"
+                                value={addAssignment?.projectDescription}
+                                placeholder="Project Description"
+                                onChange={(e) => {
+                                    setError({
+                                        ...error,
+                                        projectDescription: "",
+                                    });
+                                    handleChange(e);
+                                }}
+                                style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+
+                            />
+                            {error.projectDescription && <p style={{ color: "red", fontSize: "60%" }}>{error.projectDescription} </p>}
+
+                        </div>
                     </div>
+                    <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "30%", width: "40%" }}>
 
-                    <div className="col-sm-6 form-group">
-                        <label htmlFor="mobile">Project Description</label>
-                        <SoftInput
-                            type="text"
-                            name="projectDescription"
-                            value={addAssignment?.projectDescription}
-                            placeholder="Project Description"
-                            onChange={(e) => {
-                                setError({
-                                    ...error,
-                                    projectDescription: "",
-                                });
-                                handleChange(e);
-                            }}
-                            style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
-                        />
-                        {error.projectDescription && <p style={{ color: "red", fontSize: "60%" }}>{error.projectDescription} </p>}
-
-                    </div>
+                        <SoftButton className="add-teacher" variant="gradient" color="info" fullWidth onClick={createAssignment} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0px solid rgba(0, 0, 0, 0.125)",outline:"none" }}>
+                            {/* Add Assignment */}
+                            {location?.state ? "Update" : "Add"}
+                        </SoftButton>
+                        <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={() => { navigate('/assignments') }} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0px solid rgba(0, 0, 0, 0.125)",outline:"none" }}>
+                            Cancel
+                        </SoftButton>
+                    </SoftBox>
+                    {/* </div> */}
+                    {/* </form> */}
                 </div>
-                <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "30%", width: "40%" }}>
 
-
-                    <SoftButton className="add-teacher" variant="gradient" color="info" fullWidth onClick={createAssignment} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
-                        {/* Add Assignment */}
-                        {location?.state ? "Update" : "Add"}
-                    </SoftButton>
-                    <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={() => { navigate('/assignments') }} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}>
-                        Cancel
-                    </SoftButton>
-                </SoftBox>
-                {/* </div> */}
-                {/* </form> */}
-            </div>
-
-        </SoftBox >
+            </SoftBox >
 
         </>
     )

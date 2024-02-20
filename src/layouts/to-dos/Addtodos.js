@@ -254,12 +254,12 @@ const Addtodos = () => {
                             </div>
                         </div>
                         <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "32%", width: "30%", marginBottom: "10vh", marginTop: "6%" }}>
-                            <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={Addtodos} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}
+                            <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={Addtodos} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",border:"0px",outline:"none" }}
                             >
                                 Add Todos
                             </SoftButton>
 
-                            <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={cancelBtn} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)" }}>
+                            <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={cancelBtn} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",border:"0px",outline:"none" }}>
                                 Cancel
                             </SoftButton>
                         </SoftBox>
