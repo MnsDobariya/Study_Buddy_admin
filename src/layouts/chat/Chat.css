@@ -250,7 +250,8 @@ img {
 }
 
 .background-img {
-  background-image: url('../../layouts/img/lib-img1.jpg');
+  /* background-image: url('../../layouts/img/lib-img1.jpg'); */
+  background-image: url('https://w0.peakpx.com/wallpaper/190/187/HD-wallpaper-whatsapp-cartoon-skull-dark-dead-punk.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

@@ -59,27 +59,27 @@ function SignUp() {
   // const toastify = () => {
   // }
 
-  const valid = (item, v_icon, inv_icon) => {
-    const text = document.querySelector(`#${item}`);
-    text.style.opacity = "1";
+  // const valid = (item, v_icon, inv_icon) => {
+  //   const text = document.querySelector(`#${item}`);
+  //   text.style.opacity = "1";
 
-    const valid_icon = document.querySelector(`#${item} .${v_icon}`);
-    valid_icon.style.opacity = "1";
+  //   const valid_icon = document.querySelector(`#${item} .${v_icon}`);
+  //   valid_icon.style.opacity = "1";
 
-    const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
-    invalid_icon.style.opacity = "0";
-  };
+  //   const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
+  //   invalid_icon.style.opacity = "0";
+  // };
 
-  const Invalid = (item, v_icon, inv_icon) => {
-    const text = document.querySelector(`#${item}`);
-    text.style.opacity = ".5";
+  // const Invalid = (item, v_icon, inv_icon) => {
+  //   const text = document.querySelector(`#${item}`);
+  //   text.style.opacity = ".5";
 
-    const valid_icon = document.querySelector(`#${item} .${v_icon}`);
-    valid_icon.style.opacity = "0";
+  //   const valid_icon = document.querySelector(`#${item} .${v_icon}`);
+  //   valid_icon.style.opacity = "0";
 
-    const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
-    invalid_icon.style.opacity = "1";
-  };
+  //   const invalid_icon = document.querySelector(`#${item} .${inv_icon}`);
+  //   invalid_icon.style.opacity = "1";
+  // };
   const SignUp = () => {
 
 
@@ -192,28 +192,28 @@ function SignUp() {
       }
     }
 
-    if (name === "Password") {
-      if (value.match(/[A-Z]/) != null) {
-        valid('capital', 'fa-check', 'fa-times');
-      } else {
-        Invalid("capital", "fa-check", "fa-times");
-      }
-      if (value.match(/[0-9]/) != null) {
-        valid('num', 'fa-check', 'fa-times');
-      } else {
-        Invalid("num", "fa-check", "fa-times");
-      }
-      if (value.match(/[!@#$%^&*]/) != null) {
-        valid('char', 'fa-check', 'fa-times');
-      } else {
-        Invalid("char", "fa-check", "fa-times");
-      }
-      if (value.length > 7) {
-        valid('more8', 'fa-check', 'fa-times');
-      } else {
-        Invalid("more8", "fa-check", "fa-times");
-      }
-    }
+    // if (name === "Password") {
+    //   if (value.match(/[A-Z]/) != null) {
+    //     valid('capital', 'fa-check', 'fa-times');
+    //   } else {
+    //     Invalid("capital", "fa-check", "fa-times");
+    //   }
+    //   if (value.match(/[0-9]/) != null) {
+    //     valid('num', 'fa-check', 'fa-times');
+    //   } else {
+    //     Invalid("num", "fa-check", "fa-times");
+    //   }
+    //   if (value.match(/[!@#$%^&*]/) != null) {
+    //     valid('char', 'fa-check', 'fa-times');
+    //   } else {
+    //     Invalid("char", "fa-check", "fa-times");
+    //   }
+    //   if (value.length > 7) {
+    //     valid('more8', 'fa-check', 'fa-times');
+    //   } else {
+    //     Invalid("more8", "fa-check", "fa-times");
+    //   }
+    // }
 
     return;
 

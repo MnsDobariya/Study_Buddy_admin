@@ -9,7 +9,7 @@ import SoftTypography from 'components/SoftTypography';
 import { ApiPost } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
 import { toast } from 'react-toastify';
-import { ApiGet,ApiPut } from 'config/Api/ApiData';
+import { ApiGet, ApiPut } from 'config/Api/ApiData';
 import axios from 'axios';
 import hotkeys from 'hotkeys-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const Resources = () => {
     const dispatch = useDispatch();
     const resource = useSelector((state) => state.resource);
+    console.log(resource, "resouces");
 
     const [open, setOpen] = useState();
     const [resources, setResources] = useState({
@@ -26,7 +27,7 @@ const Resources = () => {
         description: "",
         file: ""
     });
-console.log("resources",resources);
+    console.log("resources", resources);
     const [error, setError] = useState({
         title: "",
         description: "",
@@ -37,7 +38,7 @@ console.log("resources",resources);
     // const [resourecesRecord, setResourcesRecord] = useState([]);
     const [openPopUp, setOpenPopUp] = useState(false);
     const [deleteId, setDeleteId] = useState();
-// console.log("resourecesRecord",resourecesRecord);
+    // console.log("resourecesRecord",resourecesRecord);
     const handlePopupClose = () => {
         setOpenPopUp(false);
     }
@@ -127,10 +128,10 @@ console.log("resources",resources);
 
     const columns = [
         // { field: "index", headerName: "Id", width: 150 },
-        { field: "title", headerName: "Title", width: 200 ,hideable:false},
-        { field: "description", headerName: "Description", width: 290,hideable:false },
+        { field: "title", headerName: "Title", width: 200, hideable: false },
+        { field: "description", headerName: "Description", width: 290, hideable: false },
         {
-            field: "file", headerName: "File", width: 270,hideable:false,
+            field: "file", headerName: "File", width: 270, hideable: false,
             renderCell: (params) => {
                 return (
                     <>
@@ -144,7 +145,7 @@ console.log("resources",resources);
             field: "action",
             headerName: "Action",
             width: 150,
-            hideable:false,
+            hideable: false,
             renderCell: (params) => {
                 return (
                     <>
@@ -200,8 +201,9 @@ console.log("resources",resources);
         },
     ];
 
-    const indexedData = resource.resourceList.map((item, index) => ({
+    const indexedData = resource?.resourceList?.map((item, index) => ({
         ...item,
+        id: item._id,
         index: index + 1,
     }))
 
@@ -261,11 +263,11 @@ console.log("resources",resources);
     useEffect(() => {
         const handleAddBookShortcut = (e) => {
             if (e.key === "s" && e.altKey) {
-              e.preventDefault();
-              AddResources();
+                e.preventDefault();
+                AddResources();
             }
-          };
-          document.addEventListener("keydown", handleAddBookShortcut);
+        };
+        document.addEventListener("keydown", handleAddBookShortcut);
         hotkeys("alt + c", (e) => {
             e.preventDefault();
             handleClose();
@@ -278,14 +280,14 @@ console.log("resources",resources);
 
     return (
         <>
-            <div style={{  height: "80vh", width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
+            <div style={{ height: "80vh", width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
                 <h3 style={{ color: " #344767" }}>Resources</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
                     pageSize={5}
                     localeText={{
-                        toolbarExportPrint:"PDF",
+                        toolbarExportPrint: "PDF",
                     }}
                     components={{
                         NoRowsOverlay: () => (
@@ -305,7 +307,7 @@ console.log("resources",resources);
                                 <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {
                                     handleOpen(true);
                                 }}
-                                style={{border:"0px",outline:"none"}}
+                                    style={{ border: "0px", outline: "none" }}
                                 >
                                     Add Resources
                                 </SoftButton>
@@ -382,15 +384,15 @@ console.log("resources",resources);
                                     }}
                                     onKeyPress={(e) => onKeyBtn(e)}
                                 />
-                                 {/* <label htmlFor="file">{resources ? resources?.file?.name : resources?.file}</label> */}
+                                {/* <label htmlFor="file">{resources ? resources?.file?.name : resources?.file}</label> */}
                             </div>
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
 
-                                <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" ,border:"0px",outline:"none"}} onClick={AddResources}>
+                                <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={AddResources}>
                                     Resources
                                 </SoftButton>
 
-                                <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%",border:"0px",outline:"none" }} onClick={handleClose}>
+                                <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={handleClose}>
                                     cancle
                                 </SoftButton>
                             </SoftBox>
