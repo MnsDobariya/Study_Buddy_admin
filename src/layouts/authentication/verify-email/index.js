@@ -148,7 +148,7 @@ function EmailVerify() {
                   }}
                   onKeyPress={(e) => onKeyBtn(e)}
                 />
-                <SoftButton variant="gradient" color="info" onClick={getOTP} style={{ position: "absolute", transform: 'translateY(0%)', left: "38.1%",  cursor: 'pointer',width: "60px" }}>
+                <SoftButton variant="gradient" color="info" onClick={getOTP} style={{ position: "absolute", transform: 'translateY(0%)', left: "38.1%",  cursor: 'pointer',width: "60px",border:"0px",outline:"none" }}>
                   send
                 </SoftButton>
               </div>
@@ -187,7 +187,7 @@ function EmailVerify() {
             </SoftTypography>
 
           <SoftBox mt={4} mb={1} >
-            <SoftButton variant="gradient" color="info" style={{width:"110.3%"}} onClick={handleVerify}>
+            <SoftButton variant="gradient" color="info" style={{width:"110.3%",border:"0px",outline:"none"}} onClick={handleVerify}>
               Verify OTP
             </SoftButton>
           </SoftBox>

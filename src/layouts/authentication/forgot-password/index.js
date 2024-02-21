@@ -226,7 +226,7 @@ function ForgotEmail() {
           </SoftBox>
 
           <SoftBox mt={4} mb={1} style={{ display: "flex", justifyContent: "center", justifyContent: "space-evenly" }}>
-            <SoftButton variant="gradient" color="info" fullWidth onClick={resetPassword}>
+            <SoftButton variant="gradient" color="info" fullWidth onClick={resetPassword} style={{border:"0px",outline:"none"}}>
               Reset Password
             </SoftButton>
           </SoftBox>

@@ -321,7 +321,7 @@ function SignIn() {
           </SoftBox>
 
           <SoftBox mt={4} mb={1}>
-            <SoftButton variant="gradient" color="info" fullWidth onClick={SingIn}>
+            <SoftButton variant="gradient" color="info" fullWidth onClick={SingIn} style={{border:"0px",outline:"none"}}>
               sign in
             </SoftButton>
           </SoftBox>
