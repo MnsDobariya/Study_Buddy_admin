@@ -25,10 +25,24 @@ import OrderOverview from "layouts/dashboard/components/OrderOverview";
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
+import { faListCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { ApiGet } from "config/Api/ApiData";
+import { EndPoint } from "config/EndPoint/Endpoint";
+import { setAssignmentList } from "store/slices/assignmentSlice";
+import { MdEvent } from "react-icons/md";
 
 function Dashboard() {
+
   const { size } = typography;
   const { chart, items } = reportsBarChartData;
+  const assignment = useSelector((state) => state.assignment);
+  const todo = useSelector((state) => state.todo);
+  const calendar = useSelector((state) => state.calendar);
+  const resource = useSelector((state) => state.resource);
+
 
   return (
     <DashboardLayout>
@@ -38,38 +52,42 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "today's money" }}
-                count="$53,000"
-                percentage={{ color: "success", text: "+55%" }}
+                title={{ text: "Todos" }}
+                count={todo.todoList?.length}
+                // percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: "paid" }}
               />
+              {/* <FontAwesomeIcon icon={faListCheck} size="xs" style={{ color: "#3a416f" }} />, */}
+
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "today's users" }}
-                count="2,300"
-                percentage={{ color: "success", text: "+3%" }}
+                title={{ text: "Calendar Events" }}
+                count={calendar.calendarList?.length}
+                // percentage={{ color: "success", text: "+3%" }}
                 icon={{ color: "info", component: "public" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "new clients" }}
-                count="+3,462"
-                percentage={{ color: "error", text: "-2%" }}
+                title={{ text: "Resources" }}
+                count={resource.resourceList?.length}
+                // percentage={{ color: "success", text: "-2%" }}
                 icon={{ color: "info", component: "emoji_events" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "sales" }}
-                count="$103,430"
-                percentage={{ color: "success", text: "+5%" }}
+                title={{ text: "Assignments" }}
+                count={assignment.assignmentList?.length}
+                // percentage={{ color: "success", text: "+5%" }}
                 icon={{
                   color: "info",
                   component: "shopping_cart",
                 }}
-              />
+                // icon={<MdEvent />}
+                  />
+              
             </Grid>
           </Grid>
         </SoftBox>
@@ -85,7 +103,7 @@ function Dashboard() {
         </SoftBox>
         <SoftBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} lg={5}>
+            {/* <Grid item xs={12} lg={5}>
               <ReportsBarChart
                 title="active users"
                 description={
@@ -96,9 +114,9 @@ function Dashboard() {
                 chart={chart}
                 items={items}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} lg={7}>
-              <GradientLineChart
+              {/* <GradientLineChart
                 title="Sales Overview"
                 description={
                   <SoftBox display="flex" alignItems="center">
@@ -115,16 +133,16 @@ function Dashboard() {
                 }
                 height="20.25rem"
                 chart={gradientLineChartData}
-              />
+              /> */}
             </Grid>
           </Grid>
         </SoftBox>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={8}>
-            <Projects />
+            {/* <Projects /> */}
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-            <OrderOverview />
+            {/* <OrderOverview /> */}
           </Grid>
         </Grid>
       </SoftBox>

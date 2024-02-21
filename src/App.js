@@ -25,17 +25,29 @@ import routes from "routes";
 import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 // Images
-import brand from "../src/layouts/img/864px-Wikipedia_logo_Book_of_Records.svg.png";
+import brand from '../src/layouts/img/original-removebg.png';
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import ForgotPassword from "layouts/authentication/forgot-password";
 import EmailVerify from "layouts/authentication/verify-email";
+import { useDispatch } from "react-redux";
+import { setAssignmentList } from "store/slices/assignmentSlice";
+import { ApiGet } from "config/Api/ApiData";
+import { EndPoint } from "config/EndPoint/Endpoint";
+import { setCalendarList } from "store/slices/calendarSlice";
+import { setTodoList } from "store/slices/todoSlice";
+import { setResourceList } from "store/slices/resourceSlice";
 
 export default function App() {
 
-  const ueseTeacher = "teacher";
-  const filterRout = routes.filter((roles) => roles.role !== ueseTeacher);
+  // const ueseTeacher = "Admin";
+  const role = localStorage.getItem("role")
+  // console.log('role', role)
+  const filterRout = routes?.filter((route) => route?.role?.includes(role));
+  // console.log('filterRout', filterRout)
+
   const [controller, dispatch] = useSoftUIController();
+  const AppDispatch = useDispatch();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
@@ -95,6 +107,52 @@ export default function App() {
   // const getToken = localStorage.getItem("token");
 
 
+  // console.log('assignment', assignment)
+  const getAssignmentRecord = () => {
+    // axios.get("http://localhost:3000/api/v1/users/teacher/get",
+    ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
+        .then((res) => {
+            AppDispatch(setAssignmentList(res?.data))
+            // setAssignmentCount(res?.data.length);
+        }).catch((error) => {
+        })
+};
+
+const getCalendarRecord = () => {
+  ApiGet(`${EndPoint.EVENT_GET}`)
+      .then((res) => {
+          let updated = res?.data?.map((x) => ({
+              ...x,
+              title: x?.Title,
+              start: x?.StartDate,
+              end: x?.EndDate
+          }))
+          AppDispatch(setCalendarList(updated))
+
+      })
+};
+
+const getTodosData = () => {
+  ApiGet(`${EndPoint.TODOS_GET}`)
+      .then((res) => {
+          AppDispatch(setTodoList(res?.data))
+      })
+}
+
+
+const getResources = () => {
+  ApiGet(`${EndPoint.RESOURCES_GET}`)
+      .then((res) => {
+          AppDispatch(setResourceList(res?.data));
+      });
+}
+
+useEffect((e) => {
+    getAssignmentRecord();
+    getCalendarRecord();
+    getTodosData();
+    getResources();
+}, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -104,13 +162,13 @@ export default function App() {
           <Sidenav
             color={sidenavColor}
             brand={brand}
-            brandName="Study Buddy"
+            // brandName="Study Buddy1"
             routes={filterRout}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
             sx={{
-              "& .css-5fzm53":{width:'3.2rem',height:"3rem"},
-              "& .css-ixyk52-MuiTypography-root ":{fontSize: '1.1rem',marginTop:"10%"}
+              "& .css-5fzm53": { width: '9.2rem', height: "5rem" },
+              "& .css-ixyk52-MuiTypography-root ": { fontSize: '1.1rem', marginTop: "10%" }
             }}
           />
           <Configurator />
@@ -126,23 +184,6 @@ export default function App() {
         <Route exact path={"/authentication/forgot-password"} element={<ForgotPassword />} key={"forgot-password"} />;
         <Route exact path={"/authentication/verify-email"} element={<EmailVerify />} key={"verify-email"} />;
       </Routes>
-
-      {/* <Routes>
-        {getToken ? (
-          <>
-            <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
-          </>
-        ) : (
-          <>
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-          </>
-        )}
-      </Routes> */}
-      {/* <Routes>
-        {getToken && 
-        <Route path="*" element={<Navigate to="/authentication/sign-in"/>}/>
-        }
-      </Routes>  */}
     </ThemeProvider>
   )
 }

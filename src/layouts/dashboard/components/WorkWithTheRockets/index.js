@@ -35,8 +35,8 @@ function WorkWithTheRockets() {
           </SoftBox>
           <SoftBox mb={2}>
             <SoftTypography variant="body2" color="white">
-              Wealth creation is an evolutionarily recent positive-sum game. It is all about who
-              take the opportunity first.
+            Group work refers to learning experiences in which students work together on the same task. 
+            Group work can help build a positive and engaging learning community through peer learning and teaching.
             </SoftTypography>
           </SoftBox>
           <SoftTypography
