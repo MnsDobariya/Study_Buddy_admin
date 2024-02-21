@@ -1,12 +1,162 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../landing/landing.css';
 import SoftButton from 'components/SoftButton';
 import SoftBox from 'components/SoftBox';
 import { Source } from '@mui/icons-material';
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import brand from '../layouts/img/original-removebg.png';
+import { Card, Checkbox } from '@mui/material';
+import SoftTypography from 'components/SoftTypography';
+import SoftInput from 'components/SoftInput';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
+  const [agreement, setAgremment] = useState(true);
+
+  const [regFormData, setRegFormData] = useState({
+    FirstName: "",
+    LastName: "",
+    Mobile: "",
+    Email: "",
+    Password: "",
+    ConfirmPassword: "",
+  });
+
+  const [error, setError] = useState({
+    FirstName: "",
+    LastName: "",
+    Mobile: "",
+    Email: "",
+    Password: "",
+    ConfirmPassword: "",
+  });
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const SignUp = () => {
+
+
+    const error = {};
+    if (!regFormData.FirstName) {
+      error.FirstName = "Please FirstName Required";
+    }
+
+    if (!regFormData.LastName) {
+      error.LastName = "Please LastName Required";
+    }
+
+    const mobileRegex = /^\d+$/;
+    if (!regFormData.Mobile) {
+      error.Mobile = "Please Mobile Required";
+    } else if (!mobileRegex.test(regFormData.Mobile)) {
+      error.Mobile = "Invalid Mobile";
+    }
+
+    const emailRegex =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!regFormData.Email) {
+      error.Email = "Please Email Required";
+    } else if (!emailRegex.test(regFormData.Email)) {
+      error.Email = "Invalid Email";
+    }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,10})/;
+    if (!regFormData.Password) {
+      error.Password = "Please Password Required";
+    } else if (!passwordRegex.test(regFormData.Password)) {
+      error.Password = "Invalid Password";
+    }
+
+    const ConfirmPasswordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,10})/;
+    if (!regFormData.ConfirmPassword) {
+      error.ConfirmPassword = "Please ConfirmPassword Required";
+    } else if (!ConfirmPasswordRegex.test(regFormData.ConfirmPassword)) {
+      error.ConfirmPasswordRegex = "Invalid Password";
+    }
+
+    if (
+      error.FirstName ||
+      error.LastName ||
+      error.Mobile ||
+      error.Email ||
+      error.Password
+    ) {
+      setError(error);
+      return;
+    }
+
+    const body = {
+      firstName: regFormData.FirstName,
+      lastName: regFormData.LastName,
+      phone: regFormData.Mobile,
+      email: regFormData.Email,
+      password: regFormData.Password,
+    }
+
+
+    ApiPost(`${EndPoint.USER_REGISTER}`, body)
+      .then((res) => {
+        if (res.status === 201) {
+          setRegFormData({
+            FirstName: "",
+            LastName: "",
+            Mobile: "",
+            Email: "",
+            Password: "",
+            ConfirmPassword: ""
+          })
+        }
+        navigate('/authentication/sign-in')
+        toast.success("Register Successfully");
+      })
+      .catch((error) => {
+        if (error.error === "User already register") {
+          toast.error(<p style={{ fontSize: "80%" }}>{"User already registered"}</p>, {
+            position: "top-center",
+          });
+        }
+      });
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    const textRegex = /^[A-Za-z\s]+$/;
+
+    setRegFormData({
+      ...regFormData,
+      [name]: value,
+    });
+
+    if (name === "FirstName" || name === "LastName") {
+      if (!textRegex.test(value)) {
+        setError({
+          ...error,
+          [name]: "Please Enter Text Only",
+        });
+      } else {
+        setError({
+          ...error,
+          [name]: "",
+        })
+      }
+    }
+    return;
+
+  };
+  const handleSetAgremment = () => setAgremment(!agreement);
+  const navigate = useNavigate();
+
+  const onKeyBtn = (e) => {
+    if (e.key === "Enter")
+      SignUp();
+  }
 
   return (
     <>
@@ -23,7 +173,7 @@ const LandingPage = () => {
 
 
                 <img src={brand}
-                  alt="CloudOnex" className="max-height-35 py-1 my-1" style={{maxHeight: '5rem',width: '14rem'}}/>
+                  alt="CloudOnex" className="max-height-35 py-1 my-1" style={{ maxHeight: '5rem', width: '14rem' }} />
 
               </a>
             </div>
@@ -83,7 +233,7 @@ const LandingPage = () => {
                 <a href="/authentication/sign-in"
                   className=" rounded-md loginBtn py-3 px-7 pe-2 text-base font-medium hover:opacity-70">Sign In</a>
                 <a href="/authentication/sign-up"
-                  className=" rounded-md py-3 px-7 pe-2 text-base font-medium hover:opacity-70">Sign Up</a>
+                  className=" rounded-md py-3 px-7 pe-2 text-base font-medium hover:opacity-70 button" style={{ background: "linear-gradient(310deg, #2152ff, #21d4fd)", color: "white" }}>Sign Up</a>
               </div>
             </div>
           </div>
@@ -1008,7 +1158,7 @@ const LandingPage = () => {
 
 
 
-            <div className="w-full px-4 md:w-1/2 lg:w-1/3">
+            {/* <div className="box-1 w-full px-4 md:w-1/2 lg:w-1/3">
               <div className="ud-single-testimonial mb-12 bg-white p-8 shadow-testimonial">
 
                 <div className="relative mt-8 flex items-center gap-x-4">
@@ -1034,10 +1184,88 @@ const LandingPage = () => {
 
 
               </div>
+            </div> */}
+
+            <div className='mainBody'>
+
+              <meta charset="utf-8" />
+              <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+              {/* <title>Cards Hover2</title> */}
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+              <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+                crossOrigin="anonymous" />
+
+
+              <div className="containerlnd">
+                <div className="card1">
+                  <div className="face face1">
+                    <div className="content">
+                      <div className="icon1">
+                        {/* <i className="fa fa-linkedin-square" aria-hidden="true"></i> */}
+                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg  bg-opacity-5 ">
+                          S
+                        </div>
+                        <div className='mainName'>Sarah Malik</div>
+
+                        {/* <div className="mainName mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-info bg-opacity-5 text-white">
+                        Sarah Malik
+                        </div> */}
+
+                      </div>
+
+                    </div>
+                  </div>
+                  <div className="face face2">
+                    <div className="content">
+                      <h3>
+                        {/* <a href="https://www.linkedin.com/in/adamdipinto/" target="blank">_adamdipinto</a> */}
+                      </h3>
+                      <p>It works well and has all the functions I need. I would recommend it to anyone who needs a simple and easy to use document editor.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="card1">
+                  <div className="face face1">
+                    <div className="content">
+                      <div className="icon1">
+                        <i className="fa fa-twitter-square" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="face face2">
+                    <div className="content">
+                      <h3>
+                        <a href="https://twitter.com/AdamDipinto" target="blank">@AdamDipinto</a>
+                      </h3>
+                      <p>This is where I read news and network with different social groups.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="card1">
+                  <div className="face face1">
+                    <div className="content">
+                      <div className="icon1">
+                        <i className="fa fa-github-square" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="face face2">
+                    <div className="content">
+                      <h3>
+                        <a href="https://github.com/atom888" target="blank">atom888</a>
+                      </h3>
+                      <p>This is where I share code and work on projects.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
 
-            <div className="w-full px-4 md:w-1/2 lg:w-1/3">
+
+
+            {/* <div className="box-1 w-full px-4 md:w-1/2 lg:w-1/3">
               <div className="ud-single-testimonial mb-12 bg-white p-8 shadow-testimonial">
 
                 <div className="relative mt-8 flex items-center gap-x-4">
@@ -1066,7 +1294,7 @@ const LandingPage = () => {
             </div>
 
 
-            <div className="w-full px-4 md:w-1/2 lg:w-1/3">
+            <div className="box-1 w-full px-4 md:w-1/2 lg:w-1/3">
               <div className="ud-single-testimonial mb-12 bg-white p-8 shadow-testimonial">
 
                 <div className="relative mt-8 flex items-center gap-x-4">
@@ -1092,7 +1320,7 @@ const LandingPage = () => {
 
 
               </div>
-            </div>
+            </div> */}
 
 
 
@@ -1113,6 +1341,177 @@ const LandingPage = () => {
             <div className="mb-3 mt-3 text-gray-500">
               <label>Already have an account? <a className="text-blue-600 decoration-2 hover:underline font-medium" href="/authentication/sign-in">Sign in</a></label>
             </div>
+            <Card >
+              <SoftBox p={3} mb={0} textAlign="center">
+                <SoftTypography variant="h5" fontWeight="medium">
+                  Register
+                </SoftTypography>
+              </SoftBox>
+              <SoftBox mb={1} >
+              </SoftBox>
+              <SoftBox pt={2} pb={3} px={3}>
+                <SoftBox component="form" role="form" height="100%">
+                  <SoftBox mb={1} mt={0}>
+                    <SoftInput
+                      type="text"
+                      name="FirstName"
+                      value={regFormData.FirstName}
+                      placeholder="First Name"
+                      onChange={(e) => {
+                        setError({
+                          ...error,
+                          FirstName: ""
+                        })
+                        handleChange(e)
+                      }}
+                    />
+                    {error.FirstName && <p style={{ color: "red", fontSize: "60%" }}>{error.FirstName} </p>}
+                  </SoftBox>
+                  <SoftBox mb={1} mt={0}>
+                    <SoftInput
+                      type="text"
+                      name="LastName"
+                      value={regFormData.LastName}
+                      placeholder="Last Name"
+                      onChange={(e) => {
+                        setError({
+                          ...error,
+                          LastName: ""
+                        })
+                        handleChange(e)
+                      }}
+                    />
+                    {error.LastName && <p style={{ color: "red", fontSize: "60%" }}>{error.LastName} </p>}
+
+                  </SoftBox>
+                  <SoftBox mb={1} mt={0}>
+                    <SoftInput
+                      type="text"
+                      name="Mobile"
+                      value={regFormData.Mobile}
+                      placeholder="Mobile"
+                      onChange={(e) => {
+                        const input = e.target.value;
+                        const regex = /^[0-9\b]+$/;
+                        if (input === '' || regex.test(input) && input.length <= 10) {
+                          setError({
+                            ...error,
+                            Mobile: "",
+                          });
+                          handleChange(e);
+                        } else {
+                          setError({
+                            ...error,
+                            Mobile: "Please enter valid 10-digit mobile number",
+                          })
+                        }
+                      }}
+                    />
+                    {error.Mobile && <p style={{ color: "red", fontSize: "60%" }}>{error.Mobile} </p>}
+
+                  </SoftBox>
+                  <SoftBox mb={1} mt={0}>
+                    <SoftInput
+                      type="email"
+                      name="Email"
+                      value={regFormData.Email}
+                      placeholder="Email"
+                      onChange={(e) => {
+                        setError({
+                          ...error,
+                          Email: ""
+                        })
+                        handleChange(e)
+                      }}
+                    />
+                    {error.Email && <p style={{ color: "red", fontSize: "60%" }}>{error.Email} </p>}
+
+                  </SoftBox>
+                  <SoftBox mb={2}>
+                    <SoftInput
+                      type={passwordVisible ? "text" : "password"}
+                      name="Password"
+                      value={regFormData.Password}
+                      placeholder="Password"
+                      onChange={(e) => {
+                        setError({
+                          ...error,
+                          Password: ""
+                        })
+                        handleChange(e)
+                      }}
+                      onKeyPress={(e) => onKeyBtn(e)}
+                    />
+                    <div className='input-group-append'>
+                      <span
+                        className='icon'
+                        onClick={togglePasswordVisibility}
+                        style={{
+                          position: 'absolute',
+                          // right: '40%',
+                          // top: '66%',
+                          right: "30px",
+                          // left: "48%",
+                          transform: 'translateY(-110%)',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {passwordVisible ? (
+                          <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
+                        ) : (
+                          <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
+                        )}
+                      </span>
+                      {/* </div> */}
+                    </div>
+                    {error.Password && <p style={{ color: "red", fontSize: "60%" }}>{error.Password} </p>}
+
+
+                  </SoftBox>
+
+                  <SoftBox display="flex" alignItems="center">
+                    <Checkbox checked={agreement} onChange={handleSetAgremment} />
+                    <SoftTypography
+                      variant="button"
+                      fontWeight="regular"
+                      onClick={handleSetAgremment}
+                      sx={{ cursor: "poiner", userSelect: "none" }}
+                    >
+                      &nbsp;&nbsp;I agree the&nbsp;
+                    </SoftTypography>
+                    <SoftTypography
+                      component="a"
+                      href="#"
+                      variant="button"
+                      fontWeight="bold"
+                      textGradient
+                    >
+                      Terms and Conditions
+                    </SoftTypography>
+                  </SoftBox>
+                  <SoftBox mt={4} mb={1}>
+                    <SoftButton variant="gradient" color="dark" fullWidth onClick={SignUp} style={{ border: "0px", outline: "none" }}>
+                      sign up
+                    </SoftButton>
+                  </SoftBox>
+                  <SoftBox mt={3} textAlign="center">
+                    <SoftTypography variant="button" color="text" fontWeight="regular">
+                      Already have an account?&nbsp;
+                      <SoftTypography
+                        component={Link}
+                        to="/authentication/sign-in"
+                        variant="button"
+                        color="dark"
+                        fontWeight="bold"
+                        textGradient
+                      >
+                        Sign in
+                      </SoftTypography>
+                    </SoftTypography>
+                  </SoftBox>
+                </SoftBox>
+              </SoftBox>
+            </Card>
 
             {/* <form method="post" action="https://studybuddy.cloudonex.com/signup">
             
