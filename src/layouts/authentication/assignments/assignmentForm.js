@@ -265,6 +265,8 @@ const AssignmentForm = () => {
                                             outline: "none"
                                         }
                                     }}
+                                style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+
                                 />
                                 {/* </DemoContainer> */}
                             </LocalizationProvider>
@@ -309,7 +311,26 @@ const AssignmentForm = () => {
                                             border: "none",
                                             outline: "none"
                                         },
+                                        // "& .MuiButtonBase-root ":{
+                                        //     "& .Mui-disabled ":{
+                                        //         "& .MuiPickersDay-root":{
+                                        //             "& .Mui-selected ":{
+                                        //                 "& .Mui-disabled":{
+                                        //                     "& .MuiPickersDay-dayWithMargin":{
+                                        //                         "& .MuiPickersDay-today":{
+                                        //                             "& .css-1r2w4dn-MuiButtonBase-root-MuiPickersDay-root":{
+                                        //                                 background: 'linear-gradient(310deg, #2152ff, #21d4fd)'
+                                        //                             }
+                                        //                         }
+                                        //                     }
+                                        //                 }
+                                        //             }
+                                        //         }
+                                        //     }
+                                        // }
                                     }}
+                                style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+
                                 />
                                 {/* </DemoContainer> */}
                             </LocalizationProvider>
