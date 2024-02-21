@@ -296,7 +296,7 @@ const Chat = () => {
                                                     setShowBackgroundHeader(false)
                                                     setShowBackgroundChat(false)
                                                 }}>
-                                                    <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</span></h5>
+                                                    <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY LTS')}</span></h5>
                                                     <p>{item?.messager?.message}</p>
                                                 </div>
                                             </div>

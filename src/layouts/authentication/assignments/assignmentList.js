@@ -1,4 +1,4 @@
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, Menu, MenuItem, TextField } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
@@ -59,10 +59,10 @@ const AssignmentList = () => {
 
     const columns = [
         { field: "index", headerName: "Id", width: 90 },
-        { field: "title", headerName: "Title", width: 250 },
-        { field: "lbl", headerName: "Members", width: 150 },
+        { field: "title", headerName: "Title", width: 200 },
+        // { field: "lbl", headerName: "Members", width: 150 },
         { field: "startDate", headerName: "Start Date", width: 250, valueFormatter: params => moment(params?.value).format("DD MMM YYYY") },
-        { field: "status", headerName: "Status", width: 150 },
+        { field: "status", headerName: "Status", width: 400 },
         {
             field: "action",
             headerName: "Action",

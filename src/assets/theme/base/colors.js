@@ -29,10 +29,10 @@ const colors = {
     focus: "#000000",
   },
 
-  primary: {
-    main: "#cb0c9f",
-    focus: "#ad0a87",
-  },
+  // primary: {
+  //   main: "#cb0c9f",
+  //   focus: "#ad0a87",
+  // },
 
   secondary: {
     main: "#8392ab",
