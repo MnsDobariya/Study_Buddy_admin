@@ -141,6 +141,10 @@ const AssignmentList = () => {
                     rows={indexedData}
                     columns={columns}
                     pageSize={5}
+                    localeText={{
+                        toolbarExportPrint: "PDF",
+                    }}
+                    disableColumnSelector
                     components={{
                         Toolbar: () => (
                             <div

@@ -281,7 +281,7 @@ const Resources = () => {
     return (
         <>
             <div style={{ height: "80vh", width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
-                <h3 style={{ color: " #344767" }}>Resources</h3>
+                <h3 style={{ fontSize:"larger", fontWeight: "500",color: " #344767" }}>Resources</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
@@ -289,6 +289,7 @@ const Resources = () => {
                     localeText={{
                         toolbarExportPrint: "PDF",
                     }}
+                    disableColumnSelector
                     components={{
                         NoRowsOverlay: () => (
                             <Stack height="100%" alignItems="center" justifyContent="center">
@@ -342,7 +343,7 @@ const Resources = () => {
                     <div className="container" style={{ marginTop: "10%" }}>
                         <form className="addresources">
                             <div className="col-sm-12 mx-t3 mb-4">
-                                <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%", color: "#344767" }}>
+                                <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>
                                     Resources
                                 </h3>
                             </div>
@@ -382,7 +383,7 @@ const Resources = () => {
                                         });
                                         handleImageChange(e);
                                     }}
-                                    onKeyPress={(e) => onKeyBtn(e)}
+                                    // onKeyPress={(e) => onKeyBtn(e)}
                                 />
                                 {/* <label htmlFor="file">{resources ? resources?.file?.name : resources?.file}</label> */}
                             </div>
