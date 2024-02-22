@@ -48,7 +48,7 @@ const Todos = () => {
     return (
         <>
             <div className="to-dos" style={{ display: "flex", marginTop: "5%" }}>
-                <h3 style={{ marginLeft: "20%", fontWeight: "500", color: "#344767" }}>Todos List</h3>
+                <h3 style={{ marginLeft: "20%",fontSize:"larger", fontWeight: "500", color: "#344767" }}>Todos List</h3>
                 <SoftButton variant="gradient" color="info" style={{ marginBottom: "1%", marginLeft: "58%",border:"0px",outline:"none" }} onClick={() => navigate("/todos/addtodos")}>
                     Add Todos
                 </SoftButton>

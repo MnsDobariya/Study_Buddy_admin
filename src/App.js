@@ -37,6 +37,7 @@ import { EndPoint } from "config/EndPoint/Endpoint";
 import { setCalendarList } from "store/slices/calendarSlice";
 import { setTodoList } from "store/slices/todoSlice";
 import { setResourceList } from "store/slices/resourceSlice";
+import LandingPage from "landing/landing";
 
 export default function App() {
 
@@ -96,6 +97,7 @@ export default function App() {
 
       } else {
         //  <Route path="/authentication/sign-in" element={<Navigate to="/authentication/sign-in" />} />;
+        <Route exact path={"/landingPage"} element={<SignUp />} key={"landing"} />;
         <Route exact path={"/authentication/sign-up"} element={<SignUp />} key={"sign-up"} />;
         <Route exact path={"/authentication/sign-in"} element={<SignIn />} key={"sign-in"} />;
         <Route exact path={"/authentication/forgot-password"} element={<ForgotPassword />} key={"forgot-password"} />;
@@ -154,10 +156,12 @@ useEffect((e) => {
     getResources();
 }, []);
 
+
+const userToken = localStorage.getItem("token");
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {layout === "dashboard" && (
+      {userToken && layout === "dashboard" && (
         <div>
           <Sidenav
             color={sidenavColor}
@@ -178,7 +182,8 @@ useEffect((e) => {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+        <Route path="*" element={<Navigate to="/landingPage" />} />
+        <Route exact path={"/landingPage"} element={<LandingPage />} key={"landing"} />;
         <Route exact path={"/authentication/sign-up"} element={<SignUp />} key={"sign-up"} />;
         <Route exact path={"/authentication/sign-in"} element={<SignIn />} key={"sign-in"} />;
         <Route exact path={"/authentication/forgot-password"} element={<ForgotPassword />} key={"forgot-password"} />;

@@ -171,7 +171,7 @@ console.log('calendar', calendar)
         <>
             <div style={{ width: "80%", marginLeft: "19%", height: "50%", marginTop: "2%" }}>
                 <div style={{ display: "flex", gap: "81%" }}>
-                    <h4 style={{ marginBottom: "2%", textAlign: "left" }}>Calendar</h4>
+                    <h4 style={{ marginBottom: "2%", textAlign: "left",fontSize:"larger", fontWeight: "500", color: "#344767" }}>Calendar</h4>
                     <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ height: "10%" ,border:"0px",outline:"none"}} onClick={() => {
                         handleOpen(true)
                     }} >
@@ -209,7 +209,7 @@ console.log('calendar', calendar)
                     <div className="container" style={{ marginTop: "10%" }}>
                         <form className="calender">
                             <div className="col-sm-12 mx-t3 mb-5">
-                                <h3 style={{ textAlign: "center", paddingTop: "6%", color: "#344767" }}>
+                                <h3 style={{ textAlign: "center", paddingTop: "6%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>
                                     Event
                                 </h3>
                             </div>
@@ -241,7 +241,11 @@ console.log('calendar', calendar)
                                             sx={{
                                                 "& .MuiSvgIcon-root": {
                                                     marginLeft: "18rem",
-                                                }
+                                                },
+                                                "&  .MuiButtonBase-root  ":{
+                                                    border:"none",
+                                                    outline:"none"
+                                                },
                                             }}
                                         />
                                     </DemoItem>
@@ -263,7 +267,11 @@ console.log('calendar', calendar)
                                             sx={{
                                                 "& .MuiSvgIcon-root": {
                                                     marginLeft: "18rem",
-                                                }
+                                                },
+                                                "&  .MuiButtonBase-root  ":{
+                                                    border:"none",
+                                                    outline:"none"
+                                                },
                                             }}
                                         />
                                     </DemoItem>

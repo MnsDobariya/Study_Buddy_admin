@@ -41,7 +41,7 @@ const Notification = () => {
   return (
     <>
       <div className="notification" style={{ display: "flex", marginTop: "5%" }}>
-        <h3 style={{ marginLeft: "20%",marginBottom:"2%", fontWeight: "500", color: "#344767" }}>Notification List</h3>
+        <h3 style={{ marginLeft: "20%",marginBottom:"2%", fontSize:"larger",fontWeight: "500", color: "#344767" }}>Notification List</h3>
       </div>
 
       {(notificationData && notificationData.length) ?

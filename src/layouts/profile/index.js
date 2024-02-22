@@ -358,7 +358,7 @@ function Overview() {
           </SoftBox>
         </Card>
       </SoftBox> */}
-      <h1 style={{ textAlign: "left", marginLeft: "1.5%", marginTop: "3%", marginBottom: "7%" }}>
+      <h1 style={{ textAlign: "left", marginLeft: "1.5%", marginTop: "3%", marginBottom: "7%",fontSize:"larger", fontWeight: "500", color: "#344767"}}>
         Profile
       </h1>
       <SoftBox mt={4} mb={1}>

@@ -166,7 +166,7 @@ function SignIn() {
         localStorage.setItem("id", res.data.admin.id)
         localStorage.setItem("role",res.data.admin.role)
         // console.log('res.data', res.data)
-        navigate('/landingpage')
+        navigate('/dashboard')
         toast.success("Login Successfully");
       })
 

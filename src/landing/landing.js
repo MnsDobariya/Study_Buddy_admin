@@ -1135,14 +1135,14 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <section id="customers" className="pt-20 md:pt-[120px]">
+      <section id="customers" className="">
         <div className="container px-4">
 
           <div className="flex flex-wrap">
             <div className="mx-4 w-full">
-              <div className="mx-auto mb-[60px] max-w-[620px] text-center lg:mb-20">
+              <div className="mx-auto">
 
-                <div className="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
+                <div className="max-w-2xl mx-auto text-center ">
 
                   <h2 className="text-2xl font-bold md:text-4xl md:leading-tight">
                     Testimonials
@@ -1229,16 +1229,20 @@ const LandingPage = () => {
                   <div className="face face1">
                     <div className="content">
                       <div className="icon1">
-                        <i className="fa fa-twitter-square" aria-hidden="true"></i>
+                        {/* <i className="fa fa-twitter-square" aria-hidden="true"></i> */}
+                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg  bg-opacity-5 " style={{color:"#6eadd4"}}>
+                          J
+                        </div>
+                        <div className='mainName'>James Larsson</div>
                       </div>
                     </div>
                   </div>
                   <div className="face face2">
                     <div className="content">
                       <h3>
-                        <a href="https://twitter.com/AdamDipinto" target="blank">@AdamDipinto</a>
+                        {/* <a href="https://twitter.com/AdamDipinto" target="blank">@AdamDipinto</a> */}
                       </h3>
-                      <p>This is where I read news and network with different social groups.</p>
+                      <p>I love this product! This is efficient and productive. I can create documents and share them with my colleagues. I can also export them.</p>
                     </div>
                   </div>
                 </div>
@@ -1246,16 +1250,20 @@ const LandingPage = () => {
                   <div className="face face1">
                     <div className="content">
                       <div className="icon1">
-                        <i className="fa fa-github-square" aria-hidden="true"></i>
+                        {/* <i className="fa fa-github-square" aria-hidden="true"></i> */}
+                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-opacity-5 " style={{color:"#4aada9"}}>
+                          A
+                        </div>
+                        <div className='mainName'>Alice Holmes</div>
                       </div>
                     </div>
                   </div>
                   <div className="face face2">
                     <div className="content">
                       <h3>
-                        <a href="https://github.com/atom888" target="blank">atom888</a>
+                        {/* <a href="https://github.com/atom888" target="blank">atom888</a> */}
                       </h3>
-                      <p>This is where I share code and work on projects.</p>
+                      <p> I use this product to share assignments with my students. It is very easy to use and I can see the logs who accessed them.</p>
                     </div>
                   </div>
                 </div>
