@@ -51,10 +51,34 @@ const AssignmentForm = () => {
     });
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        const textRegex = /^[A-Za-z\s]+$/;
+
         setAddAssignment({
             ...addAssignment,
             [e.target.name]: e.target.value,
         });
+        if (name === "title" ) {
+            if (!textRegex.test(value)) {
+                setError({
+                    ...error,
+                    [name]: "Please Enter Text Only",
+                });
+            } else {
+                setError({
+                    ...error,
+                    [name]: "",
+                })
+            }
+        }
+        if (value.trim() === "") {
+            setError({
+                ...error,
+                [name]: "",
+            });
+        }
+
     };
 
     useEffect(() => {

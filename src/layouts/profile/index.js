@@ -95,7 +95,7 @@ function Overview() {
     division: "",
     otherDivision: ""
   });
-//   console.log(userProfile?.otherDivision, "userProfile");
+  //   console.log(userProfile?.otherDivision, "userProfile");
 
 
   const [isAuthorSelect, setIsAuthorSelect] = useState(false);
@@ -136,7 +136,9 @@ function Overview() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     const textRegex = /^[A-Za-z\s]+$/;
+
 
     setUserProfile({
       ...userProfile,
@@ -144,20 +146,25 @@ function Overview() {
 
     });
 
-    if (name === "firstName" || name === "lastName" || name === "email" || name === "gender") {
+    if (name === "firstName" || name === "lastName") {
       if (!textRegex.test(value)) {
         setError({
           ...error,
           [name]: "Please Enter Text Only",
         });
-      }else {
+      } else {
         setError({
           ...error,
-          [name]:"",
+          [name]: "",
         })
       }
     }
-    return;    
+    if (value.trim() === "") {
+      setError({
+          ...error,
+          [name]: "",
+      });
+  }
   };
 
   const handleImageChange = (e) => {
@@ -206,7 +213,7 @@ function Overview() {
     form_data.append("year", userProfile?.year)
     form_data.append("semester", userProfile?.semester)
     form_data.append("division", userProfile?.division)
-    if(userProfile?.otherDivision){
+    if (userProfile?.otherDivision) {
       form_data.append("otherDivision", userProfile?.otherDivision)
     }
     if (userProfile?.profilePicture) {
@@ -358,7 +365,7 @@ function Overview() {
           </SoftBox>
         </Card>
       </SoftBox> */}
-      <h1 style={{ textAlign: "left", marginLeft: "1.5%", marginTop: "3%", marginBottom: "7%",fontSize:"larger", fontWeight: "500", color: "#344767"}}>
+      <h1 style={{ textAlign: "left", marginLeft: "1.5%", marginTop: "3%", marginBottom: "7%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>
         Profile
       </h1>
       <SoftBox mt={4} mb={1}>
@@ -378,6 +385,8 @@ function Overview() {
                     handleChange(e);
                   }}
                 />
+                {error.firstName && <p>{error.firstName}</p>}
+
               </div>
               <div className="col-sm-6 form-group">
                 <label htmlFor="name-l" style={{ fontWeight: "500" }} >LastName</label>
@@ -390,6 +399,8 @@ function Overview() {
                     handleChange(e);
                   }}
                 />
+                {error.lastName && <p>{error.lastName}</p>}
+
               </div>
             </div>
             <div className="form-row" style={{ display: "flex", paddingLeft: "41px", paddingRight: "41px" }}>
@@ -606,7 +617,7 @@ function Overview() {
                         const selectedDivision = e.target.value;
                         setUserProfile({
                           ...userProfile,
-                          division : selectedDivision
+                          division: selectedDivision
                         })
                         // setIsAuthorSelect(selectedDivision === "Other Select");
                       }}
@@ -630,7 +641,7 @@ function Overview() {
                         onChange={(e) => {
                           setUserProfile({
                             ...userProfile,
-                            otherDivision : e.target.value
+                            otherDivision: e.target.value
                           })
                         }}
                       />
@@ -639,15 +650,15 @@ function Overview() {
                 </div>
               </>
             }
-            <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "32%", width: "30%",marginTop:"0px" }}>
+            <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "32%", width: "30%", marginTop: "0px" }}>
               <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={() => {
                 updateuserProfile();
               }}
-                style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",marginBottom:"11px",border:"0px",outline:"none"}}
+                style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", marginBottom: "11px", border: "0px", outline: "none" }}
               >
                 Update
               </SoftButton>
-              <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",marginBottom:"11px",border:"0px",outline:"none"}}>
+              <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", marginBottom: "11px", border: "0px", outline: "none" }}>
                 Cancel
               </SoftButton>
             </SoftBox>

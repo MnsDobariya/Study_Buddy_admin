@@ -198,7 +198,7 @@ const AssignmentList = () => {
                 sx={{
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
-                            height:"35%",
+                            height:"40%",
                             width: "100%",
                             maxWidth: "500px",  
                             borderRadius:"0.5rem", // Set your width here
