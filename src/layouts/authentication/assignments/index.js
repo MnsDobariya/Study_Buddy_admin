@@ -132,7 +132,7 @@ const Assignments = () => {
         <>
             <div className="container1 mt-5">
                 <div className="asgn">
-                    <h3 style={{ marginLeft: "6%" }}>Assignments</h3>
+                    <h3 style={{ marginLeft: "6%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>Assignments</h3>
                     <div className='add-assignment-btn mt-1' >
                         <SoftBox style={{ justifyContent: "end", display: "flex", gap: "10px" }}>
                             <SoftButton variant="gradient" color="info" onClick={() => {
@@ -246,9 +246,9 @@ const Assignments = () => {
                         deleteRecords(deleteId)
                         handlePopupClose(true)
                     }}
-                    style={{ width: "30%" }}
+                    style={{ width: "30%",backgroundColor:"#dc3545" }}
                     >Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%" }} >No</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%" ,backgroundColor:"#6c757d"}} >No</button>
                 </DialogActions>
             </Dialog>
         </>

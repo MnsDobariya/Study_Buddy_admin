@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const Resources = () => {
     const dispatch = useDispatch();
     const resource = useSelector((state) => state.resource);
-    console.log(resource, "resouces");
+    // console.log(resource, "resouces");
 
     const [open, setOpen] = useState();
     const [resources, setResources] = useState({
@@ -35,12 +35,20 @@ const Resources = () => {
     });
 
 
-    // const [resourecesRecord, setResourcesRecord] = useState([]);
+    const [resourecesRecord, setResourcesRecord] = useState([]);
     const [openPopUp, setOpenPopUp] = useState(false);
     const [deleteId, setDeleteId] = useState();
     // console.log("resourecesRecord",resourecesRecord);
     const handlePopupClose = () => {
         setOpenPopUp(false);
+    }
+
+    const getResources = () => {
+        ApiGet(`${EndPoint.RESOURCES_GET}`)
+        .then((res) => {
+            console.log(res,"respopne");
+            setResourcesRecord(res?.data);
+        })
     }
 
     const deleteResources = (id) => {
@@ -129,9 +137,9 @@ const Resources = () => {
     const columns = [
         // { field: "index", headerName: "Id", width: 150 },
         { field: "title", headerName: "Title", width: 200, hideable: false },
-        { field: "description", headerName: "Description", width: 290, hideable: false },
+        { field: "description", headerName: "Description", width: 340, hideable: false },
         {
-            field: "file", headerName: "File", width: 270, hideable: false,
+            field: "file", headerName: "File", width: 300, hideable: false,
             renderCell: (params) => {
                 return (
                     <>
@@ -201,7 +209,7 @@ const Resources = () => {
         },
     ];
 
-    const indexedData = resource?.resourceList?.map((item, index) => ({
+    const indexedData = resourecesRecord?.map((item, index) => ({
         ...item,
         id: item._id,
         index: index + 1,
@@ -259,6 +267,10 @@ const Resources = () => {
     //         Addtodos();
     //     }
     // }
+
+    useEffect(() => {
+        getResources("");
+    },[]);
 
     useEffect(() => {
         const handleAddBookShortcut = (e) => {
@@ -420,7 +432,7 @@ const Resources = () => {
             >
                 <DialogTitle id="alert-dialog-title">
                     {/* Delete */}
-                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%" }} />
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%",height:"22px" }} onClick={handlePopupClose} />
                 </DialogTitle>
                 <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
@@ -441,9 +453,9 @@ const Resources = () => {
                         deleteResources(deleteId)
                         handlePopupClose(true)
                     }}
-                        style={{ width: "30%" }}
+                        style={{ width: "30%",backgroundColor:"#dc3545" }}
                     >Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%" }} >No</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%",backgroundColor:"#6c757d" }} >No</button>
                 </DialogActions>
             </Dialog>
 

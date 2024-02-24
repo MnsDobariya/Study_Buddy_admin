@@ -137,7 +137,7 @@ const Teacher = () => {
         <>
 
             <div style={{ width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
-                <h3 style={{ color: " #344767" }}>Teacher List</h3>
+                <h3 style={{ fontSize:"larger", fontWeight: "500",color: " #344767" }}>Teacher List</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
@@ -232,9 +232,9 @@ const Teacher = () => {
                         deleteRecord(deleteRowId)
                         handleClose(true)
                     }}
-                        style={{ width: "30%" }}
+                        style={{ width: "30%",backgroundColor:"#dc3545" }}
                     >Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handleClose} style={{ width: "30%" }}>No</button>
+                    <button type="button" className="btn btn-secondary" onClick={handleClose} style={{ width: "30%",backgroundColor:"#6c757d" }}>No</button>
                 </DialogActions>
             </Dialog>
 

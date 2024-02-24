@@ -11,152 +11,154 @@ import SoftInput from 'components/SoftInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
+import image from '../layouts/img/header3.png';
+
 
 const LandingPage = () => {
-  const [agreement, setAgremment] = useState(true);
+  // const [agreement, setAgremment] = useState(true);
 
-  const [regFormData, setRegFormData] = useState({
-    FirstName: "",
-    LastName: "",
-    Mobile: "",
-    Email: "",
-    Password: "",
-    ConfirmPassword: "",
-  });
+  // const [regFormData, setRegFormData] = useState({
+  //   FirstName: "",
+  //   LastName: "",
+  //   Mobile: "",
+  //   Email: "",
+  //   Password: "",
+  //   ConfirmPassword: "",
+  // });
 
-  const [error, setError] = useState({
-    FirstName: "",
-    LastName: "",
-    Mobile: "",
-    Email: "",
-    Password: "",
-    ConfirmPassword: "",
-  });
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  // const [error, setError] = useState({
+  //   FirstName: "",
+  //   LastName: "",
+  //   Mobile: "",
+  //   Email: "",
+  //   Password: "",
+  //   ConfirmPassword: "",
+  // });
+  // const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
+  // const togglePasswordVisibility = () => {
+  //   setPasswordVisible(!passwordVisible);
+  // };
 
-  const SignUp = () => {
-
-
-    const error = {};
-    if (!regFormData.FirstName) {
-      error.FirstName = "Please FirstName Required";
-    }
-
-    if (!regFormData.LastName) {
-      error.LastName = "Please LastName Required";
-    }
-
-    const mobileRegex = /^\d+$/;
-    if (!regFormData.Mobile) {
-      error.Mobile = "Please Mobile Required";
-    } else if (!mobileRegex.test(regFormData.Mobile)) {
-      error.Mobile = "Invalid Mobile";
-    }
-
-    const emailRegex =
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!regFormData.Email) {
-      error.Email = "Please Email Required";
-    } else if (!emailRegex.test(regFormData.Email)) {
-      error.Email = "Invalid Email";
-    }
-
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,10})/;
-    if (!regFormData.Password) {
-      error.Password = "Please Password Required";
-    } else if (!passwordRegex.test(regFormData.Password)) {
-      error.Password = "Invalid Password";
-    }
-
-    const ConfirmPasswordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,10})/;
-    if (!regFormData.ConfirmPassword) {
-      error.ConfirmPassword = "Please ConfirmPassword Required";
-    } else if (!ConfirmPasswordRegex.test(regFormData.ConfirmPassword)) {
-      error.ConfirmPasswordRegex = "Invalid Password";
-    }
-
-    if (
-      error.FirstName ||
-      error.LastName ||
-      error.Mobile ||
-      error.Email ||
-      error.Password
-    ) {
-      setError(error);
-      return;
-    }
-
-    const body = {
-      firstName: regFormData.FirstName,
-      lastName: regFormData.LastName,
-      phone: regFormData.Mobile,
-      email: regFormData.Email,
-      password: regFormData.Password,
-    }
+  // const SignUp = () => {
 
 
-    ApiPost(`${EndPoint.USER_REGISTER}`, body)
-      .then((res) => {
-        if (res.status === 201) {
-          setRegFormData({
-            FirstName: "",
-            LastName: "",
-            Mobile: "",
-            Email: "",
-            Password: "",
-            ConfirmPassword: ""
-          })
-        }
-        navigate('/authentication/sign-in')
-        toast.success("Register Successfully");
-      })
-      .catch((error) => {
-        if (error.error === "User already register") {
-          toast.error(<p style={{ fontSize: "80%" }}>{"User already registered"}</p>, {
-            position: "top-center",
-          });
-        }
-      });
-  };
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  //   const error = {};
+  //   if (!regFormData.FirstName) {
+  //     error.FirstName = "Please FirstName Required";
+  //   }
 
-    const textRegex = /^[A-Za-z\s]+$/;
+  //   if (!regFormData.LastName) {
+  //     error.LastName = "Please LastName Required";
+  //   }
 
-    setRegFormData({
-      ...regFormData,
-      [name]: value,
-    });
+  //   const mobileRegex = /^\d+$/;
+  //   if (!regFormData.Mobile) {
+  //     error.Mobile = "Please Mobile Required";
+  //   } else if (!mobileRegex.test(regFormData.Mobile)) {
+  //     error.Mobile = "Invalid Mobile";
+  //   }
 
-    if (name === "FirstName" || name === "LastName") {
-      if (!textRegex.test(value)) {
-        setError({
-          ...error,
-          [name]: "Please Enter Text Only",
-        });
-      } else {
-        setError({
-          ...error,
-          [name]: "",
-        })
-      }
-    }
-    return;
+  //   const emailRegex =
+  //     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  //   if (!regFormData.Email) {
+  //     error.Email = "Please Email Required";
+  //   } else if (!emailRegex.test(regFormData.Email)) {
+  //     error.Email = "Invalid Email";
+  //   }
 
-  };
-  const handleSetAgremment = () => setAgremment(!agreement);
-  const navigate = useNavigate();
+  //   const passwordRegex =
+  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,10})/;
+  //   if (!regFormData.Password) {
+  //     error.Password = "Please Password Required";
+  //   } else if (!passwordRegex.test(regFormData.Password)) {
+  //     error.Password = "Invalid Password";
+  //   }
 
-  const onKeyBtn = (e) => {
-    if (e.key === "Enter")
-      SignUp();
-  }
+  //   const ConfirmPasswordRegex =
+  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,10})/;
+  //   if (!regFormData.ConfirmPassword) {
+  //     error.ConfirmPassword = "Please ConfirmPassword Required";
+  //   } else if (!ConfirmPasswordRegex.test(regFormData.ConfirmPassword)) {
+  //     error.ConfirmPasswordRegex = "Invalid Password";
+  //   }
+
+  //   if (
+  //     error.FirstName ||
+  //     error.LastName ||
+  //     error.Mobile ||
+  //     error.Email ||
+  //     error.Password
+  //   ) {
+  //     setError(error);
+  //     return;
+  //   }
+
+  //   const body = {
+  //     firstName: regFormData.FirstName,
+  //     lastName: regFormData.LastName,
+  //     phone: regFormData.Mobile,
+  //     email: regFormData.Email,
+  //     password: regFormData.Password,
+  //   }
+
+
+  //   ApiPost(`${EndPoint.USER_REGISTER}`, body)
+  //     .then((res) => {
+  //       if (res.status === 201) {
+  //         setRegFormData({
+  //           FirstName: "",
+  //           LastName: "",
+  //           Mobile: "",
+  //           Email: "",
+  //           Password: "",
+  //           ConfirmPassword: ""
+  //         })
+  //       }
+  //       navigate('/authentication/sign-in')
+  //       toast.success("Register Successfully");
+  //     })
+  //     .catch((error) => {
+  //       if (error.error === "User already register") {
+  //         toast.error(<p style={{ fontSize: "80%" }}>{"User already registered"}</p>, {
+  //           position: "top-center",
+  //         });
+  //       }
+  //     });
+  // };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+
+  //   const textRegex = /^[A-Za-z\s]+$/;
+
+  //   setRegFormData({
+  //     ...regFormData,
+  //     [name]: value,
+  //   });
+
+  //   if (name === "FirstName" || name === "LastName") {
+  //     if (!textRegex.test(value)) {
+  //       setError({
+  //         ...error,
+  //         [name]: "Please Enter Text Only",
+  //       });
+  //     } else {
+  //       setError({
+  //         ...error,
+  //         [name]: "",
+  //       })
+  //     }
+  //   }
+  //   return;
+
+  // };
+  // const handleSetAgremment = () => setAgremment(!agreement);
+  // const navigate = useNavigate();
+
+  // const onKeyBtn = (e) => {
+  //   if (e.key === "Enter")
+  //     SignUp();
+  // }
 
   return (
     <>
@@ -411,9 +413,9 @@ const LandingPage = () => {
 
               <nav className="grid gap-4 mt-5 md:mt-10" aria-label="Tabs" role="tablist">
                 <button type="button"
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-left hover:bg-gray-200 p-4 md:p-5 rounded-xl  active"
+                  className=" text-left  p-4 md:p-5 rounded-xl "
                   id="tabs-with-card-item-1" data-hs-tab="#tabs-with-card-1"
-                  aria-controls="tabs-with-card-1" role="tab">
+                  aria-controls="tabs-with-card-1" role="tab" style={{border:"0px",outline:"none"}}>
                   <span className="flex">
                     <svg className="flex-shrink-0 mt-2 h-6 w-6 md:w-7 md:h-7 hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500"
                       xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -424,16 +426,16 @@ const LandingPage = () => {
 
 
                     <span className="grow ml-6">
-                      <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500">  Ask AI Tutor</span>
+                      <span className="block text-lg font-semibold">  Ask AI Tutor</span>
                       <span className="block mt-1 text-gray-800">Dont know answer of some questions? No problem your AI tutor will answer questions on any suubject. Chat with Ai and increase your knowledge.</span>
                     </span>
                   </span>
                 </button>
 
                 <button type="button"
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-left hover:bg-gray-200 p-4 md:p-5 rounded-xl"
+                  className=" text-left p-4 md:p-5 rounded-xl"
                   id="tabs-with-card-item-2" data-hs-tab="#tabs-with-card-2"
-                  aria-controls="tabs-with-card-2" role="tab">
+                  aria-controls="tabs-with-card-2" role="tab" style={{border:"0px",outline:"none"}}>
                   <span className="flex">
                     <svg className="flex-shrink-0 mt-2 h-6 w-6 md:w-7 md:h-7 hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500"
                       xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -450,10 +452,11 @@ const LandingPage = () => {
                   </span>
                 </button>
 
+                {/* hover:bg-gray-200 */}
                 <button type="button"
-                  className="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-left hover:bg-gray-200 p-4 md:p-5 rounded-xl"
+                  className="text-left  p-4 md:p-5 rounded-xl"
                   id="tabs-with-card-item-3" data-hs-tab="#tabs-with-card-3"
-                  aria-controls="tabs-with-card-3" role="tab">
+                  aria-controls="tabs-with-card-3" role="tab" style={{border:"0px",outline:"none"}}>
                   <span className="flex">
                     <svg className="flex-shrink-0 mt-2 h-6 w-6 md:w-7 md:h-7 hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 "
                       xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -464,7 +467,7 @@ const LandingPage = () => {
 
 
                     <span className="grow ml-6">
-                      <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800"> Create Notes</span>
+                      <span className="block text-lg font-semibold "> Create Notes</span>
                       <span className="block mt-1 text-gray-800 "> Create amazing notes, highlight important ideas.You can also take help from AI to create notes.</span>
                     </span>
                   </span>
@@ -533,7 +536,7 @@ const LandingPage = () => {
       <div className="bg-white">
         <div className="mx-auto max-w-7xl sm:px-6 sm:py-20 lg:px-8">
 
-          <div className="relative isolate overflow-hidden bg-dark px-6 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
+          <div className="relative isolate overflow-hidden bg-dark px-6 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0" style={{background:"linear-gradient(310deg, #2152ff, #21d4fd)"}}>
 
 
             <div className="mx-auto max-w-md text-center text-white lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
@@ -542,7 +545,7 @@ const LandingPage = () => {
               <div className="relative pl-9 mb-2 mt-3">
 
                 <dt className="inline text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#AD52FF"
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
                     className="absolute top-1 left-1 h-5 w-5 text-indigo-600" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                   </svg> Works everywhere, whether on a PC, tablet, or mobile device.</dt>
@@ -552,7 +555,7 @@ const LandingPage = () => {
               <div className="relative pl-9 mb-2 mt-3">
 
                 <dt className="inline text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#AD52FF"
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
                     className="absolute top-1 left-1 h-5 w-5 text-indigo-600" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                   </svg> No software to install. No updates to install. No hassle.</dt>
@@ -562,7 +565,7 @@ const LandingPage = () => {
               <div className="relative pl-9 mb-2 mt-3">
 
                 <dt className="inline text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#AD52FF"
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
                     className="absolute top-1 left-1 h-5 w-5 text-indigo-600" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                   </svg> No credit card required. No commitment. Cancel anytime.</dt>
@@ -578,10 +581,12 @@ const LandingPage = () => {
             <div className="relative mt-16 h-80 lg:mt-8">
 
               <img
-                src="https://studybuddy.cloudonex.com/uploads/media/dashboard.png"
+                // src="https://studybuddy.cloudonex.com/uploads/media/dashboard.png"
+                src={image}
                 alt="Welcome to StudyBuddy"
                 className="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
-                width="1824" height="1080"
+                // width="1824" height="1080"
+                style={{width:"11rem",height:"34.5rem",marginLeft:"-33px"}}
               />
 
             </div>
@@ -590,7 +595,7 @@ const LandingPage = () => {
       </div>
 
 
-      <section id="pricing" className="relative z-20 overflow-hidden bg-white py-20 pb-12">
+      {/* <section id="pricing" className="relative z-20 overflow-hidden bg-white py-20 pb-12">
         <div className="container">
 
           <div className="-mx-4 flex flex-wrap">
@@ -871,8 +876,8 @@ const LandingPage = () => {
                     Free Trial
                   </a>
                 </div>
-
-                {/* </span> */}
+                <span>
+                </span>
               </div>
             </div>
 
@@ -1013,7 +1018,7 @@ const LandingPage = () => {
 
           </div >
         </div >
-      </section >
+      </section > */}
       <div id="faq" className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <div className="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
           FAQ
@@ -1029,7 +1034,7 @@ const LandingPage = () => {
             <div className="hs-accordion  active  hs-accordion-active:bg-gray-100 rounded-xl p-6 "
               id="hs-basic-with-title-and-arrow-stretched-heading-0">
               <button className="hs-accordion-toggle group pb-3 inline-flex items-center justify-between gap-x-3 w-full md:text-lg font-semibold text-left text-gray-800 transition hover:text-gray-500"
-                aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-0">
+                aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-0" style={{ border: "0px", outline: "none" }}>
                 What is the difference between the monthly and yearly plans?
                 <svg className="hs-accordion-active:hidden block w-3 h-3 text-gray-600 group-hover:text-gray-500 "
                   width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -1055,7 +1060,7 @@ const LandingPage = () => {
             <div className="hs-accordion  hs-accordion-active:bg-gray-100 rounded-xl p-6 "
               id="hs-basic-with-title-and-arrow-stretched-heading-1">
               <button className="hs-accordion-toggle group pb-3 inline-flex items-center justify-between gap-x-3 w-full md:text-lg font-semibold text-left text-gray-800 transition hover:text-gray-500"
-                aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-1">
+                aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-1" style={{ border: "0px", outline: "none" }}>
                 How do I cancel my subscription?
                 <svg className="hs-accordion-active:hidden block w-3 h-3 text-gray-600 group-hover:text-gray-500 "
                   width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -1081,7 +1086,7 @@ const LandingPage = () => {
             <div className="hs-accordion  hs-accordion-active:bg-gray-100 rounded-xl p-6 "
               id="hs-basic-with-title-and-arrow-stretched-heading-2">
               <button className="hs-accordion-toggle group pb-3 inline-flex items-center justify-between gap-x-3 w-full md:text-lg font-semibold text-left text-gray-800 transition hover:text-gray-500"
-                aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-2">
+                aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-2" style={{ border: "0px", outline: "none" }}>
                 What happens if I cancel my subscription?
                 <svg className="hs-accordion-active:hidden block w-3 h-3 text-gray-600 group-hover:text-gray-500 "
                   width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -1107,7 +1112,7 @@ const LandingPage = () => {
             <div className="hs-accordion  hs-accordion-active:bg-gray-100 rounded-xl p-6 "
               id="hs-basic-with-title-and-arrow-stretched-heading-3">
               <button className="hs-accordion-toggle group pb-3 inline-flex items-center justify-between gap-x-3 w-full md:text-lg font-semibold text-left text-gray-800 transition hover:text-gray-500"
-                aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-3">
+                aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-3" style={{ border: "0px", outline: "none" }}>
                 How do I start a trial?
                 <svg className="hs-accordion-active:hidden block w-3 h-3 text-gray-600 group-hover:text-gray-500 "
                   width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -1230,7 +1235,7 @@ const LandingPage = () => {
                     <div className="content">
                       <div className="icon1">
                         {/* <i className="fa fa-twitter-square" aria-hidden="true"></i> */}
-                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg  bg-opacity-5 " style={{color:"#6eadd4"}}>
+                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg  bg-opacity-5 " style={{ color: "#6eadd4" }}>
                           J
                         </div>
                         <div className='mainName'>James Larsson</div>
@@ -1251,7 +1256,7 @@ const LandingPage = () => {
                     <div className="content">
                       <div className="icon1">
                         {/* <i className="fa fa-github-square" aria-hidden="true"></i> */}
-                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-opacity-5 " style={{color:"#4aada9"}}>
+                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-opacity-5 " style={{ color: "#4aada9" }}>
                           A
                         </div>
                         <div className='mainName'>Alice Holmes</div>
@@ -1349,177 +1354,6 @@ const LandingPage = () => {
             <div className="mb-3 mt-3 text-gray-500">
               <label>Already have an account? <a className="text-blue-600 decoration-2 hover:underline font-medium" href="/authentication/sign-in">Sign in</a></label>
             </div>
-            <Card >
-              <SoftBox p={3} mb={0} textAlign="center">
-                <SoftTypography variant="h5" fontWeight="medium">
-                  Register
-                </SoftTypography>
-              </SoftBox>
-              <SoftBox mb={1} >
-              </SoftBox>
-              <SoftBox pt={2} pb={3} px={3}>
-                <SoftBox component="form" role="form" height="100%">
-                  <SoftBox mb={1} mt={0}>
-                    <SoftInput
-                      type="text"
-                      name="FirstName"
-                      value={regFormData.FirstName}
-                      placeholder="First Name"
-                      onChange={(e) => {
-                        setError({
-                          ...error,
-                          FirstName: ""
-                        })
-                        handleChange(e)
-                      }}
-                    />
-                    {error.FirstName && <p style={{ color: "red", fontSize: "60%" }}>{error.FirstName} </p>}
-                  </SoftBox>
-                  <SoftBox mb={1} mt={0}>
-                    <SoftInput
-                      type="text"
-                      name="LastName"
-                      value={regFormData.LastName}
-                      placeholder="Last Name"
-                      onChange={(e) => {
-                        setError({
-                          ...error,
-                          LastName: ""
-                        })
-                        handleChange(e)
-                      }}
-                    />
-                    {error.LastName && <p style={{ color: "red", fontSize: "60%" }}>{error.LastName} </p>}
-
-                  </SoftBox>
-                  <SoftBox mb={1} mt={0}>
-                    <SoftInput
-                      type="text"
-                      name="Mobile"
-                      value={regFormData.Mobile}
-                      placeholder="Mobile"
-                      onChange={(e) => {
-                        const input = e.target.value;
-                        const regex = /^[0-9\b]+$/;
-                        if (input === '' || regex.test(input) && input.length <= 10) {
-                          setError({
-                            ...error,
-                            Mobile: "",
-                          });
-                          handleChange(e);
-                        } else {
-                          setError({
-                            ...error,
-                            Mobile: "Please enter valid 10-digit mobile number",
-                          })
-                        }
-                      }}
-                    />
-                    {error.Mobile && <p style={{ color: "red", fontSize: "60%" }}>{error.Mobile} </p>}
-
-                  </SoftBox>
-                  <SoftBox mb={1} mt={0}>
-                    <SoftInput
-                      type="email"
-                      name="Email"
-                      value={regFormData.Email}
-                      placeholder="Email"
-                      onChange={(e) => {
-                        setError({
-                          ...error,
-                          Email: ""
-                        })
-                        handleChange(e)
-                      }}
-                    />
-                    {error.Email && <p style={{ color: "red", fontSize: "60%" }}>{error.Email} </p>}
-
-                  </SoftBox>
-                  <SoftBox mb={2}>
-                    <SoftInput
-                      type={passwordVisible ? "text" : "password"}
-                      name="Password"
-                      value={regFormData.Password}
-                      placeholder="Password"
-                      onChange={(e) => {
-                        setError({
-                          ...error,
-                          Password: ""
-                        })
-                        handleChange(e)
-                      }}
-                      onKeyPress={(e) => onKeyBtn(e)}
-                    />
-                    <div className='input-group-append'>
-                      <span
-                        className='icon'
-                        onClick={togglePasswordVisibility}
-                        style={{
-                          position: 'absolute',
-                          // right: '40%',
-                          // top: '66%',
-                          right: "30px",
-                          // left: "48%",
-                          transform: 'translateY(-110%)',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {passwordVisible ? (
-                          <FontAwesomeIcon icon={faEye} /> // Eye slash icon for showinh password
-                        ) : (
-                          <FontAwesomeIcon icon={faEyeSlash} /> // Eye icon for hide password
-                        )}
-                      </span>
-                      {/* </div> */}
-                    </div>
-                    {error.Password && <p style={{ color: "red", fontSize: "60%" }}>{error.Password} </p>}
-
-
-                  </SoftBox>
-
-                  <SoftBox display="flex" alignItems="center">
-                    <Checkbox checked={agreement} onChange={handleSetAgremment} />
-                    <SoftTypography
-                      variant="button"
-                      fontWeight="regular"
-                      onClick={handleSetAgremment}
-                      sx={{ cursor: "poiner", userSelect: "none" }}
-                    >
-                      &nbsp;&nbsp;I agree the&nbsp;
-                    </SoftTypography>
-                    <SoftTypography
-                      component="a"
-                      href="#"
-                      variant="button"
-                      fontWeight="bold"
-                      textGradient
-                    >
-                      Terms and Conditions
-                    </SoftTypography>
-                  </SoftBox>
-                  <SoftBox mt={4} mb={1}>
-                    <SoftButton variant="gradient" color="dark" fullWidth onClick={SignUp} style={{ border: "0px", outline: "none" }}>
-                      sign up
-                    </SoftButton>
-                  </SoftBox>
-                  <SoftBox mt={3} textAlign="center">
-                    <SoftTypography variant="button" color="text" fontWeight="regular">
-                      Already have an account?&nbsp;
-                      <SoftTypography
-                        component={Link}
-                        to="/authentication/sign-in"
-                        variant="button"
-                        color="dark"
-                        fontWeight="bold"
-                        textGradient
-                      >
-                        Sign in
-                      </SoftTypography>
-                    </SoftTypography>
-                  </SoftBox>
-                </SoftBox>
-              </SoftBox>
-            </Card>
 
             {/* <form method="post" action="https://studybuddy.cloudonex.com/signup">
             

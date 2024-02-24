@@ -277,7 +277,7 @@ const TeacherForm = () => {
                 <div className="container" style={{ marginTop: "8%", marginLeft: "21.5%" }}>
                     {/* <div className="row jumbotron box8"> */}
                     <div className="col-sm-12 mx-t3 mb-3">
-                        <h2 style={{ textAlign: "left", marginTop: "1%" }}>
+                        <h2 style={{ textAlign: "left", marginTop: "1%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>
                             {" "}
                             {addTeacher?.id ? "Update" : "Add"} Teacher
 
@@ -350,7 +350,7 @@ const TeacherForm = () => {
                                 {error.email && <p style={{ color: "red", fontSize: "60%" }}>{error.email} </p>}
 
                             </div>
-                            {!location?.state &&
+                           
                                 <div className="col-sm-6 form-group">
                                     <label htmlFor="password">Password </label>
                                     <div style={{ display: "flex" }}>
@@ -393,7 +393,7 @@ const TeacherForm = () => {
 
                                     </div>
                                 </div>
-                            }
+                            
                         </div>
                         <div style={{ display: "flex" }}>
                             <div className="col-sm-6 form-group">

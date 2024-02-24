@@ -154,7 +154,7 @@ const AssignmentForm = () => {
                     {/* <form className="add-assignments"> */}
                     {/* <div className="row jumbotron box2"> */}
                     <div className="col-sm-12 mx-t3 mb-3">
-                        <h2 style={{ textAlign: "left", marginTop: "1%" }}>
+                        <h2 style={{ textAlign: "left", marginTop: "1%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>
                             {" "}
                             {addAssignment?.id ? "Update" : "Add"} Assignment
 
