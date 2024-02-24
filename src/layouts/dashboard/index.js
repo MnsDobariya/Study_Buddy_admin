@@ -128,6 +128,24 @@ function Dashboard() {
                 chart={chart}
                 items={items}
               /> */}
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Task Status
+                  </Typography>
+                  <SoftBox mb={3}>
+                    <Pie
+                      data={pieChartData}
+                      options={{
+                        legend: {
+                          display: true,
+                          position: 'right',
+                        },
+                      }}
+                    />
+                  </SoftBox>
+                </CardContent>
+              </Card>
             </Grid>
             <Grid item xs={12} lg={5}>
               {/* <GradientLineChart
@@ -148,24 +166,7 @@ function Dashboard() {
                 height="20.25rem"
                 chart={gradientLineChartData}
               /> */}
-              <Card>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Task Status
-                  </Typography>
-                  <SoftBox mb={3}>
-                    <Pie
-                      data={pieChartData}
-                      options={{
-                        legend: {
-                          display: true,
-                          position: 'right',
-                        },
-                      }}
-                    />
-                  </SoftBox>
-                </CardContent>
-              </Card>
+              
             </Grid>
           </Grid>
         </SoftBox>
@@ -178,7 +179,7 @@ function Dashboard() {
           </Grid>
         </Grid>
       </SoftBox>
-      <Footer />
+      {/* <Footer />  	 */}
     </DashboardLayout>
   );
 }
