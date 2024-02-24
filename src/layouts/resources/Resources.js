@@ -27,11 +27,11 @@ const Resources = () => {
         description: "",
         file: ""
     });
-    console.log("resources", resources);
+    // console.log("resources", resources);
     const [error, setError] = useState({
         title: "",
         description: "",
-        file: ""
+        file: "",
     });
 
 
@@ -45,10 +45,10 @@ const Resources = () => {
 
     const getResources = () => {
         ApiGet(`${EndPoint.RESOURCES_GET}`)
-        .then((res) => {
-            console.log(res,"respopne");
-            setResourcesRecord(res?.data);
-        })
+            .then((res) => {
+                console.log(res, "respopne");
+                setResourcesRecord(res?.data);
+            })
     }
 
     const deleteResources = (id) => {
@@ -72,7 +72,7 @@ const Resources = () => {
             [name]: value,
         });
 
-        if (name === "title" || name === "description") {
+        if (name === "title") {
             if (!textRegex.test(value)) {
                 setError({
                     ...error,
@@ -85,7 +85,12 @@ const Resources = () => {
                 })
             }
         }
-        return;
+        if (value.trim() === "") {
+            setError({
+                ...error,
+                [name]: "",
+            });
+        }
     };
 
     const handleImageChange = (e) => {
@@ -216,6 +221,26 @@ const Resources = () => {
     }))
 
     const AddResources = () => {
+        const error = {};
+        if (!resources?.title) {
+            error.title = "Please Title Required";
+        }
+
+        if (!resources.description) {
+            error.description = "Please Description Required";
+        }
+        if (!resources.file) {
+            error.file = "Please File Required";
+        }
+
+        if (
+            error.title ||
+            error.description ||
+            error.file
+        ) {
+            setError(error);
+            return;
+        }
 
         const form_data = new FormData();
 
@@ -270,7 +295,7 @@ const Resources = () => {
 
     useEffect(() => {
         getResources("");
-    },[]);
+    }, []);
 
     useEffect(() => {
         const handleAddBookShortcut = (e) => {
@@ -293,7 +318,7 @@ const Resources = () => {
     return (
         <>
             <div style={{ height: "80vh", width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
-                <h3 style={{ fontSize:"larger", fontWeight: "500",color: " #344767" }}>Resources</h3>
+                <h3 style={{ fontSize: "larger", fontWeight: "500", color: " #344767" }}>Resources</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
@@ -355,7 +380,7 @@ const Resources = () => {
                     <div className="container" style={{ marginTop: "10%" }}>
                         <form className="addresources">
                             <div className="col-sm-12 mx-t3 mb-4">
-                                <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>
+                                <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>
                                     Resources
                                 </h3>
                             </div>
@@ -367,9 +392,15 @@ const Resources = () => {
                                     value={resources?.title}
                                     placeholder="Title"
                                     onChange={(e) => {
-                                        handleChange(e)
+                                        setError({
+                                            ...error,
+                                            title: "",
+                                        });
+                                        handleChange(e);
                                     }}
                                 />
+                                {error.title && <p style={{ color: "red", fontSize: "60%" }}>{error.title} </p>}
+
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <label htmlFor="name-l" style={{ color: "#344767" }}>Description</label>
@@ -379,9 +410,15 @@ const Resources = () => {
                                     value={resources?.description}
                                     placeholder="Description"
                                     onChange={(e) => {
-                                        handleChange(e)
+                                        setError({
+                                            ...error,
+                                            description: "",
+                                        });
+                                        handleChange(e);
                                     }}
                                 />
+                                {error.description && <p style={{ color: "red", fontSize: "60%" }}>{error.description} </p>}
+
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <label htmlFor="file" style={{ color: "#344767" }}>File</label>
@@ -395,8 +432,10 @@ const Resources = () => {
                                         });
                                         handleImageChange(e);
                                     }}
-                                    // onKeyPress={(e) => onKeyBtn(e)}
+                                // onKeyPress={(e) => onKeyBtn(e)}
                                 />
+                                {error.file && <p style={{ color: "red", fontSize: "60%" }}>{error.file} </p>}
+
                                 {/* <label htmlFor="file">{resources ? resources?.file?.name : resources?.file}</label> */}
                             </div>
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
@@ -432,7 +471,7 @@ const Resources = () => {
             >
                 <DialogTitle id="alert-dialog-title">
                     {/* Delete */}
-                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%",height:"22px" }} onClick={handlePopupClose} />
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%", height: "22px" }} onClick={handlePopupClose} />
                 </DialogTitle>
                 <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
@@ -453,9 +492,9 @@ const Resources = () => {
                         deleteResources(deleteId)
                         handlePopupClose(true)
                     }}
-                        style={{ width: "30%",backgroundColor:"#dc3545" }}
+                        style={{ width: "30%", backgroundColor: "#dc3545" }}
                     >Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%",backgroundColor:"#6c757d" }} >No</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%", backgroundColor: "#6c757d" }} >No</button>
                 </DialogActions>
             </Dialog>
 

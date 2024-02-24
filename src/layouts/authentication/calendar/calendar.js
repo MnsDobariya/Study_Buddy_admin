@@ -31,7 +31,7 @@ const Calendar = () => {
 
     const dispatch = useDispatch();
     const calendar = useSelector((state) => state.calendar);
-// console.log('calendar', calendar)
+    // console.log('calendar', calendar)
     const [calendarEvent, setCalendarEvent] = useState({
         title: "",
         startdate: "",
@@ -63,19 +63,31 @@ const Calendar = () => {
 
         const textRegex = /^[A-Za-z\s]+$/;
 
+        setCalendarEvent({
+            ...calendarEvent,
+            [name]: value
+        })
+
         if (name === "title") {
             if (!textRegex.test(value)) {
                 setError({
                     ...error,
-                    [name]: "",
+                    [name]: "please Enter Text Only",
                 });
-                return;
+            } else {
+                setError({
+                    ...error,
+                    [name]: "",
+                })
             }
         }
-        setCalendarEvent({
-            ...calendarEvent,
-            [e.target.name]: e.target.value
-        })
+        if (value.trim() === "") {
+            setError({
+                ...error,
+                [name]: "",
+            });
+        }
+
     }
     const getCalendarRecord = () => {
         ApiGet(`${EndPoint.EVENT_GET}`)
@@ -171,8 +183,8 @@ const Calendar = () => {
         <>
             <div style={{ width: "80%", marginLeft: "19%", height: "50%", marginTop: "2%" }}>
                 <div style={{ display: "flex", gap: "81%" }}>
-                    <h4 style={{ marginBottom: "2%", textAlign: "left",fontSize:"larger", fontWeight: "500", color: "#344767" }}>Calendar</h4>
-                    <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ height: "10%" ,border:"0px",outline:"none"}} onClick={() => {
+                    <h4 style={{ marginBottom: "2%", textAlign: "left", fontSize: "larger", fontWeight: "500", color: "#344767" }}>Calendar</h4>
+                    <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ height: "10%", border: "0px", outline: "none" }} onClick={() => {
                         handleOpen(true)
                     }} >
                         Add Event
@@ -209,7 +221,7 @@ const Calendar = () => {
                     <div className="container" style={{ marginTop: "10%" }}>
                         <form className="calender">
                             <div className="col-sm-12 mx-t3 mb-5">
-                                <h3 style={{ textAlign: "center", paddingTop: "6%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>
+                                <h3 style={{ textAlign: "center", paddingTop: "6%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>
                                     Event
                                 </h3>
                             </div>
@@ -221,9 +233,15 @@ const Calendar = () => {
                                     value={calendarEvent?.title}
                                     placeholder="Title"
                                     onChange={(e) => {
+                                        setError({
+                                            ...error,
+                                            title:"",
+                                        })
                                         handleChange(e);
                                     }}
                                 />
+                                {error.title && <p style={{ color: "red", fontSize: "60%" }}>{error.title} </p>}
+
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -242,9 +260,9 @@ const Calendar = () => {
                                                 "& .MuiSvgIcon-root": {
                                                     marginLeft: "18rem",
                                                 },
-                                                "&  .MuiButtonBase-root  ":{
-                                                    border:"none",
-                                                    outline:"none"
+                                                "&  .MuiButtonBase-root  ": {
+                                                    border: "none",
+                                                    outline: "none"
                                                 },
                                             }}
                                         />
@@ -268,9 +286,9 @@ const Calendar = () => {
                                                 "& .MuiSvgIcon-root": {
                                                     marginLeft: "18rem",
                                                 },
-                                                "&  .MuiButtonBase-root  ":{
-                                                    border:"none",
-                                                    outline:"none"
+                                                "&  .MuiButtonBase-root  ": {
+                                                    border: "none",
+                                                    outline: "none"
                                                 },
                                             }}
                                         />
@@ -283,14 +301,14 @@ const Calendar = () => {
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginTop: "4%" }}>
 
                                 {calendarEvent?.id ?
-                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%" ,border:"0px",outline:"none",}} onClick={updateEvent}>
+                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none", }} onClick={updateEvent}>
                                         update
                                     </SoftButton> :
-                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%",border:"0px",outline:"none", }} onClick={Save}>
+                                    <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none", }} onClick={Save}>
                                         Save
                                     </SoftButton>
                                 }
-                                <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%",border:"0px",outline:"none", }} onClick={handleClose}>
+                                <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none", }} onClick={handleClose}>
                                     cancle
                                 </SoftButton>
                             </SoftBox>

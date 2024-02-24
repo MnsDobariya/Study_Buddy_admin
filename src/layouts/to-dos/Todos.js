@@ -1,4 +1,4 @@
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SoftButton from "components/SoftButton";
 import React, { useEffect, useState } from "react";
@@ -112,27 +112,40 @@ const Todos = () => {
                 sx={{
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
+                            height: "40%",
                             width: "100%",
                             maxWidth: "500px",
-                            borderRadius: "0.5rem", // Set your width here
+                            borderRadius: "0.5rem",  // Set your width here
                         },
                     },
                 }}
             >
                 <DialogTitle id="alert-dialog-title">
-                    Delete
+                    {/* Delete */}
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%",height:"22px" }} onClick={handleClose} />
                 </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
+                </svg>
+                {/* <FontAwesomeIcon icon={faCircleXmark} /> */}
+                {/* <link  rel="shortcut icon" href="https://image.similarpng.com/very-thumbnail/2020/11/InCorrect-icon-in-sticker-style-on-transparent-background-PNG.png" /> */}
+                <DialogContent style={{ overflowY: "hidden" }}>
+                    <DialogContentText id="alert-dialog-description" style={{ textAlign: "center" }}>
                         Are you sure Delete?
                     </DialogContentText>
+                    <DialogContentText style={{ textAlign: "center" }}>
+                        Do you really want to delete these record?
+                    </DialogContentText>
                 </DialogContent>
-                <DialogActions>
+                <DialogActions style={{ marginRight: "25%", paddingBottom: "5%" }}>
+
                     <button type="button" className="btn btn-danger" onClick={() => {
                         deleteRecord(deleteId)
                         handleClose(true)
-                    }}>Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handleClose} >No</button>
+                    }}
+                        style={{ width: "30%",backgroundColor:"#dc3545" }}
+                    >Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handleClose} style={{ width: "30%",backgroundColor:"#6c757d" }} >No</button>
                 </DialogActions>
             </Dialog>
         </>
