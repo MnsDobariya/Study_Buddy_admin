@@ -45,10 +45,37 @@ const Addtodos = () => {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
+
+        const { name, value } = e.target;
+
+        const textRegex = /^[A-Za-z\s]+$/;
+
         setAddTodos({
             ...addTodos,
             [e.target.name]: e.target.value
         })
+
+        if (name === "task" ) {
+            if (!textRegex.test(value)) {
+                setError({
+                    ...error,
+                    [name]: "Please Enter Text Only",
+                });
+            } else {
+                setError({
+                    ...error,
+                    [name]: "",
+                })
+            }
+        }
+
+        if (value.trim() === "") {
+            setError({
+                ...error,
+                [name]: "",
+            });
+        }
+
     }
 
     useEffect(() => {
@@ -67,7 +94,7 @@ const Addtodos = () => {
         }
 
         if (!addTodos.portable) {
-            error.portable = "Please Portable Required";
+            error.portable = "Please Priority Required";
         }
 
         const descriptionRegex = /^[a-zA-Z]{2,40}([a-zA-Z]{2,40})+$/;
@@ -256,7 +283,7 @@ const Addtodos = () => {
                         <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "32%", width: "30%", marginBottom: "10vh", marginTop: "6%" }}>
                             <SoftButton className="teacher1" variant="gradient" color="info" fullWidth onClick={Addtodos} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",border:"0px",outline:"none" }}
                             >
-                                Add Todos
+                                {location?.state ? "Update" : "Add"} Todo
                             </SoftButton>
 
                             <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={cancelBtn} style={{ boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)",border:"0px",outline:"none" }}>

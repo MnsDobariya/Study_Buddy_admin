@@ -104,7 +104,12 @@ const TeacherForm = () => {
             }
         }
 
-
+        if (value.trim() === "") {
+            setError({
+                ...error,
+                [name]: "",
+            });
+        }
         // if (name === "password") {
         //     if (value.match(/[A-Z]/) != null) {
         //         valid('capital', 'fa-check', 'fa-times');
