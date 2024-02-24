@@ -31,7 +31,7 @@ const Calendar = () => {
 
     const dispatch = useDispatch();
     const calendar = useSelector((state) => state.calendar);
-console.log('calendar', calendar)
+// console.log('calendar', calendar)
     const [calendarEvent, setCalendarEvent] = useState({
         title: "",
         startdate: "",

@@ -20,7 +20,7 @@ const AssignmentList = () => {
   const assignment = useSelector((state) => state.assignment);
 
     // const [assignmentCount, setAssignmentCount] = useState([]);
-    // const [assignmentRecord, setAssignmentRecord] = useState([]);
+    const [assignmentRecord, setAssignmentRecord] = useState([]);
     // const [deleteRecord, setDeleteRecord] = useState();
 
     const [inputText, setInputText] = useState("");
@@ -36,7 +36,7 @@ const AssignmentList = () => {
     const [openPopUp, setOpenPopUp] = useState(false);
     const [deleteRowId, setDeleteRowId] = useState();
 
-    const indexedData = assignment.assignmentList?.map((item, index) => ({
+    const indexedData = assignmentRecord?.map((item, index) => ({
         ...item,
         index: index + 1,
     }))
@@ -105,6 +105,13 @@ const AssignmentList = () => {
     }
 
 
+    const getAssignmentRecord = () => {
+        ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
+        .then((res) => {
+            setAssignmentRecord(res?.data);
+        })
+    }
+
     const deleteRecords = (id) => {
         axios.delete(`http://localhost:3000/api/v1/assignments/delete/${id}`)
             .then((res) => {
@@ -119,11 +126,15 @@ const AssignmentList = () => {
         handleClose();
     };
 
+    useEffect(() => {
+        getAssignmentRecord("");
+    })
+
     return (
         <>
             {/* <Dashboard assignmentCount={assignmentCount} /> */}
             <div className="mt-5" style={{ marginLeft: "21%", display: "flex" }}>
-                <h3 style={{ marginTop: "1%" }}>AssignmentList</h3>
+                <h3 style={{ marginTop: "1%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>AssignmentList</h3>
                 <SoftButton variant="gradient" color="info" style={{ marginTop: "1%", marginInlineEnd: "50px",border:"0px",outline:"none", marginLeft: "48%" }} onClick={() => {
                     navigate('/assignments/assignmentform')
                 }} >
@@ -222,9 +233,9 @@ const AssignmentList = () => {
                         deleteRecords(deleteRowId)
                         handlePopupClose(true)
                     }}
-                    style={{ width: "30%" }}
+                    style={{ width: "30%",backgroundColor:"#dc3545" }}
                     >Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%" }}>No</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%",backgroundColor:"#6c757d" }}>No</button>
                 </DialogActions>
             </Dialog>
         </>

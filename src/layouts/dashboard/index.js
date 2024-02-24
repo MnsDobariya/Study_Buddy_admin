@@ -33,6 +33,8 @@ import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { setAssignmentList } from "store/slices/assignmentSlice";
 import { MdEvent } from "react-icons/md";
+import { Pie } from "react-chartjs-2";
+import { Card, CardContent, Typography } from "@mui/material";
 
 function Dashboard() {
 
@@ -42,6 +44,18 @@ function Dashboard() {
   const todo = useSelector((state) => state.todo);
   const calendar = useSelector((state) => state.calendar);
   const resource = useSelector((state) => state.resource);
+
+
+  const pieChartData = {
+    labels: ['Completed', 'In Progress', 'Not Started'],
+    datasets: [
+      {
+        data: [20, 30, 50], // Example percentages for each category
+        backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'], // Example colors for each category
+        hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+      },
+    ],
+  };
 
 
   return (
@@ -85,9 +99,9 @@ function Dashboard() {
                   color: "info",
                   component: "shopping_cart",
                 }}
-                // icon={<MdEvent />}
-                  />
-              
+              // icon={<MdEvent />}
+              />
+
             </Grid>
           </Grid>
         </SoftBox>
@@ -103,8 +117,8 @@ function Dashboard() {
         </SoftBox>
         <SoftBox mb={3}>
           <Grid container spacing={3}>
-            {/* <Grid item xs={12} lg={5}>
-              <ReportsBarChart
+            <Grid item xs={12} lg={5}>
+              {/* <ReportsBarChart
                 title="active users"
                 description={
                   <>
@@ -113,9 +127,9 @@ function Dashboard() {
                 }
                 chart={chart}
                 items={items}
-              />
-            </Grid> */}
-            <Grid item xs={12} lg={7}>
+              /> */}
+            </Grid>
+            <Grid item xs={12} lg={5}>
               {/* <GradientLineChart
                 title="Sales Overview"
                 description={
@@ -134,6 +148,24 @@ function Dashboard() {
                 height="20.25rem"
                 chart={gradientLineChartData}
               /> */}
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Task Status
+                  </Typography>
+                  <SoftBox mb={3}>
+                    <Pie
+                      data={pieChartData}
+                      options={{
+                        legend: {
+                          display: true,
+                          position: 'right',
+                        },
+                      }}
+                    />
+                  </SoftBox>
+                </CardContent>
+              </Card>
             </Grid>
           </Grid>
         </SoftBox>
