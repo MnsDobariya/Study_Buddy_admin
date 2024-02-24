@@ -11,11 +11,12 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import { setTodoList } from "store/slices/todoSlice";
 
 const Todos = () => {
     const dispatch = useDispatch();
     const todo = useSelector((state) => state.todo);
-    // const [todosData, setTodosData] = useState();
+    const [todosData, setTodosData] = useState();
 
     const navigate = useNavigate();
 
@@ -30,6 +31,17 @@ const Todos = () => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const getTodosData = () => {
+        ApiGet(`${EndPoint.TODOS_GET}`)
+            .then((res) => {
+                setTodosData(res?.data);
+            })
+      }
+
+      useEffect((e)=>{
+        getTodosData("");
+      },[])
 
     const deleteRecord = (id) => {
         axios.delete(`http://localhost:3000/api/v1/todos/delete/${id}`)
@@ -53,8 +65,8 @@ const Todos = () => {
                     Add Todos
                 </SoftButton>
             </div>
-            {( todo.todoList &&  todo.todoList.length) ?
-                 todo.todoList?.map((item) => (
+            {( todosData &&  todosData.length) ?
+                 todosData?.map((item) => (
                     <div key={item.id} className="rowtodos" id="adstodos">
                         <div className="cardtodos w-75">
 
