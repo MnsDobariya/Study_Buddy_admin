@@ -20,6 +20,7 @@ const Resources = () => {
     const dispatch = useDispatch();
     const resource = useSelector((state) => state.resource);
     // console.log(resource, "resouces");
+    
 
     const [open, setOpen] = useState();
     const [resources, setResources] = useState({
@@ -36,6 +37,7 @@ const Resources = () => {
 
 
     const [resourecesRecord, setResourcesRecord] = useState([]);
+    // console.log(resourecesRecord, "resourecesRecord");
     const [openPopUp, setOpenPopUp] = useState(false);
     const [deleteId, setDeleteId] = useState();
     // console.log("resourecesRecord",resourecesRecord);
@@ -43,10 +45,12 @@ const Resources = () => {
         setOpenPopUp(false);
     }
 
+    const role = localStorage.getItem("role");
+
     const getResources = () => {
         ApiGet(`${EndPoint.RESOURCES_GET}`)
             .then((res) => {
-                console.log(res, "respopne");
+                // console.log(res, "respopne");
                 setResourcesRecord(res?.data);
             })
     }
@@ -318,7 +322,7 @@ const Resources = () => {
     return (
         <>
             <div style={{ height: "80vh", width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
-                <h3 style={{ fontSize: "larger", fontWeight: "500", color: " #344767" }}>Resources</h3>
+                <h3 style={{ fontSize: "larger", fontWeight: "500", color: " #344767",marginBottom:"revert"}}>Resources</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
@@ -342,13 +346,15 @@ const Resources = () => {
                                 }}
                             >
                                 <GridToolbar />
-                                <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {
-                                    handleOpen(true);
-                                }}
-                                    style={{ border: "0px", outline: "none" }}
-                                >
-                                    Add Resources
-                                </SoftButton>
+                                {role === "Admin" &&
+                                    <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {
+                                        handleOpen(true);
+                                    }}
+                                        style={{ border: "0px", outline: "none" }}
+                                    >
+                                        Add Resources
+                                    </SoftButton>
+                                 } 
                             </div>
                         ),
                     }}

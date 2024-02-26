@@ -161,7 +161,7 @@ const Header = ({ userProfile, imagePreview, handleImageChange }) => {
               </SoftTypography>
             </SoftBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
+          {/* <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
             <AppBar position="static">
               <Tabs
                 orientation={tabsOrientation}
@@ -174,7 +174,7 @@ const Header = ({ userProfile, imagePreview, handleImageChange }) => {
                 <Tab label="Settings" icon={<Settings />} />
               </Tabs>
             </AppBar>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Card>
     </SoftBox>

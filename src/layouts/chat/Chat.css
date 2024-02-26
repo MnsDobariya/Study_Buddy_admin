@@ -114,6 +114,7 @@ img {
 .chat_people {
   overflow: hidden;
   clear: both;
+  cursor: pointer;
 }
 
 .chat_list {
@@ -250,8 +251,8 @@ img {
 }
 
 .background-img {
-  /* background-image: url('../../layouts/img/lib-img1.jpg'); */
-  background-image: url('https://miro.medium.com/v2/resize:fit:828/format:webp/1*sdnU-B3zh7Km-tMOgmSaBg.jpeg');
+  /* background-image: url('../../layouts/img/chatbg.jpg'); */
+  /* background-image: url('https://miro.medium.com/v2/resize:fit:828/format:webp/1*sdnU-B3zh7Km-tMOgmSaBg.jpeg'); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

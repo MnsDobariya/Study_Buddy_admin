@@ -156,11 +156,19 @@ const Addtodos = () => {
     }
 
     useEffect(() => {
+        const handleAddBookShortcut = (e) => {
+            if(e.key === "s" && e.altKey){
+                e.preventDefault();
+                Addtodos();
+            }
+        };
+        document.addEventListener("keydown",handleAddBookShortcut);
         hotkeys("alt + c", (e) => {
             e.preventDefault();
             navigate("/todos");
         });
         return () => {
+            document.removeEventListener("keydown",handleAddBookShortcut);
             hotkeys.unbind("alt + c");
         }
     })

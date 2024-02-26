@@ -35,7 +35,8 @@ const Chat = () => {
         firstName: "",
         profileImage: ""
     });
-    console.log(headerImage,"headerIamge");
+    // console.log(headerImage,"headerIamge");
+    
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -106,7 +107,8 @@ const Chat = () => {
         ApiGet(`${EndPoint.SEARCH_GET}?firstName=${search}`)
             .then((res) => {
                 // console.log(res,"resnposesearch");
-                setSearchResults(res?.data);
+                const filteredResults = res?.data.filter(user => user.year === 'TY BCA');
+                setSearchResults(filteredResults);
             })
     }
 
@@ -368,9 +370,6 @@ const Chat = () => {
                     </div>
                 </div>
             </div>
-
-
-
         </>
     )
 }
