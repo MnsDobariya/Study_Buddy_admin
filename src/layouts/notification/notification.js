@@ -32,45 +32,55 @@ const Notification = () => {
 
   const deleteRecord = (id) => {
     axios.delete(`http://localhost:3000/api/v1/notification/delete/${id}`)
-        .then((res) => {
-            getNotificationData();
-        })
-        toast.success("Delete successfully")
-}
+      .then((res) => {
+        getNotificationData();
+      })
+    toast.success("Delete successfully")
+  }
 
   return (
     <>
       <div className="notification" style={{ display: "flex", marginTop: "5%" }}>
-        <h3 style={{ marginLeft: "20%",marginBottom:"2%", fontSize:"larger",fontWeight: "500", color: "#344767" }}>Notification List</h3>
+        <h3 style={{ marginLeft: "20%", marginBottom: "2%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>Notification List</h3>
       </div>
 
       {(notificationData && notificationData.length) ?
-      notificationData?.map((item) => (
-        <div key={item.id} className="rowtodos mt-1" id="adstodos">
+        notificationData?.map((item) => (
+          <div key={item.id} className="rowtodos mt-1" id="adstodos">
 
-          <div className="cardnotification" style={{ width: 750 ,marginLeft:'34%',height:100}}>
-            <div className="card-body">
-              <div style={{ display: "flex" }}>
-                <p className="cardnotification-title">{item.title}</p>
-                <div style={{ marginLeft: "auto", display: "flex" ,marginRight:"3%",marginTop:"1%"}} >
-                  <FontAwesomeIcon icon={faTrash} style={{cursor: 'pointer'}} onClick={() => {
-                    setOpen(true);
-                    setDeleteId(item.id);
-                  }} />
+            <div className="cardnotification" style={{ width: 750, marginLeft: '34%', height: 100 }}>
+              <div className="card-body">
+                <div style={{ display: "flex" }}>
+                  <p className="cardnotification-title">{item.title}</p>
+                  <div style={{ marginLeft: "auto", display: "flex", marginRight: "3%", marginTop: "1%" }} >
+                    <FontAwesomeIcon icon={faTrash} style={{ cursor: 'pointer' }} onClick={() => {
+                      setOpen(true);
+                      setDeleteId(item.id);
+                    }} />
+                  </div>
                 </div>
+                <p className="cardnotification-text">Message : {item.description}</p>
               </div>
-              <p className="cardnotification-text">Message : {item.description}</p>
             </div>
           </div>
-        </div>
-      ))  
-      :
-      (
-        <div className='noRecord' style={{marginLeft:"50%",marginTop:"15%"}}>
-          <p>No Record</p>
-        </div>
-      )
-    }
+        ))
+        :
+        (
+          // <div className='noRecord' style={{ marginLeft: "50%", marginTop: "15%" }}>
+            <div className="cardnotification" style={{ width: 300, marginLeft: '45%',height: 100,marginTop:"15%" }}>
+              <div className="card-body">
+                <div style={{ display: "flex" }}>
+                  <p className="cardnotification-title"></p>
+                  <div style={{ marginLeft: "35%",marginTop: "5%" }} >
+                  No Record
+                  </div>
+                </div>
+                <p className="cardnotification-text"></p>
+              </div>
+            </div>
+          // </div>
+        )
+      }
 
       <Dialog
         open={open}

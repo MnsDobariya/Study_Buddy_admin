@@ -205,25 +205,25 @@ const LandingPage = () => {
                       </a>
                     </li>
                     <li className="group relative">
-                      <a href="https://studybuddy.cloudonex.com/#about"
+                      <a href=""
                         className="ud-menu-scroll mx-8 flex py-2 text-base text-dark group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0 lg:group-hover:text-primary lg:group-hover:opacity-90 xl:ml-12">
                         About
                       </a>
                     </li>
                     <li className="group relative">
-                      <a href="https://studybuddy.cloudonex.com/#pricing"
+                      <a href=""
                         className="ud-menu-scroll mx-8 flex py-2 text-base text-dark group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0 lg:group-hover:text-primary lg:group-hover:opacity-90 xl:ml-12">
                         Plans &amp; Pricing
                       </a>
                     </li>
                     <li className="group relative">
-                      <a href="https://studybuddy.cloudonex.com/#customers"
+                      <a href=""
                         className="ud-menu-scroll mx-8 flex py-2 text-base text-dark group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0  lg:group-hover:text-primary lg:group-hover:opacity-90 xl:ml-12">
                         Customers
                       </a>
                     </li>
                     <li className="group relative">
-                      <a href="https://studybuddy.cloudonex.com/#faq"
+                      <a href=""
                         className="ud-menu-scroll mx-8 flex py-2 text-base text-dark group-hover:text-primary lg:mr-0 lg:ml-7 lg:inline-flex lg:py-6 lg:px-0 lg:group-hover:text-primary lg:group-hover:opacity-90 xl:ml-12">
                         FAQ
                       </a>
@@ -573,7 +573,7 @@ const LandingPage = () => {
 
               <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
                 <a href="#signup"
-                  className="rounded-md bg-primary text-white px-3.5 py-2.5 text-sm font-semibold shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Get started</a>
+                  className="rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" style={{color:"#4890dc",backgroundColor:"white"}}>Get started</a>
                 <a href="#pricing" className="text-sm text-white font-semibold leading-6">See Pricing
                   <span aria-hidden="true">→</span></a>
               </div>
@@ -1422,10 +1422,10 @@ const LandingPage = () => {
 
                 <div className="mt-3 grid space-y-3 text-sm">
 
-                  <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="https://studybuddy.cloudonex.com/#about">About</a></p>
+                  {/* <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="https://studybuddy.cloudonex.com/#about">About</a></p>
                   <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="https://studybuddy.cloudonex.com/#pricing">Plans &amp; Pricing</a> <span className="inline text-blue-600">— Get Started</span></p>
                   <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="https://studybuddy.cloudonex.com/#customers">Testimonials</a></p>
-                  <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="https://studybuddy.cloudonex.com/#faq">FAQ</a></p>
+                  <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="https://studybuddy.cloudonex.com/#faq">FAQ</a></p> */}
 
                 </div>
               </div>
@@ -1455,7 +1455,7 @@ const LandingPage = () => {
               </div>
             </div>
 
-            <div className="pt-5 mt-5 border-t border-gray-200">
+            {/* <div className="pt-5 mt-5 border-t border-gray-200">
               <div className="sm:flex sm:justify-between sm:items-center">
                 <p className="mt-3 text-xs sm:text-sm text-gray-600">© 2024 CloudOnex All Rights Reserved.</p>
 
@@ -1489,7 +1489,7 @@ const LandingPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </footer>

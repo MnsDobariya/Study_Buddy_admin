@@ -161,10 +161,10 @@ function Overview() {
     }
     if (value.trim() === "") {
       setError({
-          ...error,
-          [name]: "",
+        ...error,
+        [name]: "",
       });
-  }
+    }
   };
 
   const handleImageChange = (e) => {
@@ -229,11 +229,21 @@ function Overview() {
       .catch((error) => {
       })
 
-
-
     // divisionDropDown.push({ label: userProfile?.otherDivision, value: userProfile?.otherDivision });
-
   }
+
+  useEffect(() => {
+    const handleAddBookShortcut = (e) => {
+      if (e.key === "s" && e.altKey) {
+        e.preventDefault();
+        updateuserProfile();
+      }
+    };
+    document.addEventListener("keydown", handleAddBookShortcut);
+    return () => {
+      document.removeEventListener("keydown", handleAddBookShortcut);
+    }
+  })
 
   return (
     <DashboardLayout>
@@ -529,7 +539,11 @@ function Overview() {
                           sx={{
                             "& .MuiSvgIcon-root": {
                               marginLeft: "19rem",
-                            }
+                            },
+                            "&  .MuiButtonBase-root  ": {
+                              border: "none",
+                              outline: "none"
+                            },
                           }}
                         />
                       </DemoItem>

@@ -264,13 +264,22 @@ const TeacherForm = () => {
     };
 
     useEffect(() => {
+        const handleAddBookShortcut = (e) => {
+            if(e.key === "s" && e.altKey) {
+                e.preventDefault();
+                addNewTeacher();
+            }
+        };
+        document.addEventListener("keydown",handleAddBookShortcut);
         hotkeys("alt + c", (e) => {
             e.preventDefault();
             navigate("/teacher");
 
         });
         return () => {
+            document.removeEventListener("keydown",handleAddBookShortcut);
             hotkeys.unbind("alt + c");
+            
         }
 
     })
