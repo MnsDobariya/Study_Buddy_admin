@@ -167,7 +167,7 @@ function EmailVerify() {
               onChange={setOTP}
               numInputs={6}
               renderSeparator={<span> -</span>}
-              inputStyle={{ width: "3.5rem", height: "2.5rem" }}
+              inputStyle={{ width: "3.5rem", height: "2.5rem",borderColor: 'black',borderStyle: 'solid',borderWidth: '1px' }}
               renderInput={(props) => <input{...props} />}
             />
 
