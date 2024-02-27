@@ -107,11 +107,11 @@ const Chat = () => {
         ApiGet(`${EndPoint.SEARCH_GET}?firstName=${search}`)
             .then((res) => {
                 // console.log(res,"resnposesearch");
-                const filteredResults = res?.data.filter(user => user.year === 'TY BCA');
-                setSearchResults(filteredResults);
+                // const filteredResults = res?.data.filter(user => user.year === 'TY BCA');
+                setSearchResults(res?.data);
             })
     }
-
+   
     const handleRoomId = (item) => {
         if (localStorage.getItem("id") !== item?.receiver?._id) {
             setChat({ ...chat, receiverId: item?.receiver?._id, roomId: item?._id });
@@ -261,7 +261,13 @@ const Chat = () => {
                                             }}
                                         >
                                             {(searchResults && searchResults.length) ?
-                                                searchResults.map((item) => (
+                                                searchResults.filter(item => {
+                                                    if (item?.role === "Admin") {
+                                                        return true;
+                                                    }
+                                                    return(item?.role === "Teacher" || item?.role === "User") && item?.year === "SY BCA";
+                                                })
+                                                .map((item) => (
                                                     <MenuItem key={item.id} onClick={() => createRoom(item)}>
                                                         <div style={{ display: "flex", alignItems: "center" }}>
                                                             <img src={getProfileImage(item?.profileImage)} alt="Profile" style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }} />
