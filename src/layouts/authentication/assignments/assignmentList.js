@@ -171,7 +171,7 @@ const AssignmentList = () => {
 
                         ),
                     }}
-                    style={{ height: "81.5vh", width: "77.5%", padding: "2%", marginLeft: "20%" }}
+                    style={{ height: "82vh", width: "77.5%", padding: "2%", marginLeft: "20%" }}
                     onRowClick={(e) => {
                     }}
                     className='custom-data-grid'

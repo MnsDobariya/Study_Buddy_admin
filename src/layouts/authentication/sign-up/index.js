@@ -215,7 +215,7 @@ function SignUp() {
     //   }
     // }
 
-    return;
+    // return;
 
   };
   const handleSetAgremment = () => setAgremment(!agreement);
@@ -249,6 +249,7 @@ function SignUp() {
                   name="FirstName"
                   value={regFormData.FirstName}
                   placeholder="First Name"
+                  autoComplete="off"
                   onChange={(e) => {
                     setError({
                       ...error,
@@ -265,6 +266,7 @@ function SignUp() {
                   name="LastName"
                   value={regFormData.LastName}
                   placeholder="Last Name"
+                  autoComplete="off"
                   onChange={(e) => {
                     setError({
                       ...error,
@@ -282,6 +284,7 @@ function SignUp() {
                   name="Mobile"
                   value={regFormData.Mobile}
                   placeholder="Mobile"
+                  autoComplete="off"
                   onChange={(e) => {
                     const input = e.target.value;
                     const regex = /^[0-9\b]+$/;
@@ -308,6 +311,7 @@ function SignUp() {
                   name="Email"
                   value={regFormData.Email}
                   placeholder="Email"
+                  autoComplete="off"
                   onChange={(e) => {
                     setError({
                       ...error,
@@ -325,6 +329,7 @@ function SignUp() {
                   name="Password"
                   value={regFormData.Password}
                   placeholder="Password"
+                  autoComplete="off"
                   onChange={(e) => {
                     setError({
                       ...error,
@@ -357,32 +362,28 @@ function SignUp() {
                   {/* </div> */}
                 </div>
                 {error.Password && <p style={{ color: "red", fontSize: "60%" }}>{error.Password} </p>}
-                <div className='validation'>
+                {/* <div className='validation'>
                   <p id='capital'>
-                    {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
                     <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
                     <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
                     <span>Capital Letters</span>
                   </p>
                   <p id='char'>
-                    {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
                     <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
                     <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
                     <span>Special Characters</span>
                   </p>
                   <p id='num'>
-                    {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
                     <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
                     <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
                     <span>Use Number</span>
                   </p>
                   <p id='more8'>
-                    {/* <FontAwesomeIcon className="fa-times icon" icon={faCircleXmark} /> */}
                     <FontAwesomeIcon className="fa-times icon" icon={faXmark} />
                     <FontAwesomeIcon className="fa-check icon" icon={faCheck} />
                     <span>8. characters</span>
                   </p>
-                </div>
+                </div> */}
 
               </SoftBox>
 
@@ -407,7 +408,7 @@ function SignUp() {
                 </SoftTypography>
               </SoftBox>
               <SoftBox mt={4} mb={1}>
-                <SoftButton variant="gradient" color="dark" fullWidth onClick={SignUp} style={{border:"0px",outline:"none"}}>
+                <SoftButton variant="gradient" color="info" fullWidth onClick={SignUp} style={{ border: "0px", outline: "none" }}>
                   sign up
                 </SoftButton>
               </SoftBox>

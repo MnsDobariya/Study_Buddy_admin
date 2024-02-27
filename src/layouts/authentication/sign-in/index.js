@@ -208,6 +208,7 @@ function SignIn() {
                 name="email"
                 value={lgnFormData.email}
                 placeholder="Email"
+                autoComplete="off"
                 onChange={(e) => {
                   setError({
                     ...error,

@@ -137,7 +137,7 @@ const Teacher = () => {
         <>
 
             <div style={{ width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
-                <h3 style={{ fontSize:"larger", fontWeight: "500",color: " #344767" }}>Teacher List</h3>
+                <h3 style={{ fontSize:"larger", fontWeight: "500",color: " #344767",marginBottom: "revert" }}>Teacher List</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
