@@ -29,7 +29,7 @@ function BuildByDevelopers() {
                 Study-Buddy, a context-aware system designed to enhance the learning experience, has been developed as a proof of concept across various everyday life domains, particularly in education.
                 </SoftTypography>
               </SoftBox>
-              <SoftTypography
+              {/* <SoftTypography
                 component="a"
                 href="#"
                 variant="button"
@@ -55,7 +55,7 @@ function BuildByDevelopers() {
               >
                 Read More
                 <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
-              </SoftTypography>
+              </SoftTypography> */}
             </SoftBox>
           </Grid>
           <Grid item xs={12} lg={5} sx={{ position: "relative", ml: "auto" }}>

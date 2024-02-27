@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 let initialState = {
-    resourceList :[],
+  resourceList: [],
 }
 
 export const resourceSlice = createSlice({
@@ -9,8 +9,9 @@ export const resourceSlice = createSlice({
   initialState,
   reducers: {
     setResourceList: (state, action) => {
-        state.resourceList = action.payload;
-  }},
+      state.resourceList = action.payload;
+    }
+  },
 });
 
 // this is for dispatch

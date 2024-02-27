@@ -39,7 +39,7 @@ function WorkWithTheRockets() {
             Group work can help build a positive and engaging learning community through peer learning and teaching.
             </SoftTypography>
           </SoftBox>
-          <SoftTypography
+          {/* <SoftTypography
             component="a"
             href="#"
             variant="button"
@@ -65,7 +65,7 @@ function WorkWithTheRockets() {
           >
             Read More
             <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
-          </SoftTypography>
+          </SoftTypography> */}
         </SoftBox>
       </SoftBox>
     </Card>

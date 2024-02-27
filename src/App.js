@@ -36,8 +36,8 @@ import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { setCalendarList } from "store/slices/calendarSlice";
 import { setTodoList } from "store/slices/todoSlice";
-import { setResourceList } from "store/slices/resourceSlice";
 import LandingPage from "landing/landing";
+import { setResourceList } from "store/slices/resourceSlice";
 
 export default function App() {
 
@@ -111,7 +111,7 @@ export default function App() {
 
   // console.log('assignment', assignment)
   const getAssignmentRecord = () => {
-    // axios.get("http://localhost:3000/api/v1/users/teacher/get",
+  
     ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
         .then((res) => {
             AppDispatch(setAssignmentList(res?.data))
@@ -142,12 +142,15 @@ const getTodosData = () => {
 }
 
 
+
 const getResources = () => {
   ApiGet(`${EndPoint.RESOURCES_GET}`)
       .then((res) => {
-          AppDispatch(setResourceList(res?.data));
-      });
+        console.log('res.data', res.data)
+          AppDispatch(setResourceList(res?.data))
+      })
 }
+
 
 useEffect((e) => {
     getAssignmentRecord();

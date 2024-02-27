@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 let initialState = {
-    todoList :[],
+  todoList: [],
 }
 
 export const todoSlice = createSlice({
@@ -9,8 +9,9 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     setTodoList: (state, action) => {
-        state.todoList = action.payload;
-  }},
+      state.todoList = action.payload;
+    }
+  },
 });
 
 // this is for dispatch
