@@ -12,9 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCircleXmark, faEye, faEyeSlash, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const yearDropDown = [
-    { label: "FYBCA", value: "FY BCA" },
-    { label: "SYBCA", value: "SY BCA" },
-    { label: "TYBCA", value: "TY BCA" }
+    { label: "FY BCA", value: "FY BCA" },
+    { label: "SY BCA", value: "SY BCA" },
+    { label: "TY BCA", value: "TY BCA" }
 ];
 
 const semesterDropDown = [

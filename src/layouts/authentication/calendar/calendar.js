@@ -171,7 +171,7 @@ const Calendar = () => {
         const handleAddBookShortcut = (e) => {
             if(e.key === "s" && e.altKey) {
                 e.preventDefault();
-                updateEvent();
+                Save();
             }
         };
         document.addEventListener("keydown",handleAddBookShortcut);

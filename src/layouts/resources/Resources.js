@@ -20,7 +20,7 @@ const Resources = () => {
     const dispatch = useDispatch();
     const resource = useSelector((state) => state.resource);
     // console.log(resource, "resouces");
-    
+
 
     const [open, setOpen] = useState();
     const [resources, setResources] = useState({
@@ -54,6 +54,10 @@ const Resources = () => {
                 setResourcesRecord(res?.data);
             })
     }
+
+    useEffect(() => {
+        getResources("");
+    }, []);
 
     const deleteResources = (id) => {
         axios.delete(`http://localhost:3000/api/v1/resources/delete/${id}`)
@@ -297,9 +301,7 @@ const Resources = () => {
     //     }
     // }
 
-    useEffect(() => {
-        getResources("");
-    }, []);
+    
 
     useEffect(() => {
         const handleAddBookShortcut = (e) => {
@@ -322,7 +324,7 @@ const Resources = () => {
     return (
         <>
             <div style={{ height: "80vh", width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
-                <h3 style={{ fontSize: "larger", fontWeight: "500", color: " #344767",marginBottom:"revert"}}>Resources</h3>
+                <h3 style={{ fontSize: "larger", fontWeight: "500", color: " #344767", marginBottom: "revert" }}>Resources</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
@@ -347,6 +349,13 @@ const Resources = () => {
                             >
                                 <GridToolbar />
                                 {role === "Admin" &&
+                                    <SoftButton variant="gradient" color="info" marginLeft="50%"
+                                        style={{ border: "0px", outline: "none" }}
+                                    >
+                                        Filter
+                                    </SoftButton>
+                                }
+                                {role === "Teacher" &&
                                     <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {
                                         handleOpen(true);
                                     }}
@@ -354,7 +363,7 @@ const Resources = () => {
                                     >
                                         Add Resources
                                     </SoftButton>
-                                 } 
+                                }
                             </div>
                         ),
                     }}
