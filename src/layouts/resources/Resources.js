@@ -16,10 +16,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faFileArrowDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
+const yearDropDown = [
+    { label: "FY BCA", value: "FY BCA" },
+    { label: "SY BCA", value: "SY BCA" },
+    { label: "TY BCA", value: "TY BCA" },
+];
+
 const Resources = () => {
     const dispatch = useDispatch();
     const resource = useSelector((state) => state.resource);
     // console.log(resource, "resouces");
+    const [year, setYear] = useState();
+
 
 
     const [open, setOpen] = useState();
@@ -48,7 +56,10 @@ const Resources = () => {
     const role = localStorage.getItem("role");
 
     const getResources = () => {
-        ApiGet(`${EndPoint.RESOURCES_GET}`)
+
+        const url = year ? `${EndPoint.RESOURCES_GET}?year=${year}` : `${EndPoint.RESOURCES_GET}`
+
+        ApiGet(url)
             .then((res) => {
                 // console.log(res, "respopne");
                 setResourcesRecord(res?.data);
@@ -301,7 +312,9 @@ const Resources = () => {
     //     }
     // }
 
-    
+    useEffect(() => {
+        getResources();
+    }, [year]);
 
     useEffect(() => {
         const handleAddBookShortcut = (e) => {
@@ -349,11 +362,27 @@ const Resources = () => {
                             >
                                 <GridToolbar />
                                 {role === "Admin" &&
-                                    <SoftButton variant="gradient" color="info" marginLeft="50%"
-                                        style={{ border: "0px", outline: "none" }}
+                                    // <SoftButton variant="gradient" color="info" marginLeft="50%"
+                                    //     style={{ border: "0px", outline: "none" }}
+                                    // >
+                                    //     Filter
+                                    // </SoftButton>
+                                    <select
+                                        name="year"
+                                        id="year"
+                                        className='form-control'
+                                        style={{ borderRadius: "0.5rem",width:"15%" }}
+                                        onChange={(e) => {
+                                            setYear(e.target.value);
+                                        }}
                                     >
-                                        Filter
-                                    </SoftButton>
+                                        <option key="">Select Year</option>
+                                        {yearDropDown &&
+                                            yearDropDown?.map((x) => (
+                                                <option key={x.value}>{x.value}</option>
+                                            ))
+                                        }
+                                    </select>
                                 }
                                 {role === "Teacher" &&
                                     <SoftButton variant="gradient" color="info" marginLeft="50%" onClick={() => {

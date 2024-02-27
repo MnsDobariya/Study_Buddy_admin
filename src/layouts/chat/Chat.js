@@ -261,13 +261,7 @@ const Chat = () => {
                                             }}
                                         >
                                             {(searchResults && searchResults.length) ?
-                                                searchResults.filter(item => {
-                                                    if (item?.role === "Admin") {
-                                                        return true;
-                                                    }
-                                                    return(item?.role === "Teacher" || item?.role === "User") && item?.year === "SY BCA";
-                                                })
-                                                .map((item) => (
+                                                searchResults.map((item) => (
                                                     <MenuItem key={item.id} onClick={() => createRoom(item)}>
                                                         <div style={{ display: "flex", alignItems: "center" }}>
                                                             <img src={getProfileImage(item?.profileImage)} alt="Profile" style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }} />
