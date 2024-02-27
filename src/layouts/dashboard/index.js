@@ -43,7 +43,7 @@ function Dashboard() {
   const assignment = useSelector((state) => state.assignment);
   const todo = useSelector((state) => state.todo);
   const calendar = useSelector((state) => state.calendar);
-  const resource = useSelector((state) => state.resource);
+  const resource=useSelector((state) => state.resource);
 
 
   const pieChartData = {

@@ -171,7 +171,7 @@ const LandingPage = () => {
           <div className="relative -mx-4 flex items-center justify-between">
             <div className="w-60 max-w-full px-4">
 
-              <a href="https://studybuddy.cloudonex.com/#home" className="block w-full py-5">
+              <a href="http://localhost:3001/landingPage" className="block w-full py-5">
 
 
                 <img src={brand}
@@ -306,13 +306,13 @@ const LandingPage = () => {
                   </div>
                 </div>
 
-                <div className="absolute bottom-12 -left-20 -z-[1] w-48 h-48 bg-gradient-to-b from-orange-500 to-white p-px rounded-lg">
+                {/* <div className="absolute bottom-12 -left-20 -z-[1] w-48 h-48 bg-gradient-to-b from-orange-500 to-white p-px rounded-lg">
                   <div className="bg-white w-48 h-48 rounded-lg"></div>
-                </div>
+                </div> */}
 
-                <div className="absolute -top-12 -right-20 -z-[1] w-48 h-48 bg-gradient-to-t from-blue-600 to-cyan-400 p-px rounded-full">
+                {/* <div className="absolute -top-12 -right-20 -z-[1] w-48 h-48 bg-gradient-to-t from-blue-600 to-cyan-400 p-px rounded-full">
                   <div className="bg-white w-48 h-48 rounded-full"></div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -1422,10 +1422,10 @@ const LandingPage = () => {
 
                 <div className="mt-3 grid space-y-3 text-sm">
 
-                  {/* <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="https://studybuddy.cloudonex.com/#about">About</a></p>
-                  <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="https://studybuddy.cloudonex.com/#pricing">Plans &amp; Pricing</a> <span className="inline text-blue-600">— Get Started</span></p>
-                  <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="https://studybuddy.cloudonex.com/#customers">Testimonials</a></p>
-                  <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="https://studybuddy.cloudonex.com/#faq">FAQ</a></p> */}
+                   <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="">About</a></p>
+                 <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="">Plans &amp; Pricing</a> <span className="inline text-blue-600">— Get Started</span></p>
+                  <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="">Testimonials</a></p>
+                  <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="">FAQ</a></p>
 
                 </div>
               </div>
