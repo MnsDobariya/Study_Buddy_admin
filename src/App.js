@@ -48,7 +48,6 @@ export default function App() {
   // console.log('filterRout', filterRout)
 
   const [controller, dispatch] = useSoftUIController();
-  const AppDispatch = useDispatch();
   const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
@@ -110,57 +109,9 @@ export default function App() {
 
 
   // console.log('assignment', assignment)
-  const getAssignmentRecord = () => {
   
-    ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
-        .then((res) => {
-            AppDispatch(setAssignmentList(res?.data))
-            // setAssignmentCount(res?.data.length);
-        }).catch((error) => {
-        })
-};
 
-const getCalendarRecord = () => {
-  ApiGet(`${EndPoint.EVENT_GET}`)
-      .then((res) => {
-          let updated = res?.data?.map((x) => ({
-              ...x,
-              title: x?.Title,
-              start: x?.StartDate,
-              end: x?.EndDate
-          }))
-          AppDispatch(setCalendarList(updated))
-
-      })
-};
-
-const getTodosData = () => {
-  ApiGet(`${EndPoint.TODOS_GET}`)
-      .then((res) => {
-          AppDispatch(setTodoList(res?.data))
-      })
-}
-
-
-
-const getResources = () => {
-  ApiGet(`${EndPoint.RESOURCES_GET}`)
-      .then((res) => {
-        console.log('res.data', res.data)
-          AppDispatch(setResourceList(res?.data))
-      })
-}
-
-
-useEffect((e) => {
-    getAssignmentRecord();
-    getCalendarRecord();
-    getTodosData();
-    getResources();
-}, []);
-
-
-const userToken = localStorage.getItem("token");
+  const userToken = localStorage.getItem("token");
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -35,6 +35,10 @@ import { setAssignmentList } from "store/slices/assignmentSlice";
 import { MdEvent } from "react-icons/md";
 import { Pie } from "react-chartjs-2";
 import { Card, CardContent, Typography } from "@mui/material";
+import { setTodoList } from "store/slices/todoSlice";
+import { setCalendarList } from "store/slices/calendarSlice";
+import { setResourceList } from "store/slices/resourceSlice";
+
 
 function Dashboard() {
 
@@ -43,7 +47,8 @@ function Dashboard() {
   const assignment = useSelector((state) => state.assignment);
   const todo = useSelector((state) => state.todo);
   const calendar = useSelector((state) => state.calendar);
-  const resource=useSelector((state) => state.resource);
+  const resource = useSelector((state) => state.resource);
+
 
 
   const pieChartData = {
@@ -56,6 +61,59 @@ function Dashboard() {
       },
     ],
   };
+
+  const AppDispatch = useDispatch();
+
+
+  const getAssignmentRecord = () => {
+
+    ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
+      .then((res) => {
+        AppDispatch(setAssignmentList(res?.data))
+        // setAssignmentCount(res?.data.length);
+      }).catch((error) => {
+      })
+  };
+
+  const getCalendarRecord = () => {
+    ApiGet(`${EndPoint.EVENT_GET}`)
+      .then((res) => {
+        let updated = res?.data?.map((x) => ({
+          ...x,
+          title: x?.Title,
+          start: x?.StartDate,
+          end: x?.EndDate
+        }))
+        AppDispatch(setCalendarList(updated))
+
+      })
+  };
+
+  const getTodosData = () => {
+    ApiGet(`${EndPoint.TODOS_GET}`)
+      .then((res) => {
+        AppDispatch(setTodoList(res?.data))
+      })
+  }
+
+
+
+  const getResources = () => {
+    ApiGet(`${EndPoint.RESOURCES_GET}`)
+      .then((res) => {
+        console.log('res.data', res.data)
+        AppDispatch(setResourceList(res?.data))
+      })
+  }
+
+
+  useEffect((e) => {
+    getAssignmentRecord();
+    getCalendarRecord();
+    getTodosData();
+    getResources();
+  }, []);
+
 
 
   return (
@@ -166,7 +224,7 @@ function Dashboard() {
                 height="20.25rem"
                 chart={gradientLineChartData}
               /> */}
-              
+
             </Grid>
           </Grid>
         </SoftBox>
