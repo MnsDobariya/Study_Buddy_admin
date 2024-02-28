@@ -28,7 +28,7 @@ import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData"
 import { faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { setAssignmentList } from "store/slices/assignmentSlice";
@@ -48,6 +48,8 @@ function Dashboard() {
   const todo = useSelector((state) => state.todo);
   const calendar = useSelector((state) => state.calendar);
   const resource = useSelector((state) => state.resource);
+  const [todosData,setTodosData] = useState([]);
+ 
 
 
 
@@ -89,19 +91,45 @@ function Dashboard() {
       })
   };
 
+
+
+
   const getTodosData = () => {
     ApiGet(`${EndPoint.TODOS_GET}`)
       .then((res) => {
-        AppDispatch(setTodoList(res?.data))
+        console.log(res?.data,"response");
+        // const convertedData = res?.data.map((todo) => ({
+        //   task: todo.task,  
+        //   portable: parseInt(todo.portable, 10), 
+        // }));
+
+        const pieChartData = {
+          labels: ['Low', 'High', 'Medium'],
+          datasets: [
+            {
+              data: [
+                res?.data?.filter((item)=> item.portable == "Low").length || 0,
+                res?.data?.filter((item)=> item.portable == "High").length || 0,
+                res?.data?.filter((item)=> item.portable == "Medium").length || 0,
+              ], 
+              backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'], 
+              hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+            },
+          ],
+        };
+  
+        setTodosData(pieChartData);
+        AppDispatch(setTodoList(res?.data));
+        // setTodosData(res?.data);
+
       })
   }
 
-
-
+  
   const getResources = () => {
     ApiGet(`${EndPoint.RESOURCES_GET}`)
       .then((res) => {
-        console.log('res.data', res.data)
+        // console.log('res.data', res.data)
         AppDispatch(setResourceList(res?.data))
       })
   }
@@ -114,7 +142,20 @@ function Dashboard() {
     getResources();
   }, []);
 
-
+  // const pieChartData = {
+  //   labels: ['Completed', 'In Progress', 'Not Started'],
+  //   datasets: [
+  //     {
+  //       data: [
+  //         todosData.filter((todo) => todo.task === 'Completed')[0]?.portable || 0,
+  //         todosData.filter((todo) => todo.task === 'In Progress')[0]?.portable || 0,
+  //         todosData.filter((todo) => todo.task === 'Not Started')[0]?.portable || 0,
+  //       ],
+  //       backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+  //       hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+  //     },
+  //   ],
+  // };
 
   return (
     <DashboardLayout>
@@ -193,7 +234,7 @@ function Dashboard() {
                   </Typography>
                   <SoftBox mb={3}>
                     <Pie
-                      data={pieChartData}
+                      data={todosData}
                       options={{
                         legend: {
                           display: true,
@@ -201,7 +242,25 @@ function Dashboard() {
                         },
                       }}
                     />
-                  </SoftBox>
+                    {/* <Pie
+                    data={{
+                      labels: todosData.map((todo) => todo.task),
+                      datasets: [
+                        {
+                          data: todosData.map((todo) => todo.portable),
+                          backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+                          hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+                        },
+                      ],
+                    }}
+                    options={{
+                      legend: {
+                        display: true,
+                        position: 'right',
+                      },
+                    }}
+                  /> */}
+                    </SoftBox>
                 </CardContent>
               </Card>
             </Grid>

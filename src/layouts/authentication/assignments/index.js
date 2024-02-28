@@ -115,6 +115,10 @@ const Assignments = () => {
             //     }
             // }}
             >
+                <MenuItem onClick={() => {
+                    navigate('/assignments/assignmentDetails')
+                }}
+                    >Open</MenuItem>
                 <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
                 <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
 

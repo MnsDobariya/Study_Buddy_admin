@@ -412,8 +412,8 @@ const LandingPage = () => {
               </h2>
 
               <nav className="grid gap-4 mt-5 md:mt-10" aria-label="Tabs" role="tablist">
-                <button type="button"
-                  className=" text-left  p-4 md:p-5 rounded-xl "
+                <div 
+                  className="card-bodylanding  text-left  p-4 md:p-5 rounded-xl"
                   id="tabs-with-card-item-1" data-hs-tab="#tabs-with-card-1"
                   aria-controls="tabs-with-card-1" role="tab" style={{border:"0px",outline:"none"}}>
                   <span className="flex">
@@ -430,10 +430,10 @@ const LandingPage = () => {
                       <span className="block mt-1 text-gray-800">Dont know answer of some questions? No problem your AI tutor will answer questions on any suubject. Chat with Ai and increase your knowledge.</span>
                     </span>
                   </span>
-                </button>
+                </div>
 
-                <button type="button"
-                  className=" text-left p-4 md:p-5 rounded-xl"
+                <div 
+                  className="card-bodylanding text-left p-4 md:p-5 rounded-xl"
                   id="tabs-with-card-item-2" data-hs-tab="#tabs-with-card-2"
                   aria-controls="tabs-with-card-2" role="tab" style={{border:"0px",outline:"none"}}>
                   <span className="flex">
@@ -450,11 +450,11 @@ const LandingPage = () => {
                       <span className="block mt-1 text-gray-800"> Plan for your study discuss with your friends and get the best out of your study time.</span>
                     </span>
                   </span>
-                </button>
+                </div>
 
                 {/* hover:bg-gray-200 */}
-                <button type="button"
-                  className="text-left  p-4 md:p-5 rounded-xl"
+                <div 
+                  className="card-bodylanding text-left  p-4 md:p-5 rounded-xl"
                   id="tabs-with-card-item-3" data-hs-tab="#tabs-with-card-3"
                   aria-controls="tabs-with-card-3" role="tab" style={{border:"0px",outline:"none"}}>
                   <span className="flex">
@@ -471,7 +471,7 @@ const LandingPage = () => {
                       <span className="block mt-1 text-gray-800 "> Create amazing notes, highlight important ideas.You can also take help from AI to create notes.</span>
                     </span>
                   </span>
-                </button>
+                </div>
               </nav>
             </div>
 
@@ -1235,7 +1235,9 @@ const LandingPage = () => {
                     <div className="content">
                       <div className="icon1">
                         {/* <i className="fa fa-twitter-square" aria-hidden="true"></i> */}
-                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg  bg-opacity-5 " style={{ color: "#6eadd4" }}>
+                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg  bg-opacity-5 " 
+                        // style={{ color: "#6eadd4" }}
+                        >
                           J
                         </div>
                         <div className='mainName'>James Larsson</div>
@@ -1256,7 +1258,9 @@ const LandingPage = () => {
                     <div className="content">
                       <div className="icon1">
                         {/* <i className="fa fa-github-square" aria-hidden="true"></i> */}
-                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-opacity-5 " style={{ color: "#4aada9" }}>
+                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-opacity-5 " 
+                        // style={{ color: "#4aada9" }}
+                        >
                           A
                         </div>
                         <div className='mainName'>Alice Holmes</div>
