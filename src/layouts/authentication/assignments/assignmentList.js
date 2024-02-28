@@ -128,7 +128,7 @@ const AssignmentList = () => {
 
     useEffect(() => {
         getAssignmentRecord("");
-    })
+    },[])
 
     return (
         <>

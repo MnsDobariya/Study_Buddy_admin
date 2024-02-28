@@ -185,7 +185,7 @@ const Calendar = () => {
             hotkeys.unbind("alt + c");
         }
 
-    })
+    },[])
 
     return (
         <>

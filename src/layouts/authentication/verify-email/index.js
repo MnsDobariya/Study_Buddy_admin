@@ -79,7 +79,7 @@ function EmailVerify() {
           })
         }
       }).catch((error) => {
-        if (error.response.data.message === "email not found") {
+        if (error.error === "email not found") {
           toast.error(<p style={{ fontSize: "80%" }}>{"email not found..!"}</p>, {
             position: "top-center",
 
@@ -97,6 +97,7 @@ function EmailVerify() {
     // axios.post("http://localhost:3000/api/v1/auth/verify-otp", body)
     ApiPost(`${EndPoint.USER_VERIFY_OTP}`, body,)
       .then((res) => {
+        console.log('res', res)
         if (res.status === 200) {
           toast.success(<p style={{ fontSize: "80%" }}>{"OTP Verification Successfully"}</p>, {
             position: "top-center"
@@ -137,6 +138,7 @@ function EmailVerify() {
                 <SoftInput
                   type="email"
                   name="email"
+                  autoComplete="off"
                   value={vrfyEmail.email}
                   placeholder="Email"
                   onChange={(e) => {
