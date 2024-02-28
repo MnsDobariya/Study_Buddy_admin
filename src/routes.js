@@ -66,6 +66,7 @@ import { MdDashboardCustomize } from "react-icons/md";
 import { MdDashboard } from "react-icons/md";
 import { FaCalendarDays } from "react-icons/fa6";
 import LandingPage from "landing/landing";
+import AssignmentDetails from "layouts/authentication/assignments/assignmentDetails";
 
 const routes = [
   {
@@ -286,6 +287,15 @@ const routes = [
     route: "/assignments/assignmentList",
     icon: <SpaceShip size="12px" />,
     component: <AssignmentList />,
+    noCollapse: true,
+  },
+  {
+    // type: "collapse",
+    name: "assignment Details",
+    key: "assignmentdetails",
+    route: "/assignments/assignmentDetails",
+    icon: <SpaceShip size="12px" />,
+    component: <AssignmentDetails />,
     noCollapse: true,
   },
 
