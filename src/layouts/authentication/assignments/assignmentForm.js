@@ -176,7 +176,7 @@ const AssignmentForm = () => {
             hotkeys.unbind("alt + c");
         }
 
-    })
+    },[])
 
     return (
         <>
