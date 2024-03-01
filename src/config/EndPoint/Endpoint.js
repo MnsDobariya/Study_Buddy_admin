@@ -34,4 +34,7 @@ export const EndPoint = {
     SEARCH_GET:'users/teacher/get/search',
     ASSIGNMENT_GETUSER:'assignments/getUser',
     TASKS_CREATE:'task/create',
+    TASK_GET:'task/get',
+    TASK_DELETE:'task/delete',
+    TASK_UPDATE:'task/update'
 }
