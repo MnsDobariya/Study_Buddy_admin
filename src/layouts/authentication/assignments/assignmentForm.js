@@ -21,6 +21,12 @@ const categoryDropDown = [
     { label: "Pending", value: "Pending" },
     { label: "Finished", value: "Finished" },
 ];
+
+// const yearDropDown = [
+//     { label: "FY BCA", value: "FY BCA" },
+//     { label: "SY BCA", value: "SY BCA" },
+//     { label: "TY BCA", value: "TY BCA" },
+// ];
 const today = dayjs();
 const tomorrow = dayjs().add(1, 'day');
 
@@ -33,6 +39,7 @@ const AssignmentForm = () => {
         title: "",
         status: "",
         assignmentSummary: "",
+        members:"",
         startDate: "",
         endDate: "",
         projectDescription: ""
@@ -45,6 +52,7 @@ const AssignmentForm = () => {
         title: "",
         status: "",
         assignmentSummary: "",
+        members:"",
         startDate: "",
         endDate: "",
         projectDescription: ""
@@ -109,6 +117,7 @@ const AssignmentForm = () => {
             error.title ||
             error.status ||
             error.assignmentSummary ||
+            // error.members||
             error.projectDescription
         ) {
             setError(error);
@@ -119,6 +128,7 @@ const AssignmentForm = () => {
             title: addAssignment?.title,
             status: addAssignment?.status,
             assignmentSummary: addAssignment?.assignmentSummary,
+            members:addAssignment?.members,
             startDate: startDate,
             endDate: endDate,
             projectDescription: addAssignment?.projectDescription,
@@ -143,6 +153,7 @@ const AssignmentForm = () => {
                             title: "",
                             status: "",
                             assignmentSummary: "",
+                            members:"",
                             startDate: "",
                             endDate: "",
                             projectDescription: ""
@@ -272,12 +283,35 @@ const AssignmentForm = () => {
                             {error.assignmentSummary && <p style={{ color: "red", fontSize: "60%" }}>{error.assignmentSummary} </p>}
 
                         </div>
-                        <div className="col-sm-6 form-group ">
+                        {/* <div className="col-sm-6 form-group">
+                            <label htmlFor="email">Members</label>
+                            <select
+                                        name="year"
+                                        id="year"
+                                        className='form-control'
+                                        style={{ borderRadius: "0.5rem",width:"15%" }}
+                                        onChange={(e) => {
+                                            setYear(e.target.value);
+                                        }}
+                                    >
+                                        <option key="">Select Year</option>
+                                        {yearDropDown &&
+                                            yearDropDown?.map((x) => (
+                                                <option key={x.value}>{x.value}</option>
+                                            ))
+                                        }
+                                    </select>
+                            {error.assignmentSummary && <p style={{ color: "red", fontSize: "60%" }}>{error.assignmentSummary} </p>}
+
+                        </div> */}
+                    </div>
+                    <div style={{ display: "flex" }}>
+                    <div className="col-sm-6 form-group ">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 {/* <DemoContainer
                                     components={['DatePicker', 'DateTimePicker', 'DateRangePicker']}
                                 > */}
-                                <label htmlFor='email'>DatePicker</label>
+                                <label htmlFor='email'>Start Date</label>
                                 <DatePicker
                                     selected={startDate}
                                     onChange={(date) => setStartDate(date)}
@@ -305,8 +339,7 @@ const AssignmentForm = () => {
 
                             {error.startDate && <p style={{ color: "red", fontSize: "60%" }}>{error.startDate} </p>}
                         </div>
-                    </div>
-                    <div style={{ display: "flex" }}>
+
                         <div className="col-sm-6 form-group ">
                             {/* <label htmlFor="date"></label>
                             <SoftInput
@@ -323,7 +356,7 @@ const AssignmentForm = () => {
                                 {/* <DemoContainer
                                     components={['DatePicker', 'DateTimePicker', 'DateRangePicker']}
                                 > */}
-                                <label htmlFor='email'>DatePicker</label>
+                                <label htmlFor='email'>End Date</label>
                                 <DatePicker
                                     selected={endDate}
                                     onChange={(date) => setEndDate(date)}
@@ -369,6 +402,7 @@ const AssignmentForm = () => {
                             {error.endDate && <p style={{ color: "red", fontSize: "60%" }}>{error.endDate} </p>}
                         </div>
 
+                    </div>
                         <div className="col-sm-6 form-group">
                             <label htmlFor="mobile">Project Description</label>
                             <SoftInput
@@ -389,7 +423,6 @@ const AssignmentForm = () => {
                             {error.projectDescription && <p style={{ color: "red", fontSize: "60%" }}>{error.projectDescription} </p>}
 
                         </div>
-                    </div>
                     <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "30%", width: "40%" }}>
 
 

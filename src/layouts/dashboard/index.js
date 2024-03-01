@@ -48,9 +48,8 @@ function Dashboard() {
   const todo = useSelector((state) => state.todo);
   const calendar = useSelector((state) => state.calendar);
   const resource = useSelector((state) => state.resource);
-  const [todosData,setTodosData] = useState([]);
- 
-
+  const [todosData, setTodosData] = useState([]);
+  const [assignmentData, setAssignmentData] = useState([]);
 
 
   const pieChartData = {
@@ -71,6 +70,22 @@ function Dashboard() {
 
     ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
       .then((res) => {
+
+        const pieChartData = {
+          labels: ['Pending', 'Started', 'Finished'],
+          datasets: [
+            {
+              data: [
+                res?.data?.filter((item) => item.status == "Pending").length || 0,
+                res?.data?.filter((item) => item.status == "Started").length || 0,
+                res?.data?.filter((item) => item.status == "Finished").length || 0,
+              ],
+              backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+              hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+            },
+          ],
+        };
+        setAssignmentData(pieChartData);
         AppDispatch(setAssignmentList(res?.data))
         // setAssignmentCount(res?.data.length);
       }).catch((error) => {
@@ -91,13 +106,10 @@ function Dashboard() {
       })
   };
 
-
-
-
   const getTodosData = () => {
     ApiGet(`${EndPoint.TODOS_GET}`)
       .then((res) => {
-        console.log(res?.data,"response");
+        console.log(res?.data, "response");
         // const convertedData = res?.data.map((todo) => ({
         //   task: todo.task,  
         //   portable: parseInt(todo.portable, 10), 
@@ -108,16 +120,16 @@ function Dashboard() {
           datasets: [
             {
               data: [
-                res?.data?.filter((item)=> item.portable == "Low").length || 0,
-                res?.data?.filter((item)=> item.portable == "High").length || 0,
-                res?.data?.filter((item)=> item.portable == "Medium").length || 0,
-              ], 
-              backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'], 
+                res?.data?.filter((item) => item.portable == "Low").length || 0,
+                res?.data?.filter((item) => item.portable == "High").length || 0,
+                res?.data?.filter((item) => item.portable == "Medium").length || 0,
+              ],
+              backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
               hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
             },
           ],
         };
-  
+
         setTodosData(pieChartData);
         AppDispatch(setTodoList(res?.data));
         // setTodosData(res?.data);
@@ -125,7 +137,7 @@ function Dashboard() {
       })
   }
 
-  
+
   const getResources = () => {
     ApiGet(`${EndPoint.RESOURCES_GET}`)
       .then((res) => {
@@ -260,29 +272,47 @@ function Dashboard() {
                       },
                     }}
                   /> */}
-                    </SoftBox>
+                  </SoftBox>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={12} lg={5}>
-              {/* <GradientLineChart
-                title="Sales Overview"
-                description={
-                  <SoftBox display="flex" alignItems="center">
-                    <SoftBox fontSize={size.lg} color="success" mb={0.3} mr={0.5} lineHeight={0}>
-                      <Icon className="font-bold">arrow_upward</Icon>
-                    </SoftBox>
-                    <SoftTypography variant="button" color="text" fontWeight="medium">
-                      4% more{" "}
-                      <SoftTypography variant="button" color="text" fontWeight="regular">
-                        in 2021
-                      </SoftTypography>
-                    </SoftTypography>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    Task Status
+                  </Typography>
+                  <SoftBox mb={3}>
+                    <Pie
+                      data={assignmentData}
+                      options={{
+                        legend: {
+                          display: true,
+                          position: 'right',
+                        },
+                      }}
+                    />
+                    {/* <Pie
+                    data={{
+                      labels: todosData.map((todo) => todo.task),
+                      datasets: [
+                        {
+                          data: todosData.map((todo) => todo.portable),
+                          backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+                          hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+                        },
+                      ],
+                    }}
+                    options={{
+                      legend: {
+                        display: true,
+                        position: 'right',
+                      },
+                    }}
+                  /> */}
                   </SoftBox>
-                }
-                height="20.25rem"
-                chart={gradientLineChartData}
-              /> */}
+                </CardContent>
+              </Card>
 
             </Grid>
           </Grid>
