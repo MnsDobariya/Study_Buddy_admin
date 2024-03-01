@@ -32,4 +32,6 @@ export const EndPoint = {
     CHAT_CREATE:'chat/create',
     CHAT_GET:'chat/get',
     SEARCH_GET:'users/teacher/get/search',
+    ASSIGNMENT_GETUSER:'assignments/getUser',
+    TASKS_CREATE:'task/create',
 }

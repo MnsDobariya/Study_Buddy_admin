@@ -67,6 +67,9 @@ import { MdDashboard } from "react-icons/md";
 import { FaCalendarDays } from "react-icons/fa6";
 import LandingPage from "landing/landing";
 import AssignmentDetails from "layouts/authentication/assignments/assignmentDetails";
+import Details from "layouts/authentication/assignments/Details";
+import Tasks from "layouts/authentication/assignments/Tasks";
+import Description from "layouts/authentication/assignments/Description";
 
 const routes = [
   {
@@ -298,7 +301,33 @@ const routes = [
     component: <AssignmentDetails />,
     noCollapse: true,
   },
-
+  {
+    // type: "collapse",
+    name: "details",
+    key: "details",
+    route: "/assignments/details",
+    icon: <SpaceShip size="12px" />,
+    component: <Details />,
+    noCollapse: true,
+  },
+  {
+    // type: "collapse",
+    name: "tasks",
+    key: "tasks",
+    route: "/assignments/tasks",
+    icon: <SpaceShip size="12px" />,
+    component: <Tasks />,
+    noCollapse: true,
+  },
+  {
+    // type: "collapse",
+    name: "description",
+    key: "description",
+    route: "/assignments/description",
+    icon: <SpaceShip size="12px" />,
+    component: <Description />,
+    noCollapse: true,
+  },
   // {
   //   type: "collapse",
   //   name: "Form3",
