@@ -11,10 +11,13 @@ import { EndPoint } from "config/EndPoint/Endpoint";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Description from "./Description";
+import Tasks from "./Tasks";
+import Details from "./Details";
 // import '../assignments/assignment.css';
 
 const today = dayjs();
-const tomorrow = dayjs().add(1,'day');
+const tomorrow = dayjs().add(1, 'day');
 
 const assignmentDetails = () => {
     const [open, setOpen] = useState();
@@ -22,18 +25,28 @@ const assignmentDetails = () => {
         dueDate: "",
         task: "",
         description: "",
+        assignId:""
     });
-const [startDate,setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date());
+    const [tab, setTab] = useState("");
 
-const navigate = useNavigate();
 
-const handleOpen = () => {
-    setOpen(true);
-}
+    const navigate = useNavigate();
 
-const handleClose = () => {
-    setOpen(false);
-}
+    const handleOpen = () => {
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const handleChange = () => {
+        setTasks({
+            ...tasks,
+            [e.target.name]: e.target.value,
+        });
+    }
 
     //     const [assignmentDetails,setAssignmentDetails] = useState();
 
@@ -50,23 +63,23 @@ const handleClose = () => {
 
     const AddTasks = () => {
         const body = {
-            dueDate:tasks?.dueDate,
-            task:tasks?.task,
-            description:tasks?.description,
+            dueDate: tasks?.dueDate,
+            task: tasks?.task,
+            description: tasks?.description,
         }
 
-        ApiPost(`${EndPoint.TASKS_CREATE}`,body)
-        .then((res) => {
-            console.log(res,"tasksres");
-            if(res.status === 201){
-                setTasks({
-                    dueDate:"",
-                    task:"",
-                    description:""
-                })
-                handleClose();
-            }
-        })
+        ApiPost(`${EndPoint.TASKS_CREATE}`, body)
+            .then((res) => {
+                console.log(res, "tasksres");
+                if (res.status === 201) {
+                    setTasks({
+                        dueDate: "",
+                        task: "",
+                        description: ""
+                    })
+                    handleClose();
+                }
+            })
     }
 
     return (
@@ -76,7 +89,7 @@ const handleClose = () => {
                 <div className="card-assignment" style={{ height: "77px" }}>
 
                     <div style={{ padding: "22px", color: "#344767" }}>
-                        <p className="card-assignment">AssignmentDetails</p>
+                        <p className="card-assignment">Assignment Details</p>
 
                     </div>
                     <p className="card-assignment"> </p>
@@ -85,31 +98,11 @@ const handleClose = () => {
             <SoftBox mt={4} mb={1}>
                 <div className="cardassignment w-75">
 
-                    {/* <div className="card-assignment2"> */}
-
-                    {/* <div style={{ display: "flex" }}>
-                        <p className="card-assignment"></p>
-                        <label className=''>
-                            <span className=''></span>
-                        </label>
-                        <div style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
-
-                        </div>
-                    </div>
-                    <p className="card-assignment"></p> */}
-                    {/* <div className="cardTitleassignment" style={{ display: "flex" }}>
-                        <div className="lblassignment" >
-                            <label1>M</label1>
-                        </div>
-                        <h5>Abc</h5>
-                        <p> 9 minutes ago</p>
-                    </div> */}
                     <div className="cardTitleassignment d-flex align-items-center">
                         <div className="lblassignment">
                             <label1>M</label1>
                         </div>
                         <h5 className="mb-2">Abc</h5>
-                        {/* <p className="mb-0">9 minutes ago</p> */}
                         <div className="ml-auto mr-3 d-flex" style={{ gap: "20px" }}>
                             <SoftButton variant="gradient" color="info" style={{ border: "0px", outline: "none" }} onClick={() => {
                                 handleOpen(true);
@@ -122,20 +115,9 @@ const handleClose = () => {
 
                         </div>
                     </div>
-                    {/* <p>9 minutes ago</p> */}
                     <div style={{ marginTop: "1%" }}>
 
-                        {/* <label>
-                            <span>Status </span>
-                        </label>
-                        <label>
-                            <span className=''>EndDate</span>
-                        </label>
-                        <label>
-                            <span className=''>StartDate</span>
-                        </label> */}
-                        {/* <div className="ad-title m-auto">
-                        </div> */}
+
                         <div className="row mt-3 ml-3">
                             <div className="col-sm-2 mx-2">
                                 <p className="assignmentdata">Status</p>
@@ -163,38 +145,45 @@ const handleClose = () => {
                     </div>
                     <div style={{ paddingBottom: "2%", marginTop: "1%", display: "flex", color: "#67748e" }}>
 
-                        {/* <label>
-    <span>Status </span>
-</label>
-<label>
-    <span className=''>EndDate</span>
-</label>
-<label>
-    <span className=''>StartDate</span>
-</label> */}
-                        {/* <div className="ad-title m-auto">
-</div> */}
+
                         <div className="row mt-3 ml-3">
                             <div className="col-md-4">
-                                <h4 className="assignmentdetails" onClick={() => {
-                                    navigate("/assignments/details");
-                                }}>Details</h4>
+                                <h4 className="assignmentdetails" onClick={() => setTab("detail")}>Details</h4>
                             </div>
                             <div className="col-md-3">
-                                <h4 className="assignmentdetails" onClick={() => {
-                                    navigate("/assignments/tasks");
-                                }}>Task</h4>
+                                <h4 className="assignmentdetails" onClick={() => setTab("task")}>Task</h4>
                             </div>
                             <div className="col-md-3">
-                                <h4 className="assignmentdetails" onClick={() => {
-                                    navigate("/assignments/description");
-                                }}>Description</h4>
+                                <h4 className="assignmentdetails" onClick={() => setTab("discussion")}>Discussion</h4>
                             </div>
                         </div>
                     </div>
                     {/* </div> */}
                 </div>
             </SoftBox>
+
+
+            {
+                tab == "detail" && (
+                    <Details />
+                )
+            }
+            {
+                tab == "task" && (
+                    <Tasks />
+
+                )
+            }
+            {
+                tab == "discussion" && (
+                     <Description />
+                )
+            }
+
+           
+
+
+
             <SoftBox mt={4} mb={1}>
                 <Modal
                     open={open}
@@ -242,6 +231,22 @@ const handleClose = () => {
                                     name="tasks"
                                     value={tasks?.task}
                                     placeholder="Tasks"
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                    }}
+                                />
+
+                            </div>
+                            <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+                                <label htmlFor="assignId" style={{ color: "#344767" }}>AssignTo</label>
+                                <SoftInput
+                                    type="text"
+                                    name="assignId"
+                                    value={tasks?.assignId}
+                                    placeholder="assignId"
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                    }}
 
                                 />
 
@@ -253,7 +258,9 @@ const handleClose = () => {
                                     name="description"
                                     value={tasks?.description}
                                     placeholder="Description"
-
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                    }}
                                 />
 
                             </div>
