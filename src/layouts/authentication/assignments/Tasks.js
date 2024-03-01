@@ -1,45 +1,136 @@
-import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import axios from 'axios';
 import SoftBox from 'components/SoftBox';
 import SoftButton from 'components/SoftButton';
-import React from 'react'
+import { ApiGet } from 'config/Api/ApiData';
+import { EndPoint } from 'config/EndPoint/Endpoint';
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Tasks = ()  => {
+const Tasks = () => {
     const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState();
 
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const [taskData, setTaskData] = useState([]);
+
+    const getTaskData = () => {
+        ApiGet(`${EndPoint.TASK_GET}`)
+            .then((res) => {
+                console.log('res', res)
+                setTaskData(res?.data);
+            })
+    }
+
+    useEffect((e) => {
+        getTaskData("");
+    }, [])
+
+    const deleteTask = (id) => {
+        axios.delete(`http://localhost:3000/api/v1/task/delete/${id}`)
+            .then((res) => {
+                getTaskData();
+            })
+    }
     return (
         <>
-            
-            <SoftBox>
-                <div className="cardTasks w-75">
+            {(taskData && taskData.length) ?
+                taskData?.map((item) => (
+                    <div key={item.id} className="rowtodos" id="adstodos">
 
-                    <div className="card-Tasks" style={{ height: "110px" }}>
+                    <SoftBox>
+                        <div className="cardTasks w-75">
 
-                        <div style={{ padding: "22px 22px 8px 22px", color: "#344767", fontSize: "initial" }}>
-                            <p>Assignment Details</p>
-                        </div>
-                        <div className="card-Tasks2">
-                            <div className="lbltasks">
-                                <label1>M</label1>
+                            <div className="card-Tasks" style={{ height: "110px" }}>
+
+                                <div style={{ padding: "22px 22px 8px 22px", color: "#344767", fontSize: "initial" }}>
+                                    <p>Task</p>
+                                </div>
+                                <div className="card-Tasks2">
+                                    <div className="lbltasks">
+                                        <label1>M</label1>
+                                    </div>
+                                    <h5 style={{ padding: "8px", fontSize: "medium", color: "#67748e" }}> Assignment Details</h5>
+                                    <label className='dateTasks'>
+                                        <span className=''><p> DUE DATE: 30 MAR 2024</p></span>
+                                    </label>
+                                    <div className="mr-5" style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
+                                        <FontAwesomeIcon icon={faPen} onClick={() => {
+                                            handleEdit(item)
+                                        }}
+                                            style={{ cursor: "pointer" }}
+                                        />
+                                        <FontAwesomeIcon icon={faTrash} onClick={() => {
+                                            setOpen(true);
+                                            setDeleteId(item.id);
+                                        }}
+                                            style={{ cursor: "pointer" }}
+                                        />
+                                    </div>
+                                </div>
+
                             </div>
-                            <h5 style={{ padding: "8px", fontSize: "medium", color: "#67748e" }}> Assignment Details</h5>
-                            <label className='dateTasks'>
-                                <span className=''><p> DUE DATE: 30 MAR 2024</p></span>
-                            </label>
-                            <div className="mr-5" style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
-                                <FontAwesomeIcon icon={faPen}
-                                    style={{ cursor: "pointer" }}
-                                />
-                                <FontAwesomeIcon icon={faTrash}
-                                    style={{ cursor: "pointer" }}
-                                />
-                            </div>
                         </div>
-
+                    </SoftBox>
                     </div>
-                </div>
-            </SoftBox>
+                )) : (
+                    <div className="noRecord" style={{marginLeft:"50%",marginTop:"15%"}}>
+                    <p>No Record</p>
+                    </div>
+                )}
+
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                sx={{
+                    "& .MuiDialog-container": {
+                        "& .MuiPaper-root": {
+                            height: "40%",
+                            width: "100%",
+                            maxWidth: "500px",
+                            borderRadius: "0.5rem",  // Set your width here
+                        },
+                    },
+                }}
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {/* Delete */}
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%", height: "22px" }} onClick={handleClose} />
+                </DialogTitle>
+                <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
+                </svg>
+                {/* <FontAwesomeIcon icon={faCircleXmark} /> */}
+                {/* <link  rel="shortcut icon" href="https://image.similarpng.com/very-thumbnail/2020/11/InCorrect-icon-in-sticker-style-on-transparent-background-PNG.png" /> */}
+                <DialogContent style={{ overflowY: "hidden" }}>
+                    <DialogContentText id="alert-dialog-description" style={{ textAlign: "center" }}>
+                        Are you sure Delete?
+                    </DialogContentText>
+                    <DialogContentText style={{ textAlign: "center" }}>
+                        Do you really want to delete these record?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions style={{ marginRight: "25%", paddingBottom: "5%" }}>
+
+                    <button type="button" className="btn btn-danger" onClick={() => {
+                        deleteTask(deleteId)
+                        handleClose(true)
+                    }}
+                        style={{ width: "30%", backgroundColor: "#dc3545" }}
+                    >Yes</button>
+                    <button type="button" className="btn btn-secondary" onClick={handleClose} style={{ width: "30%", backgroundColor: "#6c757d" }} >No</button>
+                </DialogActions>
+            </Dialog>
         </>
 
     )

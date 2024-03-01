@@ -46,7 +46,9 @@ const Assignments = () => {
 
 
     const navigate = useNavigate();
-
+    const handleEdit = (ele) => {
+        navigate(`/todos/addtodos`, { state: ele });
+    }
 
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -115,10 +117,8 @@ const Assignments = () => {
             //     }
             // }}
             >
-                <MenuItem onClick={() => {
-                    navigate('/assignments/assignmentDetails')
-                }}
-                    >Open</MenuItem>
+                <MenuItem onClick={() => navigate('/assignments/assignmentDetails',{state:selectedRowId})}>Open</MenuItem>
+
                 <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
                 <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
 
@@ -136,13 +136,13 @@ const Assignments = () => {
         <>
             <div className="container1 mt-5">
                 <div className="asgn">
-                    <h3 style={{ marginLeft: "6%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>Assignments</h3>
+                    <h3 style={{ marginLeft: "6%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>Assignments</h3>
                     <div className='add-assignment-btn mt-1' >
                         <SoftBox style={{ justifyContent: "end", display: "flex", gap: "10px" }}>
                             <SoftButton variant="gradient" color="info" onClick={() => {
                                 navigate('/assignments/assignmentform')
                             }}
-                            style={{border:"0px",outline:"none"}}
+                                style={{ border: "0px", outline: "none" }}
                             >
                                 Create Assignment
                             </SoftButton>
@@ -150,60 +150,60 @@ const Assignments = () => {
                                 navigate('/assignments/assignmentList')
 
                             }}
-                            style={{border:"0px",outline:"none"}}
+                                style={{ border: "0px", outline: "none" }}
                             >
                                 Assignment List
                             </SoftButton>
                         </SoftBox>
                     </div>
                     <div className="row" id="ads">
-                        {(assignmentRecord && assignmentRecord.length) ? 
-                        assignmentRecord?.map((item) => (
-                            <div key={item.id} className="col-md-4" id="ads">
-                                <div className="row" id="ads" >
-                                    <div className="assignment" >
-                                        <div className="card-asgn">
-                                            <div>
-                                                <div className="card-notify-year mt-4"><FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e, item)} style={{ marginLeft: "5%", color: "black" }} /></div>
-                                                {renderMenu(item)}
+                        {(assignmentRecord && assignmentRecord.length) ?
+                            assignmentRecord?.map((item) => (
+                                <div key={item.id} className="col-md-4" id="ads">
+                                    <div className="row" id="ads" >
+                                        <div className="assignment" >
+                                            <div className="card-asgn">
+                                                <div>
+                                                    <div className="card-notify-year mt-4"><FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e, item)} style={{ marginLeft: "5%", color: "black" }} /></div>
+                                                    {renderMenu(item)}
 
-                                                <h5 className="mt-2 p-4" style={{ textAlign: "center" }}><b>{item?.title}</b></h5>
-                                            </div>
-                                            <div className="card-image-overlay mt-3" style={{ fontSize: "medium", color: "gray", marginLeft: "7%" }}>
-                                                <p>{item?.assignmentSummary}</p>
-                                            </div>
-                                            <div className="card-image-overlay mt-3" style={{ fontSize: "medium", color: "gray", marginLeft: "7%" }}>
-                                                <p>{item?.projectDescription}</p>
-                                            </div>
-                                            <div className="card-body text-center" style={{ display: "flex", justifyContent: "start" }}>
-                                                <div className="lbl" >
-                                                    <label1>MM</label1>
+                                                    <h5 className="mt-2 p-4" style={{ textAlign: "center" }}><b>{item?.title}</b></h5>
                                                 </div>
-                                                <div className="lbl1" >
-                                                    <label1>FM</label1>
+                                                <div className="card-image-overlay mt-3" style={{ fontSize: "medium", color: "gray", marginLeft: "7%" }}>
+                                                    <p>{item?.assignmentSummary}</p>
                                                 </div>
-                                                <label className={item.status === 'Pending' ? 'pending' : item.status === 'Started' ? 'started' : 'finished'}>
-                                                    <span style={{ textAlign: "center", }}><b>{item?.status}</b></span>
-                                                </label>
-                                                <label className='date'>
-                                                    <span className=''><p>{formatDate(item?.endDate)}</p></span>
-                                                </label>
-                                                <div className="ad-title m-auto">
+                                                <div className="card-image-overlay mt-3" style={{ fontSize: "medium", color: "gray", marginLeft: "7%" }}>
+                                                    <p>{item?.projectDescription}</p>
                                                 </div>
-                                            </div>
+                                                <div className="card-body text-center" style={{ display: "flex", justifyContent: "start" }}>
+                                                    <div className="lbl" >
+                                                        <label1>MM</label1>
+                                                    </div>
+                                                    <div className="lbl1" >
+                                                        <label1>FM</label1>
+                                                    </div>
+                                                    <label className={item.status === 'Pending' ? 'pending' : item.status === 'Started' ? 'started' : 'finished'}>
+                                                        <span style={{ textAlign: "center", }}><b>{item?.status}</b></span>
+                                                    </label>
+                                                    <label className='date'>
+                                                        <span className=''><p>{formatDate(item?.endDate)}</p></span>
+                                                    </label>
+                                                    <div className="ad-title m-auto">
+                                                    </div>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))
-                    :
-                    (
-                        <div className="noRecord" style={{marginLeft:"49%",marginTop:"15%"}}>
-                            <p>No Record</p>
-                        </div>
-                    )
-                    }
+                            ))
+                            :
+                            (
+                                <div className="noRecord" style={{ marginLeft: "49%", marginTop: "15%" }}>
+                                    <p>No Record</p>
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
             </div>
@@ -215,30 +215,30 @@ const Assignments = () => {
                 sx={{
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
-                            height:"40%",
+                            height: "40%",
                             width: "100%",
                             maxWidth: "500px",
-                            borderRadius:"0.5rem",  // Set your width here
+                            borderRadius: "0.5rem",  // Set your width here
                         },
                     },
                 }}
             >
                 <DialogTitle id="alert-dialog-title">
                     {/* Delete */}
-                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%",height:"22px" }} onClick={handlePopupClose}/>
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%", height: "22px" }} onClick={handlePopupClose} />
                 </DialogTitle>
                 <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
                 </svg>
-                <DialogContent style={{overflowY:"hidden"}}>
-                    <DialogContentText id="alert-dialog-description" style={{textAlign:"center"}}>
+                <DialogContent style={{ overflowY: "hidden" }}>
+                    <DialogContentText id="alert-dialog-description" style={{ textAlign: "center" }}>
                         Are you sure Delete?
                     </DialogContentText>
-                    <DialogContentText style={{textAlign:"center"}}>
+                    <DialogContentText style={{ textAlign: "center" }}>
                         Do you really want to delete these record?
-                    </DialogContentText>    
+                    </DialogContentText>
                 </DialogContent>
-                <DialogActions style={{ marginRight: "25%",paddingBottom:"2%",paddingTop:"4%" }}>
+                <DialogActions style={{ marginRight: "25%", paddingBottom: "2%", paddingTop: "4%" }}>
                     {/* <Button className="btn btn-primary" onClick={() => {
                         deleteRecord(deleteId)
                         handleClose(true)
@@ -250,9 +250,9 @@ const Assignments = () => {
                         deleteRecords(deleteId)
                         handlePopupClose(true)
                     }}
-                    style={{ width: "30%",backgroundColor:"#dc3545" }}
+                        style={{ width: "30%", backgroundColor: "#dc3545" }}
                     >Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%" ,backgroundColor:"#6c757d"}} >No</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%", backgroundColor: "#6c757d" }} >No</button>
                 </DialogActions>
             </Dialog>
         </>
