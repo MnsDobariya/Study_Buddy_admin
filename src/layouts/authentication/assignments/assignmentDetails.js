@@ -10,10 +10,11 @@ import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Description from "./Description";
 import Tasks from "./Tasks";
 import Details from "./Details";
+import moment from "moment";
 // import '../assignments/assignment.css';
 
 const today = dayjs();
@@ -25,11 +26,12 @@ const assignmentDetails = () => {
         dueDate: "",
         task: "",
         description: "",
-        assignId:""
+        assignId: ""
     });
     const [startDate, setStartDate] = useState(new Date());
     const [tab, setTab] = useState("");
-
+    const location = useLocation();
+    console.log(location, "location");
 
     const navigate = useNavigate();
 
@@ -41,31 +43,21 @@ const assignmentDetails = () => {
         setOpen(false);
     }
 
-    const handleChange = () => {
+    const handleChange = (e) => {
         setTasks({
             ...tasks,
             [e.target.name]: e.target.value,
         });
     }
 
-    //     const [assignmentDetails,setAssignmentDetails] = useState();
 
-    // const getAssignmentDetails = () => {
-    //     ApiGet(`${EndPoint.ASSIGNMENT_GETUSER}`)
-    //     .then((res)=> {
-    //         console.log(res,"response");
-    //     })
-    // }
-
-    // useEffect(() => {
-    //     getAssignmentDetails("");
-    // },[]);
 
     const AddTasks = () => {
         const body = {
             dueDate: tasks?.dueDate,
             task: tasks?.task,
             description: tasks?.description,
+            assignId:tasks?.assignId,
         }
 
         ApiPost(`${EndPoint.TASKS_CREATE}`, body)
@@ -122,16 +114,16 @@ const assignmentDetails = () => {
                             <div className="col-sm-2 mx-2">
                                 <p className="assignmentdata">Status</p>
                                 <label className='pending' style={{ width: "60px", marginLeft: "0px", color: "#344767" }} >
-                                    <span className='' >pending</span>
+                                    <span className='' >{location?.state?.status}</span>
                                 </label>
                             </div>
                             <div className="col-sm-2 mx-2">
                                 <p className="assignmentdata">EndDate</p>
-                                <p className="endDate">31 Des 2024</p>
+                                <p className="endDate">{moment(location?.state?.endDate).format('DD MMM YYYY')}</p>
                             </div>
                             <div className="col-sm-2 mx-2">
                                 <p className="assignmentdata">StartDate</p>
-                                <p className="startDate">31 Des 2024</p>
+                                <p className="startDate">{moment(location?.state?.startDate).format('DD MMM YYYY')}</p>
                             </div>
                         </div>
                     </div>
@@ -176,11 +168,11 @@ const assignmentDetails = () => {
             }
             {
                 tab == "discussion" && (
-                     <Description />
+                    <Description />
                 )
             }
 
-           
+
 
 
 
@@ -228,7 +220,7 @@ const assignmentDetails = () => {
                                 <label htmlFor="name-f" style={{ color: "#344767" }}>Tasks</label>
                                 <SoftInput
                                     type="text"
-                                    name="tasks"
+                                    name="task"
                                     value={tasks?.task}
                                     placeholder="Tasks"
                                     onChange={(e) => {
@@ -276,7 +268,7 @@ const assignmentDetails = () => {
                             </div> */}
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
 
-                                <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} >
+                                <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={AddTasks}>
                                     Save
                                 </SoftButton>
 
