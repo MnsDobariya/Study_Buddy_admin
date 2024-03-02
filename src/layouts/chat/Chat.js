@@ -51,7 +51,7 @@ const Chat = () => {
     // }
 
     const createRoom = (receiverUserData) => {
-        console.log(receiverUserData, 'receiverUserData')
+        // console.log(receiverUserData, 'receiverUserData')
         const body = {
             receiverId: receiverUserData?._id
         }

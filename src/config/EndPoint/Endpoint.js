@@ -36,5 +36,8 @@ export const EndPoint = {
     TASKS_CREATE:'task/create',
     TASK_GET:'task/get',
     TASK_DELETE:'task/delete',
-    TASK_UPDATE:'task/update'
+    TASK_UPDATE:'task/update',
+    DISCUSSIONROOM_GET:'discussionRoom/get',
+    DISCUSSIONCHAT_CREATE:'discussionChat/create',
+    DISCUSSIONCHAT_GET:'discussionChat/get',
 }

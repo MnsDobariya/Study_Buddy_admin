@@ -69,7 +69,7 @@ import LandingPage from "landing/landing";
 import AssignmentDetails from "layouts/authentication/assignments/assignmentDetails";
 import Details from "layouts/authentication/assignments/Details";
 import Tasks from "layouts/authentication/assignments/Tasks";
-import Description from "layouts/authentication/assignments/Description";
+import Discussion from "layouts/authentication/assignments/Discussion";
 
 const routes = [
   {
@@ -321,11 +321,11 @@ const routes = [
   },
   {
     // type: "collapse",
-    name: "description",
-    key: "description",
-    route: "/assignments/description",
+    name: "discussion",
+    key: "discussion",
+    route: "/assignments/discussion",
     icon: <SpaceShip size="12px" />,
-    component: <Description />,
+    component: <Discussion />,
     noCollapse: true,
   },
   // {
