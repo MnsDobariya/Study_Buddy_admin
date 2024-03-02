@@ -11,10 +11,10 @@ import { EndPoint } from "config/EndPoint/Endpoint";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Description from "./Description";
 import Tasks from "./Tasks";
 import Details from "./Details";
 import moment from "moment";
+import Discussion from "./Discussion";
 // import '../assignments/assignment.css';
 
 const today = dayjs();
@@ -31,7 +31,7 @@ const assignmentDetails = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [tab, setTab] = useState("");
     const location = useLocation();
-    console.log(location, "location");
+    // console.log(location, "location");
 
     const navigate = useNavigate();
 
@@ -113,7 +113,7 @@ const assignmentDetails = () => {
                         <div className="row mt-3 ml-3">
                             <div className="col-sm-2 mx-2">
                                 <p className="assignmentdata">Status</p>
-                                <label className='pending' style={{ width: "60px", marginLeft: "0px", color: "#344767" }} >
+                                <label className={location?.state?.status === 'Pending' ? 'pending' : location?.state?.status === 'Started' ? 'started' : 'finished'} style={{ width: "60px", marginLeft: "0px" }} >
                                     <span className='' >{location?.state?.status}</span>
                                 </label>
                             </div>
@@ -168,7 +168,7 @@ const assignmentDetails = () => {
             }
             {
                 tab == "discussion" && (
-                    <Description />
+                    <Discussion />
                 )
             }
 
