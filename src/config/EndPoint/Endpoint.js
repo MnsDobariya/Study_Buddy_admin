@@ -40,4 +40,5 @@ export const EndPoint = {
     DISCUSSIONROOM_GET:'discussionRoom/get',
     DISCUSSIONCHAT_CREATE:'discussionChat/create',
     DISCUSSIONCHAT_GET:'discussionChat/get',
+    MEMBERGET_USER:"assignments/getUser"
 }
