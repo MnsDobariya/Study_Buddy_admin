@@ -15,6 +15,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { ApiGet } from 'config/Api/ApiData';
 
 const categoryDropDown = [
     { label: "Started", value: "Started" },
@@ -34,12 +35,14 @@ const AssignmentForm = () => {
 
     const token = localStorage.getItem("token");
     const location = useLocation();
+    const [member, setMember] = useState([]);
+    // console.log('member', member)
 
     const [addAssignment, setAddAssignment] = useState({
         title: "",
         status: "",
         assignmentSummary: "",
-        members:"",
+        members: "",
         startDate: "",
         endDate: "",
         projectDescription: ""
@@ -52,7 +55,7 @@ const AssignmentForm = () => {
         title: "",
         status: "",
         assignmentSummary: "",
-        members:"",
+        members: "",
         startDate: "",
         endDate: "",
         projectDescription: ""
@@ -63,11 +66,19 @@ const AssignmentForm = () => {
 
         const textRegex = /^[A-Za-z\s]+$/;
 
-        setAddAssignment({
-            ...addAssignment,
-            [e.target.name]: e.target.value,
-        });
-        if (name === "title" ) {
+        if (name === "members") {
+            // Assuming value is a single member ID, you can push it to an array
+            setAddAssignment({
+                ...addAssignment,
+                [name]: [value], // Convert value to an array
+            });
+        } else {
+            setAddAssignment({
+                ...addAssignment,
+                [name]: value,
+            });
+        }
+        if (name === "title") {
             if (!textRegex.test(value)) {
                 setError({
                     ...error,
@@ -89,10 +100,22 @@ const AssignmentForm = () => {
 
     };
 
+    const getMember = () => {
+
+        ApiGet(`${EndPoint.MEMBERGET_USER}`)
+            .then((res) => {
+                // console.log('res', res.data)
+                setMember(res?.data);
+            })
+
+
+    }
+
     useEffect(() => {
         if (location?.state) {
             setAddAssignment(location?.state);
         }
+        getMember("")
     }, []);
 
 
@@ -109,6 +132,9 @@ const AssignmentForm = () => {
         if (!addAssignment.assignmentSummary) {
             error.assignmentSummary = "Please Assignment Summary Required";
         }
+        if (!addAssignment.members) {
+            error.members = "Please Member Required";
+        }
         if (!addAssignment.projectDescription) {
             error.projectDescription = "Please Description Required";
         }
@@ -117,7 +143,7 @@ const AssignmentForm = () => {
             error.title ||
             error.status ||
             error.assignmentSummary ||
-            // error.members||
+            error.members ||
             error.projectDescription
         ) {
             setError(error);
@@ -128,7 +154,7 @@ const AssignmentForm = () => {
             title: addAssignment?.title,
             status: addAssignment?.status,
             assignmentSummary: addAssignment?.assignmentSummary,
-            members:addAssignment?.members,
+            members: addAssignment?.members,
             startDate: startDate,
             endDate: endDate,
             projectDescription: addAssignment?.projectDescription,
@@ -153,7 +179,7 @@ const AssignmentForm = () => {
                             title: "",
                             status: "",
                             assignmentSummary: "",
-                            members:"",
+                            members: "",
                             startDate: "",
                             endDate: "",
                             projectDescription: ""
@@ -172,22 +198,22 @@ const AssignmentForm = () => {
     }
     useEffect(() => {
         const handleAddBookShortcut = (e) => {
-            if(e.key === "s" && e.altKey) {
+            if (e.key === "s" && e.altKey) {
                 e.preventDefault();
                 createAssignment();
             }
         };
-        document.addEventListener("keydown",handleAddBookShortcut);
+        document.addEventListener("keydown", handleAddBookShortcut);
         hotkeys("alt + c", (e) => {
             e.preventDefault();
             navigate('/assignments');
         });
         return () => {
-            document.removeEventListener("keydown",handleAddBookShortcut);
+            document.removeEventListener("keydown", handleAddBookShortcut);
             hotkeys.unbind("alt + c");
         }
 
-    },[])
+    }, [])
 
     return (
         <>
@@ -197,7 +223,7 @@ const AssignmentForm = () => {
                     {/* <form className="add-assignments"> */}
                     {/* <div className="row jumbotron box2"> */}
                     <div className="col-sm-12 mx-t3 mb-3">
-                        <h2 style={{ textAlign: "left", marginTop: "1%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>
+                        <h2 style={{ textAlign: "left", marginTop: "1%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>
                             {" "}
                             {addAssignment?.id ? "Update" : "Add"} Assignment
 
@@ -283,30 +309,28 @@ const AssignmentForm = () => {
                             {error.assignmentSummary && <p style={{ color: "red", fontSize: "60%" }}>{error.assignmentSummary} </p>}
 
                         </div>
-                        {/* <div className="col-sm-6 form-group">
+                        <div className="col-sm-6 form-group">
                             <label htmlFor="email">Members</label>
                             <select
-                                        name="year"
-                                        id="year"
-                                        className='form-control'
-                                        style={{ borderRadius: "0.5rem",width:"15%" }}
-                                        onChange={(e) => {
-                                            setYear(e.target.value);
-                                        }}
-                                    >
-                                        <option key="">Select Year</option>
-                                        {yearDropDown &&
-                                            yearDropDown?.map((x) => (
-                                                <option key={x.value}>{x.value}</option>
-                                            ))
-                                        }
-                                    </select>
-                            {error.assignmentSummary && <p style={{ color: "red", fontSize: "60%" }}>{error.assignmentSummary} </p>}
-
-                        </div> */}
+                                name="members"
+                                id="members"
+                                className='form-control'
+                                style={{ borderRadius: "0.5rem" }}
+                                onChange={(e) => {
+                                    handleChange(e);
+                                }}
+                            >
+                                <option key="">Select Members</option>
+                                {member?.map((x) => (
+                                    <option key={x.id} value={x.id}>{x?.firstName}</option>
+                                ))
+                                }
+                            </select>
+                            {error.members && <p style={{ color: "red", fontSize: "60%" }}>{error.members} </p>}
+                        </div>
                     </div>
                     <div style={{ display: "flex" }}>
-                    <div className="col-sm-6 form-group ">
+                        <div className="col-sm-6 form-group ">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 {/* <DemoContainer
                                     components={['DatePicker', 'DateTimePicker', 'DateRangePicker']}
@@ -331,7 +355,7 @@ const AssignmentForm = () => {
                                             outline: "none"
                                         }
                                     }}
-                                style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+                                    style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
                                 />
                                 {/* </DemoContainer> */}
@@ -394,7 +418,7 @@ const AssignmentForm = () => {
                                         //     }
                                         // }
                                     }}
-                                style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+                                    style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
                                 />
                                 {/* </DemoContainer> */}
@@ -403,34 +427,34 @@ const AssignmentForm = () => {
                         </div>
 
                     </div>
-                        <div className="col-sm-6 form-group">
-                            <label htmlFor="mobile">Project Description</label>
-                            <SoftInput
-                                type="text"
-                                name="projectDescription"
-                                value={addAssignment?.projectDescription}
-                                placeholder="Project Description"
-                                onChange={(e) => {
-                                    setError({
-                                        ...error,
-                                        projectDescription: "",
-                                    });
-                                    handleChange(e);
-                                }}
-                                style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
+                    <div className="col-sm-6 form-group">
+                        <label htmlFor="mobile">Project Description</label>
+                        <SoftInput
+                            type="text"
+                            name="projectDescription"
+                            value={addAssignment?.projectDescription}
+                            placeholder="Project Description"
+                            onChange={(e) => {
+                                setError({
+                                    ...error,
+                                    projectDescription: "",
+                                });
+                                handleChange(e);
+                            }}
+                            style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
-                            />
-                            {error.projectDescription && <p style={{ color: "red", fontSize: "60%" }}>{error.projectDescription} </p>}
+                        />
+                        {error.projectDescription && <p style={{ color: "red", fontSize: "60%" }}>{error.projectDescription} </p>}
 
-                        </div>
+                    </div>
                     <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "30%", width: "40%" }}>
 
 
-                        <SoftButton className="add-teacher" variant="gradient" color="info" fullWidth onClick={createAssignment} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0px solid rgba(0, 0, 0, 0.125)",outline:"none" }}>
+                        <SoftButton className="add-teacher" variant="gradient" color="info" fullWidth onClick={createAssignment} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0px solid rgba(0, 0, 0, 0.125)", outline: "none" }}>
                             {/* Add Assignment */}
                             {location?.state ? "Update" : "Add"}
                         </SoftButton>
-                        <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={() => { navigate('/assignments') }} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0px solid rgba(0, 0, 0, 0.125)",outline:"none" }}>
+                        <SoftButton variant="gradient" color="info" marginLeft="50%" fullWidth onClick={() => { navigate('/assignments') }} style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0px solid rgba(0, 0, 0, 0.125)", outline: "none" }}>
                             Cancel
                         </SoftButton>
                     </SoftBox>
