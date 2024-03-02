@@ -15,6 +15,7 @@ import Tasks from "./Tasks";
 import Details from "./Details";
 import moment from "moment";
 import Discussion from "./Discussion";
+import { ApiPut } from "config/Api/ApiData";
 // import '../assignments/assignment.css';
 
 const today = dayjs();
@@ -57,10 +58,24 @@ const assignmentDetails = () => {
             dueDate: tasks?.dueDate,
             task: tasks?.task,
             description: tasks?.description,
-            assignId:tasks?.assignId,
+            assignId: tasks?.assignId,
         }
 
-        ApiPost(`${EndPoint.TASKS_CREATE}`, body)
+        if (tasks?.id) {
+            ApiPut(`${EndPoint.TASK_UPDATE}/${tasks?.id}`, body)
+                .then((res) => {
+                    if (res?.status === 200) {
+                        setResources({
+                            dueDate: "",
+                            task: "",
+                            description: ""
+                        });
+                    }
+                    toast.success("Update Successfully");
+                    handleClose();
+                });
+        } else {
+            ApiPost(`${EndPoint.TASKS_CREATE}`, body)
             .then((res) => {
                 console.log(res, "tasksres");
                 if (res.status === 201) {
@@ -72,6 +87,7 @@ const assignmentDetails = () => {
                     handleClose();
                 }
             })
+        }
     }
 
     return (
@@ -94,7 +110,7 @@ const assignmentDetails = () => {
                         <div className="lblassignment">
                             <label1>M</label1>
                         </div>
-                        <h5 className="mb-2">Abc</h5>
+                        <h5 className="mb-2">{location?.state?.title}</h5>
                         <div className="ml-auto mr-3 d-flex" style={{ gap: "20px" }}>
                             <SoftButton variant="gradient" color="info" style={{ border: "0px", outline: "none" }} onClick={() => {
                                 handleOpen(true);
@@ -168,7 +184,7 @@ const assignmentDetails = () => {
             }
             {
                 tab == "discussion" && (
-                    <Discussion />
+                    <Discussion assignmentDetails={location?.state} />
                 )
             }
 

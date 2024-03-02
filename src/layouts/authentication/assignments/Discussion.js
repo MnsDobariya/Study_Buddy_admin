@@ -4,57 +4,58 @@ import SoftInput from 'components/SoftInput';
 import { ApiPost } from 'config/Api/ApiData';
 import { ApiGet } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Discussion = () => {
-    const [discussionRoomRecord,setDiscussionRoomRecord] = useState([]);
-    const [discussionChat,setDiscussionChat] = useState({
-        discussionroomId:"",
-        message:"",
+/* eslint-disable */
+
+
+const Discussion = ({assignmentDetails}) => {
+    const [discussionRoomRecord, setDiscussionRoomRecord] = useState([]);
+    const [discussionChat, setDiscussionChat] = useState({
+        discussionroomId: "",
+        message: "",
     });
-    const [discussionChatRecord,setDiscussionCharRecord] = useState([]);
 
 
     const navigate = useNavigate();
 
-    const getDiscussionRoom = () => {
-        ApiGet(`${EndPoint.DISCUSSIONROOM_GET}`)
-        .then((res) => {
-            // console.log(res,"discussionRoom");
-        })
-    }
-
-    
 
     const createDiscussionChat = () => {
         const body = {
-            discussionroomId:discussionChat?.discussionroomId,
-            message:discussionChat?.message,
+            discussionroomId: discussionChat?.discussionroomId,
+            message: discussionChat?.message,
         }
 
-        ApiPost(`${EndPoint.DISCUSSIONCHAT_CREATE}`,body)
-        .then((res) => {
-            // console.log(res,"chatres");
-        })
+        ApiPost(`${EndPoint.DISCUSSIONCHAT_CREATE}`, body)
+            .then((res) => {
+                console.log(res,"chatres");
+            })
     }
 
     const getDiscussionChat = () => {
         ApiGet(`${EndPoint.DISCUSSIONCHAT_GET}`)
-        .then((res) => {
-            // console.log(res,"chatRespone");
-        })
+            .then((res) => {
+                // console.log(res,"chatRespone");
+            })
     }
 
+    const getDiscussionRoom = () => {
+        ApiGet(`${EndPoint.DISCUSSIONROOM_GET}?assignmentId=${assignmentDetails.id}`)
+            .then((res) => {
+                // console.log(res,"chatRespone");
+            })
+    }
     useEffect(() => {
-        getDiscussionRoom("");
-        // getDiscussionChat("");
-    },[]);
+        getDiscussionRoom()
+        console.log(assignmentDetails,"qqqqqqqqqqq")
+    }, []);
 
 
     return (
         <>
-           
+
 
             {/* Chart code */}
 
@@ -77,21 +78,22 @@ const Discussion = () => {
                                 </div>
 
                             </div>
-
-
-                            <div className="inbox_chat">
+                        {assignmentDetails?.members?.map((item) => (
+                            <div key={item.id}className="inbox_chat">
+                                {console.log(item?.firstName,"item")}
                                 <div className="chat_list active_chat">
                                     <div className="chat_people">
                                         <div className="chat_img">
                                             <img src="" />
                                         </div>
                                         <div className="chat_ib">
-                                            <h5>Admin <span className="chat_date">31 Des 2024</span></h5>
+                                            <h5>{item?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY')}</span></h5>
                                             <p>hii</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            ))}
 
                         </div>
                         <div className="mesgs">
@@ -134,7 +136,7 @@ const Discussion = () => {
                                         type="text"
                                         className="write_msg"
                                         placeholder="Type a message"
-                                        onChange={e => setDiscussionChat(prev => ({...prev,message:e.target.value}))}
+                                        onChange={e => setDiscussionChat(prev => ({ ...prev, message: e.target.value }))}
 
                                     />
                                     {/* } */}

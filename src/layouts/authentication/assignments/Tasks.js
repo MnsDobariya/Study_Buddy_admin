@@ -20,7 +20,6 @@ const Tasks = () => {
     };
 
     const [taskData, setTaskData] = useState([]);
-
     const getTaskData = () => {
         ApiGet(`${EndPoint.TASK_GET}`)
             .then((res) => {
