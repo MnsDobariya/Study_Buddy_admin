@@ -31,9 +31,14 @@ const Assignments = () => {
 
     const getAssignmentRecord = () => {
 
-        axios.get("http://localhost:3000/api/v1/assignments/get")
+        // axios.get("http://localhost:3000/api/v1/assignments/get")
 
-            // ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
+        //     // ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
+        //     .then((res) => {
+
+        //     })
+
+        ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
             .then((res) => {
                 setAssignmentRecord(res.data);
             })
@@ -117,7 +122,7 @@ const Assignments = () => {
             //     }
             // }}
             >
-                <MenuItem onClick={() => navigate('/assignments/assignmentDetails',{state:selectedRowId})}>Open</MenuItem>
+                <MenuItem onClick={() => navigate('/assignments/assignmentDetails', { state: selectedRowId })}>Open</MenuItem>
 
                 <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
                 <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
@@ -164,7 +169,7 @@ const Assignments = () => {
                                         <div className="assignment" >
                                             <div className="card-asgn">
                                                 <div>
-                                                    <div className="card-notify-year mt-4"><FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e, item)} style={{ marginLeft: "5%", color: "black",cursor:'pointer' }} /></div>
+                                                    <div className="card-notify-year mt-4"><FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e, item)} style={{ marginLeft: "5%", color: "black", cursor: 'pointer' }} /></div>
                                                     {renderMenu(item)}
 
                                                     <h5 className="mt-2 p-4" style={{ textAlign: "center" }}><b>{item?.title}</b></h5>
