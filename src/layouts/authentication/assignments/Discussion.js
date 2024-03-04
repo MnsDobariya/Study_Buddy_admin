@@ -13,11 +13,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Discussion = ({ assignmentDetails }) => {
     const [discussionRoomRecord, setDiscussionRoomRecord] = useState([]);
+    const [discussionChatRecord, setDiscussionChatRecord] = useState([]);
+
     const [discussionChat, setDiscussionChat] = useState({
         discussionroomId: "",
         message: "",
     });
-    
+
+    const[discussionRoomId,setDiscussionRoomId]=useState([]);    
 
 
     const navigate = useNavigate();
@@ -25,20 +28,27 @@ const Discussion = ({ assignmentDetails }) => {
 
     const createDiscussionChat = () => {
         const body = {
-            discussionroomId: discussionChat?.discussionroomId,
+            discussionroomId: discussionRoomId?.id,
             message: discussionChat?.message,
         }
 
         ApiPost(`${EndPoint.DISCUSSIONCHAT_CREATE}`, body)
-            .then((res) => {
-                console.log(res, "chatres");
-            })
+        .then((res) => {
+            if (res?.status === 201) {
+                setDiscussionChat({
+                    ...discussionChat,
+                    message: ""
+                })
+            }
+            getDiscussionChat(discussionChat?.roomId);
+        })
     }
 
-    const getDiscussionChat = () => {
-        ApiGet(`${EndPoint.DISCUSSIONCHAT_GET}`)
+    const getDiscussionChat = (roomId) => {
+        ApiGet(`${EndPoint.DISCUSSIONCHAT_GET}?discussionroomId=${roomId}`)
             .then((res) => {
-                // console.log(res,"chatRespone");
+                console.log(res,"chatRespone++++");
+                setDiscussionChatRecord(res?.data)
             })
     }
 
@@ -46,10 +56,12 @@ const Discussion = ({ assignmentDetails }) => {
         ApiGet(`${EndPoint.DISCUSSIONROOM_GET}?assignmentId=${assignmentDetails?.id}`)
             .then((res) => {
                 console.log(res,"chatRespone");
+                setDiscussionRoomId(res?.data)
             })
     }
     useEffect(() => {
         getDiscussionRoom("");
+        // getDiscussionChat("");
         // console.log(assignmentDetails,"qqqqqqqqqqq");
     }, []);
 
