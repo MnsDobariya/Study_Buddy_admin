@@ -21,7 +21,7 @@ const Tasks = () => {
     };
 
     // const handleEdit = (item) => {
-    //     navigate(`/assignments/assignmentDetails`,{state:item});
+    //     navigate(`/assignments/assignmentDetails`,{state:{ tasks : item  }});
     // }
 
 
@@ -35,7 +35,7 @@ const Tasks = () => {
             })
     }
 
-    useEffect((e) => {
+    useEffect(() => {
         getTaskData("");
     }, [])
 

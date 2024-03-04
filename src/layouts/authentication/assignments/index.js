@@ -122,7 +122,7 @@ const Assignments = () => {
             //     }
             // }}
             >
-                <MenuItem onClick={() => navigate('/assignments/assignmentDetails', { state: selectedRowId })}>Open</MenuItem>
+                <MenuItem onClick={() => navigate('/assignments/assignmentDetails', { state: { assignmentDetail : selectedRowId  } })}>Open</MenuItem>
 
                 <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
                 <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>

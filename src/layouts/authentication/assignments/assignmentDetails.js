@@ -27,12 +27,15 @@ const assignmentDetails = () => {
         dueDate: "",
         task: "",
         description: "",
-        assignId: ""
+        assignId: "",
+        assassignmentId:"",
     });
     const [startDate, setStartDate] = useState(new Date());
     const [tab, setTab] = useState("");
+
+
     const location = useLocation();
-    // console.log(location, "location");
+    // console.log(location, "location");  
 
     const navigate = useNavigate();
 
@@ -45,12 +48,18 @@ const assignmentDetails = () => {
     }
 
     const handleChange = (e) => {
-        setTasks({
-            ...tasks,
-            [e.target.name]: e.target.value,
-        });
+            setTasks({
+                ...tasks,
+                [e.target.name]: e.target.value,
+            });
     }
 
+    // useEffect(() => {
+    //     if (location?.state?.tasks) {
+    //         setTasks(location?.state?.tasks)
+    //         setOpen(true);
+    //     }
+    // }, [location])
 
 
     const AddTasks = () => {
@@ -59,36 +68,41 @@ const assignmentDetails = () => {
             task: tasks?.task,
             description: tasks?.description,
             assignId: tasks?.assignId,
+            assignmentId:location?.state?.assignmentDetail?.id,
         }
 
-        // if (tasks?.id) {
-        //     ApiPut(`${EndPoint.TASK_UPDATE}/${tasks?.id}`, body)
+        // if (location?.state?.tasks?.id) {
+        //     ApiPut(`${EndPoint.TASK_UPDATE}/${location?.state?.tasks?.id}`, body)
         //         .then((res) => {
         //             if (res?.status === 200) {
-        //                 setResources({
+        //                 setTasks({
         //                     dueDate: "",
         //                     task: "",
-        //                     description: ""
+        //                     description: "",
+        //                     assignId:"",
         //                 });
         //             }
         //             toast.success("Update Successfully");
         //             handleClose();
         //         });
         // } else {
-            ApiPost(`${EndPoint.TASKS_CREATE}/${location?.state?.id}`, body)
+        ApiPost(`${EndPoint.TASKS_CREATE}`, body)
             .then((res) => {
                 console.log(res, "tasksres");
-                // if (res.status === 201) {
-                //     setTasks({
-                //         dueDate: "",
-                //         task: "",
-                //         description: ""
-                //     })
-                    handleClose();
-                // }
+                if (res.status === 201) {
+                    setTasks({
+                        dueDate: "",
+                        task: "",
+                        description: "",
+                        assignId:"",
+
+                    })
+                handleClose();
+                }
             })
         // }
     }
+
 
     return (
         <>
@@ -110,7 +124,7 @@ const assignmentDetails = () => {
                         <div className="lblassignment">
                             <label1>M</label1>
                         </div>
-                        <h5 className="mb-2">{location?.state?.title}</h5>
+                        <h5 className="mb-2">{location?.state?.assignmentDetail?.title}</h5>
                         <div className="ml-auto mr-3 d-flex" style={{ gap: "20px" }}>
                             <SoftButton variant="gradient" color="info" style={{ border: "0px", outline: "none" }} onClick={() => {
                                 handleOpen(true);
@@ -129,17 +143,17 @@ const assignmentDetails = () => {
                         <div className="row mt-3 ml-3">
                             <div className="col-sm-2 mx-2">
                                 <p className="assignmentdata">Status</p>
-                                <label className={location?.state?.status === 'Pending' ? 'pending' : location?.state?.status === 'Started' ? 'started' : 'finished'} style={{ width: "60px", marginLeft: "0px" }} >
-                                    <span className='' >{location?.state?.status}</span>
+                                <label className={location?.state?.assignmentDetail?.status === 'Pending' ? 'pending' : location?.state?.assignmentDetail?.status === 'Started' ? 'started' : 'finished'} style={{ width: "60px", marginLeft: "0px" }} >
+                                    <span className='' >{location?.state?.assignmentDetail?.status}</span>
                                 </label>
                             </div>
                             <div className="col-sm-2 mx-2">
                                 <p className="assignmentdata">EndDate</p>
-                                <p className="endDate">{moment(location?.state?.endDate).format('DD MMM YYYY')}</p>
+                                <p className="endDate">{moment(location?.state?.assignmentDetail?.endDate).format('DD MMM YYYY')}</p>
                             </div>
                             <div className="col-sm-2 mx-2">
                                 <p className="assignmentdata">StartDate</p>
-                                <p className="startDate">{moment(location?.state?.startDate).format('DD MMM YYYY')}</p>
+                                <p className="startDate">{moment(location?.state?.assignmentDetail?.startDate).format('DD MMM YYYY')}</p>
                             </div>
                         </div>
                     </div>
@@ -247,7 +261,7 @@ const assignmentDetails = () => {
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <label htmlFor="assignId" style={{ color: "#344767" }}>AssignTo</label>
-                                <SoftInput
+                                {/* <SoftInput
                                     type="text"
                                     name="assignId"
                                     value={tasks?.assignId}
@@ -256,7 +270,21 @@ const assignmentDetails = () => {
                                         handleChange(e);
                                     }}
 
-                                />
+                                /> */}
+                                <select
+                                    name="assignId"
+                                    id="assignId"
+                                    className='form-control'
+                                    style={{ borderRadius: "0.5rem" }}
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                    }}
+                                >
+                                    <option key="">Select AssignTo</option>
+                                    {location?.state?.assignmentDetail?.members?.map((x) => (
+                                        <option key={x.id} value={x.id}>{x?.firstName}</option>
+                                    ))}
+                                </select>
 
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
