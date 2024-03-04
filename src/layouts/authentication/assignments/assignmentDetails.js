@@ -55,39 +55,39 @@ const assignmentDetails = () => {
 
     const AddTasks = () => {
         const body = {
-            dueDate: tasks?.dueDate,
+            dueDate: startDate,
             task: tasks?.task,
             description: tasks?.description,
             assignId: tasks?.assignId,
         }
 
-        if (tasks?.id) {
-            ApiPut(`${EndPoint.TASK_UPDATE}/${tasks?.id}`, body)
-                .then((res) => {
-                    if (res?.status === 200) {
-                        setResources({
-                            dueDate: "",
-                            task: "",
-                            description: ""
-                        });
-                    }
-                    toast.success("Update Successfully");
-                    handleClose();
-                });
-        } else {
-            ApiPost(`${EndPoint.TASKS_CREATE}`, body)
+        // if (tasks?.id) {
+        //     ApiPut(`${EndPoint.TASK_UPDATE}/${tasks?.id}`, body)
+        //         .then((res) => {
+        //             if (res?.status === 200) {
+        //                 setResources({
+        //                     dueDate: "",
+        //                     task: "",
+        //                     description: ""
+        //                 });
+        //             }
+        //             toast.success("Update Successfully");
+        //             handleClose();
+        //         });
+        // } else {
+            ApiPost(`${EndPoint.TASKS_CREATE}/${location?.state?.id}`, body)
             .then((res) => {
                 console.log(res, "tasksres");
-                if (res.status === 201) {
-                    setTasks({
-                        dueDate: "",
-                        task: "",
-                        description: ""
-                    })
+                // if (res.status === 201) {
+                //     setTasks({
+                //         dueDate: "",
+                //         task: "",
+                //         description: ""
+                //     })
                     handleClose();
-                }
+                // }
             })
-        }
+        // }
     }
 
     return (
@@ -200,7 +200,7 @@ const assignmentDetails = () => {
                     aria-describedby="modal-modal-description"
                 >
                     <div className="container" style={{ marginTop: "10%" }}>
-                        <form className="addresources">
+                        <form className="addtasks">
                             <div className="col-sm-12 mx-t3 mb-4">
                                 <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>
                                     Add Tasks

@@ -6,6 +6,7 @@ import SoftBox from 'components/SoftBox';
 import SoftButton from 'components/SoftButton';
 import { ApiGet } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
@@ -19,11 +20,17 @@ const Tasks = () => {
         setOpen(false);
     };
 
+    // const handleEdit = (item) => {
+    //     navigate(`/assignments/assignmentDetails`,{state:item});
+    // }
+
+
+
     const [taskData, setTaskData] = useState([]);
     const getTaskData = () => {
         ApiGet(`${EndPoint.TASK_GET}`)
             .then((res) => {
-                console.log('res', res)
+                // console.log('response', res);
                 setTaskData(res?.data);
             })
     }
@@ -50,7 +57,7 @@ const Tasks = () => {
                             <div className="card-Tasks" style={{ height: "110px" }}>
 
                                 <div style={{ padding: "22px 22px 8px 22px", color: "#344767", fontSize: "initial" }}>
-                                    <p>Task</p>
+                                    <p>{item?.task}</p>
                                 </div>
                                 <div className="card-Tasks2">
                                     <div className="lbltasks">
@@ -58,7 +65,7 @@ const Tasks = () => {
                                     </div>
                                     <h5 style={{ padding: "8px", fontSize: "medium", color: "#67748e" }}> Assignment Details</h5>
                                     <label className='dateTasks'>
-                                        <span className=''><p> DUE DATE: 30 MAR 2024</p></span>
+                                        <span className=''><p> DUE DATE: {moment(item?.dueDate).format('DD MMM YYYY')}</p></span>
                                     </label>
                                     <div className="mr-5" style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
                                         <FontAwesomeIcon icon={faPen} onClick={() => {
