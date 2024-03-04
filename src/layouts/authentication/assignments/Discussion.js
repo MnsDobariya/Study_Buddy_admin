@@ -136,12 +136,13 @@ const Discussion = ({ assignmentDetails }) => {
                                         type="text"
                                         className="write_msg"
                                         placeholder="Type a message"
+                                        
                                         onChange={e => setDiscussionChat(prev => ({ ...prev, message: e.target.value }))}
 
                                     />
                                     {/* } */}
                                     {/* {!showBackgroundChat && */}
-                                    <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createDiscussionChat}></i></button>
+                                    <button className="msg_send_btn" type="button" style={{background: "linear-gradient(310deg, #2152ff, #21d4fd)"}}><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createDiscussionChat}></i></button>
                                     {/* } */}
                                 </div>
                                 {/* </div> */}

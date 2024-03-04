@@ -360,7 +360,7 @@ const Chat = () => {
 
                                                 />}
                                             {!showBackgroundChat &&
-                                                <button className="msg_send_btn" type="button"><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
+                                                <button className="msg_send_btn" type="button" style={{background: "linear-gradient(310deg, #2152ff, #21d4fd)"}}><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
                                             }
                                         </div>
                                     </div>
