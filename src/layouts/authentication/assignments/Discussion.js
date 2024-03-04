@@ -11,12 +11,13 @@ import { useNavigate } from 'react-router-dom';
 /* eslint-disable */
 
 
-const Discussion = ({assignmentDetails}) => {
+const Discussion = ({ assignmentDetails }) => {
     const [discussionRoomRecord, setDiscussionRoomRecord] = useState([]);
     const [discussionChat, setDiscussionChat] = useState({
         discussionroomId: "",
         message: "",
     });
+    
 
 
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Discussion = ({assignmentDetails}) => {
 
         ApiPost(`${EndPoint.DISCUSSIONCHAT_CREATE}`, body)
             .then((res) => {
-                console.log(res,"chatres");
+                console.log(res, "chatres");
             })
     }
 
@@ -42,14 +43,14 @@ const Discussion = ({assignmentDetails}) => {
     }
 
     const getDiscussionRoom = () => {
-        ApiGet(`${EndPoint.DISCUSSIONROOM_GET}?assignmentId=${assignmentDetails.id}`)
+        ApiGet(`${EndPoint.DISCUSSIONROOM_GET}?assignmentId=${assignmentDetails?.id}`)
             .then((res) => {
-                // console.log(res,"chatRespone");
+                console.log(res,"chatRespone");
             })
     }
     useEffect(() => {
-        getDiscussionRoom()
-        console.log(assignmentDetails,"qqqqqqqqqqq")
+        getDiscussionRoom("");
+        // console.log(assignmentDetails,"qqqqqqqqqqq");
     }, []);
 
 
@@ -66,44 +67,43 @@ const Discussion = ({assignmentDetails}) => {
                 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet" />
             </head>
 
-            <div className="chat " style={{ marginLeft: "18%" }}>
+            <div className="" style={{ marginLeft: "18%" }}>
                 {/* <h3 className=" text-center">Messaging</h3> */}
                 <div className="messaging">
 
                     <div className="inbox_msg">
-                        <div className="inbox_people">
-                            <div className="headind_srch">
+                        <div className="inbox_people2">
+                            {/* <div className="headind_srch">
                                 <div className="recent_heading">
                                     <h4>Chat</h4>
                                 </div>
 
-                            </div>
-                        {assignmentDetails?.members?.map((item) => (
-                            <div key={item.id}className="inbox_chat">
-                                {console.log(item?.firstName,"item")}
-                                <div className="chat_list active_chat">
-                                    <div className="chat_people">
-                                        <div className="chat_img">
-                                            <img src="" />
-                                        </div>
-                                        <div className="chat_ib">
-                                            <h5>{item?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY')}</span></h5>
-                                            <p>hii</p>
+                            </div> */}
+                                {assignmentDetails?.members?.map((item) => (
+                                    <div key={item.id} className="inbox_chat">
+                                        {/* {console.log(item?.firstName,"item")} */}
+                                        <div className="chat_list active_chat" style={{backgroundColor:"white"}}>
+                                            <div className="chat_people">
+                                                <div className="chat_img">
+                                                    <img src="" />
+                                                </div>
+                                                <div className="chat_ib">
+                                                    <h5>{item?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY')}</span></h5>
+                                                    <p>hii</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            ))}
-
+                                ))}
                         </div>
-                        <div className="mesgs">
+                        <div className="mesgsDiscussion">
 
 
                             {/* <div className={`${showBackgroundImage ? 'background-img' : 'bg-transparent'}`}> */}
-                            <div className="msg_history">
+                            <div className="msg_historyDiscussion">
 
 
-                                <div className="outgoing_msg">
+                                <div className="outgoing_msg" style={{margin:"26px 11px 26px"}}>
                                     <div className="outgoing_msg_img"> <img src="" /> </div>
 
                                     <div className="sent_msg">
@@ -148,6 +148,7 @@ const Discussion = ({assignmentDetails}) => {
                             </div>
                             {/* </div> */}
                         </div>
+                        
                     </div>
                 </div>
             </div>

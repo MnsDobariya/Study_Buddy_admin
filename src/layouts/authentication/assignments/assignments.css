@@ -271,15 +271,15 @@
 
 }
 
-/* .assignmentdetails:hover {
-    padding: 8px;
+.assignmentdetails:hover {
+    /* padding: 8px;
     color:aliceblue;
     border-radius: 5px;
     background-color: rgb(110, 173, 212);
-    transition: background-color 0.3s;
+    transition: background-color 0.3s; */
     cursor: pointer;
 
-} */
+}
 
 .cardDetails {
     margin-left: 19.4%;
@@ -300,8 +300,8 @@
 
 .cardTasks {
     margin-left: 19.4%;
-    /* margin-bottom: 2%;
-    margin-top: 5%; */
+    margin-bottom: 0.5%;
+    /* margin-top: 5%; */
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     background-color: #ffffff;
     border: 0 solid rgba(0, 0, 0, 0.125);
@@ -341,4 +341,50 @@
     margin-left: 5%;
     max-height: 30px;
     font-weight: 500;
+}
+
+.inbox_people2 {
+    margin-top: 1%;
+    float: left;
+    overflow: hidden;
+    width: 27%;
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: #ffffff;
+    border: 0 solid rgba(0, 0, 0, 0.125);
+    border-radius: 1rem;
+    box-shadow: 0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05);
+}
+
+.mesgsDiscussion {
+    float: left;
+    padding: 13px 0 0 15px;
+    width: 72%;
+    /* border: 1px ridge; */
+    /* transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: #ffffff;
+    border: 0 solid rgba(0, 0, 0, 0.125);
+    border-radius: 1rem;
+    box-shadow: 0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05); */
+}
+
+.msg_historyDiscussion {
+    height: 610px;
+    /* height: 516px; */
+    overflow-y: auto;
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: #ffffff;
+    border: 0 solid rgba(0, 0, 0, 0.125);
+    border-radius: 1rem;
+    box-shadow: 0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05);
+}
+
+.addtasks {
+    margin: 4% auto 0;
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: #ffffff;
+    border: 0 solid rgba(0, 0, 0, 0.125);
+    border-radius: 1rem;
+    box-shadow: 0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05);
+    height: 530px;
+    width: 54%;
 }
