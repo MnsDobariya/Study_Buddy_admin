@@ -227,8 +227,8 @@ function Dashboard() {
           </Grid>
         </SoftBox>
         <SoftBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} lg={5}>
+          <Grid container spacing={3} style={{justifyContent:"center",columnGap:"140px"}}>
+            <Grid item xs={12} lg={4.5}>
               {/* <ReportsBarChart
                 title="active users"
                 description={
@@ -276,11 +276,11 @@ function Dashboard() {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} lg={5}>
+            <Grid item xs={12} lg={4.5}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
-                    Task Status
+                    Assignment Status
                   </Typography>
                   <SoftBox mb={3}>
                     <Pie

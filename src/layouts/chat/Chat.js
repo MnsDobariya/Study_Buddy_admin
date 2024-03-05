@@ -36,7 +36,7 @@ const Chat = () => {
         profileImage: ""
     });
     // console.log(headerImage,"headerIamge");
-    
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -111,7 +111,7 @@ const Chat = () => {
                 setSearchResults(res?.data);
             })
     }
-   
+
     const handleRoomId = (item) => {
         if (localStorage.getItem("id") !== item?.receiver?._id) {
             setChat({ ...chat, receiverId: item?.receiver?._id, roomId: item?._id });
@@ -167,201 +167,207 @@ const Chat = () => {
             <head>
                 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet" />
             </head>
+            <div className="container-fluid ">
+                <div className="row ml-5">
+                    <div className="col-lg-12">
+                        <div className="conta col-md-10.5 mt-5">
 
-            <div className="chat " style={{ marginLeft: "18%" }}>
-                {/* <h3 className=" text-center">Messaging</h3> */}
-                <div className="messaging">
+                            {/* <h3 className=" text-center">Messaging</h3> */}
+                            <div className="messaging">
 
-                    <div className="inbox_msg">
-                        <div className="inbox_people">
-                            <div className="headind_srch">
-                                <div className="recent_heading">
-                                    <h4>Chat</h4>
-                                </div>
-                                <div className="srch_bar">
-                                    <div className="stylish-input-group">
-                                        {
-                                            isSearchShow && (
-                                                <input
-                                                    type="text"
-                                                    name='search'
-                                                    className="search-bar"
-                                                    // value={search}
-                                                    placeholder="Search"
-                                                    style={{border:"0px",outline:"none"}}
-                                                    onChange={(e) => {
-                                                        // handleChange(e);
-                                                        setSearch(e.target.value);
-                                                    }}
-                                                // onKeyPress={(e) => {
-                                                //     if (e.key === "Enter") {
-                                                //         e.preventDefault();
-                                                //         getSearch();
-                                                //         handleClick();
-                                                //     }
-                                                // }}
-                                                />
-                                            )
-                                        }
+                                <div className="inbox_msg">
+                                    <div className="inbox_people">
+                                        <div className="headind_srch">
+                                            <div className="recent_heading">
+                                                <h4>Chat</h4>
+                                            </div>
+                                            <div className="srch_bar">
+                                                <div className="stylish-input-group">
+                                                    {
+                                                        isSearchShow && (
+                                                            <input
+                                                                type="text"
+                                                                name='search'
+                                                                className="search-bar"
+                                                                // value={search}
+                                                                placeholder="Search"
+                                                                style={{ border: "0px", outline: "none" }}
+                                                                onChange={(e) => {
+                                                                    // handleChange(e);
+                                                                    setSearch(e.target.value);
+                                                                }}
+                                                            // onKeyPress={(e) => {
+                                                            //     if (e.key === "Enter") {
+                                                            //         e.preventDefault();
+                                                            //         getSearch();
+                                                            //         handleClick();
+                                                            //     }
+                                                            // }}
+                                                            />
+                                                        )
+                                                    }
 
-                                        {
-                                            !isSearchShow ?
-                                                <SoftButton
-                                                    // type="button"
-                                                    variant="gradient"
-                                                    color="info"
-                                                    aria-controls="simple-menu"
-                                                    aria-haspopup="true"
-                                                    onClick={(e) => {
-                                                        // setSearch(e.target.value);
-                                                        // getSearch();
-                                                        // // handleOpen(true);
-                                                        // handleClick(e);
-                                                        setIsSearchShow(true)
-                                                    }}
-                                                    style={{border:"0px",outline:"none"}}
+                                                    {
+                                                        !isSearchShow ?
+                                                            <SoftButton
+                                                                // type="button"
+                                                                variant="gradient"
+                                                                color="info"
+                                                                aria-controls="simple-menu"
+                                                                aria-haspopup="true"
+                                                                onClick={(e) => {
+                                                                    // setSearch(e.target.value);
+                                                                    // getSearch();
+                                                                    // // handleOpen(true);
+                                                                    // handleClick(e);
+                                                                    setIsSearchShow(true)
+                                                                }}
+                                                                style={{ border: "0px", outline: "none" }}
+                                                            >
+                                                                <FontAwesomeIcon icon={faPlus} style={{ marginRight: "6px", marginBottom: "1%" }} />
+                                                                {/* <FontAwesomeIcon icon={faPlus} style={{paddingRight:"3px",marginBottom:"1%"}}/>  */}
+                                                                New Chat
+                                                            </SoftButton>
+                                                            :
+                                                            <button
+                                                                type="button"
+                                                                aria-controls="simple-menu"
+                                                                aria-haspopup="true"
+                                                                style={{ background: "none", height: "32px", border: "0", outline: "0" }}
+                                                                onClick={(e) => {
+                                                                    setSearch(e.target.value);
+                                                                    getSearch();
+                                                                    // handleOpen(true);
+                                                                    // setIsSearchShow(false)
+                                                                    handleClick(e);
+                                                                }}> <i className="fa fa-search" aria-hidden="true"></i>
+                                                            </button>
+                                                    }
+
+                                                    <Menu
+                                                        anchorEl={anchorEl}
+                                                        open={Boolean(anchorEl)}
+                                                        onClose={handleClose}
+                                                        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                                                        transformOrigin={{ horizontal: "right" }}
+
+                                                        sx={{
+                                                            "& .css-cmyovl-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
+                                                                border: " 0 solid rgba(0, 0, 0, 0.125)",
+                                                                borderRadius: "1rem",
+                                                                boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0)",
+                                                            },
+                                                            "& .MuiPaper-root": {
+                                                                left: "274px !important",
+                                                                width: "21.8%"
+                                                            }
+                                                        }}
                                                     >
-                                                    <FontAwesomeIcon icon={faPlus} style={{ marginRight: "6px", marginBottom: "1%" }} />
-                                                    {/* <FontAwesomeIcon icon={faPlus} style={{paddingRight:"3px",marginBottom:"1%"}}/>  */}
-                                                    New Chat
-                                                </SoftButton>
-                                                :
-                                                <button
-                                                    type="button"
-                                                    aria-controls="simple-menu"
-                                                    aria-haspopup="true"
-                                                    style={{ background: "none", height: "32px", border: "0", outline: "0" }}
-                                                    onClick={(e) => {
-                                                        setSearch(e.target.value);
-                                                        getSearch();
-                                                        // handleOpen(true);
-                                                        // setIsSearchShow(false)
-                                                        handleClick(e);
-                                                    }}> <i className="fa fa-search" aria-hidden="true"></i>
-                                                </button>
-                                        }
+                                                        {(searchResults && searchResults.length) ?
+                                                            searchResults.map((item) => (
+                                                                <MenuItem key={item.id} onClick={() => createRoom(item)}>
+                                                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                                                        <img src={getProfileImage(item?.profileImage)} alt="Profile" style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }} />
+                                                                        {item?.firstName}
+                                                                    </div>
+                                                                </MenuItem>
+                                                            ))
 
-                                        <Menu
-                                            anchorEl={anchorEl}
-                                            open={Boolean(anchorEl)}
-                                            onClose={handleClose}
-                                            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                                            transformOrigin={{ horizontal: "right" }}
-
-                                            sx={{
-                                                "& .css-cmyovl-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
-                                                    border: " 0 solid rgba(0, 0, 0, 0.125)",
-                                                    borderRadius: "1rem",
-                                                    boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0)",
-                                                },
-                                                "& .MuiPaper-root": {
-                                                    left: "274px !important",
-                                                    width: "21.8%"
-                                                }
-                                            }}
-                                        >
-                                            {(searchResults && searchResults.length) ?
-                                                searchResults.map((item) => (
-                                                    <MenuItem key={item.id} onClick={() => createRoom(item)}>
-                                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                                            <img src={getProfileImage(item?.profileImage)} alt="Profile" style={{ width: 30, height: 30, borderRadius: "50%", marginRight: 10 }} />
-                                                            {item?.firstName}
-                                                        </div>
-                                                    </MenuItem>
-                                                ))
-
-                                                :
-                                                (
-                                                    <MenuItem >
-                                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                                            NO RECORD FOUND
-                                                        </div>
-                                                    </MenuItem>
-                                                )
-                                            }
-                                        </Menu>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {roomRecord && roomRecord?.map((item) => (
-                                <div key={item.id} className="rowroom" id="adstodos">
-                                    <div className="inbox_chat">
-                                        <div className="chat_list active_chat">
-                                            <div className="chat_people">
-                                                <div className="chat_img">
-                                                    <img src={getProfileImage(item?.sender?.profileImage)} />
-                                                </div>
-                                                <div className="chat_ib" onClick={() => {
-                                                    handleRoomId(item)
-                                                    setShowBackgroundImage(false)
-                                                    setShowBackgroundHeader(false)
-                                                    setShowBackgroundChat(false)
-                                                }}>
-                                                    <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY LTS')}</span></h5>
-                                                    <p>{item?.messager?.message}</p>
+                                                            :
+                                                            (
+                                                                <MenuItem >
+                                                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                                                        NO RECORD FOUND
+                                                                    </div>
+                                                                </MenuItem>
+                                                            )
+                                                        }
+                                                    </Menu>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="mesgs">
 
-                            <div className={`${showBackgroundHeader ? 'bg-transparent' : 'card-header p-1 bg-light border border-top-0 border-left-0 border-right-0'}`} style={{ color: " rgba(96, 125, 139,1.0)", height: "55px" }}>
-                                {
-                                    !showBackgroundHeader && <img className="float-left" style={{ width: " 45px", height: "45px" }} src={getProfileImage(headerImage?.profileImage)} />
-                                }
-                                <h6 className="float-left" style={{ margin: "0px", marginLeft: "10px" }}>{headerImage?.firstName}
-                                </h6>
-                            </div>
-                            <div className={`${showBackgroundImage ? 'background-img' : 'bg-transparent'}`}>
-                                <div className="msg_history">
-                                    {chatRecord && chatRecord?.map((item) => (
-                                        <div key={item.id} className="rowchat " id="adstodos">
-                                            {(localStorage.getItem("id") == item?.senderId?.id) ?
-                                                <div className="outgoing_msg">
-                                                    <div className="outgoing_msg_img"> <img src={getProfileImage(item?.senderId?.profileImage)} /> </div>
-
-                                                    <div className="sent_msg">
-                                                        <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
-                                                        <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
-                                                    </div>
-                                                </div>
-                                                :
-                                                <div className="incoming_msg">
-                                                    <div className="incoming_msg_img"> <img src={getProfileImage(item?.senderId?.profileImage)} /> </div>
-                                                    <div className="received_msg">
-                                                        <div className="received_withd_msg">
-                                                            <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
-                                                            <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
-                                                            <span>
-                                                            </span>
+                                        {roomRecord && roomRecord?.map((item) => (
+                                            <div key={item.id} className="rowroom" id="adstodos">
+                                                <div className="inbox_chat">
+                                                    <div className="chat_list active_chat">
+                                                        <div className="chat_people">
+                                                            <div className="chat_img">
+                                                                <img src={getProfileImage(item?.sender?.profileImage)} />
+                                                            </div>
+                                                            <div className="chat_ib" onClick={() => {
+                                                                handleRoomId(item)
+                                                                setShowBackgroundImage(false)
+                                                                setShowBackgroundHeader(false)
+                                                                setShowBackgroundChat(false)
+                                                            }}>
+                                                                <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY LTS')}</span></h5>
+                                                                <p>{item?.messager?.message}</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="mesgs">
+
+                                        <div className={`${showBackgroundHeader ? 'bg-transparent' : 'card-header p-1 bg-light border border-top-0 border-left-0 border-right-0'}`} style={{ color: " rgba(96, 125, 139,1.0)", height: "55px" }}>
+                                            {
+                                                !showBackgroundHeader && <img className="float-left" style={{ width: " 45px", height: "45px" }} src={getProfileImage(headerImage?.profileImage)} />
                                             }
+                                            <h6 className="float-left" style={{ margin: "0px", marginLeft: "10px" }}>{headerImage?.firstName}
+                                            </h6>
                                         </div>
-                                    ))}
-                                </div>
+                                        <div className={`${showBackgroundImage ? 'background-img' : 'bg-transparent'}`}>
+                                            <div className="msg_history">
+                                                {chatRecord && chatRecord?.map((item) => (
+                                                    <div key={item.id} className="rowchat " id="adstodos">
+                                                        {(localStorage.getItem("id") == item?.senderId?.id) ?
+                                                            <div className="outgoing_msg">
+                                                                <div className="outgoing_msg_img"> <img src={getProfileImage(item?.senderId?.profileImage)} /> </div>
 
-                                <div className='type_msg'>
-                                    <div className={`${showBackgroundChat ? 'bg-transparent' : 'input_msg_write'}`}>
-                                        <div className='input_msg_write'>
-                                            {!showBackgroundChat &&
-                                                <SoftInput
-                                                    type="text"
-                                                    className="write_msg"
-                                                    placeholder="Type a message"
-                                                    value={chat?.message}
-                                                    onChange={e => setChat(prev => ({ ...prev, message: e.target.value }))}
-                                                    onKeyPress={(e) => onKeyBtn(e)}
+                                                                <div className="sent_msg">
+                                                                    <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
+                                                                    <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
+                                                                </div>
+                                                            </div>
+                                                            :
+                                                            <div className="incoming_msg">
+                                                                <div className="incoming_msg_img"> <img src={getProfileImage(item?.senderId?.profileImage)} /> </div>
+                                                                <div className="received_msg">
+                                                                    <div className="received_withd_msg">
+                                                                        <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
+                                                                        <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
+                                                                        <span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                ))}
+                                            </div>
 
-                                                />}
-                                            {!showBackgroundChat &&
-                                                <button className="msg_send_btn" type="button" style={{background: "linear-gradient(310deg, #2152ff, #21d4fd)"}}><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
-                                            }
+                                            <div className='type_msg'>
+                                                <div className={`${showBackgroundChat ? 'bg-transparent' : 'input_msg_write'}`}>
+                                                    <div className='input_msg_write'>
+                                                        {!showBackgroundChat &&
+                                                            <SoftInput
+                                                                type="text"
+                                                                className="write_msg"
+                                                                placeholder="Type a message"
+                                                                value={chat?.message}
+                                                                onChange={e => setChat(prev => ({ ...prev, message: e.target.value }))}
+                                                                onKeyPress={(e) => onKeyBtn(e)}
+
+                                                            />}
+                                                        {!showBackgroundChat &&
+                                                            <button className="msg_send_btn" type="button" style={{ background: "linear-gradient(310deg, #2152ff, #21d4fd)" }}><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createChat}></i></button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

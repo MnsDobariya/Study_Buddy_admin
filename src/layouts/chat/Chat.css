@@ -183,9 +183,13 @@ img {
 
 .mesgs {
   float: left;
-  padding: 13px 0 0 15px;
+  padding: 0 15px 0 15px;
   width: 73%;
  border: 1px ridge;
+}
+
+.conta {
+  margin-left: 12rem !important;
 }
 
 .sent_msg  {
