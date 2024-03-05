@@ -234,7 +234,7 @@
     background-color: black;
     border-radius: 23px;
     max-height: 50px;
-    width: 48px;
+    width: 40px;
     color: white;
     font-size: larger;
 }
@@ -272,8 +272,11 @@
 }
 
 .assignmentdetails.active {
-    color: white;
-    background-color: rgb(110, 173, 212);
+    color: black;
+    background-color: #17c1e8;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 0.3rem;
     /* Add any additional styles for the active state */
 }
 
@@ -318,6 +321,7 @@
     border-radius: 1rem;
     box-shadow: 0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05);
 }
+
 
 .card-Tasks2 {
     padding-left: 35px;
