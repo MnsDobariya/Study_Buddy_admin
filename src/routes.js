@@ -201,7 +201,7 @@ const routes = [
     name: "Notification",
     key: "notification",
     route: "/notification",
-    role:["User","Teacher","Admin"],
+    role:["User","Admin"],
     // icon: <NotificationBell size="12px" />,
     icon:<FontAwesomeIcon icon={faBell} size="xs" style={{color:"#3a416f"}}/>,
     component: <Notification />,
