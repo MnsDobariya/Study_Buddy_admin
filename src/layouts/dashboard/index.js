@@ -109,7 +109,7 @@ function Dashboard() {
   const getTodosData = () => {
     ApiGet(`${EndPoint.TODOS_GET}`)
       .then((res) => {
-        console.log(res?.data, "response");
+        // console.log(res?.data, "response");
         // const convertedData = res?.data.map((todo) => ({
         //   task: todo.task,  
         //   portable: parseInt(todo.portable, 10), 

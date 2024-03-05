@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Tasks = () => {
     const navigate = useNavigate();
+    const [taskData, setTaskData] = useState([]);
     const [open, setOpen] = useState(false);
     const [deleteId, setDeleteId] = useState();
 
@@ -26,7 +27,6 @@ const Tasks = () => {
 
 
 
-    const [taskData, setTaskData] = useState([]);
     const getTaskData = () => {
         ApiGet(`${EndPoint.TASK_GET}`)
             .then((res) => {
