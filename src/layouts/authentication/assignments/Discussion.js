@@ -12,15 +12,15 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Discussion = ({ assignmentDetails }) => {
-    const [discussionRoomRecord, setDiscussionRoomRecord] = useState([]);
+    // console.log('assignmentDetails', assignmentDetails)
     const [discussionChatRecord, setDiscussionChatRecord] = useState([]);
-
+// console.log('discussionChatRecord', discussionChatRecord)
     const [discussionChat, setDiscussionChat] = useState({
         discussionroomId: "",
         message: "",
     });
 
-    const[discussionRoomId,setDiscussionRoomId]=useState([]); 
+    const [discussionRoomId, setDiscussionRoomId] = useState([]);
     // console.log(discussionRoomId,"discussionRoomId");  
 
 
@@ -34,21 +34,21 @@ const Discussion = ({ assignmentDetails }) => {
         }
 
         ApiPost(`${EndPoint.DISCUSSIONCHAT_CREATE}`, body)
-        .then((res) => {
-            if (res?.status === 201) {
-                setDiscussionChat({
-                    ...discussionChat,
-                    message: ""
-                })
-            }
-            // getDiscussionChat(discussionChat?.roomId);
-        })
+            .then((res) => {
+                if (res?.status === 201) {
+                    setDiscussionChat({
+                        ...discussionChat,
+                        message: ""
+                    })
+                    getDiscussionChat(res?.data?.discussionroomId)
+                }
+            })
     }
 
     const getDiscussionChat = (roomId) => {
         ApiGet(`${EndPoint.DISCUSSIONCHAT_GET}?discussionroomId=${roomId}`)
             .then((res) => {
-                console.log(res,"chatRespone++++");
+                console.log(res, "chatRespone++++");
                 setDiscussionChatRecord(res?.data)
             })
     }
@@ -58,15 +58,20 @@ const Discussion = ({ assignmentDetails }) => {
             .then((res) => {
                 // console.log(res,"chatRespone");
                 setDiscussionRoomId(res?.data)
+
+              getDiscussionChat(res?.data?.id);
+
             })
     }
     useEffect(() => {
         getDiscussionRoom("");
-        // getDiscussionChat("");
         // console.log(assignmentDetails,"qqqqqqqqqqq");
     }, []);
 
-
+    const onKeyBtn = (e) => {
+        if (e.key === "Enter")
+            createDiscussionChat();
+    }
     return (
         <>
 
@@ -92,22 +97,26 @@ const Discussion = ({ assignmentDetails }) => {
                                 </div>
 
                             </div> */}
-                                {discussionRoomId?.members?.map((item) => (
-                                    <div key={item.id} className="inbox_chat">
-                                        {/* {console.log(item?.firstName,"item")} */}
-                                        <div className="chat_list active_chat" style={{backgroundColor:"white"}}>
-                                            <div className="chat_people">
-                                                <div className="chat_img">
-                                                    <img src="" />
-                                                </div>
-                                                <div className="chat_ib">
-                                                    <h5>{item?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY')}</span></h5>
-                                                    <p>hii</p>
-                                                </div>
+                                    {/* <h4 style={{marginTop:"5%"}}>Study Buddies</h4> */}
+
+                            {discussionRoomId?.members?.map((item) => (
+                                <div key={item.id} className="inbox_chat">
+                                    {/* {console.log(item?.firstName,"item")} */}
+
+                                    <div div className="chat_list active_chat" style={{ backgroundColor: "white" }}>
+                                        <div className="chat_people">
+                                            <div className="chat_img">
+                                                <img src="" />
+                                            </div>
+                                            <div className="chat_ib">
+                                                <h5>{item?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY')}</span></h5>
+                                                <p>{item?.email}</p>
                                             </div>
                                         </div>
                                     </div>
-                                ))}
+
+                                </div>
+                            ))}
                         </div>
                         <div className="mesgsDiscussion">
 
@@ -115,27 +124,34 @@ const Discussion = ({ assignmentDetails }) => {
                             {/* <div className={`${showBackgroundImage ? 'background-img' : 'bg-transparent'}`}> */}
                             <div className="msg_historyDiscussion">
 
+                                {discussionChatRecord && discussionChatRecord?.map((item) => (
+                                    <div key={item.id} className="rowchat " id="adstodos">
+                                        {(localStorage.getItem("id") == item?.senderId?.id) ?
 
-                                <div className="outgoing_msg" style={{margin:"26px 11px 26px"}}>
-                                    <div className="outgoing_msg_img"> <img src="" /> </div>
 
-                                    <div className="sent_msg">
-                                        <p style={{ marginBottom: "0.4rem" }}>jii</p>
-                                        <p style={{ fontSize: "small" }}>31 Des 2024</p>
+                                            <div className="outgoing_msg" style={{ margin: "26px 11px 26px" }}>
+                                                <div className="outgoing_msg_img"> <img src="" /> </div>
+
+                                                <div className="sent_msg">
+                                                    <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
+                                                    <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
+                                                </div>
+                                            </div>
+                                            :
+                                            <div className="incoming_msg">
+                                                <div className="incoming_msg_img"> <img src="" /> </div>
+                                                <div className="received_msg">
+                                                    <div className="received_withd_msg">
+                                                        <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
+                                                        <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
+                                                        <span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
                                     </div>
-                                </div>
-
-                                <div className="incoming_msg">
-                                    <div className="incoming_msg_img"> <img src="" /> </div>
-                                    <div className="received_msg">
-                                        <div className="received_withd_msg">
-                                            <p style={{ marginBottom: "0.4rem" }}>hello</p>
-                                            <p style={{ fontSize: "small" }}>31 Des 2024</p>
-                                            <span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
 
                             </div>
 
@@ -149,23 +165,24 @@ const Discussion = ({ assignmentDetails }) => {
                                         type="text"
                                         className="write_msg"
                                         placeholder="Type a message"
-                                        
+                                        value={discussionChat?.message}
                                         onChange={e => setDiscussionChat(prev => ({ ...prev, message: e.target.value }))}
+                                        onKeyPress={(e) => onKeyBtn(e)}
 
                                     />
                                     {/* } */}
                                     {/* {!showBackgroundChat && */}
-                                    <button className="msg_send_btn" type="button" style={{background: "linear-gradient(310deg, #2152ff, #21d4fd)"}}><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createDiscussionChat}></i></button>
+                                    <button className="msg_send_btn" type="button" style={{ background: "linear-gradient(310deg, #2152ff, #21d4fd)" }}><i className="fa fa-paper-plane-o" aria-hidden="true" onClick={createDiscussionChat}></i></button>
                                     {/* } */}
                                 </div>
                                 {/* </div> */}
                             </div>
                             {/* </div> */}
                         </div>
-                        
+
                     </div>
                 </div>
-            </div>
+            </div >
 
 
         </>
