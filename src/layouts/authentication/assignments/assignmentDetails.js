@@ -16,6 +16,7 @@ import Details from "./Details";
 import moment from "moment";
 import Discussion from "./Discussion";
 import { ApiPut } from "config/Api/ApiData";
+import { toast } from "react-toastify";
 // import '../assignments/assignment.css';
 
 const today = dayjs();
@@ -33,6 +34,12 @@ const assignmentDetails = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [tab, setTab] = useState("");
     const [activeTab, setActiveTab] = useState("");
+    const [error,setError] = useState({
+        // dueDate: "",
+        task: "",
+        description: "",
+    });
+
 
     const location = useLocation();
     // console.log(location, "location");
@@ -60,10 +67,34 @@ const assignmentDetails = () => {
     }
 
     const handleChange = (e) => {
+        const {name,value} = e.target;
+
+        const textRegex = /^[A-Za-z\s]+$/;
         setTasks({
             ...tasks,
-            [e.target.name]: e.target.value,
+            [name]: value,
         });
+
+        if(name === "task"){
+            if(!textRegex.test(value)){
+                setError({
+                    ...error,
+                    [name]:"please Enter Text Only",
+                });
+            }else {
+                setError({
+                    ...error,
+                    [name]: "",
+                })
+            }
+        }
+
+        if (value.trim() === "") {
+            setError({
+                ...error,
+                [name]: "",
+            });
+        }
     }
 
     // useEffect(() => {
@@ -75,6 +106,23 @@ const assignmentDetails = () => {
 
 
     const AddTasks = () => {
+        const error = {};
+        if(!tasks?.task){
+            error.task = "Please Tasks Required";
+        }
+
+        if(!tasks?.description){
+            error.description = "Please Tasks Required";
+        }
+        
+        if(
+            error?.task ||
+            error?.description
+        ){
+            setError(error);
+            return;
+        }
+
         const body = {
             dueDate: startDate,
             task: tasks?.task,
@@ -83,20 +131,20 @@ const assignmentDetails = () => {
             assignmentId: location?.state?.assignmentDetail?.id,
         }
 
-        // if (location?.state?.tasks) {
-        //     ApiPut(`${EndPoint.TASK_UPDATE}/${location?.state?.tasks?.id}`, body)
-        //         .then((res) => {
-        //             if (res?.status === 200) {
-        //                 setTasks({
-        //                     dueDate: "",
-        //                     task: "",
-        //                     description: "",
-        //                 });
-        //             }
-        //             toast.success("Update Successfully");
-        //             handleClose();
-        //         });
-        // } else {
+        if (tasks?.id) {
+            ApiPut(`${EndPoint.TASK_UPDATE}/${tasks?.id}`, body)
+                .then((res) => {
+                    if (res?.status === 200) {
+                        setTasks({
+                            dueDate: "",
+                            task: "",
+                            description: "",
+                        });
+                    }
+                    toast.success("Update Successfully");
+                    handleClose();
+                });
+        } else {
             ApiPost(`${EndPoint.TASKS_CREATE}`, body)
                 .then((res) => {
                     // console.log(res, "tasksres");
@@ -110,7 +158,7 @@ const assignmentDetails = () => {
                         handleClose();
                     }
                 })
-        // }
+        }
     }
 
 
@@ -121,7 +169,7 @@ const assignmentDetails = () => {
                 <div className="card-assignment" style={{ height: "77px" }}>
 
                     <div style={{ padding: "22px", color: "#344767" }}>
-                        <p className="card-assignment">Assignment Details</p>
+                        <p className="card-assignment" style={{fontSize:"x-large"}}>Assignment Details</p>
 
                     </div>
                     <p className="card-assignment"> </p>
@@ -186,7 +234,7 @@ const assignmentDetails = () => {
                                 <button className={`assignmentdetails ${activeTab === "task" ? "active" : ""}`} onClick={() => handleTabClick("task")} style={{border: "0px", outline: "none"}}>Task</button>
                             </div>
                             <div className="col-md-3">
-                                <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{border: "0px", outline: "none"}}>Discussion</button>
+                                <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{border: "0px", outline: "none",paddingBottom:"4px"}}>Discussion</button>
                             </div>
                         </div>
                     </div>
@@ -202,7 +250,7 @@ const assignmentDetails = () => {
             }
             {
                 tab == "task" && (
-                    <Tasks />
+                    <Tasks setTasks={setTasks} handleOpen={handleOpen}/>
 
                 )
             }
@@ -267,7 +315,7 @@ const assignmentDetails = () => {
                                         handleChange(e);
                                     }}
                                 />
-
+                         {error?.task && <p style={{ color: "red", fontSize: "60%" }}>{error?.task} </p>}
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <label htmlFor="assignId" style={{ color: "#344767" }}>AssignTo</label>
@@ -285,6 +333,7 @@ const assignmentDetails = () => {
                                     name="assignId"
                                     id="assignId"
                                     className='form-control'
+                                    value={tasks?.assignId}
                                     style={{ borderRadius: "0.5rem" }}
                                     onChange={(e) => {
                                         handleChange(e);
@@ -308,7 +357,7 @@ const assignmentDetails = () => {
                                         handleChange(e);
                                     }}
                                 />
-
+                              {error?.description && <p style={{ color: "red", fontSize: "60%" }}>{error?.description} </p>}
                             </div>
                             {/* <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <label htmlFor="file" style={{ color: "#344767" }}>File</label>
