@@ -10,7 +10,8 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Tasks = () => {
+/* eslint-disable */
+const Tasks = ({ setTasks, handleOpen }) => {
     const navigate = useNavigate();
     const [taskData, setTaskData] = useState([]);
     const [open, setOpen] = useState(false);
@@ -21,9 +22,11 @@ const Tasks = () => {
         setOpen(false);
     };
 
-    // const handleEdit = (item) => {
-    //     navigate(`/assignments/assignmentDetails`,{state:{ tasks : item  }});
-    // }
+    const handleEdit = (item) => {
+        // navigate(`/assignments/assignmentDetails`, { state: { tasks: item } });
+        setTasks(item)
+        handleOpen()
+    }
 
 
 
@@ -51,44 +54,44 @@ const Tasks = () => {
                 taskData?.map((item) => (
                     <div key={item.id} className="rowtodos" id="adstodos">
 
-                    <SoftBox>
-                        <div className="cardTasks w-75">
+                        <SoftBox>
+                            <div className="cardTasks w-75">
 
-                            <div className="card-Tasks" style={{ height: "110px" }}>
+                                <div className="card-Tasks" style={{ height: "110px" }}>
 
-                                <div style={{ padding: "22px 22px 8px 22px", color: "#344767", fontSize: "initial" }}>
-                                    <p>{item?.task}</p>
-                                </div>
-                                <div className="card-Tasks2">
-                                    <div className="lbltasks">
-                                        <label1>M</label1>
+                                    <div style={{ padding: "22px 22px 8px 22px", color: "#344767", fontSize: "initial" }}>
+                                        <p>{item?.task}</p>
                                     </div>
-                                    <h5 style={{ padding: "8px", fontSize: "medium", color: "#67748e" }}> Assignment Details</h5>
-                                    <label className='dateTasks'>
-                                        <span className=''><p> DUE DATE: {moment(item?.dueDate).format('DD MMM YYYY')}</p></span>
-                                    </label>
-                                    <div className="mr-5" style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
-                                        <FontAwesomeIcon icon={faPen} onClick={() => {
-                                            handleEdit(item)
-                                        }}
-                                            style={{ cursor: "pointer" }}
-                                        />
-                                        <FontAwesomeIcon icon={faTrash} onClick={() => {
-                                            setOpen(true);
-                                            setDeleteId(item.id);
-                                        }}
-                                            style={{ cursor: "pointer" }}
-                                        />
+                                    <div className="card-Tasks2">
+                                        <div className="lbltasks">
+                                            <label1>M</label1>
+                                        </div>
+                                        <h5 style={{ padding: "8px", fontSize: "medium", color: "#67748e" }}> Assignment Details</h5>
+                                        <label className='dateTasks'>
+                                            <span className=''><p> DUE DATE: {moment(item?.dueDate).format('DD MMM YYYY')}</p></span>
+                                        </label>
+                                        <div className="mr-5" style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
+                                            <FontAwesomeIcon icon={faPen} onClick={() => {
+                                                handleEdit(item)
+                                            }}
+                                                style={{ cursor: "pointer" }}
+                                            />
+                                            <FontAwesomeIcon icon={faTrash} onClick={() => {
+                                                setOpen(true);
+                                                setDeleteId(item.id);
+                                            }}
+                                                style={{ cursor: "pointer" }}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
-                        </div>
-                    </SoftBox>
+                        </SoftBox>
                     </div>
                 )) : (
-                    <div className="noRecord" style={{marginLeft:"50%",marginTop:"15%"}}>
-                    <p>No Record</p>
+                    <div className="noRecord" style={{ marginLeft: "50%", marginTop: "15%" }}>
+                        <p>No Record</p>
                     </div>
                 )}
 
