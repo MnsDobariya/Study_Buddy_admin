@@ -271,14 +271,24 @@
 
 }
 
-.assignmentdetails:hover {
-    /* padding: 8px;
+.assignmentdetails.active {
+    color: white;
+    background-color: rgb(110, 173, 212);
+    /* Add any additional styles for the active state */
+}
+
+/* .assignmentdetails:hover {
+    padding: 8px;
     color:aliceblue;
     border-radius: 5px;
     background-color: rgb(110, 173, 212);
-    transition: background-color 0.3s; */
+    transition: background-color 0.3s;
     cursor: pointer;
+} */
 
+.selected {
+    background-color: "red";
+    color: "white";
 }
 
 .cardDetails {

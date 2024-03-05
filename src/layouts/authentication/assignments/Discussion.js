@@ -20,7 +20,8 @@ const Discussion = ({ assignmentDetails }) => {
         message: "",
     });
 
-    const[discussionRoomId,setDiscussionRoomId]=useState([]);    
+    const[discussionRoomId,setDiscussionRoomId]=useState([]); 
+    // console.log(discussionRoomId,"discussionRoomId");  
 
 
     const navigate = useNavigate();
@@ -40,7 +41,7 @@ const Discussion = ({ assignmentDetails }) => {
                     message: ""
                 })
             }
-            getDiscussionChat(discussionChat?.roomId);
+            // getDiscussionChat(discussionChat?.roomId);
         })
     }
 
@@ -53,9 +54,9 @@ const Discussion = ({ assignmentDetails }) => {
     }
 
     const getDiscussionRoom = () => {
-        ApiGet(`${EndPoint.DISCUSSIONROOM_GET}?assignmentId=${assignmentDetails?.id}`)
+        ApiGet(`${EndPoint.DISCUSSIONROOM_GET}?assignmentId=${assignmentDetails?.assignmentDetail?.id}`)
             .then((res) => {
-                console.log(res,"chatRespone");
+                // console.log(res,"chatRespone");
                 setDiscussionRoomId(res?.data)
             })
     }
@@ -91,7 +92,7 @@ const Discussion = ({ assignmentDetails }) => {
                                 </div>
 
                             </div> */}
-                                {assignmentDetails?.members?.map((item) => (
+                                {discussionRoomId?.members?.map((item) => (
                                     <div key={item.id} className="inbox_chat">
                                         {/* {console.log(item?.firstName,"item")} */}
                                         <div className="chat_list active_chat" style={{backgroundColor:"white"}}>

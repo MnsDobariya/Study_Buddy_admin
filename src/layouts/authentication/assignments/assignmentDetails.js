@@ -28,30 +28,42 @@ const assignmentDetails = () => {
         task: "",
         description: "",
         assignId: "",
-        assassignmentId:"",
+        assassignmentId: "",
     });
     const [startDate, setStartDate] = useState(new Date());
     const [tab, setTab] = useState("");
-
+    const [activeTab, setActiveTab] = useState("");
 
     const location = useLocation();
-    // console.log(location, "location");  
+    // console.log(location, "location");
 
     const navigate = useNavigate();
+
+    
+    const handleTabClick = (tab) => {
+        setTab(tab);
+        setActiveTab(tab);
+    }
+
 
     const handleOpen = () => {
         setOpen(true);
     }
 
     const handleClose = () => {
+        // setTasks({
+        //     dueDate: "",
+        //     task: "",
+        //     description: "",
+        // });
         setOpen(false);
     }
 
     const handleChange = (e) => {
-            setTasks({
-                ...tasks,
-                [e.target.name]: e.target.value,
-            });
+        setTasks({
+            ...tasks,
+            [e.target.name]: e.target.value,
+        });
     }
 
     // useEffect(() => {
@@ -59,7 +71,7 @@ const assignmentDetails = () => {
     //         setTasks(location?.state?.tasks)
     //         setOpen(true);
     //     }
-    // }, [location])
+    // }, [location]);
 
 
     const AddTasks = () => {
@@ -68,10 +80,10 @@ const assignmentDetails = () => {
             task: tasks?.task,
             description: tasks?.description,
             assignId: tasks?.assignId,
-            assignmentId:location?.state?.assignmentDetail?.id,
+            assignmentId: location?.state?.assignmentDetail?.id,
         }
 
-        // if (location?.state?.tasks?.id) {
+        // if (location?.state?.tasks) {
         //     ApiPut(`${EndPoint.TASK_UPDATE}/${location?.state?.tasks?.id}`, body)
         //         .then((res) => {
         //             if (res?.status === 200) {
@@ -79,27 +91,25 @@ const assignmentDetails = () => {
         //                     dueDate: "",
         //                     task: "",
         //                     description: "",
-        //                     assignId:"",
         //                 });
         //             }
         //             toast.success("Update Successfully");
         //             handleClose();
         //         });
         // } else {
-        ApiPost(`${EndPoint.TASKS_CREATE}`, body)
-            .then((res) => {
-                console.log(res, "tasksres");
-                if (res.status === 201) {
-                    setTasks({
-                        dueDate: "",
-                        task: "",
-                        description: "",
-                        assignId:"",
+            ApiPost(`${EndPoint.TASKS_CREATE}`, body)
+                .then((res) => {
+                    // console.log(res, "tasksres");
+                    if (res.status === 201) {
+                        setTasks({
+                            dueDate: "",
+                            task: "",
+                            description: "",
 
-                    })
-                handleClose();
-                }
-            })
+                        })
+                        handleClose();
+                    }
+                })
         // }
     }
 
@@ -170,13 +180,13 @@ const assignmentDetails = () => {
 
                         <div className="row mt-3 ml-3">
                             <div className="col-md-4">
-                                <h4 className="assignmentdetails" onClick={() => setTab("detail")}>Details</h4>
+                                <button className={`assignmentdetails ${activeTab === "detail" ? "active" : ""}`} onClick={() => handleTabClick("detail")} style={{border: "0px", outline: "none"}}>Details</button>
                             </div>
                             <div className="col-md-3">
-                                <h4 className="assignmentdetails" onClick={() => setTab("task")}>Task</h4>
+                                <button className={`assignmentdetails ${activeTab === "task" ? "active" : ""}`} onClick={() => handleTabClick("task")} style={{border: "0px", outline: "none"}}>Task</button>
                             </div>
                             <div className="col-md-3">
-                                <h4 className="assignmentdetails" onClick={() => setTab("discussion")}>Discussion</h4>
+                                <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{border: "0px", outline: "none"}}>Discussion</button>
                             </div>
                         </div>
                     </div>
