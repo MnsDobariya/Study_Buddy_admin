@@ -9,6 +9,7 @@ import { EndPoint } from 'config/EndPoint/Endpoint';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 /* eslint-disable */
 const Tasks = ({ setTasks, handleOpen }) => {
@@ -45,6 +46,7 @@ const Tasks = ({ setTasks, handleOpen }) => {
     const deleteTask = (id) => {
         axios.delete(`http://localhost:3000/api/v1/task/delete/${id}`)
             .then((res) => {
+                toast.success("Delete Successfully");
                 getTaskData();
             })
     }

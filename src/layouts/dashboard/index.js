@@ -227,7 +227,7 @@ function Dashboard() {
           </Grid>
         </SoftBox>
         <SoftBox mb={3}>
-          <Grid container spacing={3} style={{justifyContent:"center",columnGap:"140px"}}>
+          <Grid container spacing={3}>
             <Grid item xs={12} lg={4.5}>
               {/* <ReportsBarChart
                 title="active users"
@@ -239,12 +239,12 @@ function Dashboard() {
                 chart={chart}
                 items={items}
               /> */}
-              <Card>
+              <Card  >
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
                     Task Status
                   </Typography>
-                  <SoftBox mb={3}>
+                  <SoftBox mb={3} >
                     <Pie
                       data={todosData}
                       options={{
@@ -254,6 +254,11 @@ function Dashboard() {
                         },
                       }}
                     />
+                    <p>
+                      Deep and meaningful formal learning is supported as long as one of the three forms of interaction
+                      (student–teacher; student-student; student-content) is at a high level. The other two may be
+                      offered at minimal levels, or even eliminated, without degrading the educational experience.
+                    </p>
                     {/* <Pie
                     data={{
                       labels: todosData.map((todo) => todo.task),
@@ -292,6 +297,7 @@ function Dashboard() {
                         },
                       }}
                     />
+
                     {/* <Pie
                     data={{
                       labels: todosData.map((todo) => todo.task),

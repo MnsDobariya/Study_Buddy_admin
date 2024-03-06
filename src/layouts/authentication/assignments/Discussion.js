@@ -1,3 +1,4 @@
+import { Avatar } from '@mui/material';
 import SoftBox from 'components/SoftBox';
 import SoftButton from 'components/SoftButton';
 import SoftInput from 'components/SoftInput';
@@ -14,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 const Discussion = ({ assignmentDetails }) => {
     // console.log('assignmentDetails', assignmentDetails)
     const [discussionChatRecord, setDiscussionChatRecord] = useState([]);
-// console.log('discussionChatRecord', discussionChatRecord)
+    // console.log('discussionChatRecord', discussionChatRecord)
     const [discussionChat, setDiscussionChat] = useState({
         discussionroomId: "",
         message: "",
@@ -59,7 +60,7 @@ const Discussion = ({ assignmentDetails }) => {
                 // console.log(res,"chatRespone");
                 setDiscussionRoomId(res?.data)
 
-              getDiscussionChat(res?.data?.id);
+                getDiscussionChat(res?.data?.id);
 
             })
     }
@@ -97,16 +98,21 @@ const Discussion = ({ assignmentDetails }) => {
                                 </div>
 
                             </div> */}
-                                    {/* <h4 style={{marginTop:"5%"}}>Study Buddies</h4> */}
+                            {/* <h4 style={{marginTop:"5%"}}>Study Buddies</h4> */}
 
                             {discussionRoomId?.members?.map((item) => (
                                 <div key={item.id} className="inbox_chat">
                                     {/* {console.log(item?.firstName,"item")} */}
 
+
                                     <div div className="chat_list active_chat" style={{ backgroundColor: "white" }}>
                                         <div className="chat_people">
                                             <div className="chat_img">
-                                                <img src="" />
+                                                {/* <img src="" /> */}
+                                                <Avatar style={{backgroundColor:"#17c1e8",color:"black"}}>
+                                                    {/* {item.firstName + " " + item.lastname} */}
+                                                    {`${item.firstName.charAt(0)}${item.lastName.charAt(0)}`}
+                                                </Avatar>
                                             </div>
                                             <div className="chat_ib">
                                                 <h5>{item?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY')}</span></h5>

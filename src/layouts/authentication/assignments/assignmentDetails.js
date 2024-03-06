@@ -1,4 +1,4 @@
-import { Modal } from "@mui/material";
+import { Avatar, Modal } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
@@ -17,6 +17,7 @@ import moment from "moment";
 import Discussion from "./Discussion";
 import { ApiPut } from "config/Api/ApiData";
 import { toast } from "react-toastify";
+import hotkeys from "hotkeys-js";
 // import '../assignments/assignment.css';
 
 const today = dayjs();
@@ -34,7 +35,7 @@ const assignmentDetails = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [tab, setTab] = useState("");
     const [activeTab, setActiveTab] = useState("");
-    const [error,setError] = useState({
+    const [error, setError] = useState({
         // dueDate: "",
         task: "",
         description: "",
@@ -46,7 +47,7 @@ const assignmentDetails = () => {
 
     const navigate = useNavigate();
 
-    
+
     const handleTabClick = (tab) => {
         setTab(tab);
         setActiveTab(tab);
@@ -67,7 +68,7 @@ const assignmentDetails = () => {
     }
 
     const handleChange = (e) => {
-        const {name,value} = e.target;
+        const { name, value } = e.target;
 
         const textRegex = /^[A-Za-z\s]+$/;
         setTasks({
@@ -75,13 +76,13 @@ const assignmentDetails = () => {
             [name]: value,
         });
 
-        if(name === "task"){
-            if(!textRegex.test(value)){
+        if (name === "task") {
+            if (!textRegex.test(value)) {
                 setError({
                     ...error,
-                    [name]:"please Enter Text Only",
+                    [name]: "please Enter Text Only",
                 });
-            }else {
+            } else {
                 setError({
                     ...error,
                     [name]: "",
@@ -95,7 +96,7 @@ const assignmentDetails = () => {
                 [name]: "",
             });
         }
-    }
+    };
 
     // useEffect(() => {
     //     if (location?.state?.tasks) {
@@ -107,18 +108,18 @@ const assignmentDetails = () => {
 
     const AddTasks = () => {
         const error = {};
-        if(!tasks?.task){
+        if (!tasks?.task) {
             error.task = "Please Tasks Required";
         }
 
-        if(!tasks?.description){
+        if (!tasks?.description) {
             error.description = "Please Tasks Required";
         }
-        
-        if(
+
+        if (
             error?.task ||
             error?.description
-        ){
+        ) {
             setError(error);
             return;
         }
@@ -155,11 +156,30 @@ const assignmentDetails = () => {
                             description: "",
 
                         })
+                        toast.success("Add Tasks Successfully");
                         handleClose();
                     }
                 })
         }
     }
+
+    useEffect(() => {
+        const handleAddBookShortcut = (e) => {
+            if (e.key === "s" && e.altKey) {
+                e.preventDefault();
+                AddTasks();
+            }
+        };
+        document.addEventListener("keydown", handleAddBookShortcut);
+        hotkeys("alt + c", (e) => {
+            e.preventDefault();
+            handleClose();
+        });
+        return () => {
+            document.removeEventListener("keydown", handleAddBookShortcut);
+            hotkeys.unbind("alt + c");
+        }
+    })
 
 
     return (
@@ -169,7 +189,7 @@ const assignmentDetails = () => {
                 <div className="card-assignment" style={{ height: "77px" }}>
 
                     <div style={{ padding: "22px", color: "#344767" }}>
-                        <p className="card-assignment" style={{fontSize:"x-large"}}>Assignment Details</p>
+                        <p className="card-assignment" style={{ fontSize: "x-large" }}>Assignment Details</p>
 
                     </div>
                     <p className="card-assignment"> </p>
@@ -179,9 +199,12 @@ const assignmentDetails = () => {
                 <div className="cardassignment w-75">
 
                     <div className="cardTitleassignment d-flex align-items-center">
-                        <div className="lblassignment">
+                        {/* <div className="lblassignment">
                             <label1>M</label1>
-                        </div>
+                        </div> */}
+                        <Avatar style={{ backgroundColor: "#17c1e8", color: "black" }}>
+                        {location?.state?.assignmentDetail?.title && location?.state?.assignmentDetail?.title.charAt(0)}
+                        </Avatar>
                         <h5 className="mb-2">{location?.state?.assignmentDetail?.title}</h5>
                         <div className="ml-auto mr-3 d-flex" style={{ gap: "20px" }}>
                             <SoftButton variant="gradient" color="info" style={{ border: "0px", outline: "none" }} onClick={() => {
@@ -228,13 +251,13 @@ const assignmentDetails = () => {
 
                         <div className="row mt-3 ml-3">
                             <div className="col-md-4">
-                                <button className={`assignmentdetails ${activeTab === "detail" ? "active" : ""}`} onClick={() => handleTabClick("detail")} style={{border: "0px", outline: "none"}}>Details</button>
+                                <button className={`assignmentdetails ${activeTab === "detail" ? "active" : ""}`} onClick={() => handleTabClick("detail")} style={{ border: "0px", outline: "none" }}>Details</button>
                             </div>
                             <div className="col-md-3">
-                                <button className={`assignmentdetails ${activeTab === "task" ? "active" : ""}`} onClick={() => handleTabClick("task")} style={{border: "0px", outline: "none"}}>Task</button>
+                                <button className={`assignmentdetails ${activeTab === "task" ? "active" : ""}`} onClick={() => handleTabClick("task")} style={{ border: "0px", outline: "none" }}>Task</button>
                             </div>
                             <div className="col-md-3">
-                                <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{border: "0px", outline: "none",paddingBottom:"4px"}}>Discussion</button>
+                                <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{ border: "0px", outline: "none", paddingBottom: "4px" }}>Discussion</button>
                             </div>
                         </div>
                     </div>
@@ -250,7 +273,7 @@ const assignmentDetails = () => {
             }
             {
                 tab == "task" && (
-                    <Tasks setTasks={setTasks} handleOpen={handleOpen}/>
+                    <Tasks setTasks={setTasks} handleOpen={handleOpen} />
 
                 )
             }
@@ -312,10 +335,14 @@ const assignmentDetails = () => {
                                     value={tasks?.task}
                                     placeholder="Tasks"
                                     onChange={(e) => {
+                                        setError({
+                                            ...error,
+                                            task: "",
+                                        });
                                         handleChange(e);
                                     }}
                                 />
-                         {error?.task && <p style={{ color: "red", fontSize: "60%" }}>{error?.task} </p>}
+                                {error?.task && <p style={{ color: "red", fontSize: "60%" }}>{error?.task} </p>}
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <label htmlFor="assignId" style={{ color: "#344767" }}>AssignTo</label>
@@ -354,10 +381,14 @@ const assignmentDetails = () => {
                                     value={tasks?.description}
                                     placeholder="Description"
                                     onChange={(e) => {
+                                        setError({
+                                            ...error,
+                                            description: "",
+                                        });
                                         handleChange(e);
                                     }}
                                 />
-                              {error?.description && <p style={{ color: "red", fontSize: "60%" }}>{error?.description} </p>}
+                                {error?.description && <p style={{ color: "red", fontSize: "60%" }}>{error?.description} </p>}
                             </div>
                             {/* <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <label htmlFor="file" style={{ color: "#344767" }}>File</label>
