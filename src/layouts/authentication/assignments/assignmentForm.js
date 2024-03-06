@@ -44,7 +44,7 @@ const AssignmentForm = () => {
         title: "",
         status: "",
         assignmentSummary: "",
-        members: "",
+        members: [],
         startDate: "",
         endDate: "",
         projectDescription: ""
@@ -64,14 +64,25 @@ const AssignmentForm = () => {
     });
 
     const handleChange = (selectedOptions) => {
-        setSelectedMembers(selectedOptions); 
+        setSelectedMembers(selectedOptions);
         const selectedMemberIds = selectedOptions.map(option => option.value);
         setAddAssignment({
             ...addAssignment,
             members: selectedMemberIds,
         });
         const { value, name } = selectedOptions;
+
+    };
+
+    const handleChangeText = (e) => {
+        const { name, value } = e.target;
+
         const textRegex = /^[A-Za-z\s]+$/;
+
+        setAddAssignment({
+            ...addAssignment,
+            [name]: value
+        })
 
         if (name === "title") {
             if (!textRegex.test(value)) {
@@ -83,11 +94,16 @@ const AssignmentForm = () => {
                 setError({
                     ...error,
                     [name]: "",
-                });
+                })
             }
         }
-    };
-
+        if (value.trim() === "") {
+            setError({
+                ...error,
+                [name]: "",
+            });
+        }
+    }
 
 
     const getMember = () => {
@@ -169,7 +185,7 @@ const AssignmentForm = () => {
                             title: "",
                             status: "",
                             assignmentSummary: "",
-                            members: "",
+                            members: [],
                             startDate: "",
                             endDate: "",
                             projectDescription: ""
@@ -233,7 +249,7 @@ const AssignmentForm = () => {
                                         ...error,
                                         title: "",
                                     });
-                                    handleChange(e);
+                                    handleChangeText(e);
                                 }}
                                 style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
@@ -264,7 +280,7 @@ const AssignmentForm = () => {
                                 id='inputCategory'
                                 className='form-control'
                                 value={addAssignment?.status}
-                                onChange={(e) => handleChange(e)}
+                                onChange={(e) => handleChangeText(e)}
                                 style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
                             // style={{marginLeft:"50%"}}
                             >
@@ -291,7 +307,7 @@ const AssignmentForm = () => {
                                         ...error,
                                         assignmentSummary: "",
                                     });
-                                    handleChange(e);
+                                    handleChangeText(e);
                                 }}
                                 style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 
@@ -314,16 +330,16 @@ const AssignmentForm = () => {
                                 styles={{
                                     control: (provided) => ({
                                         ...provided,
-                                        fontSize: '14px',
+                                        fontSize: '15px',
                                         width: '100%',
                                     }),
                                     singleValue: (provided) => ({
                                         ...provided,
-                                        fontSize: '14px',
+                                        fontSize: '15px',
                                     }),
                                     option: (provided, state) => ({
                                         ...provided,
-                                        fontSize: '14px', 
+                                        fontSize: '15px',
                                     }),
                                 }}
                             />
@@ -441,7 +457,7 @@ const AssignmentForm = () => {
                                     ...error,
                                     projectDescription: "",
                                 });
-                                handleChange(e);
+                                handleChangeText(e);
                             }}
                             style={{ transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms", boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)", border: "0 solid rgba(0, 0, 0, 0.125)" }}
 

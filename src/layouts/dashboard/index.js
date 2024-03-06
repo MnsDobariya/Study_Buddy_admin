@@ -254,11 +254,11 @@ function Dashboard() {
                         },
                       }}
                     />
-                    <p>
+                    {/* <p>
                       Deep and meaningful formal learning is supported as long as one of the three forms of interaction
                       (student–teacher; student-student; student-content) is at a high level. The other two may be
                       offered at minimal levels, or even eliminated, without degrading the educational experience.
-                    </p>
+                    </p> */}
                     {/* <Pie
                     data={{
                       labels: todosData.map((todo) => todo.task),
