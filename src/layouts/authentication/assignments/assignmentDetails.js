@@ -32,9 +32,13 @@ const assignmentDetails = () => {
         assignId: "",
         assassignmentId: "",
     });
+    const [taskData, setTaskData] = useState([]);
+
     const [startDate, setStartDate] = useState(new Date());
-    const [tab, setTab] = useState("");
-    const [activeTab, setActiveTab] = useState("");
+    // const [tab, setTab] = useState("");
+
+
+    const [activeTab, setActiveTab] = useState("detail");
     const [error, setError] = useState({
         // dueDate: "",
         task: "",
@@ -49,10 +53,19 @@ const assignmentDetails = () => {
 
 
     const handleTabClick = (tab) => {
-        setTab(tab);
+        // setTab(tab);
         setActiveTab(tab);
+        getTaskData();
     }
 
+    //Get Api call Task 
+    const getTaskData = () => {
+        ApiGet(`${EndPoint.TASK_GET}`)
+            .then((res) => {
+                // console.log('response', res);
+                setTaskData(res?.data);
+            })
+    }
 
     const handleOpen = () => {
         setOpen(true);
@@ -144,6 +157,7 @@ const assignmentDetails = () => {
                     }
                     toast.success("Update Successfully");
                     handleClose();
+                    getTaskData();
                 });
         } else {
             ApiPost(`${EndPoint.TASKS_CREATE}`, body)
@@ -158,6 +172,7 @@ const assignmentDetails = () => {
                         })
                         toast.success("Add Tasks Successfully");
                         handleClose();
+                        getTaskData();
                     }
                 })
         }
@@ -239,12 +254,19 @@ const assignmentDetails = () => {
                         </div>
                     </div>
                     <div className="card-body text-center" style={{ display: "flex", justifyContent: "start", marginLeft: "1%" }}>
-                        <div className="lbl" style={{ width: "31px" }}>
+                        {/* <div className="lbl" style={{ width: "31px" }}>
                             <label1>MM</label1>
                         </div>
                         <div className="lbl1" style={{ width: "31px" }} >
                             <label1>FM</label1>
+                        </div> */}
+                        {location?.state?.assignmentDetail?.members?.map((x) => (
+                            <div key={x?.id}>
+                            <Avatar style={{ backgroundColor: "#e9e9e9", color: "black" }}>
+                                {`${x.firstName.charAt(0)}${x.lastName.charAt(0)}`}
+                            </Avatar>
                         </div>
+                    ))}
                     </div>
                     <div style={{ paddingBottom: "2%", marginTop: "1%", display: "flex", color: "#67748e" }}>
 
@@ -267,18 +289,18 @@ const assignmentDetails = () => {
 
 
             {
-                tab == "detail" && (
+                activeTab == "detail" && (
                     <Details />
                 )
             }
             {
-                tab == "task" && (
-                    <Tasks setTasks={setTasks} handleOpen={handleOpen} />
+                activeTab == "task" && (
+                    <Tasks setTasks={setTasks} handleOpen={handleOpen} taskData={taskData}  getTaskData={getTaskData}/>
 
                 )
             }
             {
-                tab == "discussion" && (
+                activeTab == "discussion" && (
                     <Discussion assignmentDetails={location?.state} />
                 )
             }

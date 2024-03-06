@@ -12,9 +12,9 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 /* eslint-disable */
-const Tasks = ({ setTasks, handleOpen }) => {
+const Tasks = ({ setTasks, handleOpen,taskData,getTaskData }) => {
+    // console.log(taskData,"dsddddddddddddddd");
     const navigate = useNavigate();
-    const [taskData, setTaskData] = useState([]);
     const [open, setOpen] = useState(false);
     const [deleteId, setDeleteId] = useState();
 
@@ -27,21 +27,11 @@ const Tasks = ({ setTasks, handleOpen }) => {
         // navigate(`/assignments/assignmentDetails`, { state: { tasks: item } });
         setTasks(item)
         handleOpen()
+        getTaskData();
     }
 
 
-
-    const getTaskData = () => {
-        ApiGet(`${EndPoint.TASK_GET}`)
-            .then((res) => {
-                // console.log('response', res);
-                setTaskData(res?.data);
-            })
-    }
-
-    useEffect(() => {
-        getTaskData("");
-    }, [])
+   
 
     const deleteTask = (id) => {
         axios.delete(`http://localhost:3000/api/v1/task/delete/${id}`)

@@ -5,7 +5,7 @@ import SoftButton from "components/SoftButton";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { ApiPost } from "config/Api/ApiData";
 import SoftInput from "components/SoftInput";
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Menu, MenuItem, Modal } from "@mui/material";
+import { Avatar, AvatarGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Menu, MenuItem, Modal } from "@mui/material";
 import PlaceholderCard from "examples/Cards/PlaceholderCard";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
@@ -122,7 +122,7 @@ const Assignments = () => {
             //     }
             // }}
             >
-                <MenuItem onClick={() => navigate('/assignments/assignmentDetails', { state: { assignmentDetail : selectedRowId  } })}>Open</MenuItem>
+                <MenuItem onClick={() => navigate('/assignments/assignmentDetails', { state: { assignmentDetail: selectedRowId } })}>Open</MenuItem>
 
                 <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
                 <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
@@ -181,12 +181,19 @@ const Assignments = () => {
                                                     <p>{item?.projectDescription}</p>
                                                 </div>
                                                 <div className="card-body text-center" style={{ display: "flex", justifyContent: "start" }}>
-                                                    <div className="lbl" >
+                                                    {/* <div className="lbl" >
                                                         <label1>MM</label1>
                                                     </div>
                                                     <div className="lbl1" >
                                                         <label1>FM</label1>
-                                                    </div>
+                                                    </div> */}
+                                                        {item?.members?.map((x) => (
+                                                            <div key={x?.id}>
+                                                                <Avatar style={{ backgroundColor: "#e9e9e9", color: "black" }}>
+                                                                    {`${x.firstName.charAt(0)}${x.lastName.charAt(0)}`}
+                                                                </Avatar>
+                                                            </div>
+                                                        ))}
                                                     <label className={item.status === 'Pending' ? 'pending' : item.status === 'Started' ? 'started' : 'finished'}>
                                                         <span style={{ textAlign: "center", }}><b>{item?.status}</b></span>
                                                     </label>
