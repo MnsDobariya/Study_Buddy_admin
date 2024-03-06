@@ -52,7 +52,7 @@ const Addtodos = () => {
 
         setAddTodos({
             ...addTodos,
-            [e.target.name]: e.target.value
+            [name]: value
         })
 
         if (name === "task" ) {
