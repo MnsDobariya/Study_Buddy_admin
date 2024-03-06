@@ -16,6 +16,7 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { ApiGet } from 'config/Api/ApiData';
+import Select from 'react-select';
 
 const categoryDropDown = [
     { label: "Started", value: "Started" },
@@ -33,6 +34,7 @@ const tomorrow = dayjs().add(1, 'day');
 
 const AssignmentForm = () => {
 
+    const [selectedMembers, setSelectedMembers] = useState([]);
     const token = localStorage.getItem("token");
     const location = useLocation();
     const [member, setMember] = useState([]);
@@ -61,23 +63,16 @@ const AssignmentForm = () => {
         projectDescription: ""
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-
+    const handleChange = (selectedOptions) => {
+        setSelectedMembers(selectedOptions); 
+        const selectedMemberIds = selectedOptions.map(option => option.value);
+        setAddAssignment({
+            ...addAssignment,
+            members: selectedMemberIds,
+        });
+        const { value, name } = selectedOptions;
         const textRegex = /^[A-Za-z\s]+$/;
 
-        if (name === "members") {
-            // Assuming value is a single member ID, you can push it to an array
-            setAddAssignment({
-                ...addAssignment,
-                [name]: [value], // Convert value to an array
-            });
-        } else {
-            setAddAssignment({
-                ...addAssignment,
-                [name]: value,
-            });
-        }
         if (name === "title") {
             if (!textRegex.test(value)) {
                 setError({
@@ -88,17 +83,12 @@ const AssignmentForm = () => {
                 setError({
                     ...error,
                     [name]: "",
-                })
+                });
             }
         }
-        if (value.trim() === "") {
-            setError({
-                ...error,
-                [name]: "",
-            });
-        }
-
     };
+
+
 
     const getMember = () => {
 
@@ -311,21 +301,33 @@ const AssignmentForm = () => {
                         </div>
                         <div className="col-sm-6 form-group">
                             <label htmlFor="email">Members</label>
-                            <select
+                            <Select
                                 name="members"
                                 id="members"
-                                className='form-control'
-                                style={{ borderRadius: "0.5rem" }}
-                                onChange={(e) => {
-                                    handleChange(e);
+                                isMulti  // Allow multiple selections
+                                value={selectedMembers}
+                                onChange={handleChange}
+                                options={member.map((x) => ({
+                                    label: x.firstName,
+                                    value: x.id,
+                                }))}
+                                styles={{
+                                    control: (provided) => ({
+                                        ...provided,
+                                        fontSize: '14px',
+                                        width: '100%',
+                                    }),
+                                    singleValue: (provided) => ({
+                                        ...provided,
+                                        fontSize: '14px',
+                                    }),
+                                    option: (provided, state) => ({
+                                        ...provided,
+                                        fontSize: '14px', 
+                                    }),
                                 }}
-                            >
-                                <option key="">Select Members</option>
-                                {member?.map((x) => (
-                                    <option key={x.id} value={x.id}>{x?.firstName}</option>
-                                ))
-                                }
-                            </select>
+                            />
+
                             {error.members && <p style={{ color: "red", fontSize: "60%" }}>{error.members} </p>}
                         </div>
                     </div>
