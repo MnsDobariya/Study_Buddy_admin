@@ -1,6 +1,6 @@
 import { faEllipsisVertical, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, Menu, MenuItem, TextField } from '@mui/material';
+import { Avatar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, Menu, MenuItem, TextField } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import axios from 'axios';
 import SoftButton from 'components/SoftButton';
@@ -17,7 +17,7 @@ import { setAssignmentList } from 'store/slices/assignmentSlice';
 
 const AssignmentList = () => {
     const dispatch = useDispatch();
-  const assignment = useSelector((state) => state.assignment);
+    const assignment = useSelector((state) => state.assignment);
 
     // const [assignmentCount, setAssignmentCount] = useState([]);
     const [assignmentRecord, setAssignmentRecord] = useState([]);
@@ -41,6 +41,8 @@ const AssignmentList = () => {
         index: index + 1,
     }))
 
+    console.log('item', indexedData)
+
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedRowId, setSelectedRowId] = useState(null);
 
@@ -59,10 +61,17 @@ const AssignmentList = () => {
 
     const columns = [
         { field: "index", headerName: "Id", width: 90 },
-        { field: "title", headerName: "Title", width: 200 },
-        // { field: "lbl", headerName: "Members", width: 150 },
+        { field: "title", headerName: "Title", width: 150 },
+        { field: "members", headerName: "Members", width: 150  , renderCell: (params) => (
+            <Avatar max={3}>
+                {params.value.map((x, index) => (
+                    <Avatar key={index} style={{ backgroundColor: "rgb(219 219 219)", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
+                        {`${x.firstName.charAt(0)}${x.lastName.charAt(0)}`}
+                    </Avatar>
+                ))}
+            </Avatar> )},
         { field: "startDate", headerName: "Start Date", width: 250, valueFormatter: params => moment(params?.value).format("DD MMM YYYY") },
-        { field: "status", headerName: "Status", width: 400 },
+        { field: "status", headerName: "Status", width: 300 },
         {
             field: "action",
             headerName: "Action",
@@ -73,7 +82,7 @@ const AssignmentList = () => {
                         <FontAwesomeIcon
                             icon={faEllipsisVertical}
                             onClick={(e) => handleClick(e, params.row.id)}
-                            style={{ marginLeft: "22%", color: "black" }}
+                            style={{ marginLeft: "22%", color: "black", cursor: "pointer" }}
                         />
 
                         <Menu
@@ -100,16 +109,16 @@ const AssignmentList = () => {
         },
     ]
     const handleUpdate = (updateId) => {
-        const selectedData =  assignment.assignmentList?.find((element) => element?.id == updateId)
+        const selectedData = assignmentRecord?.find((element) => element?.id == updateId)
         navigate('/assignments/assignmentform', { state: selectedData })
     }
 
 
     const getAssignmentRecord = () => {
         ApiGet(`${EndPoint.ASSIGNMENT_GET}`)
-        .then((res) => {
-            setAssignmentRecord(res?.data);
-        })
+            .then((res) => {
+                setAssignmentRecord(res?.data);
+            })
     }
 
     const deleteRecords = (id) => {
@@ -128,25 +137,25 @@ const AssignmentList = () => {
 
     useEffect(() => {
         getAssignmentRecord("");
-    },[])
+    }, [])
 
     return (
         <>
             {/* <Dashboard assignmentCount={assignmentCount} /> */}
             <div className="mt-5" style={{ marginLeft: "21%", display: "flex" }}>
-                <h3 style={{ marginTop: "1%",fontSize:"larger", fontWeight: "500",color: "#344767" }}>AssignmentList</h3>
-                <SoftButton variant="gradient" color="info" style={{ marginTop: "1%", marginInlineEnd: "50px",border:"0px",outline:"none", marginLeft: "48%" }} onClick={() => {
+                <h3 style={{ marginTop: "1%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>AssignmentList</h3>
+                <SoftButton variant="gradient" color="info" style={{ marginTop: "1%", marginInlineEnd: "50px", border: "0px", outline: "none", marginLeft: "48%" }} onClick={() => {
                     navigate('/assignments/assignmentform')
                 }} >
                     create Assignment
                 </SoftButton>
-                <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "1%",border:"0px",outline:"none" }} onClick={() => {
+                <SoftButton variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "1%", border: "0px", outline: "none" }} onClick={() => {
                     navigate('/assignments')
                 }} >
                     Assignments
                 </SoftButton>
             </div>
-            
+
             <div style={{ padding: "1%" }}>
                 <DataGrid
                     rows={indexedData}
@@ -198,17 +207,17 @@ const AssignmentList = () => {
                 sx={{
                     "& .MuiDialog-container": {
                         "& .MuiPaper-root": {
-                            height:"40%",
+                            height: "40%",
                             width: "100%",
-                            maxWidth: "500px",  
-                            borderRadius:"0.5rem", // Set your width here
+                            maxWidth: "500px",
+                            borderRadius: "0.5rem", // Set your width here
                         },
                     },
                 }}
             >
                 <DialogTitle id="alert-dialog-title">
                     {/* Delete */}
-                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%",height:"22px" }} onClick={handlePopupClose} />
+                    <FontAwesomeIcon icon={faXmark} style={{ marginLeft: "95%", height: "22px" }} onClick={handlePopupClose} />
                 </DialogTitle>
                 <svg data-slot="icon" fill="none" strokeWidth="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: "30%", marginLeft: "36%" }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" style={{ color: "red" }}></path>
@@ -221,7 +230,7 @@ const AssignmentList = () => {
                         Do you really want to delete these record?
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions style={{ marginRight: "25%", paddingBottom: "2%",paddingTop:"4%" }}>
+                <DialogActions style={{ marginRight: "25%", paddingBottom: "2%", paddingTop: "4%" }}>
                     {/* <Button className="btn btn-primary" onClick={() => {
                         deleteRecord(deleteId)
                         handleClose(true)
@@ -233,9 +242,9 @@ const AssignmentList = () => {
                         deleteRecords(deleteRowId)
                         handlePopupClose(true)
                     }}
-                    style={{ width: "30%",backgroundColor:"#dc3545" }}
+                        style={{ width: "30%", backgroundColor: "#dc3545" }}
                     >Yes</button>
-                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%",backgroundColor:"#6c757d" }}>No</button>
+                    <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%", backgroundColor: "#6c757d" }}>No</button>
                 </DialogActions>
             </Dialog>
         </>
