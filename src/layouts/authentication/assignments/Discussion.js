@@ -137,7 +137,7 @@ const Discussion = ({ assignmentDetails }) => {
 
                                             <div className="outgoing_msg" style={{ margin: "26px 11px 26px" }}>
                                                 <div className="outgoing_msg_img"> 
-                                                <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
+                                                <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" ,marginLeft:" 46.2%",marginTop: "23%"}} sx={{ width: 35, height: 35 }}>
                                                     {/* {item.firstName + " " + item.lastname} */}
                                                     {`${item.senderId.firstName.charAt(0).toUpperCase()}${item.senderId.lastName.charAt(0).toUpperCase()}`}
                                                 </Avatar>
@@ -152,7 +152,7 @@ const Discussion = ({ assignmentDetails }) => {
                                             :
                                             <div className="incoming_msg">
                                                 <div className="incoming_msg_img"> 
-                                                <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
+                                                <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" ,marginLeft:" 39%",marginTop: "23%"}} sx={{ width: 35, height: 35 }}>
                                                     {/* {item.firstName + " " + item.lastname} */}
                                                     {`${item.senderId.firstName.charAt(0).toUpperCase()}${item.senderId.lastName.charAt(0).toUpperCase()}`}
                                                 </Avatar>
