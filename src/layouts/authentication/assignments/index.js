@@ -189,8 +189,8 @@ const Assignments = () => {
                                                     </div> */}
                                                         {item?.members?.map((x) => (
                                                             <div key={x?.id}>
-                                                                <Avatar style={{ backgroundColor: "#e9e9e9", color: "black" }}>
-                                                                    {`${x.firstName.charAt(0)}${x.lastName.charAt(0)}`}
+                                                                <Avatar style={{ backgroundColor: "rgb(219 219 219)", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
+                                                                    {`${x.firstName.charAt(0).toUpperCase()}${x.lastName.charAt(0).toUpperCase()}`}
                                                                 </Avatar>
                                                             </div>
                                                         ))}

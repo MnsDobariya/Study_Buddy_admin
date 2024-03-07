@@ -109,9 +109,9 @@ const Discussion = ({ assignmentDetails }) => {
                                         <div className="chat_people">
                                             <div className="chat_img">
                                                 {/* <img src="" /> */}
-                                                <Avatar style={{backgroundColor:"#17c1e8",color:"black"}}>
+                                                <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
                                                     {/* {item.firstName + " " + item.lastname} */}
-                                                    {`${item.firstName.charAt(0)}${item.lastName.charAt(0)}`}
+                                                    {`${item.firstName.charAt(0).toUpperCase()}${item.lastName.charAt(0).toUpperCase()}`}
                                                 </Avatar>
                                             </div>
                                             <div className="chat_ib">
@@ -136,16 +136,28 @@ const Discussion = ({ assignmentDetails }) => {
 
 
                                             <div className="outgoing_msg" style={{ margin: "26px 11px 26px" }}>
-                                                <div className="outgoing_msg_img"> <img src="" /> </div>
+                                                <div className="outgoing_msg_img"> 
+                                                <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
+                                                    {/* {item.firstName + " " + item.lastname} */}
+                                                    {`${item.senderId.firstName.charAt(0).toUpperCase()}${item.senderId.lastName.charAt(0).toUpperCase()}`}
+                                                </Avatar>
+                                                 </div>
 
                                                 <div className="sent_msg">
                                                     <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
+                                                    {console.log('item', item)}
                                                     <p style={{ fontSize: "small" }}>{moment(item?.createdAt).format('DD/MM/YYYY LTS')}</p>
                                                 </div>
                                             </div>
                                             :
                                             <div className="incoming_msg">
-                                                <div className="incoming_msg_img"> <img src="" /> </div>
+                                                <div className="incoming_msg_img"> 
+                                                <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
+                                                    {/* {item.firstName + " " + item.lastname} */}
+                                                    {`${item.senderId.firstName.charAt(0).toUpperCase()}${item.senderId.lastName.charAt(0).toUpperCase()}`}
+                                                </Avatar>
+                                                
+                                                 </div>
                                                 <div className="received_msg">
                                                     <div className="received_withd_msg">
                                                         <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>

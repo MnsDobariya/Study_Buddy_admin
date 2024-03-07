@@ -253,7 +253,7 @@ const Calendar = () => {
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DemoItem label="DatePicker">
+                                    <DemoItem label="Start Date">
                                         <DatePicker
                                             selected={startDate}
                                             onChange={(date) => setStartDate(date)}
@@ -279,7 +279,7 @@ const Calendar = () => {
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DemoItem label="DatePicker">
+                                    <DemoItem label="End Date">
                                         <DatePicker
                                             selected={endDate}
                                             onChange={(date) => setEndDate(date)}
