@@ -133,7 +133,7 @@ const AssignmentForm = () => {
         }
 
         if (!addAssignment.status) {
-            error.status = "Please LastName Required";
+            error.status = "Please Status Required";
         }
         if (!addAssignment.assignmentSummary) {
             error.assignmentSummary = "Please Assignment Summary Required";

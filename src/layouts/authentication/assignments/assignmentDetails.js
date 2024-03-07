@@ -34,6 +34,10 @@ const assignmentDetails = () => {
     });
     const [taskData, setTaskData] = useState([]);
 
+    const handleEditClick = () => {
+        // Navigate to assignmentform page with the updated data
+        navigate("/assignments/assignmentform", { state: { updatedData: location?.state?.assignmentDetail } });
+    }
     const [startDate, setStartDate] = useState(new Date());
     // const [tab, setTab] = useState("");
 
@@ -217,8 +221,8 @@ const assignmentDetails = () => {
                         {/* <div className="lblassignment">
                             <label1>M</label1>
                         </div> */}
-                        <Avatar style={{ backgroundColor: "#17c1e8", color: "black" }}>
-                        {location?.state?.assignmentDetail?.title && location?.state?.assignmentDetail?.title.charAt(0)}
+                        <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
+                            {location?.state?.assignmentDetail?.title && location?.state?.assignmentDetail?.title.charAt(0).toUpperCase()}
                         </Avatar>
                         <h5 className="mb-2">{location?.state?.assignmentDetail?.title}</h5>
                         <div className="ml-auto mr-3 d-flex" style={{ gap: "20px" }}>
@@ -227,7 +231,7 @@ const assignmentDetails = () => {
                             }}>
                                 Add Task
                             </SoftButton>
-                            <SoftButton variant="gradient" color="info" style={{ border: "0px", outline: "none" }}>
+                            <SoftButton variant="gradient" color="info" style={{ border: "0px", outline: "none" }} onClick={handleEditClick}>
                                 Edit
                             </SoftButton>
 
@@ -262,24 +266,24 @@ const assignmentDetails = () => {
                         </div> */}
                         {location?.state?.assignmentDetail?.members?.map((x) => (
                             <div key={x?.id}>
-                            <Avatar style={{ backgroundColor: "#e9e9e9", color: "black" }}>
-                                {`${x.firstName.charAt(0)}${x.lastName.charAt(0)}`}
-                            </Avatar>
-                        </div>
-                    ))}
+                                <Avatar style={{ backgroundColor: "rgb(219 219 219)", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
+                                    {`${x.firstName.charAt(0).toUpperCase()}${x.lastName.charAt(0).toUpperCase()}`}
+                                </Avatar>
+                            </div>
+                        ))}
                     </div>
                     <div style={{ paddingBottom: "2%", marginTop: "1%", display: "flex", color: "#67748e" }}>
 
 
                         <div className="row mt-3 ml-3">
                             <div className="col-md-4">
-                                <button className={`assignmentdetails ${activeTab === "detail" ? "active" : ""}`} onClick={() => handleTabClick("detail")} style={{ border: "0px", outline: "none" }}>Details</button>
+                                <button className={`assignmentdetails ${activeTab === "detail" ? "active" : ""}`} onClick={() => handleTabClick("detail")} style={{ border: "2px solid #17c1e8", outline: "none",paddingLeft:"7px",paddingRight:"7px",borderRadius:"0.3rem" }}>Details</button>
                             </div>
                             <div className="col-md-3">
-                                <button className={`assignmentdetails ${activeTab === "task" ? "active" : ""}`} onClick={() => handleTabClick("task")} style={{ border: "0px", outline: "none" }}>Task</button>
+                                <button className={`assignmentdetails ${activeTab === "task" ? "active" : ""}`} onClick={() => handleTabClick("task")} style={{ border: "2px solid #17c1e8", outline: "none",paddingLeft:"7px",paddingRight:"7px",borderRadius:"0.3rem" }}>Task</button>
                             </div>
                             <div className="col-md-3">
-                                <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{ border: "0px", outline: "none", paddingBottom: "4px" }}>Discussion</button>
+                                <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{ border: "2px solid #17c1e8", outline: "none", paddingBottom: "1px",paddingLeft:"7px",paddingRight:"7px",borderRadius:"0.3rem" }}>Discussion</button>
                             </div>
                         </div>
                     </div>
@@ -295,7 +299,7 @@ const assignmentDetails = () => {
             }
             {
                 activeTab == "task" && (
-                    <Tasks setTasks={setTasks} handleOpen={handleOpen} taskData={taskData}  getTaskData={getTaskData}/>
+                    <Tasks setTasks={setTasks} handleOpen={handleOpen} taskData={taskData} getTaskData={getTaskData} />
 
                 )
             }

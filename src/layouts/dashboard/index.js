@@ -33,7 +33,7 @@ import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { setAssignmentList } from "store/slices/assignmentSlice";
 import { MdEvent } from "react-icons/md";
-import { Pie } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 import { Card, CardContent, Typography } from "@mui/material";
 import { setTodoList } from "store/slices/todoSlice";
 import { setCalendarList } from "store/slices/calendarSlice";
@@ -281,14 +281,14 @@ function Dashboard() {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} lg={4.5}>
+            <Grid item xs={12} lg={7}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
                     Assignment Status
                   </Typography>
                   <SoftBox mb={3}>
-                    <Pie
+                    <Bar
                       data={assignmentData}
                       options={{
                         legend: {
