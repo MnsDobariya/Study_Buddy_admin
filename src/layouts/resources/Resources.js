@@ -132,6 +132,11 @@ const Resources = () => {
             description: "",
             file: ""
         });
+        setError({
+            title: "",
+            description: "",
+            file: ""
+        })
         setOpen(false);
     }
 
@@ -173,7 +178,7 @@ const Resources = () => {
             }
         },
 
-        {
+        role !== "User" && {
             field: "action",
             headerName: "Action",
             width: 150,
@@ -292,7 +297,7 @@ const Resources = () => {
                             description: "",
                             file: ""
                         });
-                        toast("Add Resources Successfully");
+                        toast.success(<p style={{ fontSize: "75%" }}>{"Add Resources Successfully"}</p>)
                     }
                     handleClose();
                     getResources();
@@ -371,7 +376,7 @@ const Resources = () => {
                                         name="year"
                                         id="year"
                                         className='form-control'
-                                        style={{ borderRadius: "0.5rem",width:"15%" }}
+                                        style={{ borderRadius: "0.5rem", width: "15%" }}
                                         onChange={(e) => {
                                             setYear(e.target.value);
                                         }}
