@@ -56,6 +56,11 @@ const Calendar = () => {
     const handleClose = () => {
         getCalendarRecord();
         setOpen(false);
+        setError({
+            title: "",
+            description: "",
+            file: ""
+        })
     }
 
     const handleChange = (e) => {
@@ -120,6 +125,17 @@ const Calendar = () => {
     }
 
     const updateEvent = () => {
+        const error = {};
+        if (!calendarEvent.title) {
+            error.title = "Please Title Required";
+        }
+
+        if (
+            error.title
+        ) {
+            setError(error);
+            return;
+        }
 
         const body = {
             Title: calendarEvent?.title,
@@ -135,6 +151,17 @@ const Calendar = () => {
             });
     }
     const Save = () => {
+        const error = {};
+        if (!calendarEvent.title) {
+            error.title = "Please Title Required";
+        }
+
+        if (
+            error.title
+        ) {
+            setError(error);
+            return;
+        }
 
         const body = {
             Title: calendarEvent?.title,
@@ -169,23 +196,23 @@ const Calendar = () => {
 
     useEffect(() => {
         const handleAddBookShortcut = (e) => {
-            if(e.key === "s" && e.altKey) {
+            if (e.key === "s" && e.altKey) {
                 e.preventDefault();
                 Save();
             }
         };
-        document.addEventListener("keydown",handleAddBookShortcut);
+        document.addEventListener("keydown", handleAddBookShortcut);
         hotkeys("alt + c", (e) => {
             e.preventDefault();
             handleClose();
         });
 
         return () => {
-            document.removeEventListener("keydown",handleAddBookShortcut);
+            document.removeEventListener("keydown", handleAddBookShortcut);
             hotkeys.unbind("alt + c");
         }
 
-    },[])
+    }, [])
 
     return (
         <>
@@ -243,7 +270,7 @@ const Calendar = () => {
                                     onChange={(e) => {
                                         setError({
                                             ...error,
-                                            title:"",
+                                            title: "",
                                         })
                                         handleChange(e);
                                     }}
