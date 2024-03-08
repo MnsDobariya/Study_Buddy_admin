@@ -36,7 +36,7 @@ const assignmentDetails = () => {
 
     const handleEditClick = () => {
         // Navigate to assignmentform page with the updated data
-        navigate("/assignments/assignmentform", { state: { updatedData: location?.state?.assignmentDetail } });
+        navigate("/assignments/assignmentform", { state: location?.state?.assignmentDetail });
     }
     const [startDate, setStartDate] = useState(new Date());
     // const [tab, setTab] = useState("");
@@ -76,11 +76,11 @@ const assignmentDetails = () => {
     }
 
     const handleClose = () => {
-        // setTasks({
-        //     dueDate: "",
-        //     task: "",
-        //     description: "",
-        // });
+        setTasks({
+            dueDate: "",
+            task: "",
+            description: "",
+        });
         setOpen(false);
     }
 
@@ -221,7 +221,7 @@ const assignmentDetails = () => {
                         {/* <div className="lblassignment">
                             <label1>M</label1>
                         </div> */}
-                        <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
+                        <Avatar style={{ backgroundColor: "#17c1e8", color: "black", fontSize: "inherit", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
                             {location?.state?.assignmentDetail?.title && location?.state?.assignmentDetail?.title.charAt(0).toUpperCase()}
                         </Avatar>
                         <h5 className="mb-2">{location?.state?.assignmentDetail?.title}</h5>
@@ -266,7 +266,7 @@ const assignmentDetails = () => {
                         </div> */}
                         {location?.state?.assignmentDetail?.members?.map((x) => (
                             <div key={x?.id}>
-                                <Avatar style={{ backgroundColor: "rgb(219 219 219)", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
+                                <Avatar style={{ backgroundColor: "rgb(219 219 219)", color: "black", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
                                     {`${x.firstName.charAt(0).toUpperCase()}${x.lastName.charAt(0).toUpperCase()}`}
                                 </Avatar>
                             </div>
@@ -277,13 +277,13 @@ const assignmentDetails = () => {
 
                         <div className="row mt-3 ml-3">
                             <div className="col-md-4">
-                                <button className={`assignmentdetails ${activeTab === "detail" ? "active" : ""}`} onClick={() => handleTabClick("detail")} style={{ border: "2px solid #17c1e8", outline: "none",paddingLeft:"7px",paddingRight:"7px",borderRadius:"0.3rem" }}>Details</button>
+                                <button className={`assignmentdetails ${activeTab === "detail" ? "active" : ""}`} onClick={() => handleTabClick("detail")} style={{ border: "2px solid #17c1e8", outline: "none", paddingLeft: "7px", paddingRight: "7px", borderRadius: "0.3rem" }}>Details</button>
                             </div>
                             <div className="col-md-3">
-                                <button className={`assignmentdetails ${activeTab === "task" ? "active" : ""}`} onClick={() => handleTabClick("task")} style={{ border: "2px solid #17c1e8", outline: "none",paddingLeft:"7px",paddingRight:"7px",borderRadius:"0.3rem" }}>Task</button>
+                                <button className={`assignmentdetails ${activeTab === "task" ? "active" : ""}`} onClick={() => handleTabClick("task")} style={{ border: "2px solid #17c1e8", outline: "none", paddingLeft: "7px", paddingRight: "7px", borderRadius: "0.3rem" }}>Task</button>
                             </div>
                             <div className="col-md-3">
-                                <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{ border: "2px solid #17c1e8", outline: "none", paddingBottom: "1px",paddingLeft:"7px",paddingRight:"7px",borderRadius:"0.3rem" }}>Discussion</button>
+                                <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{ border: "2px solid #17c1e8", outline: "none", paddingBottom: "1px", paddingLeft: "7px", paddingRight: "7px", borderRadius: "0.3rem" }}>Discussion</button>
                             </div>
                         </div>
                     </div>
@@ -324,7 +324,8 @@ const assignmentDetails = () => {
                         <form className="addtasks">
                             <div className="col-sm-12 mx-t3 mb-4">
                                 <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>
-                                    Add Tasks
+                                    {" "}
+                                    {tasks?.id ? "Update" : "Add"} Taks
                                 </h3>
                             </div>
                             <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
@@ -429,7 +430,7 @@ const assignmentDetails = () => {
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
 
                                 <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={AddTasks}>
-                                    Save
+                                 {tasks?.id ? "Update" : "Add"} Task
                                 </SoftButton>
 
                                 <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={handleClose}>

@@ -50,6 +50,7 @@ const Chat = () => {
     //     })
     // }
 
+    
     const createRoom = (receiverUserData) => {
         // console.log(receiverUserData, 'receiverUserData')
         const body = {
@@ -102,13 +103,16 @@ const Chat = () => {
                 setChatRecord(res?.data);
             })
     }
+    
 
     const getSearch = () => {
-        ApiGet(`${EndPoint.SEARCH_GET}?firstName=${search}`)
+        const searchQuery = search.toLowerCase();
+        ApiGet(`${EndPoint.SEARCH_GET}?firstName=${searchQuery}`)
             .then((res) => {
-                // console.log(res,"resnposesearch");
-                // const filteredResults = res?.data.filter(user => user.year === 'TY BCA');
-                setSearchResults(res?.data);
+                setSearchResults(res?.data.map(user => ({
+                    ...user,
+                    firstName: user.firstName.toLowerCase() 
+                })));
             })
     }
 
@@ -158,6 +162,7 @@ const Chat = () => {
         if (e.key === "Enter")
             createChat();
     }
+
 
     return (
         <>

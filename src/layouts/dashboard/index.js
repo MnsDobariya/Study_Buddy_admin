@@ -33,7 +33,7 @@ import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { setAssignmentList } from "store/slices/assignmentSlice";
 import { MdEvent } from "react-icons/md";
-import { Bar, Pie } from "react-chartjs-2";
+import { Bar, Bubble, Doughnut, Line, Pie, Radar } from "react-chartjs-2";
 import { Card, CardContent, Typography } from "@mui/material";
 import { setTodoList } from "store/slices/todoSlice";
 import { setCalendarList } from "store/slices/calendarSlice";
@@ -227,7 +227,7 @@ function Dashboard() {
           </Grid>
         </SoftBox>
         <SoftBox mb={3}>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} style={{justifyContent:"space-between"}}>
             <Grid item xs={12} lg={4.5}>
               {/* <ReportsBarChart
                 title="active users"
@@ -241,7 +241,7 @@ function Dashboard() {
               /> */}
               <Card  >
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h6" gutterBottom marginTop={1}>
                     Task Status
                   </Typography>
                   <SoftBox mb={3} >
@@ -281,20 +281,21 @@ function Dashboard() {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} lg={7}>
+            <Grid item xs={12} lg={4.5}>
               <Card>
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h6" gutterBottom marginTop={1}>
                     Assignment Status
                   </Typography>
                   <SoftBox mb={3}>
-                    <Bar
+                    <Doughnut
                       data={assignmentData}
                       options={{
                         legend: {
                           display: true,
                           position: 'right',
                         },
+                        height: 400
                       }}
                     />
 
@@ -321,6 +322,48 @@ function Dashboard() {
               </Card>
 
             </Grid>
+          </Grid>
+        </SoftBox>
+        <SoftBox mb={3}>
+          <Grid item xs={12} lg={12}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" gutterBottom marginTop={1}>
+                  Assignment Status
+                </Typography>
+                <SoftBox mb={3}>
+                  <Line
+                    data={assignmentData}
+                    options={{
+                      legend: {
+                        display: true,
+                        position: 'right',
+                      },
+                    }}
+                  />
+
+                  {/* <Pie
+                    data={{
+                      labels: todosData.map((todo) => todo.task),
+                      datasets: [
+                        {
+                          data: todosData.map((todo) => todo.portable),
+                          backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+                          hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+                        },
+                      ],
+                    }}
+                    options={{
+                      legend: {
+                        display: true,
+                        position: 'right',
+                      },
+                    }}
+                  /> */}
+                </SoftBox>
+              </CardContent>
+            </Card>
+
           </Grid>
         </SoftBox>
         <Grid container spacing={3}>

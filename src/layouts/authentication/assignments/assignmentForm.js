@@ -35,8 +35,10 @@ const tomorrow = dayjs().add(1, 'day');
 const AssignmentForm = () => {
 
     const [selectedMembers, setSelectedMembers] = useState([]);
+    console.log('selectedMembers', selectedMembers)
     const token = localStorage.getItem("token");
     const location = useLocation();
+    console.log('location', location)
     const [member, setMember] = useState([]);
     // console.log('member', member)
 
@@ -70,7 +72,6 @@ const AssignmentForm = () => {
             ...addAssignment,
             members: selectedMemberIds,
         });
-        const { value, name } = selectedOptions;
 
     };
 
@@ -120,6 +121,12 @@ const AssignmentForm = () => {
     useEffect(() => {
         if (location?.state) {
             setAddAssignment(location?.state);
+            setSelectedMembers(location?.state?.members.map((x) => ({
+                label: x.firstName,
+                value: x.id,
+            })));
+            setStartDate(new Date(location?.state.startDate)); 
+            setEndDate(new Date(location?.state.endDate)); 
         }
         getMember("")
     }, []);
