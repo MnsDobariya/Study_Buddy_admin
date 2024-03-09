@@ -47,6 +47,7 @@ import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import { ApiGet } from "config/Api/ApiData";
 import { EndPoint } from "config/EndPoint/Endpoint";
 import { MenuItem } from "@mui/material";
+import moment from "moment";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -90,6 +91,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const [notification, setNotification] = useState();
   const [seenNotifications, setSeenNotifications] = useState([]);
 
+  const getProfileImage = (image) => {
+    // console.log(image,"image");
+    return image ? `http://localhost:3000${image}` : 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg';
+}
+
   const getNotificationData = () => {
     ApiGet(`${EndPoint.NOTIFICATION_GET}`)
       .then((res) => {
@@ -120,24 +126,25 @@ function DashboardNavbar({ absolute, light, isMini }) {
         notification.slice(-3).reverse().map((item) => (
           <div key={item.id} className="rowtodos" id="adstodos">
             <NotificationItem
-              image={<img src={team2} alt="person" />}
+              // image={item?.createdBy?.profileImage}
+              image={<img src={getProfileImage(item?.createdBy?.profileImage)} alt="person" />}
               title={["New ", item.title]}
-              date={"13 minutes ago"}
+              date={moment(item?.createdAt).format('LLL')}
               onClick={() => {
                 navigate('/notification');
               }}
             />
           </div>
         ))
-      :
-      (
-        // <NotificationItem title={["no Record"]}/>
-        <MenuItem>
-        <div>
-          NO MESSAGE FOUND
-        </div>
-        </MenuItem>
-      )
+        :
+        (
+          // <NotificationItem title={["no Record"]}/>
+          <MenuItem>
+            <div>
+              NO MESSAGE FOUND
+            </div>
+          </MenuItem>
+        )
       }
       {/* 
       <NotificationItem

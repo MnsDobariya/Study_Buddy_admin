@@ -1,4 +1,4 @@
-import { Avatar, Modal } from "@mui/material";
+import { Avatar, AvatarGroup, Modal } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
@@ -255,6 +255,14 @@ const assignmentDetails = () => {
                                 <p className="assignmentdata">StartDate</p>
                                 <p className="startDate">{moment(location?.state?.assignmentDetail?.startDate).format('DD MMM YYYY')}</p>
                             </div>
+                            <div className="col-sm-2 mx-2">
+                                {/* <p className="assignmentdata">StartDate</p>
+                                <p className="startDate">{moment(location?.state?.assignmentDetail?.startDate).format('DD MMM YYYY')}</p> */}
+                                <div className="progress2 progress-moved">
+                                    <div className="progress-bar2" >
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="card-body text-center" style={{ display: "flex", justifyContent: "start", marginLeft: "1%" }}>
@@ -264,13 +272,13 @@ const assignmentDetails = () => {
                         <div className="lbl1" style={{ width: "31px" }} >
                             <label1>FM</label1>
                         </div> */}
-                        {location?.state?.assignmentDetail?.members?.map((x) => (
-                            <div key={x?.id}>
-                                <Avatar style={{ backgroundColor: "rgb(219 219 219)", color: "black", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
+                        <AvatarGroup max={3}>
+                            {location?.state?.assignmentDetail?.members?.map((x) => (
+                                <Avatar key={x?.id} style={{ backgroundColor: "rgba(0, 0, 0, 0.07)", color: "black", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
                                     {`${x.firstName.charAt(0).toUpperCase()}${x.lastName.charAt(0).toUpperCase()}`}
                                 </Avatar>
-                            </div>
-                        ))}
+                            ))}
+                        </AvatarGroup>
                     </div>
                     <div style={{ paddingBottom: "2%", marginTop: "1%", display: "flex", color: "#67748e" }}>
 
@@ -430,7 +438,7 @@ const assignmentDetails = () => {
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
 
                                 <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={AddTasks}>
-                                 {tasks?.id ? "Update" : "Add"} Task
+                                    {tasks?.id ? "Update" : "Add"} Task
                                 </SoftButton>
 
                                 <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={handleClose}>

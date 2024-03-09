@@ -1,6 +1,6 @@
 import { faPen, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormGroup } from '@mui/material';
 import axios from 'axios';
 import SoftBox from 'components/SoftBox';
 import SoftButton from 'components/SoftButton';
@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 /* eslint-disable */
-const Tasks = ({ setTasks, handleOpen,taskData,getTaskData }) => {
+const Tasks = ({ setTasks, handleOpen, taskData, getTaskData }) => {
     // console.log(taskData,"dsddddddddddddddd");
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
@@ -31,7 +31,7 @@ const Tasks = ({ setTasks, handleOpen,taskData,getTaskData }) => {
     }
 
 
-   
+
 
     const deleteTask = (id) => {
         axios.delete(`http://localhost:3000/api/v1/task/delete/${id}`)
@@ -50,9 +50,10 @@ const Tasks = ({ setTasks, handleOpen,taskData,getTaskData }) => {
                             <div className="cardTasks w-75">
 
                                 <div className="card-Tasks" style={{ height: "110px" }}>
-
                                     <div style={{ padding: "22px 22px 8px 22px", color: "#344767", fontSize: "initial" }}>
-                                        <p>{item?.task}</p>
+                                    <FormGroup >
+                                        <FormControlLabel control={<Checkbox />} label={item?.task}/>
+                                    </FormGroup>
                                     </div>
                                     <div className="card-Tasks2">
                                         <div className="lbltasks">

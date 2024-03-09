@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { token } from 'stylis';
 
 const Notification = () => {
   const [notificationData, setNotificationDate] = useState();
@@ -21,6 +22,8 @@ const Notification = () => {
       })
   }
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     getNotificationData("")
   }, [])
@@ -31,7 +34,8 @@ const Notification = () => {
   };
 
   const deleteRecord = (id) => {
-    axios.delete(`http://localhost:3000/api/v1/notification/delete/${id}`)
+    axios.delete(`http://localhost:3000/api/v1/notification/delete/${id}`,
+      { headers: { "Authorization": `Bearer ${token}` } })
       .then((res) => {
         getNotificationData();
       })
@@ -55,7 +59,7 @@ const Notification = () => {
                   <div style={{ marginLeft: "auto", display: "flex", marginRight: "3%", marginTop: "1%" }} >
                     <FontAwesomeIcon icon={faTrash} style={{ cursor: 'pointer' }} onClick={() => {
                       setOpen(true);
-                      setDeleteId(item.id);
+                      setDeleteId(item._id);
                     }} />
                   </div>
                 </div>
@@ -67,17 +71,17 @@ const Notification = () => {
         :
         (
           // <div className='noRecord' style={{ marginLeft: "50%", marginTop: "15%" }}>
-            <div className="cardnotification" style={{ width: 300, marginLeft: '45%',height: 100,marginTop:"15%" }}>
-              <div className="card-body">
-                <div style={{ display: "flex" }}>
-                  <p className="cardnotification-title"></p>
-                  <div style={{ marginLeft: "35%",marginTop: "5%" }} >
+          <div className="cardnotification" style={{ width: 300, marginLeft: '45%', height: 100, marginTop: "15%" }}>
+            <div className="card-body">
+              <div style={{ display: "flex" }}>
+                <p className="cardnotification-title"></p>
+                <div style={{ marginLeft: "35%", marginTop: "5%" }} >
                   No Record
-                  </div>
                 </div>
-                <p className="cardnotification-text"></p>
               </div>
+              <p className="cardnotification-text"></p>
             </div>
+          </div>
           // </div>
         )
       }

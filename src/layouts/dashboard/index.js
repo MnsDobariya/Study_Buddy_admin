@@ -324,7 +324,7 @@ function Dashboard() {
             </Grid>
           </Grid>
         </SoftBox>
-        <SoftBox mb={3}>
+        {/* <SoftBox mb={3}>
           <Grid item xs={12} lg={12}>
             <Card>
               <CardContent>
@@ -342,30 +342,13 @@ function Dashboard() {
                     }}
                   />
 
-                  {/* <Pie
-                    data={{
-                      labels: todosData.map((todo) => todo.task),
-                      datasets: [
-                        {
-                          data: todosData.map((todo) => todo.portable),
-                          backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
-                          hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
-                        },
-                      ],
-                    }}
-                    options={{
-                      legend: {
-                        display: true,
-                        position: 'right',
-                      },
-                    }}
-                  /> */}
+                 
                 </SoftBox>
               </CardContent>
             </Card>
 
           </Grid>
-        </SoftBox>
+        </SoftBox> */}
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={8}>
             {/* <Projects /> */}

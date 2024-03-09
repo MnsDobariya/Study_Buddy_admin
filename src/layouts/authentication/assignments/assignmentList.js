@@ -1,6 +1,6 @@
 import { faEllipsisVertical, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Avatar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, Menu, MenuItem, TextField } from '@mui/material';
+import { Avatar, AvatarGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, Menu, MenuItem, TextField } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import axios from 'axios';
 import SoftButton from 'components/SoftButton';
@@ -60,18 +60,38 @@ const AssignmentList = () => {
     }
 
     const columns = [
-        { field: "index", headerName: "Id", width: 90 },
-        { field: "title", headerName: "Title", width: 150 },
-        { field: "members", headerName: "Members", width: 150  , renderCell: (params) => (
-            <Avatar max={3}>
-                {params.value.map((x, index) => (
-                    <Avatar key={index} style={{ backgroundColor: "rgb(219 219 219)", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
-                        {`${x.firstName.charAt(0)}${x.lastName.charAt(0)}`}
-                    </Avatar>
-                ))}
-            </Avatar> )},
-        { field: "startDate", headerName: "Start Date", width: 250, valueFormatter: params => moment(params?.value).format("DD MMM YYYY") },
-        { field: "status", headerName: "Status", width: 300 },
+        // { field: "index", headerName: "Id", width: 90 },
+
+        {
+            field: "title", headerName: "Title", width: 320, renderCell: (params) => (
+                <AvatarGroup max={3} style={{gap:"15px"}} variant="rounded">
+                        <Avatar style={{ backgroundColor: "rgb(23, 193, 232)", color: "White", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
+                            {`${params.row.title.charAt(0).toUpperCase()}`}
+                        </Avatar>
+                    
+                        <p style={{fontWeight:"500"}}>{params.row.title}</p>
+                </AvatarGroup>
+            )
+        },
+        {
+            field: "members", headerName: "Members", width: 150, renderCell: (params) => (
+                <AvatarGroup max={3}>
+                    {params.value.map((x, index) => (
+                        <Avatar key={index} style={{ backgroundColor: "rgba(0, 0, 0, 0.07)", color: "black", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
+                            {`${x.firstName.charAt(0).toUpperCase()}${x.lastName.charAt(0).toUpperCase()}`}
+                        </Avatar>
+                    ))}
+                </AvatarGroup>)
+        },
+        { field: "startDate", headerName: "Start Date", width: 180, valueFormatter: params => moment(params?.value).format("DD MMM YYYY") },
+        {
+            field: "status", headerName: "Status", width: 300, renderCell: (params) => (
+                <>
+                    <label style={{ marginLeft: "-10px" }} className={params.row.status === 'Pending' ? 'pending' : params.row.status === 'Started' ? 'started' : 'finished'}>
+                        <span style={{ textAlign: "center", }}><b>{params?.row?.status}</b></span>
+                    </label>
+                </>)
+        },
         {
             field: "action",
             headerName: "Action",

@@ -187,13 +187,13 @@ const Assignments = () => {
                                                     <div className="lbl1" >
                                                         <label1>FM</label1>
                                                     </div> */}
+                                                    <AvatarGroup max={3}>
                                                         {item?.members?.map((x) => (
-                                                            <div key={x?.id}>
-                                                                <Avatar style={{ backgroundColor: "rgb(219 219 219)", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
-                                                                    {`${x.firstName.charAt(0).toUpperCase()}${x.lastName.charAt(0).toUpperCase()}`}
-                                                                </Avatar>
-                                                            </div>
+                                                            <Avatar key={x?.id} style={{ backgroundColor: "rgba(0, 0, 0, 0.07)", color: "black", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
+                                                                {`${x.firstName.charAt(0).toUpperCase()}${x.lastName.charAt(0).toUpperCase()}`}
+                                                            </Avatar>
                                                         ))}
+                                                    </AvatarGroup>
                                                     <label className={item.status === 'Pending' ? 'pending' : item.status === 'Started' ? 'started' : 'finished'}>
                                                         <span style={{ textAlign: "center", }}><b>{item?.status}</b></span>
                                                     </label>
