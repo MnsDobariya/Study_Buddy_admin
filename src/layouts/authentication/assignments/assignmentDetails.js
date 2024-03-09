@@ -255,7 +255,19 @@ const assignmentDetails = () => {
                                 <p className="assignmentdata">StartDate</p>
                                 <p className="startDate">{moment(location?.state?.assignmentDetail?.startDate).format('DD MMM YYYY')}</p>
                             </div>
+                            <div className="col-sm-2 mx-2">
+                                {/* <p className="assignmentdata">StartDate</p>
+                                <p className="startDate">{moment(location?.state?.assignmentDetail?.startDate).format('DD MMM YYYY')}</p> */}
+                                <div className="progress2 progress-moved">
+                                    <div className="progress-bar2" >
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        {/* <div className="containerpro">
+
+                        </div> */}
+
                     </div>
                     <div className="card-body text-center" style={{ display: "flex", justifyContent: "start", marginLeft: "1%" }}>
                         {/* <div className="lbl" style={{ width: "31px" }}>
@@ -430,7 +442,7 @@ const assignmentDetails = () => {
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
 
                                 <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={AddTasks}>
-                                 {tasks?.id ? "Update" : "Add"} Task
+                                    {tasks?.id ? "Update" : "Add"} Task
                                 </SoftButton>
 
                                 <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={handleClose}>

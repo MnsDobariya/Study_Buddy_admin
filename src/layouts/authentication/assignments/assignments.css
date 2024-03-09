@@ -8,6 +8,30 @@
 
 }
 
+
+.container {
+    margin-left: 100px;
+    width: 500px;
+    text-align: center;
+  }
+
+  .progress-bar2 {
+    height: 13px;
+    border-radius: 30px;
+    background-image: 
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
+    transition: 0.4s linear;  
+    transition-property: width, background-color;    
+  }
+  
+  .progress-moved .progress-bar2 {
+    width: 22rem; 
+    margin-left: 5rem;
+    /* background-color: #EF476F;   */
+    background-color: #17c1e8;  
+    animation: progressAnimation 6s;
+  }
+
 .asncard {
     border-radius: 10px;
 }

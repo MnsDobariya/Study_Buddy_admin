@@ -1019,7 +1019,7 @@ const LandingPage = () => {
           </div >
         </div >
       </section > */}
-      <div id="faq" className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+      {/* <div id="faq" className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <div className="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
           FAQ
           <h2 className="text-2xl font-bold md:text-4xl md:leading-tight">
@@ -1138,7 +1138,7 @@ const LandingPage = () => {
 
           </div>
         </div>
-      </div>
+      </div> */}
 
       <section id="customers" className="">
         <div className="container px-4">

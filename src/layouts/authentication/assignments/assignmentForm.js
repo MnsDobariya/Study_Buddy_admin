@@ -30,15 +30,16 @@ const categoryDropDown = [
 //     { label: "TY BCA", value: "TY BCA" },
 // ];
 const today = dayjs();
+
 const tomorrow = dayjs().add(1, 'day');
 
 const AssignmentForm = () => {
 
     const [selectedMembers, setSelectedMembers] = useState([]);
-    console.log('selectedMembers', selectedMembers)
+    // console.log('selectedMembers', selectedMembers)
     const token = localStorage.getItem("token");
     const location = useLocation();
-    console.log('location', location)
+    // console.log('location', location)
     const [member, setMember] = useState([]);
     // console.log('member', member)
 
@@ -52,16 +53,16 @@ const AssignmentForm = () => {
         projectDescription: ""
     });
     const navigate = useNavigate();
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(location?.state.startDate ? dayjs(new Date(location?.state.startDate)) : '');
+    const [endDate, setEndDate] = useState(location?.state.endDate ? dayjs(new Date(location?.state.endDate)) : '');
 
     const [error, setError] = useState({
         title: "",
         status: "",
         assignmentSummary: "",
         members: "",
-        startDate: "",
-        endDate: "",
+        // startDate: "",
+        // endDate: "",
         projectDescription: ""
     });
 
@@ -125,8 +126,9 @@ const AssignmentForm = () => {
                 label: x.firstName,
                 value: x.id,
             })));
-            setStartDate(new Date(location?.state.startDate)); 
-            setEndDate(new Date(location?.state.endDate)); 
+            // setStartDate(new Date(location?.state.startDate)); 
+            setStartDate(dayjs(new Date(location?.state.startDate))); 
+            setEndDate(dayjs(new Date(location?.state.endDate))); 
         }
         getMember("")
     }, []);
@@ -187,7 +189,7 @@ const AssignmentForm = () => {
             ApiPost(`${EndPoint.ASSIGNMENT_CREATE}`, body,
                 { headers: { "Authorization": `Bearer ${token}` } })
                 .then((res) => {
-                    if (res.status == 201) {
+                    if (res.status === 201) {
                         setAddAssignment({
                             title: "",
                             status: "",
@@ -226,7 +228,7 @@ const AssignmentForm = () => {
             hotkeys.unbind("alt + c");
         }
 
-    }, [])
+    })
 
     return (
         <>
@@ -367,7 +369,7 @@ const AssignmentForm = () => {
                                     selectsStart
                                     startDate={startDate}
                                     endDate={endDate}
-                                    defaultValue={today}
+                                    defaultValue={startDate ? startDate : today}
                                     minDate={tomorrow}
                                     format="DD/MM/YYYY"
                                     views={['year', 'month', 'day']}
@@ -412,9 +414,9 @@ const AssignmentForm = () => {
                                     selectsEnd
                                     startDate={startDate}
                                     endDate={endDate}
-                                    minDate={startDate}
-                                    defaultValue={today}
                                     // minDate={tomorrow}
+                                    defaultValue={endDate ? endDate : today}
+                                    minDate={tomorrow}
                                     format="DD/MM/YYYY"
                                     views={['year', 'month', 'day']}
                                     sx={{
