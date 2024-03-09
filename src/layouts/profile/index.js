@@ -88,7 +88,7 @@ function Overview() {
     phone: "",
     gender: "",
     profilePicture: "",
-    // birthday: "",
+    birthday: "",
     spId: "",
     year: "",
     semester: "",
@@ -132,6 +132,7 @@ function Overview() {
 
   useEffect(() => {
     getUserProfile();
+    setStartDate(dayjs(new Date(userProfile?.birthday)));
   }, []);
 
   const handleChange = (e) => {
@@ -531,9 +532,9 @@ function Overview() {
                           startDate={startDate}
                           // onChange={}
                           // endDate={endDate}
-                          // defaultValue={today}
+                          // defaultValue={startDate ? startDate : today}
                           // minDate={tomorrow}
-                          value={dayjs(startDate)}
+                          value={dayjs(userProfile?.birthday)}
                           format="DD/MM/YYYY"
                           views={['year', 'month', 'day']}
                           sx={{

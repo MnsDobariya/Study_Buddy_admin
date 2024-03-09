@@ -178,7 +178,8 @@ const Resources = () => {
             }
         },
 
-        role !== "User" && {
+        // role !== "User" && 
+        {
             field: "action",
             headerName: "Action",
             width: 150,

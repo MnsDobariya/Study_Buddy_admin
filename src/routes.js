@@ -150,7 +150,7 @@ const routes = [
   name: "Chat",
   key: "chat",
   route: "/chat",
-  role:["User","Teacher","Admin"],
+  role:["User","Teacher"],
   // icon: <FontAwesomeIcon icon={faCommentDots} size="xs" style={{color:"#3a416f"}}/>,
   icon: <FaWhatsapp />,
 

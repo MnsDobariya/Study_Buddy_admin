@@ -33,7 +33,7 @@ const Addtodos = () => {
         portable: "",
         description: ""
     });
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(location?.state.deadlinedate ? dayjs(new Date(location?.state.deadlinedate)) : '');
     const [error, setError] = useState({
         task: "",
         portable: "",
@@ -81,6 +81,7 @@ const Addtodos = () => {
     useEffect(() => {
         if (location?.state) {
             setAddTodos(location?.state)
+            setStartDate(dayjs(new Date(location?.state.deadlinedate)));
         }
     }, [location])
 
@@ -197,7 +198,7 @@ const Addtodos = () => {
                                             selectsStart
                                             startDate={startDate}
                                             // endDate={endDate}
-                                            defaultValue={today}
+                                            defaultValue={startDate ? startDate : today}
                                             minDate={tomorrow}
                                             format="DD/MM/YYYY"
                                             views={['year', 'month', 'day']}

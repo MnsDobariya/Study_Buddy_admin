@@ -262,126 +262,131 @@ const assignmentDetails = () => {
                                     <div className="progress-bar2" >
                                     </div>
                                 </div>
-                            </div>
+                            </div>
                         </div>
                     </div>
-                    <div className="card-body text-center" style={{ display: "flex", justifyContent: "start", marginLeft: "1%" }}>
-                        {/* <div className="lbl" style={{ width: "31px" }}>
+                    {/* <div className="containerpro">
+
+                        </div> */}
+
+                </div>
+                <div className="card-body text-center" style={{ display: "flex", justifyContent: "start", marginLeft: "1%" }}>
+                    {/* <div className="lbl" style={{ width: "31px" }}>
                             <label1>MM</label1>
                         </div>
                         <div className="lbl1" style={{ width: "31px" }} >
                             <label1>FM</label1>
                         </div> */}
-                        <AvatarGroup max={3}>
-                            {location?.state?.assignmentDetail?.members?.map((x) => (
-                                <Avatar key={x?.id} style={{ backgroundColor: "rgba(0, 0, 0, 0.07)", color: "black", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
-                                    {`${x.firstName.charAt(0).toUpperCase()}${x.lastName.charAt(0).toUpperCase()}`}
-                                </Avatar>
-                            ))}
-                        </AvatarGroup>
-                    </div>
-                    <div style={{ paddingBottom: "2%", marginTop: "1%", display: "flex", color: "#67748e" }}>
+                    <AvatarGroup max={3}>
+                        {location?.state?.assignmentDetail?.members?.map((x) => (
+                            <Avatar key={x?.id} style={{ backgroundColor: "rgba(0, 0, 0, 0.07)", color: "black", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
+                                {`${x.firstName.charAt(0).toUpperCase()}${x.lastName.charAt(0).toUpperCase()}`}
+                            </Avatar>
+                        ))}
+                    </AvatarGroup>
+                </div>
+                <div style={{ paddingBottom: "2%", marginTop: "1%", display: "flex", color: "#67748e" }}>
 
 
-                        <div className="row mt-3 ml-3">
-                            <div className="col-md-4">
-                                <button className={`assignmentdetails ${activeTab === "detail" ? "active" : ""}`} onClick={() => handleTabClick("detail")} style={{ border: "2px solid #17c1e8", outline: "none", paddingLeft: "7px", paddingRight: "7px", borderRadius: "0.3rem" }}>Details</button>
-                            </div>
-                            <div className="col-md-3">
-                                <button className={`assignmentdetails ${activeTab === "task" ? "active" : ""}`} onClick={() => handleTabClick("task")} style={{ border: "2px solid #17c1e8", outline: "none", paddingLeft: "7px", paddingRight: "7px", borderRadius: "0.3rem" }}>Task</button>
-                            </div>
-                            <div className="col-md-3">
-                                <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{ border: "2px solid #17c1e8", outline: "none", paddingBottom: "1px", paddingLeft: "7px", paddingRight: "7px", borderRadius: "0.3rem" }}>Discussion</button>
-                            </div>
+                    <div className="row mt-3 ml-3">
+                        <div className="col-md-4">
+                            <button className={`assignmentdetails ${activeTab === "detail" ? "active" : ""}`} onClick={() => handleTabClick("detail")} style={{ border: "2px solid #17c1e8", outline: "none", paddingLeft: "7px", paddingRight: "7px", borderRadius: "0.3rem" }}>Details</button>
+                        </div>
+                        <div className="col-md-3">
+                            <button className={`assignmentdetails ${activeTab === "task" ? "active" : ""}`} onClick={() => handleTabClick("task")} style={{ border: "2px solid #17c1e8", outline: "none", paddingLeft: "7px", paddingRight: "7px", borderRadius: "0.3rem" }}>Task</button>
+                        </div>
+                        <div className="col-md-3">
+                            <button className={`assignmentdetails ${activeTab === "discussion" ? "active" : ""}`} onClick={() => handleTabClick("discussion")} style={{ border: "2px solid #17c1e8", outline: "none", paddingBottom: "1px", paddingLeft: "7px", paddingRight: "7px", borderRadius: "0.3rem" }}>Discussion</button>
                         </div>
                     </div>
-                    {/* </div> */}
                 </div>
-            </SoftBox>
+                {/* </div> */}
+        </SoftBox >
+            {/* </div> */}
 
 
-            {
-                activeTab == "detail" && (
-                    <Details />
-                )
-            }
-            {
-                activeTab == "task" && (
-                    <Tasks setTasks={setTasks} handleOpen={handleOpen} taskData={taskData} getTaskData={getTaskData} />
+        {
+            activeTab == "detail" && (
+                <Details />
+            )
+}
+{
+    activeTab == "task" && (
+        <Tasks setTasks={setTasks} handleOpen={handleOpen} taskData={taskData} getTaskData={getTaskData} />
 
-                )
-            }
-            {
-                activeTab == "discussion" && (
-                    <Discussion assignmentDetails={location?.state} />
-                )
-            }
-
-
+    )
+}
+{
+    activeTab == "discussion" && (
+        <Discussion assignmentDetails={location?.state} />
+    )
+}
 
 
 
-            <SoftBox mt={4} mb={1}>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <div className="container" style={{ marginTop: "10%" }}>
-                        <form className="addtasks">
-                            <div className="col-sm-12 mx-t3 mb-4">
-                                <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>
-                                    {" "}
-                                    {tasks?.id ? "Update" : "Add"} Taks
-                                </h3>
-                            </div>
-                            <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DemoItem label="DatePicker">
-                                        <DatePicker
-                                            selected={startDate}
-                                            onChange={(date) => setStartDate(date)}
-                                            selectsStart
-                                            startDate={startDate}
-                                            // endDate={endDate}
-                                            defaultValue={today}
-                                            minDate={tomorrow}
-                                            format="DD/MM/YYYY"
-                                            views={['year', 'month', 'day']}
-                                            sx={{
-                                                "& .MuiSvgIcon-root": {
-                                                    marginLeft: "18rem",
-                                                },
-                                                "&  .MuiButtonBase-root  ": {
-                                                    border: "none",
-                                                    outline: "none"
-                                                },
-                                            }}
-                                        />
-                                    </DemoItem>
-                                </LocalizationProvider>
-                            </div>
-                            <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                <label htmlFor="name-f" style={{ color: "#344767" }}>Tasks</label>
-                                <SoftInput
-                                    type="text"
-                                    name="task"
-                                    value={tasks?.task}
-                                    placeholder="Tasks"
-                                    onChange={(e) => {
-                                        setError({
-                                            ...error,
-                                            task: "",
-                                        });
-                                        handleChange(e);
-                                    }}
-                                />
-                                {error?.task && <p style={{ color: "red", fontSize: "60%" }}>{error?.task} </p>}
-                            </div>
-                            <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                <label htmlFor="assignId" style={{ color: "#344767" }}>AssignTo</label>
-                                {/* <SoftInput
+
+
+<SoftBox mt={4} mb={1}>
+    <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+    >
+        <div className="container" style={{ marginTop: "10%" }}>
+            <form className="addtasks">
+                <div className="col-sm-12 mx-t3 mb-4">
+                    <h3 style={{ textAlign: "center", marginTop: "5%", paddingTop: "3%", fontSize: "larger", fontWeight: "500", color: "#344767" }}>
+                        {" "}
+                        {tasks?.id ? "Update" : "Add"} Taks
+                    </h3>
+                </div>
+                <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoItem label="DatePicker">
+                            <DatePicker
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                selectsStart
+                                startDate={startDate}
+                                // endDate={endDate}
+                                defaultValue={today}
+                                minDate={tomorrow}
+                                format="DD/MM/YYYY"
+                                views={['year', 'month', 'day']}
+                                sx={{
+                                    "& .MuiSvgIcon-root": {
+                                        marginLeft: "18rem",
+                                    },
+                                    "&  .MuiButtonBase-root  ": {
+                                        border: "none",
+                                        outline: "none"
+                                    },
+                                }}
+                            />
+                        </DemoItem>
+                    </LocalizationProvider>
+                </div>
+                <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+                    <label htmlFor="name-f" style={{ color: "#344767" }}>Tasks</label>
+                    <SoftInput
+                        type="text"
+                        name="task"
+                        value={tasks?.task}
+                        placeholder="Tasks"
+                        onChange={(e) => {
+                            setError({
+                                ...error,
+                                task: "",
+                            });
+                            handleChange(e);
+                        }}
+                    />
+                    {error?.task && <p style={{ color: "red", fontSize: "60%" }}>{error?.task} </p>}
+                </div>
+                <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+                    <label htmlFor="assignId" style={{ color: "#344767" }}>AssignTo</label>
+                    {/* <SoftInput
                                     type="text"
                                     name="assignId"
                                     value={tasks?.assignId}
@@ -391,41 +396,41 @@ const assignmentDetails = () => {
                                     }}
 
                                 /> */}
-                                <select
-                                    name="assignId"
-                                    id="assignId"
-                                    className='form-control'
-                                    value={tasks?.assignId}
-                                    style={{ borderRadius: "0.5rem" }}
-                                    onChange={(e) => {
-                                        handleChange(e);
-                                    }}
-                                >
-                                    <option key="">Select AssignTo</option>
-                                    {location?.state?.assignmentDetail?.members?.map((x) => (
-                                        <option key={x.id} value={x.id}>{x?.firstName}</option>
-                                    ))}
-                                </select>
+                    <select
+                        name="assignId"
+                        id="assignId"
+                        className='form-control'
+                        value={tasks?.assignId}
+                        style={{ borderRadius: "0.5rem" }}
+                        onChange={(e) => {
+                            handleChange(e);
+                        }}
+                    >
+                        <option key="">Select AssignTo</option>
+                        {location?.state?.assignmentDetail?.members?.map((x) => (
+                            <option key={x.id} value={x.id}>{x?.firstName}</option>
+                        ))}
+                    </select>
 
-                            </div>
-                            <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                <label htmlFor="name-l" style={{ color: "#344767" }}>Description</label>
-                                <SoftInput
-                                    type="text"
-                                    name="description"
-                                    value={tasks?.description}
-                                    placeholder="Description"
-                                    onChange={(e) => {
-                                        setError({
-                                            ...error,
-                                            description: "",
-                                        });
-                                        handleChange(e);
-                                    }}
-                                />
-                                {error?.description && <p style={{ color: "red", fontSize: "60%" }}>{error?.description} </p>}
-                            </div>
-                            {/* <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+                </div>
+                <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+                    <label htmlFor="name-l" style={{ color: "#344767" }}>Description</label>
+                    <SoftInput
+                        type="text"
+                        name="description"
+                        value={tasks?.description}
+                        placeholder="Description"
+                        onChange={(e) => {
+                            setError({
+                                ...error,
+                                description: "",
+                            });
+                            handleChange(e);
+                        }}
+                    />
+                    {error?.description && <p style={{ color: "red", fontSize: "60%" }}>{error?.description} </p>}
+                </div>
+                {/* <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
                                 <label htmlFor="file" style={{ color: "#344767" }}>File</label>
                                 <SoftInput
                                     type="text"
@@ -435,21 +440,21 @@ const assignmentDetails = () => {
                                 />
 
                             </div> */}
-                            <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
+                <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
 
-                                <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={AddTasks}>
-                                    {tasks?.id ? "Update" : "Add"} Task
-                                </SoftButton>
+                    <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={AddTasks}>
+                        {tasks?.id ? "Update" : "Add"} Task
+                    </SoftButton>
 
-                                <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={handleClose}>
-                                    cancle
-                                </SoftButton>
-                            </SoftBox>
+                    <SoftButton className="add-Tasks" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={handleClose}>
+                        cancle
+                    </SoftButton>
+                </SoftBox>
 
-                        </form>
-                    </div>
-                </Modal>
-            </SoftBox>
+            </form>
+        </div>
+    </Modal>
+</SoftBox>
         </>
     )
 }
