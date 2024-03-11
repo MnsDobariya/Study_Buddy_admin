@@ -33,7 +33,7 @@ const Addtodos = () => {
         portable: "",
         description: ""
     });
-    const [startDate, setStartDate] = useState(location?.state.deadlinedate ? dayjs(new Date(location?.state.deadlinedate)) : '');
+    const [startDate, setStartDate] = useState(new Date());
     const [error, setError] = useState({
         task: "",
         portable: "",
@@ -198,7 +198,8 @@ const Addtodos = () => {
                                             selectsStart
                                             startDate={startDate}
                                             // endDate={endDate}
-                                            defaultValue={startDate ? startDate : today}
+                                            // defaultValue={startDate ? startDate : today}
+                                            defaultValue={today}
                                             minDate={tomorrow}
                                             format="DD/MM/YYYY"
                                             views={['year', 'month', 'day']}

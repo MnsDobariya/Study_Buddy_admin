@@ -25,6 +25,8 @@ const Assignments = () => {
     const [openPopUp, setOpenPopUp] = useState(false);
     const [deleteId, setDeleteId] = useState();
 
+    const role = localStorage?.getItem("role");
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -122,8 +124,9 @@ const Assignments = () => {
             //     }
             // }}
             >
-                <MenuItem onClick={() => navigate('/assignments/assignmentDetails', { state: { assignmentDetail: selectedRowId } })}>Open</MenuItem>
-
+                {role !== "Teacher" &&
+                    <MenuItem onClick={() => navigate('/assignments/assignmentDetails', { state: { assignmentDetail: selectedRowId } })}>Open</MenuItem>
+                }
                 <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
                 <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
 

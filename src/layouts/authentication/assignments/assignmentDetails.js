@@ -255,14 +255,19 @@ const assignmentDetails = () => {
                                     <p className="assignmentdata">StartDate</p>
                                     <p className="startDate">{moment(location?.state?.assignmentDetail?.startDate).format('DD MMM YYYY')}</p>
                                 </div>
+
+
                                 <div className="col-sm-2 mx-2">
                                     {/* <p className="assignmentdata">StartDate</p>
                                 <p className="startDate">{moment(location?.state?.assignmentDetail?.startDate).format('DD MMM YYYY')}</p> */}
                                     <div className="progress2 progress-moved">
                                         <div className="progress-bar2" >
+
                                         </div>
                                     </div>
+
                                 </div>
+                                <p className="ml-auto mr-5" style={{fontSize:"medium"}}>78%</p>
                             </div>
                         </div>
                         {/* <div className="containerpro">

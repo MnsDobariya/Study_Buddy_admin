@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import image from '../layouts/img/header3.png';
+import image1 from '../layouts/img/lib-img1.jpg';
 
 
 const LandingPage = () => {
@@ -412,10 +413,10 @@ const LandingPage = () => {
               </h2>
 
               <nav className="grid gap-4 mt-5 md:mt-10" aria-label="Tabs" role="tablist">
-                <div 
+                <div
                   className="card-bodylanding  text-left  p-4 md:p-5 rounded-xl"
                   id="tabs-with-card-item-1" data-hs-tab="#tabs-with-card-1"
-                  aria-controls="tabs-with-card-1" role="tab" style={{border:"0px",outline:"none"}}>
+                  aria-controls="tabs-with-card-1" role="tab" style={{ border: "0px", outline: "none" }}>
                   <span className="flex">
                     <svg className="flex-shrink-0 mt-2 h-6 w-6 md:w-7 md:h-7 hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500"
                       xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -432,10 +433,10 @@ const LandingPage = () => {
                   </span>
                 </div>
 
-                <div 
+                <div
                   className="card-bodylanding text-left p-4 md:p-5 rounded-xl"
                   id="tabs-with-card-item-2" data-hs-tab="#tabs-with-card-2"
-                  aria-controls="tabs-with-card-2" role="tab" style={{border:"0px",outline:"none"}}>
+                  aria-controls="tabs-with-card-2" role="tab" style={{ border: "0px", outline: "none" }}>
                   <span className="flex">
                     <svg className="flex-shrink-0 mt-2 h-6 w-6 md:w-7 md:h-7 hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500"
                       xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -453,10 +454,10 @@ const LandingPage = () => {
                 </div>
 
                 {/* hover:bg-gray-200 */}
-                <div 
+                <div
                   className="card-bodylanding text-left  p-4 md:p-5 rounded-xl"
                   id="tabs-with-card-item-3" data-hs-tab="#tabs-with-card-3"
-                  aria-controls="tabs-with-card-3" role="tab" style={{border:"0px",outline:"none"}}>
+                  aria-controls="tabs-with-card-3" role="tab" style={{ border: "0px", outline: "none" }}>
                   <span className="flex">
                     <svg className="flex-shrink-0 mt-2 h-6 w-6 md:w-7 md:h-7 hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 "
                       xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -536,7 +537,7 @@ const LandingPage = () => {
       <div className="bg-white">
         <div className="mx-auto max-w-7xl sm:px-6 sm:py-20 lg:px-8">
 
-          <div className="relative isolate overflow-hidden bg-dark px-6 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0" style={{background:"linear-gradient(310deg, #2152ff, #21d4fd)"}}>
+          <div className="relative isolate overflow-hidden bg-dark px-6 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0" style={{ background: "linear-gradient(310deg, #2152ff, #21d4fd)" }}>
 
 
             <div className="mx-auto max-w-md text-center text-white lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
@@ -573,7 +574,7 @@ const LandingPage = () => {
 
               <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
                 <a href="#signup"
-                  className="rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" style={{color:"#4890dc",backgroundColor:"white"}}>Get started</a>
+                  className="rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" style={{ color: "#4890dc", backgroundColor: "white" }}>Get started</a>
                 <a href="#pricing" className="text-sm text-white font-semibold leading-6">See Pricing
                   <span aria-hidden="true">→</span></a>
               </div>
@@ -586,7 +587,7 @@ const LandingPage = () => {
                 alt="Welcome to StudyBuddy"
                 className="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
                 // width="1824" height="1080"
-                style={{width:"11rem",height:"34.5rem",marginLeft:"-33px"}}
+                style={{ width: "11rem", height: "34.5rem", marginLeft: "-33px" }}
               />
 
             </div>
@@ -1140,6 +1141,32 @@ const LandingPage = () => {
         </div>
       </div> */}
 
+      <div className="we-are-block">
+        <div id="history-section">
+          <div className="history-image">
+            <img src="https://img.freepik.com/free-vector/online-certification-with-graduate-laptop_23-2148571246.jpg?w=1060&t=st=1710044719~exp=1710045319~hmac=56f738fa812d49bd075df2b647936494100482ac9825a52ac1ba5da3a851bd04" width="900" height="471" alt="Building Pic" style={{width:"100%",height:"auto"}}/>
+          </div>
+          <div className="history-info">
+            <h2>Preserving Local History</h2>
+            <p>The library is at the center of the schools academic programs. The curriculum at a particular school can be largely dependent on the quality of the library. The teaching and learning process is poor without a well-equipped library.</p>
+            <p>The library is essential to facilitate student-centered learning and teaching processes like the Dalton plan, project method, and self-learning as well as seminars.</p>
+            {/* <a href="#" title="History Button">HISTORY</a> */}
+          </div>
+        </div>
+
+        <div id="about-us-section">
+          <div className="about-us-image">
+            <img src="https://media.istockphoto.com/id/1347747136/vector/group-of-students-studying.jpg?s=612x612&w=0&k=20&c=t8UwXDXTCu2O-2mOLE8_aQ7KTXxjuUk_WgiR0cS6pSk=" width="750" height="458" alt="Lobby Image" style={{width:"100%",height:"auto"}} />
+          </div>
+          <div className="about-us-info">
+            <h2>In the Spotlight</h2>
+            <p>Libraries are another place for children to develop. They can assist students with the web, offer an area that is quiet for students to focus on their studies, and also encourage learners to take time to study.</p>
+            <p>Staff members, who know what books that students enjoy can assist them in choosing books that match their preferences. Sometimes, these aren’t even books that the student was aware they would love. Giving students books that appeal to them can inspire students to continue reading.</p>
+            {/* <a href="#" title="About Us Button">ABOUT US</a> */}
+          </div>
+        </div>
+      </div>
+
       <section id="customers" className="">
         <div className="container px-4">
 
@@ -1235,7 +1262,7 @@ const LandingPage = () => {
                     <div className="content">
                       <div className="icon1">
                         {/* <i className="fa fa-twitter-square" aria-hidden="true"></i> */}
-                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg  bg-opacity-5 " 
+                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg  bg-opacity-5 "
                         // style={{ color: "#6eadd4" }}
                         >
                           J
@@ -1258,7 +1285,7 @@ const LandingPage = () => {
                     <div className="content">
                       <div className="icon1">
                         {/* <i className="fa fa-github-square" aria-hidden="true"></i> */}
-                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-opacity-5 " 
+                        <div className="mainText mr-2 mb-2 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-opacity-5 "
                         // style={{ color: "#4aada9" }}
                         >
                           A
@@ -1426,8 +1453,8 @@ const LandingPage = () => {
 
                 <div className="mt-3 grid space-y-3 text-sm">
 
-                   <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="">About</a></p>
-                 <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="">Plans &amp; Pricing</a> <span className="inline text-blue-600">— Get Started</span></p>
+                  <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="">About</a></p>
+                  <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="">Plans &amp; Pricing</a> <span className="inline text-blue-600">— Get Started</span></p>
                   <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="">Testimonials</a></p>
                   <p><a className="inline-flex gap-x-2 text-gray-600 hover:text-gray-800" href="">FAQ</a></p>
 
