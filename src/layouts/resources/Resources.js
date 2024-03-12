@@ -55,6 +55,8 @@ const Resources = () => {
 
     const role = localStorage.getItem("role");
 
+   
+
     const getResources = () => {
 
         const url = year ? `${EndPoint.RESOURCES_GET}?year=${year}` : `${EndPoint.RESOURCES_GET}`
@@ -168,11 +170,12 @@ const Resources = () => {
         { field: "title", headerName: "Title", width: 200, hideable: false },
         { field: "description", headerName: "Description", width: 340, hideable: false },
         {
-            field: "file", headerName: "File", width: 300, hideable: false,
+            field: "file", headerName: "File", width: 300, label:"view", hideable: false, 
             renderCell: (params) => {
                 return (
                     <>
                         <FontAwesomeIcon icon={faFileArrowDown} onClick={() => handleDownload(params?.row)} style={{ cursor: "pointer" }} />
+                        <a style={{fontSize:"smaller" , marginLeft:"3%",marginTop:"2%",color:"Blue",}}>view</a>
                     </>
                 )
             }
