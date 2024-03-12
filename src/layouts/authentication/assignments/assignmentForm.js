@@ -53,8 +53,8 @@ const AssignmentForm = () => {
         projectDescription: ""
     });
     const navigate = useNavigate();
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(location?.state?.startDate ? dayjs(new Date(location?.state.startDate)) : '');
+    const [endDate, setEndDate] = useState(location?.state?.endDate ? dayjs(new Date(location?.state.endDate)) : '');
 
     const [error, setError] = useState({
         title: "",
@@ -127,11 +127,11 @@ const AssignmentForm = () => {
                 value: x.id,
             })));
             // setStartDate(new Date(location?.state.startDate)); 
-            // setStartDate(dayjs(new Date(location?.state.startDate))); 
-            // setEndDate(dayjs(new Date(location?.state.endDate))); 
+            setStartDate(dayjs(new Date(location?.state.startDate))); 
+            setEndDate(dayjs(new Date(location?.state.endDate))); 
         }
         getMember("")
-    }, []);
+    }, [location?.state]);
 
 
     const createAssignment = () => {
@@ -369,8 +369,7 @@ const AssignmentForm = () => {
                                     selectsStart
                                     startDate={startDate}
                                     endDate={endDate}
-                                    // defaultValue={startDate ? startDate : today}
-                                    defaultValue={today}
+                                    defaultValue={startDate ? startDate : today}
                                     minDate={tomorrow}
                                     format="DD/MM/YYYY"
                                     views={['year', 'month', 'day']}
@@ -416,8 +415,7 @@ const AssignmentForm = () => {
                                     startDate={startDate}
                                     endDate={endDate}
                                     // minDate={tomorrow}
-                                    // defaultValue={endDate ? endDate : today}
-                                    defaultValue={today}
+                                    defaultValue={endDate ? endDate : today}
                                     minDate={tomorrow}
                                     format="DD/MM/YYYY"
                                     views={['year', 'month', 'day']}
