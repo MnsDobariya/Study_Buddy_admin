@@ -33,7 +33,7 @@ const Addtodos = () => {
         portable: "",
         description: ""
     });
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(location?.state?.deadlinedate ? dayjs(new Date(location?.state?.deadlinedate)) : '');
     const [error, setError] = useState({
         task: "",
         portable: "",
@@ -81,7 +81,7 @@ const Addtodos = () => {
     useEffect(() => {
         if (location?.state) {
             setAddTodos(location?.state)
-            setStartDate(dayjs(new Date(location?.state.deadlinedate)));
+            setStartDate(dayjs(new Date(location?.state?.deadlinedate)));
         }
     }, [location])
 
@@ -178,8 +178,7 @@ const Addtodos = () => {
         <>
             <SoftBox mt={4} mb={1}>
                 <h2 style={{ textAlign: "left", marginTop: "5%", marginLeft: "20%",fontSize:"larger", fontWeight: "500", color: "#344767" }}>
-                  {" "}
-                   {location?.state?.id ? "Update" : "Add"} Todo
+                    Add Todo
                 </h2>
 
                 <div className="container" style={{ marginTop: "5%", marginLeft: "19%" }}>
@@ -199,8 +198,7 @@ const Addtodos = () => {
                                             selectsStart
                                             startDate={startDate}
                                             // endDate={endDate}
-                                            // defaultValue={startDate ? startDate : today}
-                                            defaultValue={today}
+                                            defaultValue={startDate ? startDate : today}
                                             minDate={tomorrow}
                                             format="DD/MM/YYYY"
                                             views={['year', 'month', 'day']}
