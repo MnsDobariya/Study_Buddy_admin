@@ -33,7 +33,7 @@ const assignmentDetails = () => {
         assassignmentId: "",
     });
     const [taskData, setTaskData] = useState([]);
-
+    
     const handleEditClick = () => {
         // Navigate to assignmentform page with the updated data
         navigate("/assignments/assignmentform", { state: location?.state?.assignmentDetail });
@@ -64,7 +64,7 @@ const assignmentDetails = () => {
 
     //Get Api call Task 
     const getTaskData = () => {
-        ApiGet(`${EndPoint.TASK_GET}`)
+        ApiGet(`${EndPoint.TASK_GET}?assignmentId=${location?.state?.assignmentDetail?.id}`)
             .then((res) => {
                 // console.log('response', res);
                 setTaskData(res?.data);
@@ -267,7 +267,7 @@ const assignmentDetails = () => {
                                     </div>
 
                                 </div>
-                                <p className="ml-auto mr-5" style={{fontSize:"medium"}}>78%</p>
+           
                             </div>
                         </div>
                         {/* <div className="containerpro">

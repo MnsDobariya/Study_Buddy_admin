@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { ApiDelete } from "config/Api/ApiData";
 import { toast } from "react-toastify";
 import { element } from "prop-types";
-import { PiDotsThreeCircleVertical, PiDotsThreeCircleVerticalBold } from "react-icons/pi";
+import { PiDotsThreeCircleVertical, PiDotsThreeCircleVerticalBold, PiDotsThreeCircleVerticalLight } from "react-icons/pi";
 
 
 const Assignments = () => {
@@ -174,7 +174,7 @@ const Assignments = () => {
                                         <div className="assignment" >
                                             <div className="card-asgn">
                                                 <div>
-                                                    <div className="card-notify-year mt-4"> <PiDotsThreeCircleVertical onClick={(e) => handleClick(e, item)} style={{ marginLeft: "100%",marginBottom:"5%", color: "black", cursor: 'pointer' }} />
+                                                    <div className="card-notify-year mt-4"> <PiDotsThreeCircleVerticalLight onClick={(e) => handleClick(e, item)} style={{ marginLeft: "100%",marginBottom:"5%", color: "black", cursor: 'pointer' }} />
                                                     {/* <FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e, item)} style={{ marginLeft: "5%", color: "black", cursor: 'pointer' }} />*/}
                                                     </div> 
                                                     {renderMenu(item)}
