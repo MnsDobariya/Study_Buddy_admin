@@ -178,7 +178,8 @@ const Addtodos = () => {
         <>
             <SoftBox mt={4} mb={1}>
                 <h2 style={{ textAlign: "left", marginTop: "5%", marginLeft: "20%",fontSize:"larger", fontWeight: "500", color: "#344767" }}>
-                    Add Todo
+                {" "}
+                   {location?.state?.id ? "Update" : "Add"} Todo
                 </h2>
 
                 <div className="container" style={{ marginTop: "5%", marginLeft: "19%" }}>

@@ -1,4 +1,4 @@
-import { Avatar } from '@mui/material';
+import { Avatar, AvatarGroup } from '@mui/material';
 import SoftBox from 'components/SoftBox';
 import SoftButton from 'components/SoftButton';
 import SoftInput from 'components/SoftInput';
@@ -109,10 +109,13 @@ const Discussion = ({ assignmentDetails }) => {
                                         <div className="chat_people">
                                             <div className="chat_img">
                                                 {/* <img src="" /> */}
-                                                <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" }} sx={{ width: 35, height: 35 }}>
-                                                    {/* {item.firstName + " " + item.lastname} */}
-                                                    {`${item.firstName.charAt(0).toUpperCase()}${item.lastName.charAt(0).toUpperCase()}`}
-                                                </Avatar>
+                                                <AvatarGroup max={3}  variant="rounded">
+
+                                                    <Avatar style={{ backgroundColor: "#17c1e8", color: "black", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
+                                                        {/* {item.firstName + " " + item.lastname} */}
+                                                        {`${item.firstName.charAt(0).toUpperCase()}${item.lastName.charAt(0).toUpperCase()}`}
+                                                    </Avatar>
+                                                </AvatarGroup>
                                             </div>
                                             <div className="chat_ib">
                                                 <h5>{item?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY')}</span></h5>
@@ -136,12 +139,12 @@ const Discussion = ({ assignmentDetails }) => {
 
 
                                             <div className="outgoing_msg" style={{ margin: "26px 11px 26px" }}>
-                                                <div className="outgoing_msg_img"> 
-                                                <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" ,marginLeft:" 46.2%",marginTop: "23%"}} sx={{ width: 35, height: 35 }}>
-                                                    {/* {item.firstName + " " + item.lastname} */}
-                                                    {`${item.senderId.firstName.charAt(0).toUpperCase()}${item.senderId.lastName.charAt(0).toUpperCase()}`}
-                                                </Avatar>
-                                                 </div>
+                                                <div className="outgoing_msg_img">
+                                                    <Avatar style={{ backgroundColor: "#17c1e8", color: "black", fontSize: "initial", fontWeight: "500", marginLeft: " 46.2%", marginTop: "23%" }} sx={{ width: 35, height: 35 }}>
+                                                        {/* {item.firstName + " " + item.lastname} */}
+                                                        {`${item.senderId.firstName.charAt(0).toUpperCase()}${item.senderId.lastName.charAt(0).toUpperCase()}`}
+                                                    </Avatar>
+                                                </div>
 
                                                 <div className="sent_msg">
                                                     <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
@@ -151,13 +154,13 @@ const Discussion = ({ assignmentDetails }) => {
                                             </div>
                                             :
                                             <div className="incoming_msg">
-                                                <div className="incoming_msg_img"> 
-                                                <Avatar style={{ backgroundColor: "#17c1e8", color: "black",fontSize: "initial",fontWeight:"500" ,marginLeft:" 39%",marginTop: "23%"}} sx={{ width: 35, height: 35 }}>
-                                                    {/* {item.firstName + " " + item.lastname} */}
-                                                    {`${item.senderId.firstName.charAt(0).toUpperCase()}${item.senderId.lastName.charAt(0).toUpperCase()}`}
-                                                </Avatar>
-                                                
-                                                 </div>
+                                                <div className="incoming_msg_img">
+                                                    <Avatar style={{ backgroundColor: "#17c1e8", color: "black", fontSize: "initial", fontWeight: "500", marginLeft: " 39%", marginTop: "23%" }} sx={{ width: 35, height: 35 }}>
+                                                        {/* {item.firstName + " " + item.lastname} */}
+                                                        {`${item.senderId.firstName.charAt(0).toUpperCase()}${item.senderId.lastName.charAt(0).toUpperCase()}`}
+                                                    </Avatar>
+
+                                                </div>
                                                 <div className="received_msg">
                                                     <div className="received_withd_msg">
                                                         <p style={{ marginBottom: "0.4rem" }}>{item?.message}</p>
@@ -172,9 +175,6 @@ const Discussion = ({ assignmentDetails }) => {
                                 ))}
 
                             </div>
-
-
-
                             <div className='type_msg'>
                                 {/* <div className={`${showBackgroundChat ? 'bg-transparent' : 'input_msg_write'}`}> */}
                                 <div className='input_msg_write'>
