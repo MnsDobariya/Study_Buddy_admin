@@ -70,6 +70,7 @@ import AssignmentDetails from "layouts/authentication/assignments/assignmentDeta
 import Details from "layouts/authentication/assignments/Details";
 import Tasks from "layouts/authentication/assignments/Tasks";
 import Discussion from "layouts/authentication/assignments/Discussion";
+import User from "layouts/user/User";
 
 const routes = [
   {
@@ -328,15 +329,16 @@ const routes = [
     component: <Discussion />,
     noCollapse: true,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Form3",
-  //   key: "form3",
-  //   route: "/form3",
-  //   icon: <SpaceShip size="12px" />,
-  //   component: <Form3 />,
-  //   noCollapse: true,
-  // },
+  {
+    type: "collapse",
+    name: "User",
+    key: "user",
+    route: "/user",
+    role:["Teacher"],
+    icon: <SpaceShip size="12px" />,
+    component: <User />,
+    noCollapse: true,
+  },
   
 ];
 

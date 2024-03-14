@@ -1,9 +1,10 @@
 import { faPen, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormGroup } from '@mui/material';
+import { Avatar, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormGroup } from '@mui/material';
 import axios from 'axios';
 import SoftBox from 'components/SoftBox';
 import SoftButton from 'components/SoftButton';
+import { ApiPut } from 'config/Api/ApiData';
 import { ApiGet } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
 import moment from 'moment';
@@ -17,6 +18,7 @@ const Tasks = ({ setTasks, handleOpen, taskData, getTaskData }) => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [deleteId, setDeleteId] = useState();
+    const [complete, setComplete] = useState(false);
 
 
     const handleClose = () => {
@@ -40,6 +42,15 @@ const Tasks = ({ setTasks, handleOpen, taskData, getTaskData }) => {
                 getTaskData();
             })
     }
+
+
+    // const handleStatusUpdate = (isChecked)=>{
+    //     ApiPut(`${EndPoint.TASK_UPDATE}?isCompleted=${isChecked}`)
+    //             .then((res) => {
+    //                 console.log(res,"response");
+    //             });
+
+    // }
     return (
         <>
             {(taskData && taskData.length) ?
@@ -51,15 +62,20 @@ const Tasks = ({ setTasks, handleOpen, taskData, getTaskData }) => {
 
                                 <div className="card-Tasks" style={{ height: "110px" }}>
                                     <div style={{ padding: "22px 22px 8px 22px", color: "#344767", fontSize: "initial" }}>
-                                    <FormGroup >
-                                        <FormControlLabel control={<Checkbox />} label={item?.task}/>
-                                    </FormGroup>
+                                        <FormGroup >
+                                            <FormControlLabel control={<Checkbox
+                                                onChange={(e) => handleStatusUpdate(e.target.checked)}
+                                                defaultChecked={item?.isCompleted}
+                                            />} label={item?.description} />
+                                        </FormGroup>
                                     </div>
                                     <div className="card-Tasks2">
                                         <div className="lbltasks">
-                                            <label1>M</label1>
+                                            <Avatar style={{ backgroundColor: " #eba541", color: "White", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
+                                                {`${item?.task.charAt(0).toUpperCase()}`}
+                                            </Avatar>
                                         </div>
-                                        <h5 style={{ padding: "8px", fontSize: "medium", color: "#67748e" }}> Assignment Details</h5>
+                                        <h5 style={{ padding: "8px", fontSize: "medium", color: "#67748e" }}> {item?.task}</h5>
                                         <label className='dateTasks'>
                                             <span className=''><p> DUE DATE: {moment(item?.dueDate).format('DD MMM YYYY')}</p></span>
                                         </label>
