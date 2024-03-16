@@ -61,7 +61,7 @@ import Chat from "layouts/chat/Chat";
 import Assignments from "layouts/authentication/assignments";
 import { faBell, faCalendarDays, faCommentDots, faFileArrowDown, faFileSignature, faListCheck, faRectangleList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaUser, FaWhatsapp } from "react-icons/fa";
 import { MdDashboardCustomize } from "react-icons/md";
 import { MdDashboard } from "react-icons/md";
 import { FaCalendarDays } from "react-icons/fa6";
@@ -71,6 +71,7 @@ import Details from "layouts/authentication/assignments/Details";
 import Tasks from "layouts/authentication/assignments/Tasks";
 import Discussion from "layouts/authentication/assignments/Discussion";
 import User from "layouts/user/User";
+import ChartData from "examples/ChartData/chartData";
 
 const routes = [
   {
@@ -209,6 +210,17 @@ const routes = [
     noCollapse: true,
   },
   {
+    type: "collapse",
+    name: "ChartData",
+    key: "chartData",
+    route: "/chartdata",
+    role:["User","Admin","Teacher"],
+    // icon: <NotificationBell size="12px" />,
+    icon:<FontAwesomeIcon icon={faBell} size="xs" style={{color:"#3a416f"}}/>,
+    component: <ChartData />,
+    noCollapse: true,
+  },
+  {
     name: "Sign In",
     key: "sign-in",
     route: "/authentication/sign-in",
@@ -335,7 +347,7 @@ const routes = [
     key: "user",
     route: "/user",
     role:["Teacher"],
-    icon: <SpaceShip size="12px" />,
+    icon: <FaUser />,
     component: <User />,
     noCollapse: true,
   },

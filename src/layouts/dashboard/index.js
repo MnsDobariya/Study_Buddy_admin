@@ -38,6 +38,7 @@ import { Card, CardContent, Typography } from "@mui/material";
 import { setTodoList } from "store/slices/todoSlice";
 import { setCalendarList } from "store/slices/calendarSlice";
 import { setResourceList } from "store/slices/resourceSlice";
+import { useNavigate } from "react-router-dom";
 
 
 function Dashboard() {
@@ -50,8 +51,8 @@ function Dashboard() {
   const resource = useSelector((state) => state.resource);
   const [todosData, setTodosData] = useState([]);
   const [assignmentData, setAssignmentData] = useState([]);
-
-
+  const [assignmentChartData, setAssignmentChartData] = useState([]);
+  const [todoChartData, setTodoChartData] = useState([]);
   const pieChartData = {
     labels: ['Completed', 'In Progress', 'Not Started'],
     datasets: [
@@ -65,6 +66,7 @@ function Dashboard() {
 
   const AppDispatch = useDispatch();
 
+  const navigate = useNavigate();
 
   const getAssignmentRecord = () => {
 
@@ -85,8 +87,11 @@ function Dashboard() {
             },
           ],
         };
+        // setAssignmentChartData(res?.data.filter((item)=>console.log('first', item.status)))
+        setAssignmentChartData(res?.data)
         setAssignmentData(pieChartData);
         AppDispatch(setAssignmentList(res?.data))
+
         // setAssignmentCount(res?.data.length);
       }).catch((error) => {
       })
@@ -129,7 +134,7 @@ function Dashboard() {
             },
           ],
         };
-
+        setTodoChartData(res?.data)
         setTodosData(pieChartData);
         AppDispatch(setTodoList(res?.data));
         // setTodosData(res?.data);
@@ -168,6 +173,42 @@ function Dashboard() {
   //     },
   //   ],
   // };
+  const options = {
+    legend: {
+      display: true,
+      position: 'right',
+    },
+    onClick: (event, elements) => {
+      navigate("/chartdata", { state: todoChartData })
+
+      if (elements.length) {
+        const clickedElementIndex = elements[0]._index;
+        const datasetIndex = elements[0]._datasetIndex;
+        const label = todosData.labels[clickedElementIndex];
+        const value = todosData.datasets[datasetIndex].data[clickedElementIndex];
+        handleOnClick(label, value);
+      }
+    },
+  };
+  const options1 = {
+    legend: {
+      display: true,
+      position: 'right',
+    },
+    onClick: (event, elements) => {
+      
+      if (elements.length) {
+        navigate("/chartdata", { state: assignmentChartData })
+        const clickedElementIndex = elements[0]._index;
+        const datasetIndex = elements[0]._datasetIndex;
+        const label = assignmentData.labels[clickedElementIndex];
+        const value = assignmentData.datasets[datasetIndex].data[clickedElementIndex];
+        handleOnClick(label, value);
+      }
+    },
+  };
+
+  
 
   return (
     <DashboardLayout>
@@ -227,7 +268,7 @@ function Dashboard() {
           </Grid>
         </SoftBox>
         <SoftBox mb={3}>
-          <Grid container spacing={3} style={{justifyContent:"space-between"}}>
+          <Grid container spacing={3} style={{ justifyContent: "space-between" }}>
             <Grid item xs={12} lg={4.5}>
               {/* <ReportsBarChart
                 title="active users"
@@ -247,12 +288,13 @@ function Dashboard() {
                   <SoftBox mb={3} >
                     <Pie
                       data={todosData}
-                      options={{
-                        legend: {
-                          display: true,
-                          position: 'right',
-                        },
-                      }}
+                      // options={{
+                      //   legend: {
+                      //     display: true,
+                      //     position: 'right',
+                      //   },
+                      // }}
+                      options={options}
                     />
                     {/* <p>
                       Deep and meaningful formal learning is supported as long as one of the three forms of interaction
@@ -290,13 +332,14 @@ function Dashboard() {
                   <SoftBox mb={3}>
                     <Doughnut
                       data={assignmentData}
-                      options={{
-                        legend: {
-                          display: true,
-                          position: 'right',
-                        },
-                        height: 400
-                      }}
+                      // options={{
+                      //   legend: {
+                      //     display: true,
+                      //     position: 'right',
+                      //   },
+                      //   height: 400
+                      // }}
+                      options={options1}
                     />
 
                     {/* <Pie
