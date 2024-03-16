@@ -15,6 +15,7 @@ import hotkeys from 'hotkeys-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faFileArrowDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { Viewer,Worker } from '@react-pdf-viewer/core';
 
 const yearDropDown = [
     { label: "FY BCA", value: "FY BCA" },
@@ -23,6 +24,13 @@ const yearDropDown = [
 ];
 
 const Resources = () => {
+    // const defaultLayoutPluginInstance = defaultLayoutPlugin();
+    // const [pdfFile, setPdfFile] = useState(null);
+    // const [pdfError, setPdfError] = useState('');
+    // const [selectedPdf, setSelectedPdf] = useState(null);
+    // const [pdfViewerOpen, setPdfViewerOpen] = useState(false);
+
+
     const dispatch = useDispatch();
     const resource = useSelector((state) => state.resource);
     // console.log(resource, "resouces");
@@ -55,7 +63,7 @@ const Resources = () => {
 
     const role = localStorage.getItem("role");
 
-   
+
 
     const getResources = () => {
 
@@ -82,6 +90,33 @@ const Resources = () => {
 
     const token = localStorage.getItem("token");
 
+    // const allowedFiles = ['application/pdf'];
+    // const handleFile = (e) => {
+    //     let selectedFile = e.target.files[0];
+    //     // console.log(selectedFile.type);  
+    //     if (selectedFile) {
+    //         if (selectedFile && allowedFiles.includes(selectedFile.type)) {
+    //             let reader = new FileReader();
+    //             reader.readAsDataURL(selectedFile);
+    //             reader.onloadend = (e) => {
+    //                 setPdfError('');
+    //                 setPdfFile(e.target.result);
+    //             }
+    //         }
+    //         else {
+    //             setPdfError('Not a valid pdf: Please select only PDF');
+    //             setPdfFile('');
+    //         }
+    //     }
+    //     else {
+    //         console.log('please select a PDF');
+    //     }
+    // }
+
+    // const openPdfViewer = (pdf) => {
+    //     setSelectedPdf(pdf);
+    //     setPdfViewerOpen(true);
+    // };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -170,12 +205,13 @@ const Resources = () => {
         { field: "title", headerName: "Title", width: 200, hideable: false },
         { field: "description", headerName: "Description", width: 340, hideable: false },
         {
-            field: "file", headerName: "File", width: 300, label:"view", hideable: false, 
+            field: "file", headerName: "File", width: 300, label: "view", hideable: false,
             renderCell: (params) => {
                 return (
                     <>
                         <FontAwesomeIcon icon={faFileArrowDown} onClick={() => handleDownload(params?.row)} style={{ cursor: "pointer" }} />
-                        <a style={{fontSize:"smaller" , marginLeft:"3%",marginTop:"2%",color:"Blue",}}>view</a>
+                        {/* <a style={{ fontSize: "smaller", marginLeft: "3%", marginTop: "2%", color: "Blue", }} onClick={() => openPdfViewer(params?.row.file)}>view</a> */}
+
                     </>
                 )
             }
@@ -550,7 +586,51 @@ const Resources = () => {
                     <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%", backgroundColor: "#6c757d" }} >No</button>
                 </DialogActions>
             </Dialog>
+            {/* <div className="container">
+                <form>
 
+                    <label><h5>Upload PDF</h5></label>
+                    <br></br>
+
+                    <input type='file' className="form-control"
+                        onChange={handleFile}></input>
+                    {pdfError && <span className='text-danger'>{pdfError}</span>}
+
+                </form>
+                <h5>View PDF</h5> */}
+            {/* <div className="viewer">
+
+
+                {pdfFile && (
+                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.12.313/build/pdf.worker.min.js">
+                        <Viewer fileUrl={pdfFile}></Viewer>
+                    </Worker>
+                )}
+
+
+                {!pdfFile && <>No file is selected yet</>}
+
+            </div> */}
+
+            {/* </div> */}
+            {/* <Modal
+                open={pdfViewerOpen}
+                onClose={() => {
+                    setSelectedPdf(null);
+                    setPdfViewerOpen(false);
+                }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div className="viewer">
+                    {selectedPdf && (
+                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.12.313/build/pdf.worker.min.js">
+                            <Viewer fileUrl={selectedPdf}></Viewer>
+                        </Worker>
+                    )}
+                    {!selectedPdf && <>No file is selected yet</>}
+                </div>
+            </Modal> */}
 
         </>
     )

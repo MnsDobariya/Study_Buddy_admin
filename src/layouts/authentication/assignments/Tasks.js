@@ -14,12 +14,9 @@ import { toast } from 'react-toastify';
 
 /* eslint-disable */
 const Tasks = ({ setTasks, handleOpen, taskData, getTaskData }) => {
-    // console.log(taskData,"dsddddddddddddddd");
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [deleteId, setDeleteId] = useState();
-    const [complete, setComplete] = useState(false);
-
 
     const handleClose = () => {
         setOpen(false);
@@ -33,8 +30,6 @@ const Tasks = ({ setTasks, handleOpen, taskData, getTaskData }) => {
     }
 
 
-
-
     const deleteTask = (id) => {
         axios.delete(`http://localhost:3000/api/v1/task/delete/${id}`)
             .then((res) => {
@@ -44,13 +39,16 @@ const Tasks = ({ setTasks, handleOpen, taskData, getTaskData }) => {
     }
 
 
-    // const handleStatusUpdate = (isChecked)=>{
-    //     ApiPut(`${EndPoint.TASK_UPDATE}?isCompleted=${isChecked}`)
-    //             .then((res) => {
-    //                 console.log(res,"response");
-    //             });
+    const handleStatusUpdate = (isChecked,id)=>{
+        const body = {
+            isCompleted  : isChecked
+        }
+        ApiPut(`${EndPoint.TASK_UPDATE}/${id}`,body)
+                .then((res) => {
+                    // console.log(res,"response");
+                });
 
-    // }
+    }
     return (
         <>
             {(taskData && taskData.length) ?
@@ -64,7 +62,7 @@ const Tasks = ({ setTasks, handleOpen, taskData, getTaskData }) => {
                                     <div style={{ padding: "22px 22px 8px 22px", color: "#344767", fontSize: "initial" }}>
                                         <FormGroup >
                                             <FormControlLabel control={<Checkbox
-                                                onChange={(e) => handleStatusUpdate(e.target.checked)}
+                                                onChange={(e) => handleStatusUpdate(e.target.checked,item.id)}
                                                 defaultChecked={item?.isCompleted}
                                             />} label={item?.description} />
                                         </FormGroup>

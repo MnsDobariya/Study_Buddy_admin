@@ -33,7 +33,7 @@ const assignmentDetails = () => {
         assassignmentId: "",
     });
     const [taskData, setTaskData] = useState([]);
-    
+
     const handleEditClick = () => {
         // Navigate to assignmentform page with the updated data
         navigate("/assignments/assignmentform", { state: location?.state?.assignmentDetail });
@@ -70,6 +70,11 @@ const assignmentDetails = () => {
                 setTaskData(res?.data);
             })
     }
+
+    const completedTasksCount = taskData.filter(item => item.isCompleted).length;
+    const totalTasksCount = taskData.length;
+    const progress = totalTasksCount > 0 ? (completedTasksCount / totalTasksCount) * 100 : 0;
+
 
     const handleOpen = () => {
         setOpen(true);
@@ -257,17 +262,15 @@ const assignmentDetails = () => {
                                 </div>
 
 
-                                <div className="col-sm-2 mx-2">
-                                    {/* <p className="assignmentdata">StartDate</p>
-                                <p className="startDate">{moment(location?.state?.assignmentDetail?.startDate).format('DD MMM YYYY')}</p> */}
-                                    <div className="progress2 progress-moved">
-                                        <div className="progress-bar2" >
-
+                                {activeTab === "task" && ( // Conditionally render the progress bar when the "task" tab is active
+                                    <div className="col-sm-2 mx-2">
+                                        <div className="progress2 progress-moved">
+                                            <div className="progress-bar2" style={{ width: `${progress}%`, marginTop: "6%" }}>
+                                            </div>
                                         </div>
                                     </div>
-
-                                </div>
-           
+                                )}
+                                {activeTab === "task" && `${progress}%`}
                             </div>
                         </div>
                         {/* <div className="containerpro">
