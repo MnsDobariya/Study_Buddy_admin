@@ -40,8 +40,8 @@ const Calendar = () => {
 
     const [open, setOpen] = useState();
 
-    const [startDate, setStartDate] = useState(calendarEvent?.startdate ? dayjs(new Date(calendarEvent?.startdate)) : '');
-    const [endDate, setEndDate] = useState(calendarEvent?.enddate ? dayjs(new Date(calendarEvent?.enddate)) : '');
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     const [error, setError] = useState({
         title: "",
@@ -289,9 +289,10 @@ const Calendar = () => {
                                             selectsStart
                                             startDate={startDate}
                                             endDate={endDate}
-                                            defaultValue={startDate ? startDate : today}
+                                            // defaultValue={startDate ? startDate : today}
+                                            defaultValue={today}
                                             minDate={tomorrow}
-                                            value={dayjs(calendarEvent?.startdate)}
+                                            // value={dayjs(calendarEvent?.startdate)}
                                             format="DD/MM/YYYY"
                                             views={['year', 'month', 'day']}
                                             sx={{
@@ -316,9 +317,10 @@ const Calendar = () => {
                                             selectsEnd
                                             startDate={startDate}
                                             endDate={endDate}
-                                            defaultValue={endDate ? endDate : today}
-                                            minDate={tomorrow}
-                                            value={dayjs(calendarEvent?.enddate)}
+                                            // defaultValue={endDate ? endDate : today}
+                                            defaultValue={today}
+                                            minDate={startDate}
+                                            // value={dayjs(calendarEvent?.enddate)}
                                             format="DD/MM/YYYY"
                                             views={['year', 'month', 'day']}
                                             sx={{

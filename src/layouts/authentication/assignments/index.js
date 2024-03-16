@@ -174,12 +174,19 @@ const Assignments = () => {
                                         <div className="assignment" >
                                             <div className="card-asgn">
                                                 <div>
-                                                    <div className="card-notify-year mt-4"> <PiDotsThreeCircleVerticalLight onClick={(e) => handleClick(e, item)} style={{ marginLeft: "100%",marginBottom:"5%", color: "black", cursor: 'pointer' }} />
-                                                    {/* <FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e, item)} style={{ marginLeft: "5%", color: "black", cursor: 'pointer' }} />*/}
-                                                    </div> 
+                                                    <div className="card-notify-year mt-4"> <PiDotsThreeCircleVerticalLight onClick={(e) => handleClick(e, item)} style={{ marginLeft: "100%", marginBottom: "5%", color: "black", cursor: 'pointer' }} />
+                                                        {/* <FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e, item)} style={{ marginLeft: "5%", color: "black", cursor: 'pointer' }} />*/}
+                                                    </div>
                                                     {renderMenu(item)}
+                                                    <AvatarGroup max={3} className="mt-4 pl-5" style={{ gap: "15px",display:"inline-flex" }} variant="rounded">
+                                                        <Avatar style={{ backgroundColor: "rgb(23, 193, 232)", color: "White", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
+                                                            {`${item?.title.charAt(0).toUpperCase()}`}
+                                                        </Avatar>
 
-                                                    <h5 className="mt-2 p-4" style={{ textAlign: "center" }}><b>{item?.title}</b></h5>
+                                                        <p style={{ fontWeight: "500" }}>{item?.title}</p>
+                                                    </AvatarGroup>
+
+                                                    {/* <h5 className="mt-2 p-4" style={{ textAlign: "center" }}><b>{item?.title}</b></h5> */}
                                                 </div>
                                                 <div className="card-image-overlay mt-3" style={{ fontSize: "medium", color: "gray", marginLeft: "7%" }}>
                                                     <p>{item?.assignmentSummary}</p>
