@@ -15,7 +15,8 @@ import hotkeys from 'hotkeys-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faFileArrowDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { Viewer,Worker } from '@react-pdf-viewer/core';
+import { Worker,Viewer } from '@react-pdf-viewer/core';
+import PDFViewer from 'pdf-viewer-reactjs';
 
 const yearDropDown = [
     { label: "FY BCA", value: "FY BCA" },
@@ -25,10 +26,10 @@ const yearDropDown = [
 
 const Resources = () => {
     // const defaultLayoutPluginInstance = defaultLayoutPlugin();
-    // const [pdfFile, setPdfFile] = useState(null);
-    // const [pdfError, setPdfError] = useState('');
-    // const [selectedPdf, setSelectedPdf] = useState(null);
-    // const [pdfViewerOpen, setPdfViewerOpen] = useState(false);
+    const [pdfFile, setPdfFile] = useState(null);
+    const [pdfError, setPdfError] = useState('');
+    const [selectedPdf, setSelectedPdf] = useState(null);
+    const [pdfViewerOpen, setPdfViewerOpen] = useState(false);
 
 
     const dispatch = useDispatch();
@@ -113,10 +114,11 @@ const Resources = () => {
     //     }
     // }
 
-    // const openPdfViewer = (pdf) => {
-    //     setSelectedPdf(pdf);
-    //     setPdfViewerOpen(true);
-    // };
+    const openPdfViewer = (pdf) => {
+        console.log("pdf",pdf);
+        setSelectedPdf(pdf);
+        setPdfViewerOpen(true);
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -210,7 +212,7 @@ const Resources = () => {
                 return (
                     <>
                         <FontAwesomeIcon icon={faFileArrowDown} onClick={() => handleDownload(params?.row)} style={{ cursor: "pointer" }} />
-                        {/* <a style={{ fontSize: "smaller", marginLeft: "3%", marginTop: "2%", color: "Blue", }} onClick={() => openPdfViewer(params?.row.file)}>view</a> */}
+                        <a style={{ fontSize: "smaller", marginLeft: "3%", marginTop: "2%", color: "Blue", }} onClick={() => openPdfViewer(params?.row.file)}>view</a>
 
                     </>
                 )
@@ -613,7 +615,7 @@ const Resources = () => {
             </div> */}
 
             {/* </div> */}
-            {/* <Modal
+            <Modal
                 open={pdfViewerOpen}
                 onClose={() => {
                     setSelectedPdf(null);
@@ -623,14 +625,18 @@ const Resources = () => {
                 aria-describedby="modal-modal-description"
             >
                 <div className="viewer">
-                    {selectedPdf && (
-                        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.12.313/build/pdf.worker.min.js">
-                            <Viewer fileUrl={selectedPdf}></Viewer>
-                        </Worker>
-                    )}
+{console.log("selectedPdf",selectedPdf)}
+                {selectedPdf && (
+    // <Worker workerUrl="/path-to/pdf.worker.js">
+    //     <Viewer fileUrl={selectedPdf}></Viewer>
+    // </Worker>
+    <PDFViewer
+    document={{ url: `http://localhost:3000${selectedPdf}`}}
+  />
+)}
                     {!selectedPdf && <>No file is selected yet</>}
                 </div>
-            </Modal> */}
+            </Modal>
 
         </>
     )
