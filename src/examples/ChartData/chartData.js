@@ -1,14 +1,21 @@
 import { Avatar, AvatarGroup } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import moment from 'moment';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom';
 
 const ChartData = () => {
 
     const location = useLocation();
 
-    console.log('location', location)
+    // console.log('location', location)
+
+
+    useEffect(()=>{
+
+        
+
+    },[location.state])
 
     const columns = [
         // { field: "index", headerName: "Id", width: 90 },
