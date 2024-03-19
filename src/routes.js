@@ -59,7 +59,7 @@ import Resources from "layouts/resources/Resources";
 import Notification from "layouts/notification/notification";
 import Chat from "layouts/chat/Chat";
 import Assignments from "layouts/authentication/assignments";
-import { faBell, faCalendarDays, faCommentDots, faFileArrowDown, faFileSignature, faListCheck, faRectangleList } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCalendarDays, faCommentDots, faFileArrowDown, faFileSignature, faListCheck, faRectangleList, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaUser, FaWhatsapp } from "react-icons/fa";
 import { MdDashboardCustomize } from "react-icons/md";
@@ -347,7 +347,7 @@ const routes = [
     key: "user",
     route: "/user",
     role:["Teacher"],
-    icon: <FaUser />,
+    icon: <FontAwesomeIcon icon={faUser} size="sm" style={{color:"#3a416f"}}/>,
     component: <User />,
     noCollapse: true,
   },

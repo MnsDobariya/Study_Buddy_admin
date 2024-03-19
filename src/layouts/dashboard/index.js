@@ -196,14 +196,17 @@ function Dashboard() {
       position: 'right',
     },
     onClick: (event, elements) => {
-      
+
       if (elements.length) {
-        navigate("/chartdata", { state: assignmentChartData })
+        // navigate("/chartdata", { state: assignmentChartData })
         const clickedElementIndex = elements[0]._index;
         const datasetIndex = elements[0]._datasetIndex;
-        const label = assignmentData.labels[clickedElementIndex];
-        const value = assignmentData.datasets[datasetIndex].data[clickedElementIndex];
-        handleOnClick(label, value);
+        // const label = assignmentData.labels[clickedElementIndex];
+        // const value = assignmentData.datasets[datasetIndex].data[clickedElementIndex];
+        const lable = assignmentData.labels[elements[0]?.index];
+
+        navigate("/chartdata", { state: lable })
+        // handleOnClick(label, value);
       }
     },
   };
