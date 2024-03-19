@@ -74,8 +74,8 @@ const Todos = () => {
 
                                 <div style={{ display: "flex" }}>
                                     <p className="card-title">{item?.task}</p>
-                                    <label className={item.portable === 'High' ? 'high' : item.portable === 'Medium' ? 'medium' : 'low'}>
-                                        <span className=''>{item?.portable}</span>
+                                    <label className={item.priority === 'High' ? 'high' : item.priority === 'Medium' ? 'medium' : 'low'}>
+                                        <span className=''>{item?.priority}</span>
                                     </label>
                                     <div style={{ marginLeft: "auto", display: "flex", gap: "39px" }} >
                                         <FontAwesomeIcon icon={faPen} onClick={() => {

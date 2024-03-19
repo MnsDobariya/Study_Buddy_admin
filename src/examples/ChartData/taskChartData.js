@@ -1,4 +1,3 @@
-import { Avatar, AvatarGroup } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ApiGet } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
@@ -6,59 +5,44 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 
-const ChartData = () => {
-    const [status,setStatus] = useState([]);
+const TaskChartData = () => {
+    const [priority, setPriority] = useState([]);
 
     const location = useLocation();
 
     // console.log('location', location)
 
 
-    useEffect(()=>{
-        ApiGet(`${EndPoint.ASSIGNMENT_GETSTATUS}?status=${location?.state}`)
-        .then((res) => {
-            // console.log(res,"responseStatus");
-            setStatus(res?.data);
-        })
-        
-    },[location.state])
+    useEffect(() => {
+        ApiGet(`${EndPoint.TODOS_GETTASK}?priority=${location?.state}`)
+            .then((res) => {
+                // console.log(res,"responseStatus");
+                setPriority(res?.data);
+            })
+
+    }, [location.state])
 
     const columns = [
         // { field: "index", headerName: "Id", width: 90 },
 
         {
-            field: "title", headerName: "Title", width: 320, renderCell: (params) => (
-                <AvatarGroup max={3} style={{ gap: "15px" }} variant="rounded">
-                    <Avatar style={{ backgroundColor: "rgb(23, 193, 232)", color: "White", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
-                        {`${params.row.title.charAt(0).toUpperCase()}`}
-                    </Avatar>
-
-                    <p style={{ fontWeight: "500" }}>{params.row.title}</p>
-                </AvatarGroup>
-            )
+            field: "task", headerName: "Task", width: 150
         },
         {
-            field: "members", headerName: "Members", width: 150, renderCell: (params) => (
-                <AvatarGroup max={3}>
-                    {params.value.map((x, index) => (
-                        <Avatar key={index} style={{ backgroundColor: "rgba(0, 0, 0, 0.07)", color: "black", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
-                            {`${x.firstName.charAt(0).toUpperCase()}${x.lastName.charAt(0).toUpperCase()}`}
-                        </Avatar>
-                    ))}
-                </AvatarGroup>)
+            field: "description", headerName: "Description", width: 150
         },
-        { field: "startDate", headerName: "Start Date", width: 180, valueFormatter: params => moment(params?.value).format("DD MMM YYYY") },
+        { field: "deadlinedate", headerName: "Deadlinedate", width: 180, valueFormatter: params => moment(params?.value).format("DD MMM YYYY") },
         {
-            field: "status", headerName: "Status", width: 300, renderCell: (params) => (
+            field: "priority", headerName: "Priority", width: 300, renderCell: (params) => (
                 <>
-                    <label style={{ marginLeft: "-10px" }} className={params.row.status === 'Pending' ? 'pending' : params.row.status === 'Started' ? 'started' : 'finished'}>
-                        <span style={{ textAlign: "center", }}><b>{params?.row?.status}</b></span>
+                    <label style={{ marginLeft: "-10px" }} className={params.row.priority === 'High' ? 'high' : params.row.priority === 'Medium' ? 'medium' : 'low'}>
+                        <span style={{ textAlign: "center", }}><b>{params?.row?.priority}</b></span>
                     </label>
                 </>)
         }
     ]
 
-    const indexedData = status?.map((x,index) => ({
+    const indexedData = priority?.map((x, index) => ({
         ...x,
         index: index + 1
     }
@@ -90,7 +74,7 @@ const ChartData = () => {
                         ),
                     }}
                     style={{ height: "82vh", width: "77.5%", padding: "2%", marginLeft: "20%" }}
-                   
+
                     className='custom-data-grid'
                     initialState={{
                         pagination: { paginationModel: { pageSize: 5 } },
@@ -110,4 +94,4 @@ const ChartData = () => {
     )
 }
 
-export default ChartData;
+export default TaskChartData;
