@@ -125,9 +125,9 @@ function Dashboard() {
           datasets: [
             {
               data: [
-                res?.data?.filter((item) => item.portable == "Low").length || 0,
-                res?.data?.filter((item) => item.portable == "High").length || 0,
-                res?.data?.filter((item) => item.portable == "Medium").length || 0,
+                res?.data?.filter((item) => item.priority == "Low").length || 0,
+                res?.data?.filter((item) => item.priority == "High").length || 0,
+                res?.data?.filter((item) => item.priority == "Medium").length || 0,
               ],
               backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
               hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
@@ -179,14 +179,17 @@ function Dashboard() {
       position: 'right',
     },
     onClick: (event, elements) => {
-      navigate("/chartdata", { state: todoChartData })
+      // navigate("/chartdata", { state: todoChartData })
 
       if (elements.length) {
         const clickedElementIndex = elements[0]._index;
         const datasetIndex = elements[0]._datasetIndex;
-        const label = todosData.labels[clickedElementIndex];
-        const value = todosData.datasets[datasetIndex].data[clickedElementIndex];
-        handleOnClick(label, value);
+        // const label = todosData.labels[clickedElementIndex];
+        // const value = todosData.datasets[datasetIndex].data[clickedElementIndex];
+        const lable = todosData.labels[elements[0]?.index];
+        navigate("/taskChartdata", { state: lable })
+
+        // handleOnClick(label, value);
       }
     },
   };

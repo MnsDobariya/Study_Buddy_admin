@@ -30,13 +30,13 @@ const Addtodos = () => {
     const location = useLocation();
     const [addTodos, setAddTodos] = useState({
         task: "",
-        portable: "",
+        priority: "",
         description: ""
     });
     const [startDate, setStartDate] = useState(location?.state?.deadlinedate ? dayjs(new Date(location?.state?.deadlinedate)) : '');
     const [error, setError] = useState({
         task: "",
-        portable: "",
+        priority: "",
         description: ""
     });
 
@@ -94,8 +94,8 @@ const Addtodos = () => {
             error.task = "Invalid Task";
         }
 
-        if (!addTodos.portable) {
-            error.portable = "Please Priority Required";
+        if (!addTodos.priority) {
+            error.priority = "Please Priority Required";
         }
 
         const descriptionRegex = /^[a-zA-Z]{2,40}([a-zA-Z]{2,40})+$/;
@@ -105,7 +105,7 @@ const Addtodos = () => {
             error.description = "Invalid Description";
         }
 
-        if (error.task || error.portable || error.description) {
+        if (error.task || error.priority || error.description) {
             setError(error)
             return;
         }
@@ -113,7 +113,7 @@ const Addtodos = () => {
         const body = {
             deadlinedate: startDate,
             task: addTodos.task,
-            portable: addTodos.portable,
+            priority: addTodos.priority,
             description: addTodos.description
         }
 
@@ -130,7 +130,7 @@ const Addtodos = () => {
                     if (res.status === 201) {
                         setAddTodos({
                             task: "",
-                            portable: "",
+                            priority: "",
                             description: ""
                         });
                         navigate("/todos");
@@ -246,18 +246,18 @@ const Addtodos = () => {
                         </div>
                         <div className="form-row" style={{ display: "flex", paddingLeft: "41px", paddingRight: "41px", marginTop: "2%" }}>
                             <div className="col-sm-6 form-group">
-                                <label htmlFor="portable" style={{ fontWeight: "500" }}>Priority</label>
+                                <label htmlFor="priority" style={{ fontWeight: "500" }}>Priority</label>
 
                                 <select
-                                    name="portable"
-                                    id="portable"
+                                    name="priority"
+                                    id="priority"
                                     className="form-control"
-                                    value={addTodos?.portable}
+                                    value={addTodos?.priority}
                                     style={{ borderRadius: "0.5rem" }}
                                     onChange={(e) => {
                                         setError({
                                             ...error,
-                                            portable: ""
+                                            priority: ""
                                         })
                                         handleChange(e)
                                     }}
@@ -269,7 +269,7 @@ const Addtodos = () => {
                                         ))
                                     }
                                 </select>
-                                {error.portable && <p>{error.portable}</p>}
+                                {error.priority && <p>{error.priority}</p>}
                             </div>
                             <div className="col-sm-6 form-group">
                                 <label htmlFor="description" style={{ fontWeight: "500" }} >Description</label>

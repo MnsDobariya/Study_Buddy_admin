@@ -72,6 +72,7 @@ import Tasks from "layouts/authentication/assignments/Tasks";
 import Discussion from "layouts/authentication/assignments/Discussion";
 import User from "layouts/user/User";
 import ChartData from "examples/ChartData/chartData";
+import TaskChartData from "examples/ChartData/taskChartData";
 
 const routes = [
   {
@@ -210,7 +211,6 @@ const routes = [
     noCollapse: true,
   },
   {
-    type: "collapse",
     name: "ChartData",
     key: "chartData",
     route: "/chartdata",
@@ -218,6 +218,16 @@ const routes = [
     // icon: <NotificationBell size="12px" />,
     icon:<FontAwesomeIcon icon={faBell} size="xs" style={{color:"#3a416f"}}/>,
     component: <ChartData />,
+    noCollapse: true,
+  },
+  {
+    name: "TaskChartData",
+    key: "taskchartData",
+    route: "/taskChartdata",
+    role:["User","Admin","Teacher"],
+    // icon: <NotificationBell size="12px" />,
+    icon:<FontAwesomeIcon icon={faBell} size="xs" style={{color:"#3a416f"}}/>,
+    component: <TaskChartData />,
     noCollapse: true,
   },
   {
