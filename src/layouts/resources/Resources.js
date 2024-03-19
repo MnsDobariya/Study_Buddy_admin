@@ -15,8 +15,8 @@ import hotkeys from 'hotkeys-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faFileArrowDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { Worker,Viewer } from '@react-pdf-viewer/core';
-import PDFViewer from 'pdf-viewer-reactjs';
+import { Worker, Viewer } from '@react-pdf-viewer/core';
+// import PDFViewer from 'pdf-viewer-reactjs';
 
 const yearDropDown = [
     { label: "FY BCA", value: "FY BCA" },
@@ -24,20 +24,19 @@ const yearDropDown = [
     { label: "TY BCA", value: "TY BCA" },
 ];
 
+const chooseFormateDropDown = [
+    { label: "Image", value: "Image" },
+    { label: "Video", value: "Video" },
+    { label: "Pdf", value: "Pdf" },
+];
+
 const Resources = () => {
-    // const defaultLayoutPluginInstance = defaultLayoutPlugin();
-    const [pdfFile, setPdfFile] = useState(null);
-    const [pdfError, setPdfError] = useState('');
-    const [selectedPdf, setSelectedPdf] = useState(null);
-    const [pdfViewerOpen, setPdfViewerOpen] = useState(false);
-
-
     const dispatch = useDispatch();
     const resource = useSelector((state) => state.resource);
     // console.log(resource, "resouces");
     const [year, setYear] = useState();
-
-
+    const [file, setFile] = useState(false);
+    const [fileFormate, setFileFormate] = useState();
 
     const [open, setOpen] = useState();
     const [resources, setResources] = useState({
@@ -91,33 +90,15 @@ const Resources = () => {
 
     const token = localStorage.getItem("token");
 
-    // const allowedFiles = ['application/pdf'];
-    // const handleFile = (e) => {
-    //     let selectedFile = e.target.files[0];
-    //     // console.log(selectedFile.type);  
-    //     if (selectedFile) {
-    //         if (selectedFile && allowedFiles.includes(selectedFile.type)) {
-    //             let reader = new FileReader();
-    //             reader.readAsDataURL(selectedFile);
-    //             reader.onloadend = (e) => {
-    //                 setPdfError('');
-    //                 setPdfFile(e.target.result);
-    //             }
-    //         }
-    //         else {
-    //             setPdfError('Not a valid pdf: Please select only PDF');
-    //             setPdfFile('');
-    //         }
-    //     }
-    //     else {
-    //         console.log('please select a PDF');
-    //     }
-    // }
 
-    const openPdfViewer = (pdf) => {
-        console.log("pdf",pdf);
-        setSelectedPdf(pdf);
-        setPdfViewerOpen(true);
+    // const openPdfViewer = (pdf) => {
+    //     console.log("pdf", pdf);
+    //     setSelectedPdf(pdf);
+    //     setPdfViewerOpen(true);
+    // };
+
+    const openPdfViewer = (pdfUrl) => {
+        window.open(pdfUrl, "_blank");
     };
 
     const handleChange = (e) => {
@@ -154,10 +135,30 @@ const Resources = () => {
     const handleImageChange = (e) => {
         e.preventDefault();
 
-        setResources({
-            ...resources,
-            file: e.target.files[0]
-        });
+        // setResources({
+        //     ...resources,
+        //     file: e.target.files[0]
+        // });
+        const selectedFile = e.target.files[0];
+
+        if (selectedFile) {
+            if (fileFormate === 'Image' && selectedFile.type.startsWith('image')) {
+                setResources({
+                    ...resources,
+                    file: selectedFile
+                });
+            } else if (fileFormate === 'Pdf' && selectedFile.type === 'application/pdf') {
+                setResources({
+                    ...resources,
+                    file: selectedFile
+                });
+            } else {
+                setError({
+                    ...error,
+                    file: `Please select a ${fileFormate} file`
+                });
+            }
+        }
 
     }
 
@@ -179,26 +180,57 @@ const Resources = () => {
         setOpen(false);
     }
 
+    // const handleDownload = (data) => {
+
+
+    //     fetch(` http://localhost:3000` + data?.file).then((x) => {
+    //         x.blob().then((blob) => {
+
+    //             const fileURL =
+    //                 window.URL.createObjectURL(blob);
+
+    //             const downloadLink = document.createElement('a');
+    //             downloadLink.href = fileURL;
+
+    //             downloadLink.download = `${data?.title}.pdf`;
+
+    //             document.body.appendChild(downloadLink);
+    //             downloadLink.click();
+    //             document.body.removeChild(downloadLink);
+    //         });
+    //     });
+    // };
+
     const handleDownload = (data) => {
-
-
-        fetch(` http://localhost:3000` + data?.file).then((x) => {
-            x.blob().then((blob) => {
-
-                const fileURL =
-                    window.URL.createObjectURL(blob);
-
-                const downloadLink = document.createElement('a');
-                downloadLink.href = fileURL;
-
-                downloadLink.download = `${data?.title}.pdf`;
-
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
+        if (data.file.toLowerCase().endsWith('.pdf')) {
+            fetch(`http://localhost:3000${data.file}`).then((response) => {
+                response.blob().then((blob) => {
+                    const url = window.URL.createObjectURL(new Blob([blob]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `${data.title}.pdf`);
+                    document.body.appendChild(link);
+                    link.click();
+                    link.parentNode.removeChild(link);
+                });
             });
-        });
+        } else if (data.file.toLowerCase().endsWith('.jpg') || data.file.toLowerCase().endsWith('.jpeg') || data.file.toLowerCase().endsWith('.png')) {
+            fetch(`http://localhost:3000${data.file}`).then((response) => {
+                response.blob().then((blob) => {
+                    const url = window.URL.createObjectURL(new Blob([blob]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `${data.title}.jpg`);
+                    document.body.appendChild(link);
+                    link.click();
+                    link.parentNode.removeChild(link);
+                });
+            });
+        } else {
+            console.log('Unsupported file format');
+        }
     };
+
 
 
 
@@ -212,7 +244,7 @@ const Resources = () => {
                 return (
                     <>
                         <FontAwesomeIcon icon={faFileArrowDown} onClick={() => handleDownload(params?.row)} style={{ cursor: "pointer" }} />
-                        <a style={{ fontSize: "smaller", marginLeft: "3%", marginTop: "2%", color: "Blue", }} onClick={() => openPdfViewer(params?.row.file)}>view</a>
+                        <a style={{ fontSize: "smaller", marginLeft: "3%", marginTop: "2%", color: "Blue", }} onClick={() => openPdfViewer(`http://localhost:3000${params?.row.file}`)}>view</a>
 
                     </>
                 )
@@ -511,24 +543,80 @@ const Resources = () => {
                                 {error.description && <p style={{ color: "red", fontSize: "60%" }}>{error.description} </p>}
 
                             </div>
-                            <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
-                                <label htmlFor="file" style={{ color: "#344767" }}>File</label>
-                                <SoftInput
-                                    type="file"
-                                    // name="file"
-                                    onChange={(e) => {
-                                        setError({
-                                            ...error,
-                                            file: "",
-                                        });
-                                        handleImageChange(e);
-                                    }}
-                                // onKeyPress={(e) => onKeyBtn(e)}
-                                />
-                                {error.file && <p style={{ color: "red", fontSize: "60%" }}>{error.file} </p>}
 
-                                {/* <label htmlFor="file">{resources ? resources?.file?.name : resources?.file}</label> */}
-                            </div>
+                            {!file ?
+                                <>
+                                    <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+
+                                        <label htmlFor="file" style={{ color: "#344767" }}>Formate</label>
+                                        <select
+                                            name="year"
+                                            id="year"
+                                            className='form-control'
+                                            style={{ borderRadius: "0.5rem", width: "100%" }}
+
+                                            onChange={(e) => {
+                                                setFileFormate(e.target.value);
+                                                setFile(true)
+                                            }}
+                                        >
+                                            <option key="">Select Formate</option>
+                                            {chooseFormateDropDown &&
+                                                chooseFormateDropDown?.map((x) => (
+                                                    <option key={x.value}>{x.value}</option>
+
+                                                ))
+                                            }
+                                        </select>
+                                    </div>
+                                </>
+                                :
+                                <>
+                                    <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+
+                                        <label htmlFor="file" style={{ color: "#344767" }}>Formate</label>
+                                        <select
+                                            name="year"
+                                            id="year"
+                                            className='form-control'
+                                            style={{ borderRadius: "0.5rem", width: "100%" }}
+
+                                            onChange={(e) => {
+                                                setFileFormate(e.target.value);
+                                                setFile(true)
+                                            }}
+                                        >
+                                            <option key="">Select Formate</option>
+                                            {chooseFormateDropDown &&
+                                                chooseFormateDropDown?.map((x) => (
+                                                    <option key={x.value}>{x.value}</option>
+
+                                                ))
+                                            }
+                                        </select>
+                                    </div>
+                                </>
+                            }
+                            {file && (
+                                <div className="col-sm-10 form-group" style={{ marginLeft: "8%" }}>
+                                    <label htmlFor="file" style={{ color: "#344767" }}>File</label>
+                                    <SoftInput
+                                        type="file"
+                                        // name="file"
+                                        onChange={(e) => {
+                                            setError({
+                                                ...error,
+                                                file: "",
+                                            });
+                                            handleImageChange(e);
+                                        }}
+                                        onKeyPress={(e) => onKeyBtn(e)}
+                                    />
+                                    {error.file && <p style={{ color: "red", fontSize: "60%" }}>{error.file} </p>}
+
+                                    <label htmlFor="file">{resources ? resources?.file?.name : resources?.file}</label>
+                                </div>
+                            )}
                             <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
 
                                 <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={AddResources}>
@@ -588,34 +676,8 @@ const Resources = () => {
                     <button type="button" className="btn btn-secondary" onClick={handlePopupClose} style={{ width: "30%", backgroundColor: "#6c757d" }} >No</button>
                 </DialogActions>
             </Dialog>
-            {/* <div className="container">
-                <form>
 
-                    <label><h5>Upload PDF</h5></label>
-                    <br></br>
-
-                    <input type='file' className="form-control"
-                        onChange={handleFile}></input>
-                    {pdfError && <span className='text-danger'>{pdfError}</span>}
-
-                </form>
-                <h5>View PDF</h5> */}
-            {/* <div className="viewer">
-
-
-                {pdfFile && (
-                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.12.313/build/pdf.worker.min.js">
-                        <Viewer fileUrl={pdfFile}></Viewer>
-                    </Worker>
-                )}
-
-
-                {!pdfFile && <>No file is selected yet</>}
-
-            </div> */}
-
-            {/* </div> */}
-            <Modal
+            {/* <Modal
                 open={pdfViewerOpen}
                 onClose={() => {
                     setSelectedPdf(null);
@@ -625,18 +687,18 @@ const Resources = () => {
                 aria-describedby="modal-modal-description"
             >
                 <div className="viewer">
-{console.log("selectedPdf",selectedPdf)}
-                {selectedPdf && (
-    // <Worker workerUrl="/path-to/pdf.worker.js">
-    //     <Viewer fileUrl={selectedPdf}></Viewer>
-    // </Worker>
-    <PDFViewer
-    document={{ url: `http://localhost:3000${selectedPdf}`}}
-  />
-)}
+                    {console.log("selectedPdf", selectedPdf)}
+                    {selectedPdf && (
+                        // <Worker workerUrl="/path-to/pdf.worker.js">
+                        //     <Viewer fileUrl={selectedPdf}></Viewer>
+                        // </Worker>
+                        <PDFViewer
+                            document={{ url: `http://localhost:3000${selectedPdf}` }}
+                        />
+                    )}
                     {!selectedPdf && <>No file is selected yet</>}
                 </div>
-            </Modal>
+            </Modal> */}
 
         </>
     )
