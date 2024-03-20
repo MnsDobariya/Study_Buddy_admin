@@ -153,7 +153,7 @@ const routes = [
   name: "Chat",
   key: "chat",
   route: "/chat",
-  role:["User","Teacher","Admin"],
+  role:["User","Teacher"],
   // icon: <FontAwesomeIcon icon={faCommentDots} size="xs" style={{color:"#3a416f"}}/>,
   icon: <FaWhatsapp />,
 
@@ -204,7 +204,7 @@ const routes = [
     name: "Notification",
     key: "notification",
     route: "/notification",
-    role:["User","Admin"],
+    role:["User","Admin","Teacher"],
     // icon: <NotificationBell size="12px" />,
     icon:<FontAwesomeIcon icon={faBell} size="xs" style={{color:"#3a416f"}}/>,
     component: <Notification />,

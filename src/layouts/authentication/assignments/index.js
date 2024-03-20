@@ -178,8 +178,8 @@ const Assignments = () => {
                                                         {/* <FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e, item)} style={{ marginLeft: "5%", color: "black", cursor: 'pointer' }} />*/}
                                                     </div>
                                                     {renderMenu(item)}
-                                                    <AvatarGroup max={3} className="mt-4 pl-5" style={{ gap: "15px",display:"inline-flex" }} variant="rounded">
-                                                        <Avatar style={{ backgroundColor: "rgb(23, 193, 232)", color: "White", fontSize: "initial", fontWeight: "500" }} sx={{ width: 35, height: 35 }}>
+                                                    <AvatarGroup max={3} className="mt-4 pl-5" style={{ gap: "15px",display:"inline-flex",marginLeft:"-6%" }} variant="rounded">
+                                                        <Avatar style={{ backgroundColor: "rgb(23, 193, 232)", color: "White", fontSize: "initial", fontWeight: "500" ,boxSizing:"initial"}} sx={{ width: 35, height: 35 }}>
                                                             {`${item?.title.charAt(0).toUpperCase()}`}
                                                         </Avatar>
 
