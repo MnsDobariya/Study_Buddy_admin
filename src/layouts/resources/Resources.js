@@ -550,11 +550,10 @@ const Resources = () => {
 
                                         <label htmlFor="file" style={{ color: "#344767" }}>Formate</label>
                                         <select
-                                            name="year"
-                                            id="year"
+                                            name="formate"
+                                            id="formate"
                                             className='form-control'
                                             style={{ borderRadius: "0.5rem", width: "100%" }}
-
                                             onChange={(e) => {
                                                 setFileFormate(e.target.value);
                                                 setFile(true)
@@ -576,11 +575,10 @@ const Resources = () => {
 
                                         <label htmlFor="file" style={{ color: "#344767" }}>Formate</label>
                                         <select
-                                            name="year"
-                                            id="year"
+                                            name="formate"
+                                            id="formate"
                                             className='form-control'
                                             style={{ borderRadius: "0.5rem", width: "100%" }}
-
                                             onChange={(e) => {
                                                 setFileFormate(e.target.value);
                                                 setFile(true)
