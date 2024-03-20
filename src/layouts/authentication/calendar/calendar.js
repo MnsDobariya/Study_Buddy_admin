@@ -43,6 +43,8 @@ const Calendar = () => {
     const [startDate, setStartDate] = useState(calendarEvent?.startdate ? dayjs(new Date(calendarEvent?.startdate)) : '');
     const [endDate, setEndDate] = useState(calendarEvent?.enddate ? dayjs(new Date(calendarEvent?.enddate)) : '');
 
+    
+
     const [error, setError] = useState({
         title: "",
         startdate: "",
@@ -292,6 +294,7 @@ const Calendar = () => {
                                             defaultValue={startDate ? startDate : today}
                                             minDate={tomorrow}
                                             value={dayjs(calendarEvent?.startdate)}
+                                            // value={startDate}
                                             format="DD/MM/YYYY"
                                             views={['year', 'month', 'day']}
                                             sx={{
@@ -317,8 +320,9 @@ const Calendar = () => {
                                             startDate={startDate}
                                             endDate={endDate}
                                             defaultValue={endDate ? endDate : today}
-                                            minDate={tomorrow}
-                                            value={dayjs(calendarEvent?.enddate)}
+                                            minDate={startDate}
+                                            value={dayjs(calendarEvent?.enddate)}    
+                                            // value={endDate}    
                                             format="DD/MM/YYYY"
                                             views={['year', 'month', 'day']}
                                             sx={{

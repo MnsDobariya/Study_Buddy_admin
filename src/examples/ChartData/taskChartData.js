@@ -26,16 +26,16 @@ const TaskChartData = () => {
         // { field: "index", headerName: "Id", width: 90 },
 
         {
-            field: "task", headerName: "Task", width: 150
+            field: "task", headerName: "Task", width: 250
         },
         {
-            field: "description", headerName: "Description", width: 150
+            field: "description", headerName: "Description", width: 350
         },
-        { field: "deadlinedate", headerName: "Deadlinedate", width: 180, valueFormatter: params => moment(params?.value).format("DD MMM YYYY") },
+        { field: "deadlinedate", headerName: "Deadlinedate", width: 300, valueFormatter: params => moment(params?.value).format("DD MMM YYYY") },
         {
-            field: "priority", headerName: "Priority", width: 300, renderCell: (params) => (
+            field: "priority", headerName: "Priority", width: 200, renderCell: (params) => (
                 <>
-                    <label style={{ marginLeft: "-10px" }} className={params.row.priority === 'High' ? 'high' : params.row.priority === 'Medium' ? 'medium' : 'low'}>
+                    <label className={params.row.priority === 'High' ? 'high' : params.row.priority === 'Medium' ? 'medium' : 'low'}>
                         <span style={{ textAlign: "center", }}><b>{params?.row?.priority}</b></span>
                     </label>
                 </>)
