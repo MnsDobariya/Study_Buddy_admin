@@ -39,7 +39,7 @@ const AssignmentForm = () => {
     // console.log('selectedMembers', selectedMembers)
     const token = localStorage.getItem("token");
     const location = useLocation();
-    // console.log('location', location)
+    console.log('location', location)
     const [member, setMember] = useState([]);
     // console.log('member', member)
 
@@ -121,14 +121,17 @@ const AssignmentForm = () => {
 
     useEffect(() => {
         if (location?.state) {
-            setAddAssignment(location?.state);
+            setAddAssignment({
+                ...location?.state,
+                members: location?.state.members.map((item) => item.id)
+            });
             setSelectedMembers(location?.state?.members.map((x) => ({
                 label: x.firstName,
                 value: x.id,
             })));
             // setStartDate(new Date(location?.state.startDate)); 
-            setStartDate(dayjs(new Date(location?.state.startDate))); 
-            setEndDate(dayjs(new Date(location?.state.endDate))); 
+            setStartDate(dayjs(new Date(location?.state.startDate)));
+            setEndDate(dayjs(new Date(location?.state.endDate)));
         }
         getMember("")
     }, [location?.state]);
@@ -416,7 +419,7 @@ const AssignmentForm = () => {
                                     endDate={endDate}
                                     // minDate={tomorrow}
                                     defaultValue={endDate ? endDate : today}
-                                    minDate={tomorrow}
+                                    minDate={startDate}
                                     format="DD/MM/YYYY"
                                     views={['year', 'month', 'day']}
                                     sx={{
