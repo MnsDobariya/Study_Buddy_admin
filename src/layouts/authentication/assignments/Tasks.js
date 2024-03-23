@@ -85,7 +85,7 @@ const Tasks = ({ setTasks, handleOpen, taskData, getTaskData }) => {
                                             />
                                             <FontAwesomeIcon icon={faTrash} onClick={() => {
                                                 setOpen(true);
-                                                setDeleteId(item.id);
+                                                setDeleteId(item.id);   
                                             }}
                                                 style={{ cursor: "pointer" }}
                                             />

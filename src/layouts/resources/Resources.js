@@ -15,7 +15,7 @@ import hotkeys from 'hotkeys-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faFileArrowDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { Worker, Viewer } from '@react-pdf-viewer/core';
+// import { Worker, Viewer } from '@react-pdf-viewer/core';
 // import PDFViewer from 'pdf-viewer-reactjs';
 
 const yearDropDown = [
@@ -26,7 +26,7 @@ const yearDropDown = [
 
 const chooseFormateDropDown = [
     { label: "Image", value: "Image" },
-    { label: "Video", value: "Video" },
+    // { label: "Video", value: "Video" },
     { label: "Pdf", value: "Pdf" },
 ];
 
@@ -615,7 +615,7 @@ const Resources = () => {
                                     <label htmlFor="file">{resources ? resources?.file?.name : resources?.file}</label>
                                 </div>
                             )}
-                            <SoftBox mt={4} style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", marginBottom: "10vh" }}>
+                            <SoftBox  style={{ display: "flex", justifyContent: "center", gap: "20%", marginLeft: "26%", width: "51%", paddingBottom: "3%" }}>
 
                                 <SoftButton className="add-teacher" variant="gradient" color="info" marginLeft="50%" style={{ marginTop: "3%", border: "0px", outline: "none" }} onClick={AddResources}>
                                     Resources
