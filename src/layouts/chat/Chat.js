@@ -12,6 +12,10 @@ import { Menu, MenuItem } from '@mui/material';
 import SoftButton from 'components/SoftButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { PiDotsThreeCircleVerticalLight } from 'react-icons/pi';
+import { ApiPut } from 'config/Api/ApiData';
+import { ApiDelete } from 'config/Api/ApiData';
+import { useNavigate } from 'react-router-dom';
 
 const Chat = () => {
     const [roomRecord, setRoomRecord] = useState([]);
@@ -36,6 +40,24 @@ const Chat = () => {
         profileImage: ""
     });
     // console.log(headerImage,"headerIamge");
+    const [open, setOpen] = useState(false);
+    const [secondanchorEl, setSecondanchorEl] = useState(null);
+    const [selectedRowId, setSelectedRowId] = useState(null);
+
+    const navigate = useNavigate();
+
+    const handleSecondClick = (event, data) => {
+        setSecondanchorEl(event.currentTarget);
+        setSelectedRowId(data);
+    }
+
+    const handleSecondClose = () => {
+        setSecondanchorEl(null);
+        setSelectedRowId(null);
+        setOpen(false);
+    }
+
+
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -50,7 +72,7 @@ const Chat = () => {
     //     })
     // }
 
-    
+
     const createRoom = (receiverUserData) => {
         // console.log(receiverUserData, 'receiverUserData')
         const body = {
@@ -103,7 +125,7 @@ const Chat = () => {
                 setChatRecord(res?.data);
             })
     }
-    
+
 
     const getSearch = () => {
         const searchQuery = search.toLowerCase();
@@ -111,8 +133,50 @@ const Chat = () => {
             .then((res) => {
                 setSearchResults(res?.data.map(user => ({
                     ...user,
-                    firstName: user.firstName.toLowerCase() 
+                    firstName: user.firstName.toLowerCase()
                 })));
+            })
+    }
+
+    const updateBlockRoom = (isBlocked, roomId) => {
+        const body = {
+            // receiverId: chat?.receiverId
+            block: isBlocked,
+        }
+        // console.log(body, "body");
+
+        ApiPut(`${EndPoint.BLOCK_ROOM_UPDATE}/${roomId}`, body)
+            .then((res) => {
+                // console.log(res, "response");
+                if (res?.status === 200) {
+                    const updatedRoomRecord = roomRecord.map(room => {
+                        if (room._id === roomId) {
+                            return {
+                                ...room,
+                                block: isBlocked
+                            };
+                        }
+                        return room;
+
+                    });
+                    setRoomRecord(updatedRoomRecord);
+                }
+                handleSecondClose();
+            })
+            .catch(error => {
+                handleSecondClose();
+            });
+        if (isBlocked) {
+            // deleteRoom(roomId);
+            // navigate("/taskChartdata")
+        }
+    }
+
+    const deleteRoom = (roomId) => {
+        ApiDelete(`${EndPoint.ROOM_DELETE}/${roomId}`)
+            .then((res) => {
+                // console.log(res, "ddddddddddddddddddd");
+                getRoom();
             })
     }
 
@@ -149,6 +213,45 @@ const Chat = () => {
     //     })
     // }
 
+
+    const renderMenu = (item) => {
+        return (
+            <Menu
+                anchorEl={secondanchorEl}
+                open={Boolean(secondanchorEl)}
+                onClose={handleSecondClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                transformOrigin={{ horizontal: "right" }}
+                sx={{
+                    "& .css-cmyovl-MuiPaper-root-MuiMenu-paper-MuiPopover-paper": {
+                        border: " 0 solid rgba(0, 0, 0, 0.125)",
+                        borderRadius: "1rem",
+                        boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0)",
+                    }
+                }}
+            // sx={{
+            //     "& .MuiPaper-root":{
+            //         "& .MuiMenu-paper":{
+            //             "& .MuiPopover-paper":{
+            //                 // transition:" box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+            //                 // backgroundColor: "#ffffff",
+            //                 // border:" 0 solid rgba(0, 0, 0, 0.125)",
+            //                 // borderRadius: "1rem",
+            //                 // boxShadow: "0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05)"
+            //             }
+            //         }
+            //     }
+            // }}
+            >
+
+                <MenuItem onClick={(e) => updateBlockRoom(true, item?._id)}>Block</MenuItem>
+                <MenuItem onClick={() => deleteRoom(item?._id)}>Delete</MenuItem>
+
+                {/* Add more menu items for other actions if needed */}
+            </Menu>
+        );
+    };
+
     const getProfileImage = (image) => {
         // console.log(image,"image");
         return image ? `http://localhost:3000${image}` : 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg';
@@ -156,7 +259,12 @@ const Chat = () => {
 
     useEffect(() => {
         getRoom("")
-    }, [])
+    }, []);
+
+    // useEffect(() => {
+    //     const filteredRoomRecord = roomRecord.filter(room => !room.block);
+    //     setRoomRecord(filteredRoomRecord);
+    // }, []);
 
     const onKeyBtn = (e) => {
         if (e.key === "Enter")
@@ -307,7 +415,11 @@ const Chat = () => {
                                                                 setShowBackgroundChat(false)
                                                             }}>
                                                                 <h5>{localStorage.getItem("id") == item?.sender?._id ? item?.receiver?.firstName : item?.sender?.firstName} <span className="chat_date">{moment(item?.createdAt).format('DD MMM YYYY LTS')}</span></h5>
-                                                                <p>{item?.messager?.message}</p>
+                                                                <p style={{ display: "flex" }}>{item?.messager?.message} <PiDotsThreeCircleVerticalLight onClick={(e) => handleSecondClick(e, item)} style={{ marginLeft: "inherit", color: "black", cursor: 'pointer', fontSize: "25px" }} /></p>
+                                                                {/* <div className=""> <PiDotsThreeCircleVerticalLight style={{ marginBottom: "5%", color: "black", cursor: 'pointer' }} /> */}
+                                                                {/* <FontAwesomeIcon icon={faEllipsisVertical} onClick={(e) => handleClick(e, item)} style={{ marginLeft: "5%", color: "black", cursor: 'pointer' }} />*/}
+                                                                {/* </div> */}
+                                                                {renderMenu(item)}
                                                             </div>
                                                         </div>
                                                     </div>

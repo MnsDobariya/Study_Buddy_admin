@@ -43,7 +43,7 @@ const Calendar = () => {
     const [startDate, setStartDate] = useState(calendarEvent?.startdate ? dayjs(new Date(calendarEvent?.startdate)) : '');
     const [endDate, setEndDate] = useState(calendarEvent?.enddate ? dayjs(new Date(calendarEvent?.enddate)) : '');
 
-    
+
 
     const [error, setError] = useState({
         title: "",
@@ -60,8 +60,8 @@ const Calendar = () => {
         setOpen(false);
         setError({
             title: "",
-            description: "",
-            file: ""
+            startdate: "",
+            enddate: ""
         })
     }
 
@@ -169,7 +169,7 @@ const Calendar = () => {
 
         const body = {
             Title: calendarEvent?.title,
-            StartDate: startDate,
+            StartDate: startDate ,
             EndDate: endDate,
         }
 
@@ -322,7 +322,7 @@ const Calendar = () => {
                                             defaultValue={endDate ? endDate : today}
                                             minDate={startDate}
                                             value={dayjs(calendarEvent?.enddate)}    
-                                            // value={endDate}    
+                                            // value={endDate}
                                             format="DD/MM/YYYY"
                                             views={['year', 'month', 'day']}
                                             sx={{

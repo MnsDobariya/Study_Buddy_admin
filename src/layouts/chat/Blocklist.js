@@ -1,50 +1,45 @@
 import { Stack } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import SoftButton from 'components/SoftButton';
 import { ApiGet } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
-import React, { useEffect, useState } from 'react';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react'
 
+const Blocklist = () => {
+    const [blockdata, setBlockData] = useState([]);
+    // console.log(blockdata,"blockData");
 
-
-const User = () => {
-    const [user, setUser] = useState([]);
-
-    const getAllUser = () => {
-
-        ApiGet(`${EndPoint.ALLUSER_GET}`)
+    const getBlockRoom = () => {
+        ApiGet(`${EndPoint.BLOCK_ROOM_GET}`)
             .then((res) => {
-                // console.log(res, "respopne");
-                setUser(res?.data);
+                // console.log(res, "responseBlockList");
+                setBlockData(res?.data);
             })
     }
 
     useEffect(() => {
-        getAllUser("");
+        getBlockRoom("");
     }, []);
 
-
     const columns = [
-        // { field: "index", headerName: "Id", width: 150 },
         { field: "firstName", headerName: "FirstName", width: 150, hideable: false },
         { field: "lastName", headerName: "LastName", width: 150, hideable: false },
-        { field: "email", headerName: "Email", width: 150, label: "view", hideable: false },
-        { field: "gender", headerName: "Gender", width: 150, label: "view", hideable: false },
-        { field: "phone", headerName: "Phone", width: 150, label: "view", hideable: false },
-        { field: "division", headerName: "Division", width: 150, label: "view", hideable: false },
-        { field: "birthday", headerName: "Birthday", width: 150, label: "view", hideable: false },
-
+        { field: "email", headerName: "Email", width: 200, hideable: false },
+        { field: "phone", headerName: "Mobile", width: 200, hideable: false },
+        { field: "phone", headerName: "Mobile", width: 200, hideable: false },
+        { field: "birthday", headerName: "BirthDay", width: 180, valueFormatter: params => moment(params?.value).format("DD MMM YYYY"),hideable: false },
     ];
 
-    const indexedData = user?.map((item, index) => ({
-        ...item,
+    const indexedData = blockdata?.map((item, index) => ({
+        ...item?.receiverId,
         index: index + 1,
+
     }))
 
     return (
         <>
-            <div style={{ height: "80vh", width: "77.5%", padding: "1%", marginLeft: "20%", marginTop: "2%" }}>
-                <h3 style={{ fontSize: "larger", fontWeight: "500", color: " #344767", marginBottom: "revert" }}>Users</h3>
+            <div style={{ height: "80vh", width: "77.5%", padding: "1%", marginLeft: "20%"}}>
+                <h3 style={{ fontSize: "larger", fontWeight: "500", color: " #344767", marginBottom: "revert" }}>Block List</h3>
                 <DataGrid
                     rows={indexedData}
                     columns={columns}
@@ -68,6 +63,7 @@ const User = () => {
                                 }}
                             >
                                 <GridToolbar />
+
                             </div>
                         ),
                     }}
@@ -92,4 +88,4 @@ const User = () => {
     )
 }
 
-export default User;
+export default Blocklist;
