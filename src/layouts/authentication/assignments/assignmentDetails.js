@@ -263,7 +263,7 @@ const assignmentDetails = () => {
 
 
                                 {activeTab === "task" && ( // Conditionally render the progress bar when the "task" tab is active
-                                    <div className="col-sm-2 mx-2">
+                                    <div className="col-sm-3 mx-1">
                                         <div className="progress2 progress-moved">
                                             <div className="progress-bar2" style={{ width: `${progress}%`, marginTop: "6%" }}>
                                             </div>

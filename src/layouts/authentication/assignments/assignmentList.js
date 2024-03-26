@@ -9,6 +9,7 @@ import { EndPoint } from 'config/EndPoint/Endpoint';
 import Dashboard from 'layouts/dashboard';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
+import { PiDotsThreeCircleVerticalLight } from 'react-icons/pi';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -41,7 +42,6 @@ const AssignmentList = () => {
         index: index + 1,
     }))
 
-    console.log('item', indexedData)
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedRowId, setSelectedRowId] = useState(null);
@@ -99,10 +99,9 @@ const AssignmentList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <FontAwesomeIcon
-                            icon={faEllipsisVertical}
+                        <PiDotsThreeCircleVerticalLight
                             onClick={(e) => handleClick(e, params.row.id)}
-                            style={{ marginLeft: "22%", color: "black", cursor: "pointer" }}
+                            style={{ marginLeft: "8%", color: "black", cursor: "pointer",fontSize:"30px" }}
                         />
 
                         <Menu
@@ -117,10 +116,10 @@ const AssignmentList = () => {
                                 }
                             }}
                         >
+                            <MenuItem onClick={() => handleUpdate(selectedRowId)} style={{ borderBottom: "2px solid rgba(20,20,20,0.07)" }}>Edit</MenuItem>
                             <MenuItem onClick={() => {
                                 handleDelete(params.row.id)
                             }}>Delete</MenuItem>
-                            <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
 
                         </Menu>
                     </>
