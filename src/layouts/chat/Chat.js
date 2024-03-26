@@ -57,6 +57,15 @@ const Chat = () => {
         setOpen(false);
     }
 
+    const hanldeBlock = (item) => {
+        updateBlockRoom(true, item?._id);
+        setSecondanchorEl(null);
+    }
+
+    const handleDelete = (item) => {
+        deleteRoom(item?._id);
+        setSecondanchorEl(null);
+    }
 
 
     const handleClick = (event) => {
@@ -149,18 +158,19 @@ const Chat = () => {
             .then((res) => {
                 // console.log(res, "response");
                 if (res?.status === 200) {
-                    const updatedRoomRecord = roomRecord.map(room => {
-                        if (room._id === roomId) {
-                            return {
-                                ...room,
-                                block: isBlocked
-                            };
-                        }
-                        return room;
+                    // const updatedRoomRecord = roomRecord.map(room => {
+                    //     if (room._id === roomId) {
+                    //         return {
+                    //             ...room,
+                    //             block: isBlocked
+                    //         };
+                    //     }
+                    //     return room;
 
-                    });
-                    setRoomRecord(updatedRoomRecord);
+                    // });
+                    // setRoomRecord(updatedRoomRecord);
                 }
+                getRoom();
                 handleSecondClose();
             })
             .catch(error => {
@@ -244,8 +254,8 @@ const Chat = () => {
             // }}
             >
 
-                <MenuItem onClick={(e) => updateBlockRoom(true, item?._id)}>Block</MenuItem>
-                <MenuItem onClick={() => deleteRoom(item?._id)}>Delete</MenuItem>
+                <MenuItem onClick={() => hanldeBlock(selectedRowId)}>Block</MenuItem>
+                <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
 
                 {/* Add more menu items for other actions if needed */}
             </Menu>
@@ -256,6 +266,8 @@ const Chat = () => {
         // console.log(image,"image");
         return image ? `http://localhost:3000${image}` : 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg';
     }
+
+    const filteredRoomRecord = roomRecord?.filter(room => !room.block);
 
     useEffect(() => {
         getRoom("")
@@ -400,7 +412,7 @@ const Chat = () => {
                                             </div>
                                         </div>
 
-                                        {roomRecord && roomRecord?.map((item) => (
+                                        {filteredRoomRecord?.map((item) => (
                                             <div key={item.id} className="rowroom" id="adstodos">
                                                 <div className="inbox_chat">
                                                     <div className="chat_list active_chat">
