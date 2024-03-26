@@ -85,7 +85,7 @@ const Blocklist = () => {
                     <>
                         <PiDotsThreeCircleVerticalLight
                             onClick={(e) => handleClick(e, params.row.id)}
-                            style={{ marginLeft: "8%", color: "black", cursor: "pointer", fontSize: "30px" }}
+                            style={{ marginLeft: "22%", color: "black", cursor: "pointer", fontSize: "30px" }}
                         />
 
                         <Menu

@@ -62,7 +62,7 @@ import Assignments from "layouts/authentication/assignments";
 import { faBell, faCalendarDays, faCommentDots, faFileArrowDown, faFileSignature, faListCheck, faRectangleList, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaUser, FaWhatsapp } from "react-icons/fa";
-import { MdDashboardCustomize } from "react-icons/md";
+import { MdBlock, MdDashboardCustomize } from "react-icons/md";
 import { MdDashboard } from "react-icons/md";
 import { FaCalendarDays } from "react-icons/fa6";
 import LandingPage from "landing/landing";
@@ -167,7 +167,7 @@ const routes = [
     route: "/blocklist",
     role: ["User"],
     // icon: <FontAwesomeIcon icon={faCommentDots} size="xs" style={{color:"#3a416f"}}/>,
-    icon: <FaWhatsapp />,
+    icon: <MdBlock />,
     component: <Blocklist />,
     noCollapse: true,
   },
