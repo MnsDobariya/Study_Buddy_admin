@@ -129,8 +129,8 @@ const Assignments = () => {
                 {role !== "Teacher" &&
                     <MenuItem onClick={() => navigate('/assignments/assignmentDetails', { state: { assignmentDetail: selectedRowId } })}>Open</MenuItem>
                 }
-                <MenuItem onClick={() => handleUpdate(selectedRowId)}>Edit</MenuItem>
-                <MenuItem onClick={() => handleDelete(selectedRowId)}>Delete</MenuItem>
+                <MenuItem onClick={() => handleUpdate(selectedRowId)} style={{ borderBottom: "2px solid rgba(20,20,20,0.07)" }}>Edit</MenuItem>
+                <MenuItem onClick={() => handleDelete(selectedRowId)} >Delete</MenuItem>
 
                 {/* Add more menu items for other actions if needed */}
             </Menu>
