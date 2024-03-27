@@ -5,11 +5,11 @@ import Storage from './storage';
 let API_BASE_URL;
 
 if (window.location.hostname === 'localhost') {
-  API_BASE_URL = 'http://localhost:3000/api/v1';
+  API_BASE_URL = 'https://c63a-2402-a00-162-d066-7949-5f68-f64d-f490.ngrok-free.app/api/v1';
   // API_BASE_URL = 'http://115.124.106.150:8124/api';
 } else {
   // Live server environment
-  API_BASE_URL = 'http://localhost:3000/api/v1';
+  API_BASE_URL = 'https://c63a-2402-a00-162-d066-7949-5f68-f64d-f490.ngrok-free.app/api/v1';
 }
 
 const getHttpMemberOptions = (options, isAuth = false) => {
@@ -19,7 +19,10 @@ const getHttpMemberOptions = (options, isAuth = false) => {
   }
   if (options.hasOwnProperty('Content-Type')) {
     headers['Content-Type'] = options['Content-Type'] ?? 'application/json';
+    // headers['Host'] = '*https://4fd2-2402-a00-162-d066-7949-5f68-f64d-f490.ngrok-free.app';
   }
+  // headers.Host = "https://4fd2-2402-a00-162-d066-7949-5f68-f64d-f490.ngrok-free.app"
+  headers['ngrok-skip-browser-warning'] = 'true'
   return { headers };
 };
 
