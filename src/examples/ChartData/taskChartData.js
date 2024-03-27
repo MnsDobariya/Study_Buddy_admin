@@ -3,7 +3,9 @@ import { ApiGet } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+
 
 const TaskChartData = () => {
     const [priority, setPriority] = useState([]);
@@ -11,6 +13,7 @@ const TaskChartData = () => {
     const location = useLocation();
 
     // console.log('location', location)
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -68,6 +71,7 @@ const TaskChartData = () => {
                                 }}
                             >
                                 <GridToolbar />
+                                <IoArrowBackCircleSharp onClick={()=>navigate("/dashboard")} size={"30px"} style={{marginLeft:"66%"}}/>Back
 
                             </div>
 

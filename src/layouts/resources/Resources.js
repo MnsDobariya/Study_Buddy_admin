@@ -15,6 +15,7 @@ import hotkeys from 'hotkeys-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faFileArrowDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { GrDownload } from "react-icons/gr";
 // import { Worker, Viewer } from '@react-pdf-viewer/core';
 // import PDFViewer from 'pdf-viewer-reactjs';
 
@@ -243,8 +244,7 @@ const Resources = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <FontAwesomeIcon icon={faFileArrowDown} onClick={() => handleDownload(params?.row)} style={{ cursor: "pointer" }} />
-                        <a style={{ fontSize: "smaller", marginLeft: "3%", marginTop: "2%", color: "Blue", }} onClick={() => openPdfViewer(`http://localhost:3000${params?.row.file}`)}>view</a>
+                        <a style={{ fontSize: "smaller", marginTop: "2%", color: "Blue", }} onClick={() => openPdfViewer(`http://localhost:3000${params?.row.file}`)}>view</a>
 
                     </>
                 )
@@ -260,6 +260,7 @@ const Resources = () => {
             renderCell: (params) => {
                 return (
                     <>
+                        <GrDownload  onClick={() => handleDownload(params?.row)} style={{ cursor: "pointer" ,marginRight:"15%"}} />
 
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -274,7 +275,7 @@ const Resources = () => {
                                 setResources(params.row);
                                 handleOpen();
                             }}
-                            style={{ marginRight: "10px", cursor: "pointer" }}
+                            style={{ cursor: "pointer" }}
                         >
                             <path
                                 strokeLinecap='round'

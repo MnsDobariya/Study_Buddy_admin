@@ -27,9 +27,9 @@
   .progress-moved .progress-bar2 {
     width: 22rem; 
     margin-top: 4%;
-    margin-left: 3.7rem;
+    /* margin-left: 3.7rem; */
     /* background-color: #EF476F;   */
-    background-color: #17c1e8;  
+    background-color: #0488a6;  
     animation: progressAnimation 6s;
   }
 

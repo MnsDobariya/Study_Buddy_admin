@@ -2,26 +2,30 @@ import { Avatar, AvatarGroup } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ApiGet } from 'config/Api/ApiData';
 import { EndPoint } from 'config/EndPoint/Endpoint';
+import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+
 
 const ChartData = () => {
-    const [status,setStatus] = useState([]);
+    const [status, setStatus] = useState([]);
 
     const location = useLocation();
 
     // console.log('location', location)
 
+    const navigate = useNavigate();
 
-    useEffect(()=>{
+    useEffect(() => {
         ApiGet(`${EndPoint.ASSIGNMENT_GETSTATUS}?status=${location?.state}`)
-        .then((res) => {
-            // console.log(res,"responseStatus");
-            setStatus(res?.data);
-        })
-        
-    },[location.state])
+            .then((res) => {
+                // console.log(res,"responseStatus");
+                setStatus(res?.data);
+            })
+
+    }, [location.state])
 
     const columns = [
         // { field: "index", headerName: "Id", width: 90 },
@@ -33,7 +37,7 @@ const ChartData = () => {
                         {`${params.row.title.charAt(0).toUpperCase()}`}
                     </Avatar>
 
-                    <p style={{ fontWeight: "500" }}>{params.row.title}</p>
+                    <p style={{ fontWeight: "500" ,marginTop:"5%"}}>{params.row.title}</p>
                 </AvatarGroup>
             )
         },
@@ -58,13 +62,15 @@ const ChartData = () => {
         }
     ]
 
-    const indexedData = status?.map((x,index) => ({
+    const indexedData = status?.map((x, index) => ({
         ...x,
         index: index + 1
     }
     ))
     return (
         <>
+            <DashboardNavbar />
+
             <div style={{ padding: "1%" }}>
                 <DataGrid
                     rows={indexedData}
@@ -79,18 +85,19 @@ const ChartData = () => {
                             <div
                                 style={{
                                     display: "flex",
-                                    justifyContent: "space-between",
+                                    // justifyContent: "space-between",
                                     alignItems: "center",
                                 }}
                             >
                                 <GridToolbar />
-
+                                <IoArrowBackCircleSharp onClick={()=>navigate("/dashboard")} size={"30px"} style={{marginLeft:"66%"}}/>Back
                             </div>
 
                         ),
                     }}
+
                     style={{ height: "82vh", width: "77.5%", padding: "2%", marginLeft: "20%" }}
-                   
+
                     className='custom-data-grid'
                     initialState={{
                         pagination: { paginationModel: { pageSize: 5 } },

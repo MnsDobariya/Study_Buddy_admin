@@ -16,6 +16,7 @@ import { PiDotsThreeCircleVerticalLight } from 'react-icons/pi';
 import { ApiPut } from 'config/Api/ApiData';
 import { ApiDelete } from 'config/Api/ApiData';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Chat = () => {
     const [roomRecord, setRoomRecord] = useState([]);
@@ -172,9 +173,13 @@ const Chat = () => {
                 }
                 getRoom();
                 handleSecondClose();
+                toast.success(<p style={{fontSize:"80%"}}>{"Room blocked successfully"}</p>);
             })
             .catch(error => {
                 handleSecondClose();
+                toast.error(<p style={{ fontSize: "80%" }}>{"Room not found"}</p>, {
+                    position: "top-center",
+                });
             });
         if (isBlocked) {
             // deleteRoom(roomId);

@@ -9,6 +9,7 @@ import { EndPoint } from 'config/EndPoint/Endpoint';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { PiDotsThreeCircleVerticalLight } from 'react-icons/pi';
+import { toast } from 'react-toastify';
 
 const Blocklist = () => {
     const [blockdata, setBlockData] = useState([]);
@@ -42,6 +43,7 @@ const Blocklist = () => {
         ApiPut(`${EndPoint.UNBLOCK_ROOM_UPDATE}/${id}`, body)
             .then((res) => {
                 // console.log(res, "responseRoom");
+                toast.success(<p style={{fontSize:"80%"}}>{"Room unblocked successfully"}</p>)
                 getBlockRoom();
             })
     }

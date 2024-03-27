@@ -69,7 +69,7 @@ const AssignmentList = () => {
                             {`${params.row.title.charAt(0).toUpperCase()}`}
                         </Avatar>
                     
-                        <p style={{fontWeight:"500"}}>{params.row.title}</p>
+                        <p style={{fontWeight:"500",marginTop:"5%"}}>{params.row.title}</p>
                 </AvatarGroup>
             )
         },
